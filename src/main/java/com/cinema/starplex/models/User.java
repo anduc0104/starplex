@@ -26,7 +26,7 @@ public class User {
     @Column(nullable = false)
     private String role; // admin, customer, staff
 
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = true, updatable = false)
     private Timestamp createdAt;
 
     //getters and setters
@@ -84,6 +84,16 @@ public class User {
     }
 
     public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public User(Integer id, String username, String email, String password, String phone, String role) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.role = role;
         this.createdAt = createdAt;
     }
 }

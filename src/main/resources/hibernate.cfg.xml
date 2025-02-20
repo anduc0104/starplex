@@ -16,6 +16,15 @@
         <property name="hibernate.hbm2ddl.auto">none</property>
 
         <!-- Đăng ký Entity -->
-        <mapping class="models.User"/>
+        <mapping class="com/cinema/starplex/models/User.java"/>
+        <mapping class="models.Booking"/>
+        <mapping class="models.BookingDetail"/>
+        <mapping class="models.Movie"/>
+        <mapping class="models.MovieType"/>
+        <mapping class="models.Payment"/>
+        <mapping class="models.Room"/>
+        <mapping class="models.Seat"/>
+        <mapping class="models.SeatType"/>
+        <mapping class="models.Showtime"/>
     </session-factory>
 </hibernate-configuration>

@@ -1,5 +1,5 @@
 package com.cinema.starplex.config;
-
+//Quan ly SessionFactory trong hibernate
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
