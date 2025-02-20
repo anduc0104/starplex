@@ -1,24 +1,24 @@
 package com.cinema.starplex.models;
 
 import jakarta.persistence.*;
+
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "rooms")
-public class Room {
+@Table(name = "directors")
+public class Director {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer roomNumber;
-    private Integer totalSeats;
+    private String name;
     private Timestamp createdAt;
 
-    public Room() {}
+    public Director() {
+    }
 
-    public Room(Integer id, Integer roomNumber, Integer totalSeats, Timestamp createdAt) {
+    public Director(Integer id, String name, Timestamp createdAt) {
         this.id = id;
-        this.roomNumber = roomNumber;
-        this.totalSeats = totalSeats;
+        this.name = name;
         this.createdAt = createdAt;
     }
 
@@ -32,20 +32,12 @@ public class Room {
         this.id = id;
     }
 
-    public Integer getRoomNumber() {
-        return roomNumber;
+    public String getName() {
+        return name;
     }
 
-    public void setRoomNumber(Integer roomNumber) {
-        this.roomNumber = roomNumber;
-    }
-
-    public Integer getTotalSeats() {
-        return totalSeats;
-    }
-
-    public void setTotalSeats(Integer totalSeats) {
-        this.totalSeats = totalSeats;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Timestamp getCreatedAt() {
@@ -56,3 +48,4 @@ public class Room {
         this.createdAt = createdAt;
     }
 }
+

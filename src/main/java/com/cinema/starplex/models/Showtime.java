@@ -11,23 +11,26 @@ public class Showtime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     @ManyToOne
-    @JoinColumn(name = "movie_id", nullable = false)
+    @JoinColumn(name = "movie_id")
     private Movie movie;
-
     @ManyToOne
-    @JoinColumn(name = "room_id", nullable = false)
+    @JoinColumn(name = "room_id")
     private Room room;
-
-    @Column(name = "start_time", nullable = false)
     private Timestamp startTime;
-
-    @Column(nullable = false)
     private BigDecimal price;
-
-    @Column(name = "created_at", nullable = false, updatable = false)
     private Timestamp createdAt;
+
+    public Showtime() {}
+
+    public Showtime(Integer id, Movie movie, Room room, Timestamp startTime, BigDecimal price, Timestamp createdAt) {
+        this.id = id;
+        this.movie = movie;
+        this.room = room;
+        this.startTime = startTime;
+        this.price = price;
+        this.createdAt = createdAt;
+    }
 
     // Getters and Setters
 

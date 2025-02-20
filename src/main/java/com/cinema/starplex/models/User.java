@@ -11,25 +11,28 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String username;
-
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String email;
-
-    @Column(nullable = false)
     private String password;
-
     private String phone;
-
-    @Column(nullable = false)
-    private String role; // admin, customer, staff
-
-    @Column(name = "created_at", nullable = true, updatable = false)
+    private String role;
     private Timestamp createdAt;
 
-    //getters and setters
+    public User() {}
+
+    public User(Integer id, String username, String email, String password, String phone, String role, Timestamp createdAt) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.role = role;
+        this.createdAt = createdAt;
+    }
+
+    // Getters and Setters
 
     public Integer getId() {
         return id;
@@ -84,16 +87,6 @@ public class User {
     }
 
     public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public User(Integer id, String username, String email, String password, String phone, String role) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.phone = phone;
-        this.role = role;
         this.createdAt = createdAt;
     }
 }

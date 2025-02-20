@@ -68,25 +68,9 @@ public class UserDao implements BaseDao<User>{
 
     public static void main(String[] args) {
         UserDao userDao = new UserDao();
+//         Save a new user
+//        User user = new User(1, "John Doe", "john.doe@example.com", "password123", "0999999999", "admin", '2025-02-15 10:30:00');
+//        userDao.save(user);
 
-        // Save a new user
-        User user = new User(1, "John Doe", "john.doe@example.com", "password123", "0999999999", "admin");
-        userDao.save(user);
-
-        // Update user details
-//        user.setEmail("john.doe@new.example.com");
-//        userDao.update(user);
-//
-//        // Delete user
-//        userDao.delete(user);
-//
-//        // Retrieve user by ID
-//        User retrievedUser = userDao.findById(user.getId());
-//        if (retrievedUser!= null) {
-//            System.out.println("Retrieved user: " + retrievedUser.getName());
-//        }
-
-        // Retrieve all users
-//        List<User> users = userDao.findAll();
     }
 }

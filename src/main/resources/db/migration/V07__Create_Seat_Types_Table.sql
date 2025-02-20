@@ -1,0 +1,6 @@
+CREATE TABLE seat_types (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NULL,
+    price DECIMAL(10,2) NULL,
+    created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP
+);

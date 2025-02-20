@@ -26,5 +26,12 @@
         <mapping class="models.Seat"/>
         <mapping class="models.SeatType"/>
         <mapping class="models.Showtime"/>
+        <mapping class="models.User"/>
+        <mapping class="models.Actor"/>
+        <mapping class="models.Director"/>
+        <mapping class="models.MovieActor"/>
+        <mapping class="models.MovieDirector"/>
+        <mapping class="models.MovieGenre"/>
+
     </session-factory>
 </hibernate-configuration>

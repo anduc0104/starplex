@@ -10,20 +10,24 @@ public class Seat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     @ManyToOne
-    @JoinColumn(name = "room_id", nullable = false)
+    @JoinColumn(name = "room_id")
     private Room room;
-
     @ManyToOne
-    @JoinColumn(name = "seat_type_id", nullable = false)
+    @JoinColumn(name = "seat_type_id")
     private SeatType seatType;
-
-    @Column(nullable = false)
     private String seatNumber;
-
-    @Column(name = "created_at", nullable = false, updatable = false)
     private Timestamp createdAt;
+
+    public Seat() {}
+
+    public Seat(Integer id, Room room, SeatType seatType, String seatNumber, Timestamp createdAt) {
+        this.id = id;
+        this.room = room;
+        this.seatType = seatType;
+        this.seatNumber = seatNumber;
+        this.createdAt = createdAt;
+    }
 
     // Getters and Setters
 
