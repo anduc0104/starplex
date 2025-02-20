@@ -11,4 +11,5 @@ module com.cinema.starplex {
 
     opens com.cinema.starplex.ui to javafx.graphics;
     exports com.cinema.starplex.ui.controllers;
+    exports com.cinema.starplex.ui;
 }
