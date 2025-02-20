@@ -15,6 +15,7 @@ public class Main extends Application {
 
         //css
         scene.getStylesheets().add(getClass().getResource("/css/main.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
 
         //font
 //         montserrat = Font.loadFont(getClass().getResource("/fonts/Montserrat-Italic-VariableFont_wght.ttf").toExternalForm(), 16);
