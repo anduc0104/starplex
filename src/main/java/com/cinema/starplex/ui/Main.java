@@ -14,6 +14,7 @@ public class Main extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         //css
         scene.getStylesheets().add(getClass().getResource("/css/main.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
 
         //font
         Font font = Font.loadFont(getClass().getResourceAsStream("/font/Montserrat-ExtraLight.ttf"), 16);
