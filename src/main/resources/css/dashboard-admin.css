@@ -1,0 +1,31 @@
+.nav-btn{
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+}
+
+.nav-btn:hover{
+    -fx-background-color: #1071e1;
+}
+.signout-btn:hover{
+    -fx-background-color: #d83f5a;
+}
+
+.bg-white{
+   -fx-background-color: #fff;
+   -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,.3), 8,0,0,0);
+   -fx-background-radius: 8px;
+}
+.bg-white:hover{
+   -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,.5), 8,0,0,0);
+}
+
+.card{
+    -fx-background-color: #2b428c;
+    -fx-background-radius: 8px;
+}
+
+.card:hover{
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,.5), 5,0,0,0);
+}

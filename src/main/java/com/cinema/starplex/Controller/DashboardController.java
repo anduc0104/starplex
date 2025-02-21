@@ -6,4 +6,8 @@ public class DashboardController {
 
     public void filterMovies(ActionEvent actionEvent) {
     }
+
+    public void searchUsers(ActionEvent actionEvent) {
+
+    }
 }
