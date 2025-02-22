@@ -30,6 +30,19 @@ public class Movie {
     @Column(name = "created_at", nullable = false, updatable = false)
     private Timestamp createdAt;
 
+    public Movie(Integer id, MovieType movieType, String title, Integer duration, Date releaseDate, String rating, String description, Timestamp createdAt) {
+        this.id = id;
+        this.movieType = movieType;
+        this.title = title;
+        this.duration = duration;
+        this.releaseDate = releaseDate;
+        this.rating = rating;
+        this.description = description;
+        this.createdAt = createdAt;
+    }
+
+    public Movie() {}
+
     // Getters and Setters
 
     public Integer getId() {

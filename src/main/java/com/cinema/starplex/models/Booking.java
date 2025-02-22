@@ -28,6 +28,17 @@ public class Booking {
     @Column(name = "created_at", nullable = false, updatable = false)
     private Timestamp createdAt;
 
+    public Booking(Integer id, User user, Showtime showtime, BigDecimal totalPrice, String status, Timestamp createdAt) {
+        this.id = id;
+        this.user = user;
+        this.showtime = showtime;
+        this.totalPrice = totalPrice;
+        this.status = status;
+        this.createdAt = createdAt;
+    }
+
+    public Booking() {}
+
     // Getters and Setters
 
     public Integer getId() {

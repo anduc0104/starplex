@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.cinema.starplex.ui.controllers.HomepageController"
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 
->
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.cinema.starplex.ui.controllers.HomepageController">
+    <!-- Sidebar -->
+    <VBox spacing="15.0" prefWidth="200" style="-fx-background-color: #a12c2c; -fx-padding: 20;">
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" styleClass="my_button"/>
-</VBox>
+    </VBox>
+
+    <!-- Main Content -->
+    <VBox layoutX="220" spacing="20.0">
+
+    </VBox>
+</AnchorPane>

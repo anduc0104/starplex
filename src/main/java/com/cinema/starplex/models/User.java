@@ -87,6 +87,12 @@ public class User {
         this.createdAt = createdAt;
     }
 
+    // Constructor
+
+
+    public User() {
+    }
+
     public User(Integer id, String username, String email, String password, String phone, String role) {
         this.id = id;
         this.username = username;

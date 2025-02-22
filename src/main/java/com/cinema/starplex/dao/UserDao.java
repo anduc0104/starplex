@@ -12,6 +12,14 @@ public class UserDao implements BaseDao<User>{
     public void save(User user) {
         Transaction transaction = null;
         try(Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "FROM User WHERE email = :email";
+            User existingUser = session.createQuery(hql, User.class)
+                    .setParameter("email", user.getEmail())
+                    .uniqueResult();
+
+            if (existingUser != null) {
+                throw new RuntimeException("Email already exists: " + user.getEmail());
+            }
             transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();
@@ -24,13 +32,32 @@ public class UserDao implements BaseDao<User>{
     @Override
     public void update(User user) {
         Transaction transaction = null;
-        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.update(user);
+
+            String hql = "FROM User WHERE email = :email";
+            User existingUser = session.createQuery(hql, User.class)
+                    .setParameter("email", user.getEmail())
+                    .uniqueResult();
+
+            if (existingUser != null) {
+                // Update existing user's fields
+                existingUser.setUsername(user.getUsername());
+                existingUser.setPassword(user.getPassword());
+                existingUser.setPhone(user.getPhone());
+                existingUser.setRole(user.getRole());
+
+                session.merge(existingUser);
+            } else {
+                throw new RuntimeException("User not found with email: " + user.getEmail());
+            }
+
             transaction.commit();
         } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            e.printStackTrace();
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw new RuntimeException("Failed to update user", e);
         }
     }
 
@@ -64,29 +91,5 @@ public class UserDao implements BaseDao<User>{
             e.printStackTrace();
             return null;
         }
-    }
-
-    public static void main(String[] args) {
-        UserDao userDao = new UserDao();
-
-        // Save a new user
-        User user = new User(1, "John Doe", "john.doe@example.com", "password123", "0999999999", "admin");
-        userDao.save(user);
-
-        // Update user details
-//        user.setEmail("john.doe@new.example.com");
-//        userDao.update(user);
-//
-//        // Delete user
-//        userDao.delete(user);
-//
-//        // Retrieve user by ID
-//        User retrievedUser = userDao.findById(user.getId());
-//        if (retrievedUser!= null) {
-//            System.out.println("Retrieved user: " + retrievedUser.getName());
-//        }
-
-        // Retrieve all users
-//        List<User> users = userDao.findAll();
     }
 }

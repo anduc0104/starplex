@@ -30,6 +30,18 @@ public class Payment {
     @Column(name = "created_at", nullable = false, updatable = false)
     private Timestamp createdAt;
 
+    public Payment(Integer id, Booking booking, BigDecimal amount, String paymentMethod, String status, String transactionId, Timestamp createdAt) {
+        this.id = id;
+        this.booking = booking;
+        this.amount = amount;
+        this.paymentMethod = paymentMethod;
+        this.status = status;
+        this.transactionId = transactionId;
+        this.createdAt = createdAt;
+    }
+
+    public Payment(){}
+
     // Getters and Setters
 
     public Integer getId() {

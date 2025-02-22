@@ -16,6 +16,19 @@ public class Room {
     @Column(name = "created_at", nullable = false, updatable = false)
     private Timestamp createdAt;
 
+    // Constructors
+
+    public Room(Integer id, Integer roomNumber, Integer totalSeats, Timestamp createdAt) {
+        this.id = id;
+        this.roomNumber = roomNumber;
+        this.totalSeats = totalSeats;
+        this.createdAt = createdAt;
+    }
+
+    public Room() {
+    }
+
+
     // Getters and Setters
 
     public Integer getId() {

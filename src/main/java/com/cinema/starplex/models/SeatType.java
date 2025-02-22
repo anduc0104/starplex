@@ -17,7 +17,17 @@ public class SeatType {
     @Column(name = "created_at", nullable = false, updatable = false)
     private Timestamp createdAt;
 
-    // Getters and Setters
+    public SeatType(Integer id, String name, Timestamp createdAt) {
+        this.id = id;
+        this.name = name;
+        this.createdAt = createdAt;
+    }
+
+    public SeatType() {
+    }
+
+
+// Getters and Setters
 
     public Integer getId() {
         return id;

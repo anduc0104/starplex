@@ -25,6 +25,16 @@ public class Seat {
     @Column(name = "created_at", nullable = false, updatable = false)
     private Timestamp createdAt;
 
+    public Seat(Integer id, Room room, SeatType seatType, String seatNumber, Timestamp createdAt) {
+        this.id = id;
+        this.room = room;
+        this.seatType = seatType;
+        this.seatNumber = seatNumber;
+        this.createdAt = createdAt;
+    }
+
+    public Seat() {}
+
     // Getters and Setters
 
     public Integer getId() {

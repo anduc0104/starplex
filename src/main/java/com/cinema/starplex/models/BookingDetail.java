@@ -25,6 +25,16 @@ public class BookingDetail {
     @Column(name = "created_at", nullable = false, updatable = false)
     private Timestamp createdAt;
 
+    public BookingDetail(Integer id, Booking booking, Seat seat, BigDecimal price, Timestamp createdAt) {
+        this.id = id;
+        this.booking = booking;
+        this.seat = seat;
+        this.price = price;
+        this.createdAt = createdAt;
+    }
+
+    public BookingDetail() {}
+
     // Getters and Setters
 
     public Integer getId() {

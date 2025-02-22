@@ -4,27 +4,27 @@
         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <!-- Cấu hình kết nối MySQL -->
-        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/starplex</property>
-        <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password"></property>
+        <!-- Cấu hình kết nối postgre -->
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/starplex</property>
+        <property name="hibernate.connection.username">postgres</property>
+        <property name="hibernate.connection.password">12345677</property>
 
         <!-- Cấu hình Hibernate -->
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
         <property name="hibernate.show_sql">true</property>
-        <property name="hibernate.hbm2ddl.auto">none</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
 
         <!-- Đăng ký Entity -->
-        <mapping class="com/cinema/starplex/models/User.java"/>
-        <mapping class="models.Booking"/>
-        <mapping class="models.BookingDetail"/>
-        <mapping class="models.Movie"/>
-        <mapping class="models.MovieType"/>
-        <mapping class="models.Payment"/>
-        <mapping class="models.Room"/>
-        <mapping class="models.Seat"/>
-        <mapping class="models.SeatType"/>
-        <mapping class="models.Showtime"/>
+        <mapping class="com.cinema.starplex.models.User"/>
+        <mapping class="com.cinema.starplex.models.Booking"/>
+        <mapping class="com.cinema.starplex.models.BookingDetail"/>
+        <mapping class="com.cinema.starplex.models.Movie"/>
+        <mapping class="com.cinema.starplex.models.MovieType"/>
+        <mapping class="com.cinema.starplex.models.Payment"/>
+        <mapping class="com.cinema.starplex.models.Room"/>
+        <mapping class="com.cinema.starplex.models.Seat"/>
+        <mapping class="com.cinema.starplex.models.SeatType"/>
+        <mapping class="com.cinema.starplex.models.Showtime"/>
     </session-factory>
 </hibernate-configuration>
