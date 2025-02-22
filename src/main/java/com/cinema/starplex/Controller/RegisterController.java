@@ -1,7 +1,7 @@
 package com.cinema.starplex.Controller;
 
-import com.cinema.starplex.Connection.DatabaseConnection;
-import com.cinema.starplex.Utils.Utils;
+import com.cinema.starplex.util.DatabaseConnection;
+import com.cinema.starplex.util.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

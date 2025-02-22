@@ -1,6 +1,5 @@
-package com.cinema.starplex.Connection;
+package com.cinema.starplex.util;
 
-import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
