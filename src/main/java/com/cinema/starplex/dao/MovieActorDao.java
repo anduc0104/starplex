@@ -1,18 +1,18 @@
 package com.cinema.starplex.dao;
+import com.cinema.starplex.models.MovieActor;
 import com.cinema.starplex.config.HibernateUtil;
-import com.cinema.starplex.models.Actor;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
 
-public class ActorDao implements BaseDao<Actor> {
+public class MovieActorDao implements BaseDao<MovieActor>{
     @Override
-    public void save(Actor actor) {
+    public void save(MovieActor movieActor) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.save(actor);
+            session.save(movieActor);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
@@ -21,11 +21,11 @@ public class ActorDao implements BaseDao<Actor> {
     }
 
     @Override
-    public void update(Actor actor) {
+    public void update(MovieActor movieActor) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.update(actor);
+            session.update(movieActor);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
@@ -34,11 +34,11 @@ public class ActorDao implements BaseDao<Actor> {
     }
 
     @Override
-    public void delete(Actor actor) {
+    public void delete(MovieActor movieActor) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.delete(actor);
+            session.delete(movieActor);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
@@ -47,18 +47,18 @@ public class ActorDao implements BaseDao<Actor> {
     }
 
     @Override
-    public Actor findById(long id) {
+    public MovieActor findById(long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.get(Actor.class, id);
+            return session.get(MovieActor.class, id);
         } catch (Exception e) {
             return null;
         }
     }
 
     @Override
-    public List<Actor> findAll() {
+    public List<MovieActor> findAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("FROM Actor", Actor.class).list();
+            return session.createQuery("FROM MovieActor", MovieActor.class).list();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
