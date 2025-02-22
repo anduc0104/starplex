@@ -1,6 +1,6 @@
 package com.cinema.starplex.util;
 
-import com.cinema.starplex.Controller.LoginController;
+import com.cinema.starplex.ui.controllers.LoginController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;

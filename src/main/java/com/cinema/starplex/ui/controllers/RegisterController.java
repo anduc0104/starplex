@@ -1,4 +1,4 @@
-package com.cinema.starplex.Controller;
+package com.cinema.starplex.ui.controllers;
 
 import com.cinema.starplex.util.DatabaseConnection;
 import com.cinema.starplex.util.Utils;

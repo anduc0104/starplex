@@ -14,7 +14,7 @@ public class Main extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         //css
         scene.getStylesheets().add(getClass().getResource("/css/main.css").toExternalForm());
-        scene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/css/dashboard-admin.css").toExternalForm());
 
         //font
         Font font = Font.loadFont(getClass().getResourceAsStream("/font/Montserrat-ExtraLight.ttf"), 16);
@@ -23,8 +23,8 @@ public class Main extends Application {
 //        DatabaseInitializer.initializeDatabase();
         primaryStage.setTitle("Home Page");
         primaryStage.setScene(scene);
-        primaryStage.setFullScreenExitHint("");
-        primaryStage.setFullScreen(true);
+//        primaryStage.setFullScreenExitHint("");
+//        primaryStage.setFullScreen(true);
         primaryStage.show();
     }
 }

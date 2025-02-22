@@ -1,4 +1,4 @@
-package com.cinema.starplex.Controller;
+package com.cinema.starplex.ui.controllers.admin;
 
 import javafx.event.ActionEvent;
 

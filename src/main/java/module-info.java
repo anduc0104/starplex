@@ -11,5 +11,6 @@ module com.cinema.starplex {
 
     requires java.naming;
 
-    opens com.cinema.starplex.Controller to javafx.fxml;
+    opens com.cinema.starplex.ui.controllers to javafx.fxml;
+    opens com.cinema.starplex.ui.controllers.admin to javafx.fxml;
 }
