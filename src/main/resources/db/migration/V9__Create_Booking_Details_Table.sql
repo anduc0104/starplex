@@ -1,7 +1,0 @@
-CREATE TABLE booking_details (
-    id SERIAL PRIMARY KEY,
-    booking_id INTEGER REFERENCES bookings(id) ON DELETE CASCADE,
-    seat_id INTEGER REFERENCES seats(id) ON DELETE CASCADE,
-    price DECIMAL(10,2) NOT NULL CHECK (price >= 0),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);

@@ -9,14 +9,9 @@ public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private Integer roomNumber;
     private Integer totalSeats;
-
-    @Column(name = "created_at", nullable = false, updatable = false)
     private Timestamp createdAt;
-
-    // Constructors
 
     public Room(Integer id, Integer roomNumber, Integer totalSeats, Timestamp createdAt) {
         this.id = id;
@@ -27,7 +22,6 @@ public class Room {
 
     public Room() {
     }
-
 
     // Getters and Setters
 

@@ -2,15 +2,11 @@
     -fx-primary-color: #111827;
     -fx-secondary-color: #EF4444;
     -fx-accent-color: #EAB308;
+    -fx-font-family: "Montserrat ExtraLight";
+    -fx-font-size: 16px;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-style: italic;
 }
-@font-face {
-    font-family: "serif";
-    src: url('Montserrat-Italic-VariableFont_wght.ttf');
-    font-optical-sizing: auto;
-    font-weight: <weight>;
-    font-style: normal;
-}
-
 .my_button{
     -fx-background-color: -fx-primary-color;
     -fx-text-fill: white;

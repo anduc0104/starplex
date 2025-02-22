@@ -2,32 +2,23 @@ package com.cinema.starplex.models;
 
 import jakarta.persistence.*;
 
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "seat_types")
-public class SeatType {
+@Table(name = "directors")
+public class Director {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private BigDecimal price;
     private Timestamp createdAt;
 
-    public SeatType(Integer id, String name, Timestamp createdAt) {
-        this.id = id;
-        this.name = name;
-        this.createdAt = createdAt;
+    public Director() {
     }
 
-// Getters and Setters
-    public SeatType() {}
-
-    public SeatType(Integer id, String name, BigDecimal price, Timestamp createdAt) {
+    public Director(Integer id, String name, Timestamp createdAt) {
         this.id = id;
         this.name = name;
-        this.price = price;
         this.createdAt = createdAt;
     }
 
@@ -49,14 +40,6 @@ public class SeatType {
         this.name = name;
     }
 
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
     public Timestamp getCreatedAt() {
         return createdAt;
     }
@@ -65,3 +48,4 @@ public class SeatType {
         this.createdAt = createdAt;
     }
 }
+

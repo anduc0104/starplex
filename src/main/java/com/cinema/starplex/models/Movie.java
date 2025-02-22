@@ -11,28 +11,18 @@ public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @ManyToOne
-    @JoinColumn(name = "movie_type_id", nullable = false)
-    private MovieType movieType;
-
-    @Column(nullable = false)
     private String title;
-
-    private Integer duration; // Duration in minutes
-
-    @Column(name = "release_date", nullable = false)
+    private Float duration;
     private Date releaseDate;
-
     private String rating;
     private String description;
-
-    @Column(name = "created_at", nullable = false, updatable = false)
     private Timestamp createdAt;
 
-    public Movie(Integer id, MovieType movieType, String title, Integer duration, Date releaseDate, String rating, String description, Timestamp createdAt) {
+
+    public Movie() {}
+
+    public Movie(Integer id, String title, Float duration, Date releaseDate, String rating, String description, Timestamp createdAt) {
         this.id = id;
-        this.movieType = movieType;
         this.title = title;
         this.duration = duration;
         this.releaseDate = releaseDate;
@@ -40,8 +30,6 @@ public class Movie {
         this.description = description;
         this.createdAt = createdAt;
     }
-
-    public Movie() {}
 
     // Getters and Setters
 
@@ -53,14 +41,6 @@ public class Movie {
         this.id = id;
     }
 
-    public MovieType getMovieType() {
-        return movieType;
-    }
-
-    public void setMovieType(MovieType movieType) {
-        this.movieType = movieType;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -69,11 +49,11 @@ public class Movie {
         this.title = title;
     }
 
-    public Integer getDuration() {
+    public Float getDuration() {
         return duration;
     }
 
-    public void setDuration(Integer duration) {
+    public void setDuration(Float duration) {
         this.duration = duration;
     }
 

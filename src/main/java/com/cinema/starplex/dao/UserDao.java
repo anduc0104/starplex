@@ -92,4 +92,12 @@ public class UserDao implements BaseDao<User>{
             return null;
         }
     }
+
+//    public static void main(String[] args) {
+//        UserDao userDao = new UserDao();
+////         Save a new user
+////        User user = new User(1, "John Doe", "john.doe@example.com", "password123", "0999999999", "admin", '2025-02-15 10:30:00');
+////        userDao.save(user);
+//
+//    }
 }

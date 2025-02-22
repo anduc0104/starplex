@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cinema.starplex.Controller.DashboardController">
+    <children>
+        <!-- Header -->
+        <VBox spacing="10" prefWidth="900.0">
+            <Label text="Danh Sách Phim" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+            <HBox spacing="10">
+                <Label text="Thể loại: " />
+                <ComboBox fx:id="filterCategory" />
+                <Button text="Lọc" onAction="#filterMovies"/>
+            </HBox>
+        </VBox>
+
+        <!-- Danh sách phim -->
+        <ScrollPane layoutY="50" layoutX="10" prefHeight="520.0" prefWidth="880.0">
+            <VBox fx:id="movieListContainer" spacing="10"/>
+        </ScrollPane>
+    </children>
+</AnchorPane>

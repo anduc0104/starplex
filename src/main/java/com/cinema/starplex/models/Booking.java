@@ -1,6 +1,7 @@
 package com.cinema.starplex.models;
 
 import jakarta.persistence.*;
+
 import java.sql.Timestamp;
 import java.math.BigDecimal;
 
@@ -10,23 +11,19 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
-
     @ManyToOne
-    @JoinColumn(name = "showtime_id", nullable = false)
+    @JoinColumn(name = "showtime_id")
     private Showtime showtime;
-
-    @Column(nullable = false)
     private BigDecimal totalPrice;
-
-    @Column(nullable = false)
-    private String status; // Pending, Confirmed, Cancelled
-
-    @Column(name = "created_at", nullable = false, updatable = false)
+    private String status;
     private Timestamp createdAt;
+
+    public Booking() {
+
+    }
 
     public Booking(Integer id, User user, Showtime showtime, BigDecimal totalPrice, String status, Timestamp createdAt) {
         this.id = id;
@@ -37,9 +34,7 @@ public class Booking {
         this.createdAt = createdAt;
     }
 
-    public Booking() {}
-
-    // Getters and Setters
+// Getters and Setters
 
     public Integer getId() {
         return id;

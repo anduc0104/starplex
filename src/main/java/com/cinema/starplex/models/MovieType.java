@@ -10,11 +10,7 @@ public class MovieType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @Column(nullable = false)
     private String name;
-
-    @Column(name = "created_at", nullable = false, updatable = false)
     private Timestamp createdAt;
 
     public MovieType(Integer id, String name, Timestamp createdAt) {
