@@ -2,6 +2,7 @@ package com.cinema.starplex.dao;
 
 import com.cinema.starplex.config.HibernateUtil;
 import com.cinema.starplex.models.Room;
+import com.cinema.starplex.models.Seat;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -60,6 +61,28 @@ public class RoomDao implements BaseDao<Room>{
     public List<Room> findAll() {
         try(Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("FROM Room", Room.class).list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Room> findRoomByShowtimeId(long showtimeId) {
+        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery("FROM Room r JOIN r.showtimes s WHERE s.id = :showtimeId", Room.class)
+                   .setParameter("showtimeId", showtimeId)
+                   .list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Seat> findSeatsByRoomId(long roomId) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery("FROM Seat WHERE room.id = :roomId", Seat.class)
+                    .setParameter("roomId", roomId)
+                    .list();
         } catch (Exception e) {
             e.printStackTrace();
             return null;

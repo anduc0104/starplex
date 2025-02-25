@@ -4,7 +4,10 @@ import com.cinema.starplex.config.HibernateUtil;
 import com.cinema.starplex.models.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import org.mindrot.jbcrypt.BCrypt;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class UserDao implements BaseDao<User>{
@@ -12,7 +15,7 @@ public class UserDao implements BaseDao<User>{
     public void save(User user) {
         Transaction transaction = null;
         try(Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "FROM User WHERE email = :email";
+            String hql = "FROM users WHERE email = :email";
             User existingUser = session.createQuery(hql, User.class)
                     .setParameter("email", user.getEmail())
                     .uniqueResult();
@@ -35,7 +38,7 @@ public class UserDao implements BaseDao<User>{
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
 
-            String hql = "FROM User WHERE email = :email";
+            String hql = "FROM users WHERE email = :email";
             User existingUser = session.createQuery(hql, User.class)
                     .setParameter("email", user.getEmail())
                     .uniqueResult();
@@ -92,6 +95,65 @@ public class UserDao implements BaseDao<User>{
             return null;
         }
     }
+
+    public boolean registerUser(String username, String password, String email, String phone, String role) {
+        Transaction transaction = null;
+        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            User existingUser = getUserByUsername(username);
+            User existingEmail = getUserByEmail(email);
+            if (existingUser!= null || existingEmail!=null) {
+                System.out.println("User or Email already exists");
+                return false;
+            }
+
+            String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+            User user = new User();
+            user.setUsername(username);
+            user.setPassword(hashedPassword);
+            user.setEmail(email);
+            user.setPhone(phone);
+            user.setRole(role != null ? role : "customer");
+            user.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+            session.save(user);
+            transaction.commit();
+            System.out.println("User saved successfully");
+            return true;
+        } catch (Exception e) {
+            if (transaction!= null) transaction.rollback();
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public User getUserByUsername(String username) {
+        Transaction transaction = null;
+        User user = null;
+        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+
+            Query<User> query = session.createQuery("FROM User WHERE username =:username", User.class);
+            query.setParameter("username", username);
+            user = query.uniqueResult();
+
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    public User getUserByEmail(String email) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<User> query = session.createQuery("FROM User WHERE email = :email", User.class);
+            query.setParameter("email", email);
+            return query.uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
 //    public static void main(String[] args) {
 //        UserDao userDao = new UserDao();

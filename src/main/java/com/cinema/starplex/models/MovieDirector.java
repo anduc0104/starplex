@@ -8,9 +8,11 @@ public class MovieDirector {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @ManyToOne
     @JoinColumn(name = "movie_id")
     private Movie movie;
+
     @ManyToOne
     @JoinColumn(name = "director_id")
     private Director director;

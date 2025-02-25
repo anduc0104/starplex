@@ -2,6 +2,7 @@ package com.cinema.starplex.models;
 
 import jakarta.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "rooms")

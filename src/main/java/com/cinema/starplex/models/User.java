@@ -33,6 +33,11 @@ public class User {
         this.createdAt = createdAt;
     }
 
+    public User(String username, String hashedPassword) {
+        this.username = username;
+        this.password = hashedPassword;
+    }
+
     // Getters and Setters
 
     public Integer getId() {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE hibernate-configuration PUBLIC
         "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
         <!-- Cấu hình kết nối postgre -->
@@ -11,9 +11,22 @@
         <property name="hibernate.connection.password">12345677</property>
 
         <!-- Cấu hình Hibernate -->
-        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+<!--        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>-->
         <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <!-- Connection pool settings -->
+        <property name="hibernate.connection.pool_size">1</property>
+        <property name="hibernate.current_session_context_class">thread</property>
+
+
+        <!-- Connection pool settings với HikariCP -->
+        <property name="hibernate.connection.provider_class">org.hibernate.hikaricp.internal.HikariCPConnectionProvider</property>
+        <property name="hibernate.hikari.maximumPoolSize">5</property>
+        <property name="hibernate.hikari.minimumIdle">2</property>
+        <property name="hibernate.hikari.idleTimeout">30000</property>
+        <property name="hibernate.hikari.poolName">StarplexHikariCP</property>
 
         <!-- Đăng ký Entity -->
         <mapping class="com.cinema.starplex.models.User"/>
@@ -26,22 +39,10 @@
         <mapping class="com.cinema.starplex.models.Seat"/>
         <mapping class="com.cinema.starplex.models.SeatType"/>
         <mapping class="com.cinema.starplex.models.Showtime"/>
-        <mapping class="com/cinema/starplex/models/User.java"/>
-        <mapping class="models.Booking"/>
-        <mapping class="models.BookingDetail"/>
-        <mapping class="models.Movie"/>
-        <mapping class="models.MovieType"/>
-        <mapping class="models.Payment"/>
-        <mapping class="models.Room"/>
-        <mapping class="models.Seat"/>
-        <mapping class="models.SeatType"/>
-        <mapping class="models.Showtime"/>
-        <mapping class="models.User"/>
-        <mapping class="models.Actor"/>
-        <mapping class="models.Director"/>
-        <mapping class="models.MovieActor"/>
-        <mapping class="models.MovieDirector"/>
-        <mapping class="models.MovieGenre"/>
-
+        <mapping class="com.cinema.starplex.models.MovieDirector"/>
+        <mapping class="com.cinema.starplex.models.Director"/>
+        <mapping class="com.cinema.starplex.models.MovieGenre"/>
+        <mapping class="com.cinema.starplex.models.MovieActor"/>
+        <mapping class="com.cinema.starplex.models.Actor"/>
     </session-factory>
 </hibernate-configuration>

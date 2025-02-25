@@ -10,13 +10,13 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cinema.starplex.Controller.LoginController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cinema.starplex.ui.controllers.LoginController">
     <left>
         <AnchorPane prefHeight="400.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
                 <ImageView fitHeight="400.0" fitWidth="200.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../../../../1.jpeg" />
+                        <Image url="@../../../images/1.jpeg" />
                     </image>
                 </ImageView>
             </children>
@@ -27,7 +27,7 @@
             <children>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="123.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../../../../padlock.png" />
+                        <Image url="@../../../images/padlock.png" />
                     </image>
                 </ImageView>
                 <PasswordField fx:id="passwordField" layoutX="35.0" layoutY="205.0" prefHeight="30.0" prefWidth="225.0" promptText="Password" style="-fx-font-weight: bold;">
@@ -45,7 +45,7 @@
                         <Font size="15.0" />
                     </font>
                 </Button>
-                <Hyperlink layoutX="41.0" layoutY="325.0" onAction="#switchToRegister" text="Don't have an account yet? Register" textFill="#d01818">
+                <Hyperlink fx:id="registerLink" layoutX="41.0" layoutY="325.0" onAction="#switchToRegister" text="Don't have an account yet? Register" textFill="#d01818">
                     <font>
                         <Font size="13.0" />
                     </font>
