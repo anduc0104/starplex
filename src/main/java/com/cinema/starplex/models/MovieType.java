@@ -9,12 +9,13 @@ public class MovieType {
     private String name;
     private Timestamp createdAt;
 
-    public MovieType() {}
-
     public MovieType(Integer id, String name, Timestamp createdAt) {
         this.id = id;
         this.name = name;
         this.createdAt = createdAt;
+    }
+
+    public MovieType() {
     }
 
     // Getters and Setters

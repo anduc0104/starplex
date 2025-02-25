@@ -11,6 +11,13 @@ public class SeatType {
     private BigDecimal price;
     private Timestamp createdAt;
 
+    public SeatType(Integer id, String name, Timestamp createdAt) {
+        this.id = id;
+        this.name = name;
+        this.createdAt = createdAt;
+    }
+
+// Getters and Setters
     public SeatType() {}
 
     public SeatType(Integer id, String name, BigDecimal price, Timestamp createdAt) {

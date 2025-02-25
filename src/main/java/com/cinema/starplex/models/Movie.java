@@ -14,6 +14,7 @@ public class Movie {
     private String description;
     private Timestamp createdAt;
 
+
     public Movie() {}
 
     public Movie(Integer id, String title, Float duration, Date releaseDate, String rating, String description, Timestamp createdAt) {

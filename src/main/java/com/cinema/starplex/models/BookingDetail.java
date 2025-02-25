@@ -11,6 +11,7 @@ public class BookingDetail {
     private BigDecimal price;
     private Timestamp createdAt;
 
+
     public BookingDetail() {}
 
     public BookingDetail(Integer id, Booking booking, Seat seat, BigDecimal price, Timestamp createdAt) {

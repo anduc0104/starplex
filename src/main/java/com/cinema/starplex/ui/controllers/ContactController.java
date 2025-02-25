@@ -1,5 +1,4 @@
 package com.cinema.starplex.ui.controllers;
 
-public class UserController {
-
+public class ContactController {
 }

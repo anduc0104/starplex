@@ -14,8 +14,6 @@ public class Showtime {
     private BigDecimal price;
     private Timestamp createdAt;
 
-    public Showtime() {}
-
     public Showtime(Integer id, Movie movie, Room room, Timestamp startTime, BigDecimal price, Timestamp createdAt) {
         this.id = id;
         this.movie = movie;
@@ -24,6 +22,8 @@ public class Showtime {
         this.price = price;
         this.createdAt = createdAt;
     }
+
+    public Showtime(){}
 
     // Getters and Setters
 

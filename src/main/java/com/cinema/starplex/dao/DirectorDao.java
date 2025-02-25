@@ -1,18 +1,18 @@
 package com.cinema.starplex.dao;
+import com.cinema.starplex.models.Director;
 import com.cinema.starplex.config.HibernateUtil;
-import com.cinema.starplex.models.Actor;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
 
-public class ActorDao implements BaseDao<Actor>{
+public class DirectorDao implements BaseDao<Director>{
     @Override
-    public void save(Actor actor) {
+    public void save(Director director) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.save(actor);
+            session.save(director);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
@@ -21,11 +21,11 @@ public class ActorDao implements BaseDao<Actor>{
     }
 
     @Override
-    public void update(Actor actor) {
+    public void update(Director director) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.update(actor);
+            session.update(director);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
@@ -34,11 +34,11 @@ public class ActorDao implements BaseDao<Actor>{
     }
 
     @Override
-    public void delete(Actor actor) {
+    public void delete(Director director) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.delete(actor);
+            session.delete(director);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
@@ -47,18 +47,18 @@ public class ActorDao implements BaseDao<Actor>{
     }
 
     @Override
-    public Actor findById(long id) {
+    public Director findById(long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.get(Actor.class, id);
+            return session.get(Director.class, id);
         } catch (Exception e) {
             return null;
         }
     }
 
     @Override
-    public List<Actor> findAll() {
+    public List<Director> findAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("FROM Actor", Actor.class).list();
+            return session.createQuery("FROM Director", Director.class).list();
         } catch (Exception e) {
             e.printStackTrace();
             return null;

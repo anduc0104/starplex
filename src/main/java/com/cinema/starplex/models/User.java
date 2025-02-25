@@ -14,7 +14,8 @@ public class User {
     private String role;
     private Timestamp createdAt;
 
-    public User() {}
+    public User() {
+    }
 
     public User(Integer id, String username, String email, String password, String phone, String role, Timestamp createdAt) {
         this.id = id;
@@ -24,6 +25,11 @@ public class User {
         this.phone = phone;
         this.role = role;
         this.createdAt = createdAt;
+    }
+
+    public User(String username, String hashedPassword) {
+        this.username = username;
+        this.password = hashedPassword;
     }
 
     // Getters and Setters
@@ -81,6 +87,16 @@ public class User {
     }
 
     public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public User(Integer id, String username, String email, String password, String phone, String role) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.role = role;
         this.createdAt = createdAt;
     }
 }

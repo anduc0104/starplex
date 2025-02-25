@@ -2,6 +2,7 @@ package com.cinema.starplex.models;
 
 import jakarta.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 public class Room {
     private Integer id;
@@ -9,13 +10,14 @@ public class Room {
     private Integer totalSeats;
     private Timestamp createdAt;
 
-    public Room() {}
-
     public Room(Integer id, Integer roomNumber, Integer totalSeats, Timestamp createdAt) {
         this.id = id;
         this.roomNumber = roomNumber;
         this.totalSeats = totalSeats;
         this.createdAt = createdAt;
+    }
+
+    public Room() {
     }
 
     // Getters and Setters
