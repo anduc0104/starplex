@@ -4,31 +4,26 @@ import jakarta.persistence.*;
 import java.sql.Timestamp;
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "payments")
 public class Payment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @ManyToOne
-    @JoinColumn(name = "booking_id", nullable = false)
     private Booking booking;
-
-    @Column(nullable = false)
     private BigDecimal amount;
-
-    @Column(name = "payment_method", nullable = false)
-    private String paymentMethod; // Credit Card, PayPal, Cash
-
-    @Column(nullable = false)
-    private String status; // Pending, Completed, Failed
-
-    @Column(name = "transaction_id", nullable = false, unique = true)
+    private String paymentMethod;
+    private String status;
     private String transactionId;
-
-    @Column(name = "created_at", nullable = false, updatable = false)
     private Timestamp createdAt;
+
+    public Payment() {}
+
+    public Payment(Integer id, Booking booking, BigDecimal amount, String paymentMethod, String status, String transactionId, Timestamp createdAt) {
+        this.id = id;
+        this.booking = booking;
+        this.amount = amount;
+        this.paymentMethod = paymentMethod;
+        this.status = status;
+        this.transactionId = transactionId;
+        this.createdAt = createdAt;
+    }
 
     // Getters and Setters
 

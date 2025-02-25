@@ -1,0 +1,6 @@
+CREATE TABLE rooms (
+    id SERIAL PRIMARY KEY,
+    room_number INTEGER NULL,
+    total_seats INTEGER NULL,
+    created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP
+);

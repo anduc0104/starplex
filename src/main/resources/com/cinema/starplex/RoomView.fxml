@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.cinema.starplex.ui.controllers.RoomControllerView"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <VBox spacing="10" alignment="CENTER">
+        <GridPane hgap="10" vgap="10">
+            <Label text="Room Number:"/>
+            <TextField fx:id="roomNumberField"/>
+
+            <Label text="Total Seats:"/>
+            <TextField fx:id="totalSeatsField"/>
+        </GridPane>
+
+        <Label text="Showtime Information" style="-fx-font-weight: bold;"/>
+        <GridPane hgap="10" vgap="10">
+            <Label text="Start Time (YYYY-MM-DD HH:MM:SS):"/>
+            <TextField fx:id="showtimeStartTimeField"/>
+
+            <Label text="Price:"/>
+            <TextField fx:id="showtimePriceField"/>
+        </GridPane>
+
+        <Button text="Save Room &amp; Showtime" onAction="#handleSaveRoom"/>
+    </VBox>
+</AnchorPane>

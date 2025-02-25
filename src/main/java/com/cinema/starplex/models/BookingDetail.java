@@ -4,26 +4,23 @@ import jakarta.persistence.*;
 import java.sql.Timestamp;
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "booking_details")
 public class BookingDetail {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @ManyToOne
-    @JoinColumn(name = "booking_id", nullable = false)
     private Booking booking;
-
-    @ManyToOne
-    @JoinColumn(name = "seat_id", nullable = false)
     private Seat seat;
-
-    @Column(nullable = false)
     private BigDecimal price;
-
-    @Column(name = "created_at", nullable = false, updatable = false)
     private Timestamp createdAt;
+
+
+    public BookingDetail() {}
+
+    public BookingDetail(Integer id, Booking booking, Seat seat, BigDecimal price, Timestamp createdAt) {
+        this.id = id;
+        this.booking = booking;
+        this.seat = seat;
+        this.price = price;
+        this.createdAt = createdAt;
+    }
 
     // Getters and Setters
 

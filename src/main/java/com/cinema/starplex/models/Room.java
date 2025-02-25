@@ -2,19 +2,23 @@ package com.cinema.starplex.models;
 
 import jakarta.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
-@Entity
-@Table(name = "rooms")
 public class Room {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private Integer roomNumber;
     private Integer totalSeats;
-
-    @Column(name = "created_at", nullable = false, updatable = false)
     private Timestamp createdAt;
+
+    public Room(Integer id, Integer roomNumber, Integer totalSeats, Timestamp createdAt) {
+        this.id = id;
+        this.roomNumber = roomNumber;
+        this.totalSeats = totalSeats;
+        this.createdAt = createdAt;
+    }
+
+    public Room() {
+    }
 
     // Getters and Setters
 

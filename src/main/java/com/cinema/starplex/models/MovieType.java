@@ -4,18 +4,19 @@ import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 
-@Entity
-@Table(name = "movie_types")
 public class MovieType {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @Column(nullable = false)
     private String name;
-
-    @Column(name = "created_at", nullable = false, updatable = false)
     private Timestamp createdAt;
+
+    public MovieType(Integer id, String name, Timestamp createdAt) {
+        this.id = id;
+        this.name = name;
+        this.createdAt = createdAt;
+    }
+
+    public MovieType() {
+    }
 
     // Getters and Setters
 
