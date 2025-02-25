@@ -10,46 +10,64 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cinema.starplex.ui.controllers.LoginController">
+<?import javafx.scene.control.Label?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="520.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.cinema.starplex.ui.controllers.LoginController">
     <left>
         <AnchorPane prefHeight="400.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
                 <ImageView fitHeight="400.0" fitWidth="200.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../../../1.jpeg" />
+                        <Image url="@../../../../../1.jpeg"/>
                     </image>
                 </ImageView>
             </children>
         </AnchorPane>
     </left>
     <right>
-        <AnchorPane prefHeight="400.0" prefWidth="320.0" style="-fx-background-color: #ECECE7;" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="400.0" prefWidth="320.0" style="-fx-background-color: #ECECE7;"
+                    BorderPane.alignment="CENTER">
             <children>
-                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="123.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
+                <!--left imagae-->
+                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="123.0" layoutY="58.0" pickOnBounds="true"
+                           preserveRatio="true">
                     <image>
-                        <Image url="@../../../../../../padlock.png" />
+                        <Image url="@../../../../../../padlock.png"/>
                     </image>
                 </ImageView>
-                <PasswordField fx:id="passwordField" layoutX="35.0" layoutY="205.0" prefHeight="30.0" prefWidth="225.0" promptText="Password" style="-fx-font-weight: bold;">
+                <!--username-->
+                <TextField fx:id="usernameField" layoutX="35.0" layoutY="150.0" prefHeight="30.0" prefWidth="225.0"
+                           promptText="Username" style="-fx-font-weight: bold;">
                     <font>
-                        <Font size="13.0" />
-                    </font>
-                </PasswordField>
-                <TextField fx:id="usernameField" layoutX="35.0" layoutY="150.0" prefHeight="30.0" prefWidth="225.0" promptText="Username" style="-fx-font-weight: bold;">
-                    <font>
-                        <Font size="13.0" />
+                        <Font size="13.0"/>
                     </font>
                 </TextField>
-                <Button fx:id="loginButton" layoutX="73.0" layoutY="260.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #111827; -fx-font-weight: bold;" text="Login" textFill="WHITE">
+                <Label fx:id="usernameError" layoutX="35.0" layoutY="180.0" textFill="red"
+                       style="-fx-font-size: 12px;"/>
+
+                <!--password-->
+                <PasswordField fx:id="passwordField" layoutX="35.0" layoutY="205.0" prefHeight="30.0" prefWidth="225.0"
+                               promptText="Password" style="-fx-font-weight: bold;">
                     <font>
-                        <Font size="15.0" />
+                        <Font size="13.0"/>
+                    </font>
+                </PasswordField>
+                <Label fx:id="passwordError" layoutX="35.0" layoutY="235.0" textFill="red"
+                       style="-fx-font-size: 12px;"/>
+
+                <Button fx:id="loginButton" layoutX="73.0" layoutY="260.0" mnemonicParsing="false"
+                        onAction="#handleLogin" prefHeight="30.0" prefWidth="150.0"
+                        style="-fx-background-color: #111827; -fx-font-weight: bold;" text="Login" textFill="WHITE">
+                    <font>
+                        <Font size="15.0"/>
                     </font>
                 </Button>
-                <Hyperlink layoutX="41.0" layoutY="325.0" onAction="#switchToRegister" text="Don't have an account yet? Register" textFill="#d01818">
-                    <font>
-                        <Font size="13.0" />
-                    </font>
-                </Hyperlink>
+                <!--                <Hyperlink layoutX="41.0" layoutY="325.0" onAction="#switchToRegister" text="Don't have an account yet? Register" textFill="#d01818">-->
+                <!--                    <font>-->
+                <!--                        <Font size="13.0" />-->
+                <!--                    </font>-->
+                <!--                </Hyperlink>-->
             </children>
         </AnchorPane>
     </right>

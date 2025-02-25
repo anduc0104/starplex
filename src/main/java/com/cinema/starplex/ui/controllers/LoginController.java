@@ -1,61 +1,104 @@
 package com.cinema.starplex.ui.controllers;
 
-import com.cinema.starplex.util.DatabaseConnection;
-import com.cinema.starplex.util.Utils;
+import com.cinema.starplex.dao.UserDao;
+
+import com.cinema.starplex.models.User;
+import com.cinema.starplex.util.SceneSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.ResultSet;
 
 
 public class LoginController {
-    @FXML TextField usernameField;
-    @FXML TextField emailField;
-    @FXML PasswordField passwordField;
-    @FXML TextField phoneField;
-    @FXML Button loginButton;
+    @FXML
+    TextField usernameField;
+    @FXML
+    TextField emailField;
+    @FXML
+    PasswordField passwordField;
+    @FXML
+    TextField phoneField;
+    @FXML
+    Button loginButton;
+    @FXML
+    private Label usernameError;
+    @FXML
+    private Label passwordError;
 
-    Connection conn = (Connection) new DatabaseConnection().getConn();
-
-    public void handleLogin(ActionEvent actionEvent) {
+    public void handleLogin(ActionEvent actionEvent) throws SQLException {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        String sql = "SELECT * from user WHERE username = ? AND password = sha1(?)";
-        try{
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, username);
-            pstmt.setString(2, password);
-            ResultSet rs = pstmt.executeQuery();
-            if(rs.next()){
-                System.out.println("Login Successfully!");
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Login Successfully!");
-                Utils.switchTo((Stage) loginButton.getScene().getWindow(), "DashboardView.fxml", 1024, 768);
-            }else {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Invalid username or password");
-                alert.showAndWait();
-            }
+        // Xóa thông báo lỗi cũ
+        clearErrors();
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (!validateFields(username, password)) {
+            return;
         }
+        System.out.println(username);
+        System.out.println(password);
 
-    }
 
-    public void switchToRegister(ActionEvent actionEvent) {
-        try {
-            Utils.switchTo((Stage) loginButton.getScene().getWindow(), "RegisterView.fxml", 400, 400);
-        } catch (IOException e) {
-            e.printStackTrace();
+        UserDao userDao = new UserDao();
+        User user = userDao.login(username, password);
+        if (user != null) {
+            System.out.println("login successful");
+            System.out.println(user);
+            Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            SceneSwitcher.switchTo(currentStage, "Dashboard-View.fxml");
+        } else {
+            System.out.println("login failed");
+            showError(usernameField, usernameError, "Invalid username or password");
+            showError(passwordField, passwordError, "Invalid username or password");
         }
     }
+
+    public boolean validateFields(String username, String password) {
+        boolean isValid = true;
+
+
+        if (username.isEmpty()) {
+            showError(usernameField, usernameError, "username must not leave empty");
+            isValid = false;
+        }
+        if (password.isEmpty()) {
+            showError(passwordField, passwordError, "password must not leave empty");
+            isValid = false;
+            return isValid;
+        }
+        if (password.length() < 8) {
+            showError(passwordField, passwordError, "at least 8 characters");
+            isValid = false;
+            return isValid;
+        }
+
+
+        return isValid;
+    }
+
+    public void showError(TextField field, Label errorLabel, String message) {
+        field.setStyle("-fx-border-color: -fx-secondary-color");
+        errorLabel.setText(message);
+        errorLabel.setStyle("-fx-color: -fx-secondary-color");
+    }
+
+    private void clearErrors() {
+        usernameError.setText("");
+        passwordError.setText("");
+        usernameField.setStyle("");
+        passwordField.setStyle("");
+    }
+
+//    public void switchToRegister(ActionEvent actionEvent) {
+//        try {
+//            Utils.switchTo((Stage) loginButton.getScene().getWindow(), "RegisterView.fxml", 400, 400);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

@@ -2,20 +2,13 @@ package com.cinema.starplex.models;
 
 import jakarta.persistence.*;
 
+
 import java.sql.Timestamp;
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "showtimes")
 public class Showtime {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToOne
-    @JoinColumn(name = "movie_id")
     private Movie movie;
-    @ManyToOne
-    @JoinColumn(name = "room_id")
     private Room room;
     private Timestamp startTime;
     private BigDecimal price;

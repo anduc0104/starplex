@@ -5,11 +5,7 @@ import jakarta.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
 
-@Entity
-@Table(name = "movies")
 public class Movie {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String title;
     private Float duration;

@@ -4,17 +4,9 @@ import jakarta.persistence.*;
 import java.sql.Timestamp;
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "bookings")
 public class Booking {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
-    @ManyToOne
-    @JoinColumn(name = "showtime_id")
     private Showtime showtime;
     private BigDecimal totalPrice;
     private String status;

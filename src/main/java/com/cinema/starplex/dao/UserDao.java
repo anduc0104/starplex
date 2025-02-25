@@ -1,76 +1,65 @@
 package com.cinema.starplex.dao;
 
-import com.cinema.starplex.config.HibernateUtil;
 import com.cinema.starplex.models.User;
+import com.cinema.starplex.util.DatabaseConnection;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
-public class UserDao implements BaseDao<User>{
+public class UserDao implements BaseDao<User> {
     @Override
     public void save(User user) {
-        Transaction transaction = null;
-        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            session.save(user);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            e.printStackTrace();
-        }
+
     }
 
     @Override
     public void update(User user) {
-        Transaction transaction = null;
-        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            session.update(user);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            e.printStackTrace();
-        }
+
     }
 
     @Override
     public void delete(User user) {
-        Transaction transaction = null;
-        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            session.delete(user);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            e.printStackTrace();
-        }
+
     }
 
     @Override
     public User findById(long id) {
-        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.get(User.class, id);
-        } catch(Exception e) {
-            return null;
-        }
+
+        return null;
     }
 
     @Override
     public List<User> findAll() {
-        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("FROM User", User.class).list();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+
+        return List.of();
+    }
+
+    public User login(String username, String password) throws SQLException {
+        User user = null;
+        String sql = "Select * from users where username = ? and password = ?";
+        Connection conn = DatabaseConnection.getConn();
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    user = new User();
+                    user.setId((int) rs.getLong("id"));
+                    user.setUsername(rs.getString("username"));
+                    user.setPassword(rs.getString("password"));
+                    user.setEmail(rs.getString("email"));
+                    return user;
+                }
+                DatabaseConnection.close(conn);
+                return user;
+            }
         }
     }
 
-    public static void main(String[] args) {
-        UserDao userDao = new UserDao();
-//         Save a new user
-//        User user = new User(1, "John Doe", "john.doe@example.com", "password123", "0999999999", "admin", '2025-02-15 10:30:00');
-//        userDao.save(user);
-
-    }
 }

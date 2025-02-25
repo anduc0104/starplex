@@ -19,12 +19,12 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>17.0.6</version>
+            <version>23.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>17.0.6</version>
+            <version>23.0.1</version>
         </dependency>
 
         <!-- BootstrapFX -->
@@ -48,21 +48,11 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Hibernate ORM -->
-        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>6.6.8.Final</version>
-            <type>pom</type>
-        </dependency>
 
-
-        <!-- Hibernate Connection Pooling -->
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-hikaricp</artifactId>
-            <version>6.4.2.Final</version>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
         </dependency>
 
         <dependency>
@@ -70,25 +60,11 @@
             <artifactId>flyway-core</artifactId>
             <version>11.3.2</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-database-postgresql -->
+
         <dependency>
             <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-database-postgresql</artifactId>
+            <artifactId>flyway-mysql</artifactId>
             <version>11.1.0</version>
-            <scope>runtime</scope>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.7.5</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>6.6.8.Final</version>
-            <scope>compile</scope>
         </dependency>
 
     </dependencies>
@@ -114,9 +90,9 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>11.3.2</version>
                 <configuration>
-                    <url>jdbc:postgresql://localhost:5432/starplex</url>
-                    <user>postgres</user>
-                    <password>password</password>
+                    <url>jdbc:mysql://localhost:3306/starplex</url>
+                    <user>root</user>
+                    <password></password>
                 </configuration>
             </plugin>
 

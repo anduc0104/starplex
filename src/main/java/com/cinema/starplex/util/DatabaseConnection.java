@@ -1,26 +1,29 @@
 package com.cinema.starplex.util;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
-    private static final String URL = "jdbc:mysql://localhost:3306/@@@@";
-    private static final String USER = "root";
-    private static final String PASSWORD = "";
+    public static Connection getConn() {
+        String url = "jdbc:mysql://localhost:3306/starplex";
+        String user = "root";
+        String password = "";
 
-    private DatabaseConnection conn;
-
-    public DatabaseConnection() {
         try {
-            this.conn = (DatabaseConnection) DriverManager.getConnection(URL, USER, PASSWORD);
+            return DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
-            System.out.println("Database connection failed!");
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public static void close(Connection conn) {
+        try {
+            if (conn!=null &&!conn.isClosed()) {
+                conn.close();
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    public DatabaseConnection getConn() {
-        return conn;
-    }
-
-
 }

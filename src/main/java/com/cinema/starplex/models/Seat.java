@@ -4,17 +4,9 @@ import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 
-@Entity
-@Table(name = "seats")
 public class Seat {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToOne
-    @JoinColumn(name = "room_id")
     private Room room;
-    @ManyToOne
-    @JoinColumn(name = "seat_type_id")
     private SeatType seatType;
     private String seatNumber;
     private Timestamp createdAt;

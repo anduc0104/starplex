@@ -4,7 +4,7 @@ import com.cinema.starplex.models.Actor;
 
 import java.util.List;
 
-public class ActorDao implements BaseDao<Actor> {
+public class ActorDao implements BaseDao<Actor>{
     @Override
     public void save(Actor entity) {
 

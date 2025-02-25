@@ -2,17 +2,9 @@ package com.cinema.starplex.models;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
-@Entity
-@Table(name = "movie_directors")
 public class MovieDirector {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToOne
-    @JoinColumn(name = "movie_id")
     private Movie movie;
-    @ManyToOne
-    @JoinColumn(name = "director_id")
     private Director director;
 
     public MovieDirector() {}

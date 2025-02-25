@@ -4,17 +4,9 @@ import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 
-@Entity
-@Table(name = "movie_genres")
 public class MovieGenre {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToOne
-    @JoinColumn(name = "movie_id")
     private Movie movie;
-    @ManyToOne
-    @JoinColumn(name = "movie_type_id")
     private MovieType movieType;
 
     public MovieGenre() {}
