@@ -22,12 +22,12 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Button layoutY="140.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="160.0" styleClass="nav-btn" stylesheets="@../../../css/dashboard-admin.css" text="Dashboard" textFill="WHITE" />
-                  <Button layoutY="200.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="160.0" styleClass="nav-btn" stylesheets="@../../../css/dashboard-admin.css" text="Staff" textFill="WHITE" />
-                  <Button layoutY="320.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="160.0" styleClass="nav-btn" stylesheets="@../../../css/dashboard-admin.css" text="Movie" textFill="WHITE" />
-                  <Button layoutY="260.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="160.0" styleClass="nav-btn" stylesheets="@../../../css/dashboard-admin.css" text="User" textFill="WHITE" />
-                  <Button layoutY="380.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="160.0" styleClass="nav-btn" stylesheets="@../../../css/dashboard-admin.css" text="Chart" textFill="WHITE" />
-                  <Button layoutX="49.0" layoutY="491.0" mnemonicParsing="false" style="-fx-background-color: #EF4444; -fx-background-radius: 8px; -fx-cursor: hand;" styleClass="signout-btn" stylesheets="@../../../css/dashboard-admin.css" text="Sign out" />
+                  <Button onAction="#" layoutY="140.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="160.0" styleClass="nav-btn" stylesheets="@../../../css/dashboard-admin.css" text="Dashboard" textFill="WHITE" />
+                  <Button onAction="" layoutY="200.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="160.0" styleClass="nav-btn" stylesheets="@../../../css/dashboard-admin.css" text="Staff" textFill="WHITE" />
+                  <Button onAction="" layoutY="320.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="160.0" styleClass="nav-btn" stylesheets="@../../../css/dashboard-admin.css" text="Movie" textFill="WHITE" />
+                  <Button onAction=""layoutY="260.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="160.0" styleClass="nav-btn" stylesheets="@../../../css/dashboard-admin.css" text="User" textFill="WHITE" />
+                  <Button onAction="" layoutY="380.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="160.0" styleClass="nav-btn" stylesheets="@../../../css/dashboard-admin.css" text="Chart" textFill="WHITE" />
+                  <Button onAction="" layoutX="49.0" layoutY="491.0" mnemonicParsing="false" style="-fx-background-color: #EF4444; -fx-background-radius: 8px; -fx-cursor: hand;" styleClass="signout-btn" stylesheets="@../../../css/dashboard-admin.css" text="Sign out" />
                </children>
             </AnchorPane>
          </left>

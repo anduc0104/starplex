@@ -11,6 +11,11 @@ public class MovieDao implements BaseDao<Movie>{
     }
 
     @Override
+    public boolean insert(Movie entity) {
+        return false;
+    }
+
+    @Override
     public void update(Movie entity) {
 
     }

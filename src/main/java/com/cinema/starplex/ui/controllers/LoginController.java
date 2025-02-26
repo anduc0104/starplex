@@ -94,11 +94,12 @@ public class LoginController {
         passwordField.setStyle("");
     }
 
-//    public void switchToRegister(ActionEvent actionEvent) {
-//        try {
-//            Utils.switchTo((Stage) loginButton.getScene().getWindow(), "RegisterView.fxml", 400, 400);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public void switchToRegister(ActionEvent actionEvent) {
+        try {
+            SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),"RegisterView.fxml");
+            System.out.println("Register scene loaded");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

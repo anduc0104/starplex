@@ -1,7 +1,7 @@
 package com.cinema.starplex.ui.controllers;
 
 import com.cinema.starplex.dao.RoomDao;
-import com.cinema.starplex.dao.ShowTimeDao;
+import com.cinema.starplex.dao.ShowtimeDao;
 import com.cinema.starplex.models.Room;
 import com.cinema.starplex.models.Showtime;
 import javafx.fxml.FXML;
@@ -21,7 +21,7 @@ public class RoomControllerView {
     private TextField showtimeStartTimeField;
 
     private RoomDao roomDao = new RoomDao();
-    private ShowTimeDao showTimeDao = new ShowTimeDao();
+    private ShowtimeDao showTimeDao = new ShowtimeDao();
 
     @FXML
     public void handleSaveRoom() {

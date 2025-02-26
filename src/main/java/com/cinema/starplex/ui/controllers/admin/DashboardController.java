@@ -1,8 +1,9 @@
 package com.cinema.starplex.ui.controllers.admin;
 
-import com.cinema.starplex.util.Utils;
+import com.cinema.starplex.util.SceneSwitcher;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
+import javafx.stage.Stage;
 
 public class DashboardController {
 
@@ -14,31 +15,38 @@ public class DashboardController {
 
     }
 
+    public void viewDashboard(ActionEvent actionEvent) {
+        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(), "/com/cinema/starplex/Dashboard-View.fxml");
+    }
+
+    public void viewTicketSales(ActionEvent actionEvent) {
+    }
+
     public void viewMovieDetails(ActionEvent actionEvent) {
-        Utils.switchScene((Node) actionEvent.getSource(), "/com/cinema/starplex/ui/views/movie_details.fxml", "Movie Details");
+
     }
 
     public void viewUserDetails(ActionEvent actionEvent) {
-        Utils.switchScene((Node) actionEvent.getSource(), "/com/cinema/starplex/ui/views/movie_details.fxml", "Movie Details");
+        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(), "/com/cinema/starplex/UserView.fxml");
     }
 
     public void viewRevenueReport(ActionEvent actionEvent) {
-        Utils.switchScene((Node) actionEvent.getSource(), "/com/cinema/starplex/ui/views/movie_details.fxml", "Movie Details");
+        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "/com/cinema/starplex/MovieView.fxml");
     }
 
     public void viewStaffList(ActionEvent actionEvent) {
-        Utils.switchScene((Node) actionEvent.getSource(), "/com/cinema/starplex/ui/views/movie_details.fxml", "Movie Details");
+        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "/com/cinema/starplex/StaffView.fxml");
     }
 
     public void viewChart(ActionEvent actionEvent) {
-        Utils.switchScene((Node) actionEvent.getSource(), "/com/cinema/starplex/ui/views/movie_details.fxml", "Movie Details");
+        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "/com/cinema/starplex/ChartView.fxml");
     }
 
     public void logout(ActionEvent actionEvent) {
-        Utils.switchScene((Node) actionEvent.getSource(), "/com/cinema/starplex/LoginView", "Logout");
+        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "/com/cinema/starplex/LoginView");
     }
 
     public void viewRooms(ActionEvent actionEvent) {
-        Utils.switchScene((Node) actionEvent.getSource(), "/com/cinema/starplex/RoomView.fxml", "Movie Details");
+        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "/com/cinema/starplex/RoomView.fxml");
     }
 }

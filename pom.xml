@@ -67,6 +67,13 @@
             <version>11.1.0</version>
         </dependency>
 
+        <!-- Add this dependency to your pom.xml -->
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
+        </dependency>
+
     </dependencies>
 
     <build>

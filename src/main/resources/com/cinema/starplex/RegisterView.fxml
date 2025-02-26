@@ -28,30 +28,45 @@
                 <Font size="13.0" />
             </font>
         </TextField>
+        <Label fx:id="usernameError" layoutX="35.0" layoutY="180.0" textFill="red"
+               style="-fx-font-size: 12px;"/>
+
 
         <PasswordField fx:id="passwordField" layoutX="92.0" layoutY="155.0" prefHeight="30.0" prefWidth="336.0" promptText="Password" style="-fx-font-weight: bold;">
             <font>
                 <Font size="13.0" />
             </font>
         </PasswordField>
+        <Label fx:id="passwordError" layoutX="35.0" layoutY="235.0" textFill="red"
+               style="-fx-font-size: 12px;"/>
+
 
         <PasswordField fx:id="confirmPasswordField" layoutX="92.0" layoutY="200.0" prefHeight="30.0" prefWidth="336.0" promptText="Confirm Password" style="-fx-font-weight: bold;">
             <font>
                 <Font size="13.0" />
             </font>
         </PasswordField>
+        <Label fx:id="confirmPasswordError" layoutX="35.0" layoutY="235.0" textFill="red"
+               style="-fx-font-size: 12px;"/>
+
 
         <TextField fx:id="emailField" layoutX="92.0" layoutY="245.0" prefHeight="30.0" prefWidth="336.0" promptText="Email" style="-fx-font-weight: bold;">
             <font>
                 <Font size="13.0" />
             </font>
         </TextField>
+        <Label fx:id="emailError" layoutX="35.0" layoutY="235.0" textFill="red"
+               style="-fx-font-size: 12px;"/>
+
 
         <TextField fx:id="phoneField" layoutX="92.0" layoutY="290.0" prefHeight="30.0" prefWidth="336.0" promptText="Phone" style="-fx-font-weight: bold;">
             <font>
                 <Font size="13.0" />
             </font>
         </TextField>
+        <Label fx:id="phoneError" layoutX="35.0" layoutY="235.0" textFill="red"
+               style="-fx-font-size: 12px;"/>
+
 
         <!-- Nút đăng ký -->
         <Button fx:id="registerButton" layoutX="160.0" layoutY="351.0" mnemonicParsing="false" onAction="#handleRegister" prefHeight="30.0" prefWidth="200.0" style="-fx-background-color: #111827; -fx-font-weight: bold;" text="Register" textFill="WHITE">

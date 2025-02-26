@@ -1,6 +1,5 @@
 package com.cinema.starplex.models;
 
-import jakarta.persistence.*;
 
 import java.sql.Date;
 import java.sql.Timestamp;

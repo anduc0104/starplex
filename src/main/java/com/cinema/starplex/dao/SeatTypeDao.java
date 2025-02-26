@@ -11,6 +11,11 @@ public class SeatTypeDao implements BaseDao<SeatType>{
     }
 
     @Override
+    public boolean insert(SeatType entity) {
+        return false;
+    }
+
+    @Override
     public void update(SeatType entity) {
 
     }

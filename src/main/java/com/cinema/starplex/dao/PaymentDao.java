@@ -11,6 +11,11 @@ public class PaymentDao implements BaseDao<Payment>{
     }
 
     @Override
+    public boolean insert(Payment entity) {
+        return false;
+    }
+
+    @Override
     public void update(Payment entity) {
 
     }
