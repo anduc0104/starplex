@@ -1,6 +1,7 @@
 package com.cinema.starplex.ui;
 
-import com.cinema.starplex.util.DatabaseInitializer;
+import com.cinema.starplex.util.DatabaseConnection;
+import com.cinema.starplex.util.SceneSwitcher;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

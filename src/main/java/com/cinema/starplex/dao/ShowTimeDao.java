@@ -1,8 +1,10 @@
 package com.cinema.starplex.dao;
 
+import com.cinema.starplex.models.Showtime;
+
 import java.util.List;
 
-public class ShowtimeDao implements BaseDao<Showtime>{
+public class ShowTimeDao implements BaseDao<Showtime>{
 
     @Override
     public void save(Showtime entity) {

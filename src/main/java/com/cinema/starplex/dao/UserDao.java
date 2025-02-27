@@ -2,8 +2,7 @@ package com.cinema.starplex.dao;
 
 import com.cinema.starplex.models.User;
 import com.cinema.starplex.util.DatabaseConnection;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -41,23 +40,25 @@ public class UserDao implements BaseDao<User> {
 
     public User login(String username, String password) throws SQLException {
         User user = null;
-        String sql = "Select * from users where username = ? and password = ?";
+        String sql = "Select * from users where username = ?";
         Connection conn = DatabaseConnection.getConn();
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
             pstmt.setString(1, username);
-            pstmt.setString(2, password);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    user = new User();
-                    user.setId((int) rs.getLong("id"));
-                    user.setUsername(rs.getString("username"));
-                    user.setPassword(rs.getString("password"));
-                    user.setEmail(rs.getString("email"));
-                    return user;
+                    String hashedPassword = rs.getString("password");
+
+                    if (BCrypt.checkpw(password, hashedPassword)) {
+                        user = new User();
+                        user.setId(rs.getInt("id"));
+                        user.setUsername(rs.getString("username"));
+                        user.setPassword(hashedPassword);
+                        user.setEmail(rs.getString("email"));
+                        return user;
+                    }
                 }
                 DatabaseConnection.close(conn);
-                return user;
+                return null;
             }
         }
     }

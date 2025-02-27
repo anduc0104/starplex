@@ -19,7 +19,7 @@
             <children>
                 <ImageView fitHeight="400.0" fitWidth="200.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../../../1.jpeg"/>
+                        <Image url="@../../../images/1.jpeg"/>
                     </image>
                 </ImageView>
             </children>
@@ -33,7 +33,7 @@
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="123.0" layoutY="58.0" pickOnBounds="true"
                            preserveRatio="true">
                     <image>
-                        <Image url="@../../../../../../padlock.png"/>
+                        <Image url="@../../../images/padlock.png"/>
                     </image>
                 </ImageView>
                 <!--username-->

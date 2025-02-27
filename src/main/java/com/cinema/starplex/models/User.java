@@ -1,13 +1,12 @@
 package com.cinema.starplex.models;
 
-
-import jakarta.persistence.*;
 import java.sql.Timestamp;
 
 
 public class User {
     private Integer id;
     private String username;
+    private String full_name;
     private String email;
     private String password;
     private String phone;
@@ -17,9 +16,10 @@ public class User {
     public User() {
     }
 
-    public User(Integer id, String username, String email, String password, String phone, String role, Timestamp createdAt) {
+    public User(Integer id, String username, String full_name, String email, String password, String phone, String role, Timestamp createdAt) {
         this.id = id;
         this.username = username;
+        this.full_name = full_name;
         this.email = email;
         this.password = password;
         this.phone = phone;
@@ -90,13 +90,11 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    public User(Integer id, String username, String email, String password, String phone, String role) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.phone = phone;
-        this.role = role;
-        this.createdAt = createdAt;
+    public String getFull_name() {
+        return full_name;
+    }
+
+    public void setFull_name(String full_name) {
+        this.full_name = full_name;
     }
 }

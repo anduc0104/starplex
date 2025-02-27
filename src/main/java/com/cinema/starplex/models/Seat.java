@@ -1,7 +1,5 @@
 package com.cinema.starplex.models;
 
-import jakarta.persistence.*;
-
 import java.sql.Timestamp;
 
 public class Seat {

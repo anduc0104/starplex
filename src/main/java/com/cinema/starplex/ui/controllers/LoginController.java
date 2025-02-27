@@ -50,7 +50,7 @@ public class LoginController {
             System.out.println("login successful");
             System.out.println(user);
             Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            SceneSwitcher.switchTo(currentStage, "Dashboard-View.fxml");
+            SceneSwitcher.switchTo(currentStage, "admin/main-layout.fxml");
         } else {
             System.out.println("login failed");
             showError(usernameField, usernameError, "Invalid username or password");
@@ -94,11 +94,4 @@ public class LoginController {
         passwordField.setStyle("");
     }
 
-//    public void switchToRegister(ActionEvent actionEvent) {
-//        try {
-//            Utils.switchTo((Stage) loginButton.getScene().getWindow(), "RegisterView.fxml", 400, 400);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 }

@@ -6,14 +6,16 @@ module com.cinema.starplex {
 
     opens com.cinema.starplex to javafx.fxml;
 
-    requires java.naming;
+    requires spring.security.crypto;
+    requires java.sql;
 
     opens com.cinema.starplex.ui.controllers to javafx.fxml;
     opens com.cinema.starplex.ui.controllers.admin to javafx.fxml;
 
-    requires org.hibernate.orm.core;
-    requires jakarta.persistence;
-
     opens com.cinema.starplex.ui to javafx.fxml;
     exports com.cinema.starplex.ui to javafx.graphics;
+
+    opens com.cinema.starplex.ui.controllers.admin.usermanagement to javafx.fxml;
+    exports com.cinema.starplex.dao;
+    exports com.cinema.starplex.models;
 }

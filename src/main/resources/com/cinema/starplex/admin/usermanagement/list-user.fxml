@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.cinema.starplex.ui.controllers.admin.usermanagement.ListUser"
+>
+    <Label layoutX="43.0" layoutY="14.0" text="User Management" textFill="#ef4444" />
+    <TableView styleClass="table table-bordered">
+        <columns>
+            <TableColumn fx:id="userID"/>
+            <TableColumn fx:id="user_fullname"/>
+            <TableColumn fx:id="username"/>
+            <TableColumn fx:id="mail"/>
+            <TableColumn fx:id="phone"/>
+            <TableColumn fx:id="role"/>
+            <TableColumn fx:id="action"/>
+        </columns>
+    </TableView>
+</VBox>

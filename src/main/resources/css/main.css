@@ -14,3 +14,43 @@
     -fx-padding: 10px;
     -fx-border-radius: 5px;
 }
+
+/* bootstrap-table.css */
+
+/* Định dạng cơ bản của table */
+.table {
+    -fx-background-color: transparent;
+    -fx-border-color: #dee2e6;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+    /* Định dạng đường viền giữa các ô */
+    -fx-table-cell-border-color: #dee2e6;
+    -fx-table-header-border-color: #dee2e6;
+    -fx-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -fx-font-size: 14px;
+}
+
+/* Hiệu ứng border cho table (tương tự table-bordered của Bootstrap) */
+.table-bordered {
+    -fx-border-color: #dee2e6;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+}
+
+/* Một số tùy chỉnh cho header của bảng */
+.table .column-header-background {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #dee2e6;
+    -fx-border-width: 0 0 1px 0;
+}
+
+/* Tùy chỉnh cho các hàng trong bảng */
+.table .table-row-cell {
+    -fx-border-color: #dee2e6;
+    -fx-border-width: 0 0 1px 0;
+}
+
+/* Nếu bạn cần định dạng cho cell cụ thể */
+.table .table-cell {
+    -fx-padding: 8px;
+}
