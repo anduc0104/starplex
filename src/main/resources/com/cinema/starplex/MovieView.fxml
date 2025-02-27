@@ -6,9 +6,212 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.cinema.starplex.MovieView"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+    <children>
 
+        <AnchorPane layoutX="136.0" layoutY="136.0" prefHeight="550.0" prefWidth="500.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <AnchorPane layoutX="15.0" layoutY="15.0" prefHeight="160.0" prefWidth="1000.0" styleClass="bg-white" stylesheets="@../../../css/admin.css" AnchorPane.bottomAnchor="360.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                    <children>
+                        <AnchorPane layoutX="30.0" layoutY="13.0" prefHeight="135.0" prefWidth="190.0" styleClass="card" stylesheets="@../../../css/admin.css">
+                            <children>
+                                <Label layoutX="8.0" layoutY="22.0" text="Total tickets sold" textFill="WHITE">
+                                    <font>
+                                        <Font size="22.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="58.0" layoutY="68.0" text="1000" textFill="WHITE">
+                                    <font>
+                                        <Font name="Comic Sans MS" size="30.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="530.0" layoutY="13.0" prefHeight="135.0" prefWidth="190.0" styleClass="card">
+                            <children>
+                                <Label layoutX="8.0" layoutY="22.0" text="Available movies" textFill="WHITE">
+                                    <font>
+                                        <Font size="22.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="58.0" layoutY="68.0" text="1000" textFill="WHITE">
+                                    <font>
+                                        <Font name="Comic Sans MS" size="30.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="775.0" layoutY="13.0" prefHeight="135.0" prefWidth="190.0" styleClass="card">
+                            <children>
+                                <Label layoutX="8.0" layoutY="22.0" text="Available movies" textFill="WHITE">
+                                    <font>
+                                        <Font size="22.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="58.0" layoutY="68.0" text="1000" textFill="WHITE">
+                                    <font>
+                                        <Font name="Comic Sans MS" size="30.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="277.0" layoutY="13.0" prefHeight="135.0" prefWidth="190.0" styleClass="card">
+                            <children>
+                                <Label layoutX="30.0" layoutY="22.0" text="Total earned" textFill="WHITE">
+                                    <font>
+                                        <Font size="22.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="58.0" layoutY="68.0" text="1000" textFill="WHITE">
+                                    <font>
+                                        <Font name="Comic Sans MS" size="30.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                    </children>
+                </AnchorPane>
+                <Label layoutX="43.0" layoutY="14.0" text="Dashboard" textFill="#ef4444">
+                    <font>
+                        <Font name="System Bold Italic" size="36.0" />
+                    </font>
+                </Label>
+                <AnchorPane layoutX="20.0" layoutY="289.0" prefHeight="160.0" prefWidth="1000.0" styleClass="bg-white" stylesheets="@../../../css/admin.css">
+                    <children>
+                        <AnchorPane layoutX="30.0" layoutY="13.0" prefHeight="135.0" prefWidth="190.0" styleClass="card" stylesheets="@../../../css/admin.css">
+                            <children>
+                                <Label layoutX="8.0" layoutY="22.0" text="Total tickets sold" textFill="WHITE">
+                                    <font>
+                                        <Font size="22.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="58.0" layoutY="68.0" text="1000" textFill="WHITE">
+                                    <font>
+                                        <Font name="Comic Sans MS" size="30.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="530.0" layoutY="13.0" prefHeight="135.0" prefWidth="190.0" styleClass="card">
+                            <children>
+                                <Label layoutX="8.0" layoutY="22.0" text="Available movies" textFill="WHITE">
+                                    <font>
+                                        <Font size="22.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="58.0" layoutY="68.0" text="1000" textFill="WHITE">
+                                    <font>
+                                        <Font name="Comic Sans MS" size="30.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="775.0" layoutY="13.0" prefHeight="135.0" prefWidth="190.0" styleClass="card">
+                            <children>
+                                <Label layoutX="8.0" layoutY="22.0" text="Available movies" textFill="WHITE">
+                                    <font>
+                                        <Font size="22.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="58.0" layoutY="68.0" text="1000" textFill="WHITE">
+                                    <font>
+                                        <Font name="Comic Sans MS" size="30.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="277.0" layoutY="13.0" prefHeight="135.0" prefWidth="190.0" styleClass="card">
+                            <children>
+                                <Label layoutX="30.0" layoutY="22.0" text="Total earned" textFill="WHITE">
+                                    <font>
+                                        <Font size="22.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="58.0" layoutY="68.0" text="1000" textFill="WHITE">
+                                    <font>
+                                        <Font name="Comic Sans MS" size="30.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                    </children>
+                </AnchorPane>
+            </children>
+        </AnchorPane>
+
+        <AnchorPane layoutX="120.0" layoutY="116.0" prefHeight="600.0" prefWidth="1040.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <AnchorPane layoutX="20.0" layoutY="20.0" prefHeight="560.0" prefWidth="1000.0" styleClass="bg-white" stylesheets="@../../../css/admin.css">
+                    <children>
+                        <TableView layoutX="20.0" layoutY="80.0" prefHeight="460.0" prefWidth="960.0" styleClass="table" stylesheets="@../../../css/admin.css">
+                            <columns>
+                                <TableColumn minWidth="9.0" prefWidth="39.0" text="ID" />
+                                <TableColumn prefWidth="113.99996948242188" text="Image" />
+                                <TableColumn minWidth="4.0" prefWidth="145.99996948242188" text="Movie Title" />
+                                <TableColumn minWidth="0.0" prefWidth="111.00003051757812" text="Genre" />
+                                <TableColumn minWidth="7.0" prefWidth="129.0" text="Duration" />
+                                <TableColumn minWidth="7.0" prefWidth="122.0" text="Release  Date" />
+                                <TableColumn minWidth="7.0" prefWidth="176.0" text="Description" />
+                                <TableColumn minWidth="7.0" prefWidth="122.0" text="Action" />
+                            </columns>
+                        </TableView>
+                        <Button layoutX="47.0" layoutY="25.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="75.0" styleClass="add-new-btn" stylesheets="@../../../css/admin.css" text="Add new" textFill="WHITE" />
+                        <TextField layoutX="275.0" layoutY="27.0" prefHeight="30.0" promptText="Search by moive title" styleClass="search" stylesheets="@../../../css/admin.css" />
+                        <Icon content="SEARCH" layoutX="275.0" layoutY="31.0" />
+                    </children>
+                </AnchorPane>
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="172.0" layoutY="116.0" prefHeight="600.0" prefWidth="1040.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <AnchorPane layoutX="20.0" layoutY="20.0" prefHeight="560.0" prefWidth="1000.0" styleClass="bg-white" stylesheets="@../../../css/admin.css">
+                    <children>
+                        <Label layoutX="406.0" layoutY="14.0" text="New Movie" textFill="#2ac932">
+                            <font>
+                                <Font name="System Bold Italic" size="36.0" />
+                            </font>
+                        </Label>
+                        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="65.0" styleClass="back-btn" stylesheets="@../../../css/admin.css" text="Back" />
+                        <AnchorPane layoutX="195.0" layoutY="130.0" prefHeight="138.0" prefWidth="241.0" styleClass="bg-white" stylesheets="@../../../css/admin.css">
+                            <children>
+                                <ImageView fitHeight="139.0" fitWidth="246.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" />
+                            </children></AnchorPane>
+                        <Label layoutX="79.0" layoutY="356.0" text="Description :">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <TextArea layoutX="185.0" layoutY="312.0" prefHeight="109.0" prefWidth="263.0" styleClass="description-field" stylesheets="@../../../css/admin.css" />
+                        <TextField layoutX="709.0" layoutY="154.0" styleClass="input-field" stylesheets="@../../../css/admin.css" />
+                        <Label layoutX="615.0" layoutY="155.0" text="Movie title :">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <TextField layoutX="709.0" layoutY="232.0" styleClass="input-field" stylesheets="@../../../css/admin.css" />
+                        <Label layoutX="651.0" layoutY="234.0" text="Genre :" AnchorPane.rightAnchor="292.0">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="599.0" layoutY="394.0" text="Release date :">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <DatePicker layoutX="713.0" layoutY="395.0" prefHeight="26.0" prefWidth="156.0" />
+                        <Button layoutX="90.0" layoutY="177.0" mnemonicParsing="false" styleClass="add-image-btn" stylesheets="@../../../css/admin.css" text="Add image" />
+                        <Button layoutX="430.0" layoutY="495.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" styleClass="save-btn" stylesheets="@../../../css/admin.css" text="Save" />
+                        <Button layoutX="564.0" layoutY="495.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" styleClass="clear-btn" stylesheets="@../../../css/admin.css" text="Clear" />
+                        <TextField layoutX="710.0" layoutY="313.0" styleClass="input-field" stylesheets="@../../../css/admin.css" />
+                        <Label layoutX="631.0" layoutY="315.0" text="Duration :">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+            </children>
+        </AnchorPane>
+    </children>
 </AnchorPane>

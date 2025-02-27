@@ -1,8 +1,6 @@
 package com.cinema.starplex.ui;
 
-import com.cinema.starplex.util.DatabaseConnection;
 import com.cinema.starplex.util.DatabaseInitializer;
-import com.cinema.starplex.util.SceneSwitcher;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -17,7 +15,7 @@ public class Main extends Application {
 
         //css
         scene.getStylesheets().add(getClass().getResource("/css/main.css").toExternalForm());
-        scene.getStylesheets().add(getClass().getResource("/css/dashboard-admin.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/css/admin.css").toExternalForm());
 
         //font
         Font font = Font.loadFont(getClass().getResourceAsStream("/font/Montserrat-ExtraLight.ttf"), 16);
