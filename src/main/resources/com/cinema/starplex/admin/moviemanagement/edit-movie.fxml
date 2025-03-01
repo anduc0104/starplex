@@ -22,7 +22,7 @@
                         <Font name="System Bold" size="28.0" />
                     </font></Label>
                 <AnchorPane layoutX="791.0" layoutY="95.0" prefHeight="150.0" prefWidth="200.0" styleClass="bg-white" stylesheets="@../../../../../css/admin.css" />
-                <Button fx:id="addImageButton" layoutX="683.0" layoutY="155.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" styleClass="add-image-btn" stylesheets="@../../../../../css/admin.css" text="Add image" textFill="WHITE" />
+                <Button onAction="#handleEditImage" fx:id="addImageButton" layoutX="683.0" layoutY="155.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" styleClass="add-image-btn" stylesheets="@../../../../../css/admin.css" text="Add image" textFill="WHITE" />
                 <Label layoutX="115.0" layoutY="100.0" styleClass="label-input" stylesheets="@../../../../../css/admin.css" text="Movie title :" />
                 <TextField fx:id="titleField" layoutX="210.0" layoutY="100.0" prefHeight="27.0" prefWidth="220.0" styleClass="input-field" stylesheets="@../../../../../css/admin.css" />
                 <Label layoutX="134.0" layoutY="170.0" styleClass="label-input" stylesheets="@../../../../../css/admin.css" text="Director :" />
@@ -37,8 +37,8 @@
                 <DatePicker fx:id="releaseDatePicker" layoutX="210.0" layoutY="448.0" prefHeight="30.0" prefWidth="220.0" />
                 <Label layoutX="624.0" layoutY="380.0" styleClass="label-input" stylesheets="@../../../../../css/admin.css" text="Description :" />
                 <TextArea fx:id="descriptionField" layoutX="728.0" layoutY="302.0" prefHeight="182.0" prefWidth="327.0" styleClass="description-field" stylesheets="@../../../../../css/admin.css" />
-                <Button fx:id="saveButton" layoutX="468.0" layoutY="510.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="75.0" styleClass="save-btn" stylesheets="@../../../../../css/admin.css" text="Save" textFill="WHITE" />
-                <Button fx:id="clearButton" layoutX="618.0" layoutY="510.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="75.0" styleClass="clear-btn" stylesheets="@../../../../../css/admin.css" text="Clear" textFill="WHITE" />
+                <Button onAction="#handleEditMovie" fx:id="saveButton" layoutX="468.0" layoutY="510.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="75.0" styleClass="save-btn" stylesheets="@../../../../../css/admin.css" text="Edit" textFill="WHITE" />
+                <Button onAction="#handleEditClear" fx:id="clearButton" layoutX="618.0" layoutY="510.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="75.0" styleClass="clear-btn" stylesheets="@../../../../../css/admin.css" text="Clear" textFill="WHITE" />
                 <ImageView fx:id="movieImageView" fitHeight="150.0" fitWidth="200.0" layoutX="791.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true" />
             </children>
         </AnchorPane>

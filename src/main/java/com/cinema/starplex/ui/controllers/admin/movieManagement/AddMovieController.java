@@ -31,7 +31,7 @@ public class AddMovieController {
     private String imagePath = null;
 
     @FXML
-    private void saveMovie(ActionEvent event) {
+    private void handleSave(ActionEvent event) {
         String title = titleField.getText();
         String director = directorField.getText();
         String actors = actorsField.getText();
@@ -45,7 +45,7 @@ public class AddMovieController {
             return;
         }
 
-        String sql = "INSERT INTO movies (title, director, actors, genre, duration, release_date, description, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO movies (title, directors, actors, genres, duration, release_date, description, images) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseConnection.getConn();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -60,7 +60,7 @@ public class AddMovieController {
 
             stmt.executeUpdate();
             showAlert(Alert.AlertType.INFORMATION, "Success", "Movie added successfully!");
-            clearFields();
+            handleClear();
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to add movie.");
@@ -75,7 +75,8 @@ public class AddMovieController {
         alert.showAndWait();
     }
 
-    private void clearFields() {
+    @FXML
+    private void handleClear() {
         titleField.clear();
         directorField.clear();
         actorsField.clear();
@@ -87,7 +88,7 @@ public class AddMovieController {
     }
 
     @FXML
-    private void addImage(ActionEvent event) {
+    private void handleAddImage(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg"));
         File selectedFile = fileChooser.showOpenDialog(new Stage());

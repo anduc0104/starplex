@@ -31,13 +31,13 @@ public class MovieDao implements BaseDao<Movie> {
                 movies.add(new Movie(
                         new SimpleIntegerProperty(rs.getInt("id")),
                         new SimpleStringProperty(rs.getString("title")),
-                        new SimpleStringProperty(rs.getString("director")),
+                        new SimpleStringProperty(rs.getString("directors")),
                         new SimpleStringProperty(rs.getString("actors")),
-                        new SimpleStringProperty(rs.getString("genre")),
+                        new SimpleStringProperty(rs.getString("genres")),
                         new SimpleStringProperty(rs.getString("duration")),
                         new SimpleStringProperty(rs.getString("release_date")),
                         new SimpleStringProperty(rs.getString("description")),
-                        new SimpleStringProperty(rs.getString("image"))
+                        new SimpleStringProperty(rs.getString("images"))
                 ));
             }
         }

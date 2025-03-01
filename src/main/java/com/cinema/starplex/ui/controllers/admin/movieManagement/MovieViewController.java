@@ -14,7 +14,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -63,8 +65,27 @@ public class MovieViewController {
         imageColumn.setCellValueFactory(cellData -> {
             ImageView imageView = new ImageView();
             String imagePath = cellData.getValue().getImage();
-            if(imagePath != null && !imagePath.isEmpty()){
-                imageView.setImage(new Image(imagePath));
+
+            if (imagePath != null && !imagePath.isEmpty()) {
+                try {
+                    Image image;
+                    if (imagePath.startsWith("http") || imagePath.startsWith("https")) {
+                        // Nếu là URL trực tuyến
+                        image = new Image(imagePath);
+                    } else {
+                        // Nếu là đường dẫn cục bộ
+                        File file = new File(imagePath);
+                        if (file.exists()) {
+                            image = new Image(file.toURI().toString()); // Chuyển đổi thành "file:/"
+                        } else {
+                            System.err.println("File not found: " + imagePath);
+                            image = new Image(getClass().getResource("/images/default.jpg").toExternalForm()); // Ảnh mặc định
+                        }
+                    }
+                    imageView.setImage(image);
+                } catch (Exception e) {
+                    System.err.println("Lỗi khi load ảnh: " + e.getMessage());
+                }
             }
             imageView.setFitWidth(100);
             imageView.setFitHeight(100);
@@ -74,12 +95,15 @@ public class MovieViewController {
         loadMovies();
     }
 
-    private void setupActionColumn(){
-        actionColumn.setPrefWidth(152);
+    private void setupActionColumn() {
+        if (actionColumn == null) {
+            actionColumn = new TableColumn<>("Action"); // Khởi tạo cột nếu chưa có
+        }
         actionColumn.setCellFactory(param -> new TableCell<>() {
             private final Button editButton = new Button("Edit");
             private final Button deleteButton = new Button("Delete");
             private final HBox buttonBox = new HBox(10, editButton, deleteButton);
+
             {
                 editButton.setOnAction(event -> {
                     Movie movie = getTableView().getItems().get(getIndex());
@@ -92,6 +116,7 @@ public class MovieViewController {
                 editButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
                 deleteButton.setStyle("-fx-background-color: #F44336; -fx-text-fill: white;");
             }
+
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
@@ -102,7 +127,10 @@ public class MovieViewController {
                 }
             }
         });
-        movieTable.getColumns().add(actionColumn);
+
+        if (!movieTable.getColumns().contains(actionColumn)) {
+            movieTable.getColumns().add(actionColumn);
+        }
 
     }
 
@@ -113,11 +141,17 @@ public class MovieViewController {
 
     private void handleEdit(Movie movie) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cinema/starplex/admin/moviemanagement/"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cinema/starplex/admin/moviemanagement/edit-movie.fxml"));
             Parent root = loader.load();
 
             EditMovieController controller = loader.getController();
             controller.setMovie(movie); // Truyền dữ liệu phim vào form
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Edit Movie");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
 
             // Cập nhật TableView sau khi chỉnh sửa xong
             movieTable.refresh();

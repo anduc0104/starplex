@@ -36,7 +36,7 @@ public class MainLayoutController {
     }
 
     public void movieScene(ActionEvent actionEvent) {
-        FXMLLoader loader = SceneSwitcher.loadView("admin/moviemanagement/add-movie.fxml");
+        FXMLLoader loader = SceneSwitcher.loadView("admin/moviemanagement/movie-view.fxml");
         assert loader != null;
         Parent newView = loader.getRoot();
         mainBorderPane.setCenter(newView);

@@ -57,7 +57,8 @@ public class EditMovieController {
         }
     }
 
-    private void chooseImage() {
+    @FXML
+    private void handleEditImage() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
         selectedFile = fileChooser.showOpenDialog(null);
@@ -68,8 +69,8 @@ public class EditMovieController {
     }
 
     @FXML
-    private void saveMovie() {
-        String sql = "UPDATE movies SET title = ?, director = ?, actors = ?, genre = ?, duration = ?, release_date = ?, description = ?, image = ? WHERE id = ?";
+    private void handleEditMovie() {
+        String sql = "UPDATE movies SET title = ?, directors = ?, actors = ?, genres = ?, duration = ?, release_date = ?, description = ?, images = ? WHERE id = ?";
 
         try (Connection conn = DatabaseConnection.getConn();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -114,7 +115,7 @@ public class EditMovieController {
     }
 
     @FXML
-    private void clearFields() {
+    private void handleEditClear() {
         titleField.clear();
         directorField.clear();
         actorsField.clear();
