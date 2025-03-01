@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cinema.starplex.ui.controllers.admin.movieManagement.AddMovieController">
+   <children>
+      <AnchorPane layoutX="20.0" layoutY="20.0" prefHeight="560.0" prefWidth="1160.0" styleClass="bg-white" stylesheets="@../../../../../css/admin.css">
+         <children>
+            <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="75.0" styleClass="back-btn" stylesheets="@../../../../../css/admin.css" text="Back" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font></Button>
+            <Label layoutX="505.0" layoutY="9.0" text="New Movie" textFill="#25ff0d">
+               <font>
+                  <Font name="System Bold" size="28.0" />
+               </font></Label>
+            <AnchorPane layoutX="791.0" layoutY="95.0" prefHeight="150.0" prefWidth="200.0" styleClass="bg-white" stylesheets="@../../../../../css/admin.css" />
+            <Button fx:id="addImageButton" layoutX="683.0" layoutY="155.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" styleClass="add-image-btn" stylesheets="@../../../../../css/admin.css" text="Add image" textFill="WHITE" />
+            <Label layoutX="115.0" layoutY="100.0" styleClass="label-input" stylesheets="@../../../../../css/admin.css" text="Movie title :" />
+            <TextField fx:id="titleField" layoutX="210.0" layoutY="100.0" prefHeight="27.0" prefWidth="220.0" styleClass="input-field" stylesheets="@../../../../../css/admin.css" />
+            <Label layoutX="134.0" layoutY="170.0" styleClass="label-input" stylesheets="@../../../../../css/admin.css" text="Director :" />
+            <TextField fx:id="directorField" layoutX="210.0" layoutY="170.0" prefHeight="27.0" prefWidth="220.0" styleClass="input-field" stylesheets="@../../../../../css/admin.css" />
+            <Label layoutX="144.0" layoutY="240.0" styleClass="label-input" stylesheets="@../../../../../css/admin.css" text="Actors :" />
+            <TextField fx:id="actorsField" layoutX="210.0" layoutY="240.0" prefHeight="27.0" prefWidth="220.0" styleClass="input-field" stylesheets="@../../../../../css/admin.css" />
+            <Label layoutX="146.0" layoutY="310.0" styleClass="label-input" stylesheets="@../../../../../css/admin.css" text="Genre :" />
+            <TextField fx:id="genreField" layoutX="210.0" layoutY="310.0" prefHeight="27.0" prefWidth="220.0" styleClass="input-field" stylesheets="@../../../../../css/admin.css" />
+            <Label layoutX="126.0" layoutY="380.0" styleClass="label-input" stylesheets="@../../../../../css/admin.css" text="Duration :" />
+            <TextField fx:id="durationField" layoutX="210.0" layoutY="380.0" prefHeight="27.0" prefWidth="220.0" styleClass="input-field" stylesheets="@../../../../../css/admin.css" />
+            <Label layoutX="100.0" layoutY="450.0" styleClass="label-input" stylesheets="@../../../../../css/admin.css" text="Release Date :" />
+            <DatePicker fx:id="releaseDatePicker" layoutX="210.0" layoutY="448.0" prefHeight="30.0" prefWidth="220.0" />
+            <Label layoutX="624.0" layoutY="380.0" styleClass="label-input" stylesheets="@../../../../../css/admin.css" text="Description :" />
+            <TextArea fx:id="descriptionField" layoutX="728.0" layoutY="302.0" prefHeight="182.0" prefWidth="327.0" styleClass="description-field" stylesheets="@../../../../../css/admin.css" />
+            <Button fx:id="saveButton" layoutX="468.0" layoutY="510.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="75.0" styleClass="save-btn" stylesheets="@../../../../../css/admin.css" text="Save" textFill="WHITE" />
+            <Button fx:id="clearButton" layoutX="618.0" layoutY="510.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="75.0" styleClass="clear-btn" stylesheets="@../../../../../css/admin.css" text="Clear" textFill="WHITE" />
+            <ImageView fx:id="movieImageView" fitHeight="150.0" fitWidth="200.0" layoutX="791.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

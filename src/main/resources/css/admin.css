@@ -57,21 +57,16 @@
 
 .search:focused{
     -fx-border-color: #ae2d3c;
+    -fx-border-width: 2px;
 }
 
 .table{
-    -fx-border-color: #ae2d3c;
-     -fx-table-cell-border-color: #1e242e;
-
-}
-.table .column-header-background{
-    -fx-background-color: #1E4DB7;
+    -fx-table-cell-border-color: #1e242e;
 }
 
 .table .column-header {
     -fx-alignment: CENTER;
     -fx-font-size: 14px;
-    -fx-font-weight: bold;
     -fx-text-fill: white;
 }
 
@@ -81,14 +76,10 @@
     -fx-text-fill: white;
 }
 
-.table-row-cell {
-    -fx-border-color: #CCCCCC;
-    -fx-border-width: 0 1px 1px 0;
-}
-
 /* Add New Movie */
 
 .back-btn{
+    -fx-font-size: 14px;
     -fx-background-color: #1e242e;
     -fx-background-radius: 6px;
     -fx-cursor: hand;
@@ -103,15 +94,17 @@
 .input-field{
     -fx-border-color: #1e242e;
     -fx-background-color: #fff;
-    -fx-font-size: 14px;
+    -fx-border-radius: 0px 10px 0px 0px;
 }
 
 .input-field:focused{
     -fx-border-color: #ae2d3c;
+    -fx-border-width: 2px;
 }
 
 .add-image-btn{
-    -fx-background-color: #2ac932;
+    -fx-font-size: 14px;
+    -fx-background-color: #7937bf;
     -fx-background-radius: 6px;
     -fx-cursor: hand;
 }
@@ -123,6 +116,7 @@
 }
 
 .save-btn{
+    -fx-font-size: 14px;
     -fx-background-color: #EAB308;
     -fx-background-radius: 6px;
     -fx-cursor: hand;
@@ -135,7 +129,7 @@
 }
 
 .clear-btn{
-
+    -fx-font-size: 14px;
     -fx-background-color: #FF6464;
     -fx-background-radius: 6px;
     -fx-cursor: hand;
@@ -150,11 +144,16 @@
 .description-field{
     -fx-border-color: #1e242e;
     -fx-background-color: #fff;
-    -fx-font-size: 14px;
     -fx-wrap-text: true;
 }
 
 .description-field:focused{
     -fx-border-color: #ae2d3c;
+    -fx-border-width: 2px;
 }
+
+.label-input{
+    -fx-font-size: 16px;
+}
+
 
