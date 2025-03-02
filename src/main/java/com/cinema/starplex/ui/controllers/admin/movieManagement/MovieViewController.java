@@ -3,10 +3,16 @@ package com.cinema.starplex.ui.controllers.admin.movieManagement;
 import com.cinema.starplex.dao.MovieDao;
 import com.cinema.starplex.models.Movie;
 import com.cinema.starplex.util.DatabaseConnection;
+import com.cinema.starplex.util.SceneSwitcher;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -22,6 +28,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public class MovieViewController {
 
@@ -47,8 +54,10 @@ public class MovieViewController {
     private TableColumn<Movie, String> descriptionColumn;
     @FXML
     private TableColumn<Movie, Void> actionColumn;
+    @FXML
+    private TextField searchField;
 
-
+    private final ObservableList<Movie> movieList = FXCollections.observableArrayList();
     private final MovieDao movieDao = new MovieDao();
 
     @FXML
@@ -93,6 +102,7 @@ public class MovieViewController {
         });
         setupActionColumn();
         loadMovies();
+        setupSearchFilter();
     }
 
     private void setupActionColumn() {
@@ -135,8 +145,18 @@ public class MovieViewController {
     }
 
     private void loadMovies() throws SQLException {
+        movieList.clear();
         ObservableList<Movie> movies = movieDao.getMovies();
         movieTable.setItems(movies);
+
+        if (movies != null) {
+            movieList.addAll(movies);
+            System.out.println("Movies loaded: " + movieList.size());
+        } else {
+            System.out.println("Failed to load movies!");
+        }
+
+        movieTable.setItems(movieList);
     }
 
     private void handleEdit(Movie movie) {
@@ -187,6 +207,63 @@ public class MovieViewController {
         }
 
     }
+
+    @FXML
+    public void handleSwitchAddNew(ActionEvent actionEvent) {
+        try{
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            SceneSwitcher.switchTo(stage,"admin/moviemanagement/add-movie.fxml");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setupSearchFilter() {
+        if (movieList == null) {
+            System.out.println("movieList is NULL!");
+            return;
+        }
+
+        System.out.println("Movie List Size: " + movieList.size());
+        for (Movie m : movieList) {
+            System.out.println("Movie: " + m.getTitle());
+        }
+
+        if (movieList.isEmpty()) {
+            System.out.println("Movie List is empty!");
+            return;
+        }
+
+        // Dùng `FilteredList` bọc `movieList` để bộ lọc hoạt động động
+        FilteredList<Movie> filteredMovies = new FilteredList<>(movieList, p -> true);
+
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("Search: " + newValue);
+
+            filteredMovies.setPredicate(movie -> {
+                if (newValue == null || newValue.trim().isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+                boolean match = movie.getTitle().toLowerCase().contains(lowerCaseFilter);
+
+                if (match) {
+                    System.out.println("Matched: " + movie.getTitle());
+                }
+
+                return match;
+            });
+
+            System.out.println("Filtered Movies: " + filteredMovies.size());
+        });
+
+        // Cập nhật danh sách sau khi lọc
+        movieTable.setItems(filteredMovies);
+
+        System.out.println("Search filter applied!");
+    }
+
+
 
 
 }

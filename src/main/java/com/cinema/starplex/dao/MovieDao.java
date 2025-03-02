@@ -41,6 +41,7 @@ public class MovieDao implements BaseDao<Movie> {
                 ));
             }
         }
+        System.out.println("Movies loaded: " + movies.size()); // Kiểm tra số lượng dữ liệu
         return movies;
     }
 

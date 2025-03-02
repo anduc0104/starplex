@@ -2,7 +2,10 @@ package com.cinema.starplex.ui.controllers.admin.movieManagement;
 
 import com.cinema.starplex.models.Movie;
 import com.cinema.starplex.util.DatabaseConnection;
+import com.cinema.starplex.util.SceneSwitcher;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
@@ -123,6 +126,16 @@ public class EditMovieController {
         durationField.clear();
         releaseDatePicker.setValue(null);
         descriptionField.clear();
+    }
+
+    @FXML
+    public void handleBack(ActionEvent actionEvent) {
+        try{
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            SceneSwitcher.switchTo(stage,"admin/moviemanagement/movie-view.fxml");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 
