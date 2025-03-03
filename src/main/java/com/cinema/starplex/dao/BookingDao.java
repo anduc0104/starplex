@@ -12,12 +12,17 @@ public class BookingDao implements BaseDao<Booking>{
     }
 
     @Override
+    public boolean insert(Booking entity) {
+        return false;
+    }
+
+    @Override
     public void update(Booking entity) {
 
     }
 
     @Override
-    public void delete(Booking entity) {
+    public void delete(long id) {
 
     }
 

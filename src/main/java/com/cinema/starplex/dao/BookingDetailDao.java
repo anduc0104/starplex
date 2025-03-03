@@ -11,12 +11,17 @@ public class BookingDetailDao implements BaseDao<BookingDetail> {
     }
 
     @Override
+    public boolean insert(BookingDetail entity) {
+        return false;
+    }
+
+    @Override
     public void update(BookingDetail entity) {
 
     }
 
     @Override
-    public void delete(BookingDetail entity) {
+    public void delete(long id) {
 
     }
 

@@ -16,12 +16,12 @@
                     AnchorPane.topAnchor="0.0">
             <children>
                 <AnchorPane layoutX="15.0" layoutY="15.0" prefHeight="160.0" prefWidth="1000.0"
-                            styleClass="bg-white" stylesheets="@../../../../css/dashboard-admin.css"
+                            styleClass="bg-white" stylesheets="@../../../../css/admin.css"
                             AnchorPane.bottomAnchor="360.0" AnchorPane.leftAnchor="20.0"
                             AnchorPane.rightAnchor="20.0">
                     <children>
                         <AnchorPane layoutX="30.0" layoutY="13.0" prefHeight="135.0" prefWidth="190.0"
-                                    styleClass="card" stylesheets="@../../../../css/dashboard-admin.css">
+                                    styleClass="card" stylesheets="@../../../../css/admin.css">
                             <children>
                                 <Label layoutX="8.0" layoutY="22.0" text="Total tickets sold"
                                        textFill="WHITE">
@@ -92,10 +92,10 @@
                     </font>
                 </Label>
                 <AnchorPane layoutX="20.0" layoutY="289.0" prefHeight="160.0" prefWidth="1000.0"
-                            styleClass="bg-white" stylesheets="@../../../../css/dashboard-admin.css">
+                            styleClass="bg-white" stylesheets="@../../../../css/admin.css">
                     <children>
                         <AnchorPane layoutX="30.0" layoutY="13.0" prefHeight="135.0" prefWidth="190.0"
-                                    styleClass="card" stylesheets="@../../../../css/dashboard-admin.css">
+                                    styleClass="card" stylesheets="@../../../../css/admin.css">
                             <children>
                                 <Label layoutX="8.0" layoutY="22.0" text="Total tickets sold"
                                        textFill="WHITE">

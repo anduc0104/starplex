@@ -65,6 +65,11 @@ public class MovieDao implements BaseDao<Movie> {
     }
 
     @Override
+    public boolean insert(Movie entity) {
+        return false;
+    }
+
+    @Override
     public void update(Movie entity) {
         String sql = "UPDATE movies SET title =?, director =?, actors =?, genre =?, duration =?, release_date =?, description =?, image =? WHERE id =?";
 
@@ -85,11 +90,11 @@ public class MovieDao implements BaseDao<Movie> {
     }
 
     @Override
-    public void delete(Movie entity) {
+    public void delete(long id) {
         String sql = "DELETE FROM movies WHERE id =?";
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, entity.getId());
+            pstmt.setLong(1, id);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -13,12 +13,17 @@ public class RoomDao implements BaseDao<Room> {
     }
 
     @Override
+    public boolean insert(Room entity) {
+        return false;
+    }
+
+    @Override
     public void update(Room room) {
 
     }
 
     @Override
-    public void delete(Room room) {
+    public void delete(long id) {
 
     }
 

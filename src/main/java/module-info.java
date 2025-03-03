@@ -8,6 +8,7 @@ module com.cinema.starplex {
 
     requires spring.security.crypto;
     requires java.sql;
+    requires java.naming;
 
     opens com.cinema.starplex.ui.controllers to javafx.fxml;
     opens com.cinema.starplex.ui.controllers.admin to javafx.fxml;

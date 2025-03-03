@@ -11,12 +11,17 @@ public class MovieTypeDao implements BaseDao<MovieType>{
     }
 
     @Override
+    public boolean insert(MovieType entity) {
+        return false;
+    }
+
+    @Override
     public void update(MovieType entity) {
 
     }
 
     @Override
-    public void delete(MovieType entity) {
+    public void delete(long id) {
 
     }
 

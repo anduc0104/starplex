@@ -40,10 +40,6 @@ public class LoginController {
         if (!validateFields(username, password)) {
             return;
         }
-        System.out.println(username);
-        System.out.println(password);
-
-
         UserDao userDao = new UserDao();
         User user = userDao.login(username, password);
         if (user != null) {

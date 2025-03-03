@@ -9,12 +9,17 @@ public class Director implements BaseDao<Director>{
     }
 
     @Override
+    public boolean insert(Director entity) {
+        return false;
+    }
+
+    @Override
     public void update(Director entity) {
 
     }
 
     @Override
-    public void delete(Director entity) {
+    public void delete(long id) {
 
     }
 

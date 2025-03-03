@@ -23,7 +23,6 @@ public class SceneSwitcher {
 
             FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
             Scene scene = new Scene(fxmlLoader.load());
-            scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
             scene.getStylesheets().add(SceneSwitcher.class.getResource("/css/main.css").toExternalForm());
             scene.getStylesheets().add(SceneSwitcher.class.getResource("/css/admin.css").toExternalForm());
             if (fxmlFile == "LoginView.fxml") {

@@ -168,7 +168,7 @@ public class MovieViewController {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            movieDao.delete(movie);
+            movieDao.delete(movie.idProperty().longValue());
             String sql = "DELETE FROM movies WHERE id = ?";
 
             try (Connection conn = DatabaseConnection.getConn();

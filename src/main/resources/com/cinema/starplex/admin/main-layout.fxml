@@ -46,8 +46,22 @@
                         <Button onAction="#managementUser" fx:id="buttonUserManagement" layoutY="260.0"
                                 mnemonicParsing="false" prefHeight="45.0" prefWidth="160.0" styleClass="nav-btn"
                                 stylesheets="@../../../../css/admin.css" text="User" textFill="WHITE"/>
-                        <Button layoutY="380.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="160.0"
-                                styleClass="nav-btn" stylesheets="@../../../../css/admin.css" text="Chart"
+                        <!--Room-->
+                        <Button onAction="#managementRoom" layoutY="380.0" mnemonicParsing="false" prefHeight="45.0"
+                                prefWidth="160.0"
+                                styleClass="nav-btn" stylesheets="@../../../../css/admin.css" text="Room"
+                                textFill="WHITE"/>
+                        <!--People Films-->
+                        <Button onAction="#managementPeopleFilms" layoutY="380.0" mnemonicParsing="false"
+                                prefHeight="45.0"
+                                prefWidth="160.0"
+                                styleClass="nav-btn" stylesheets="@../../../../css/admin.css" text="People Films"
+                                textFill="WHITE"/>
+                        <!--Showtime -->
+                        <Button onAction="#managementShowtime" layoutY="380.0" mnemonicParsing="false"
+                                prefHeight="45.0"
+                                prefWidth="160.0"
+                                styleClass="nav-btn" stylesheets="@../../../../css/admin.css" text="Showtime"
                                 textFill="WHITE"/>
                         <!--button log out-->
                         <Button onAction="#logout" fx:id="buttonLogout" layoutX="49.0" layoutY="491.0"

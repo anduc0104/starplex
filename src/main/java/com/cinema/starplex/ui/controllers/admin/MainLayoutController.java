@@ -15,7 +15,7 @@ public class MainLayoutController {
     Button buttonLogout;
 
     @FXML
-    BorderPane mainBorderPane;
+    private BorderPane mainBorderPane;
 
     public void logout(ActionEvent actionEvent) {
         SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(), "LoginView.fxml");
@@ -40,5 +40,17 @@ public class MainLayoutController {
         assert loader != null;
         Parent newView = loader.getRoot();
         mainBorderPane.setCenter(newView);
+    }
+    public void managementRoom(){
+        FXMLLoader loader = SceneSwitcher.loadView("admin/roommanagement/room-view.fxml");
+        assert loader!= null;
+        Parent newView = loader.getRoot();
+        mainBorderPane.setCenter(newView);
+    }
+
+    public void managementPeopleFilms(ActionEvent event) {
+    }
+
+    public void managementShowtime(ActionEvent event) {
     }
 }
