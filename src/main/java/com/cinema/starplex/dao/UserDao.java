@@ -192,10 +192,8 @@ public class UserDao implements BaseDao<User> {
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     user = new User();
-                    user.setId((int) rs.getLong("id"));
                     user.setUsername(rs.getString("username"));
                     user.setPassword(rs.getString("password"));
-                    user.setEmail(rs.getString("email"));
                     return user;
                 }
                 return user;

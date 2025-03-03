@@ -13,9 +13,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class RegisterController {
 
@@ -41,8 +38,6 @@ public class RegisterController {
     private Label phoneError;
     @FXML
     private Label confirmPasswordError;
-
-    Connection conn = (Connection) new DatabaseConnection().getConn();
 
     public void handleRegister(ActionEvent actionEvent) {
         String username = usernameField.getText();
@@ -70,8 +65,8 @@ public class RegisterController {
             } else {
                 showError(usernameField, usernameError, "Registration failed. Try again.");
             }
-        } finally {
-            userDao.closeConnection();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

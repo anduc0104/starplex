@@ -1,77 +1,57 @@
 package com.cinema.starplex.models;
+import javafx.beans.property.*;
 
-
-import java.sql.Timestamp;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 public class Booking {
-    private Integer id;
-    private User user;
-    private Showtime showtime;
-    private BigDecimal totalPrice;
-    private String status;
-    private Timestamp createdAt;
+    private final IntegerProperty id = new SimpleIntegerProperty();
+    private final ObjectProperty<User> user = new SimpleObjectProperty<>();
+    private final ObjectProperty<Showtime> showtime = new SimpleObjectProperty<>();
+    private final ObjectProperty<BigDecimal> totalPrice = new SimpleObjectProperty<>();
+    private final StringProperty status = new SimpleStringProperty();
+    private final ObjectProperty<Timestamp> createdAt = new SimpleObjectProperty<>();
+
+    public Booking(Integer id, User user, Showtime showtime, BigDecimal totalPrice, String status, Timestamp createdAt) {
+        this.id.set(id);
+        this.user.set(user);
+        this.showtime.set(showtime);
+        this.totalPrice.set(totalPrice);
+        this.status.set(status);
+        this.createdAt.set(createdAt);
+    }
 
     public Booking() {
 
     }
 
-    public Booking(Integer id, User user, Showtime showtime, BigDecimal totalPrice, String status, Timestamp createdAt) {
-        this.id = id;
-        this.user = user;
-        this.showtime = showtime;
-        this.totalPrice = totalPrice;
-        this.status = status;
-        this.createdAt = createdAt;
-    }
+    // Getter & Setter cho id
+    public Integer getId() { return id.get(); }
+    public void setId(int id) { this.id.set(id); }
+    public IntegerProperty idProperty() { return id; }
 
-// Getters and Setters
+    // Getter & Setter cho user
+    public User getUser() { return user.get(); }
+    public void setUser(User user) { this.user.set(user); }
+    public ObjectProperty<User> userProperty() { return user; }
 
-    public Integer getId() {
-        return id;
-    }
+    // Getter & Setter cho showtime
+    public Showtime getShowtime() { return showtime.get(); }
+    public void setShowtime(Showtime showtime) { this.showtime.set(showtime); }
+    public ObjectProperty<Showtime> showtimeProperty() { return showtime; }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    // Getter & Setter cho totalPrice
+    public BigDecimal getTotalPrice() { return totalPrice.get(); }
+    public void setTotalPrice(BigDecimal totalPrice) { this.totalPrice.set(totalPrice); }
+    public ObjectProperty<BigDecimal> totalPriceProperty() { return totalPrice; }
 
-    public User getUser() {
-        return user;
-    }
+    // Getter & Setter cho status
+    public String getStatus() { return status.get(); }
+    public void setStatus(String status) { this.status.set(status); }
+    public StringProperty statusProperty() { return status; }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Showtime getShowtime() {
-        return showtime;
-    }
-
-    public void setShowtime(Showtime showtime) {
-        this.showtime = showtime;
-    }
-
-    public BigDecimal getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
+    // Getter & Setter cho createdAt
+    public Timestamp getCreatedAt() { return createdAt.get(); }
+    public void setCreatedAt(Timestamp createdAt) { this.createdAt.set(createdAt); }
+    public ObjectProperty<Timestamp> createdAtProperty() { return createdAt; }
 }

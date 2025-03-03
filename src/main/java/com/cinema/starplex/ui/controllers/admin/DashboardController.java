@@ -27,26 +27,30 @@ public class DashboardController {
     }
 
     public void viewUserDetails(ActionEvent actionEvent) {
-        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(), "/com/cinema/starplex/UserView.fxml");
+        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(), "UserView.fxml");
     }
 
     public void viewRevenueReport(ActionEvent actionEvent) {
-        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "/com/cinema/starplex/MovieView.fxml");
+        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "MovieView.fxml");
     }
 
     public void viewStaffList(ActionEvent actionEvent) {
-        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "/com/cinema/starplex/StaffView.fxml");
+        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "StaffView.fxml");
     }
 
     public void viewChart(ActionEvent actionEvent) {
-        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "/com/cinema/starplex/ChartView.fxml");
+        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "ChartView.fxml");
     }
 
     public void logout(ActionEvent actionEvent) {
-        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "/com/cinema/starplex/LoginView");
+        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "LoginView");
+    }
+
+    public void viewBookings(ActionEvent actionEvent) {
+        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "booking-view/Booking-View.fxml");
     }
 
     public void viewRooms(ActionEvent actionEvent) {
-        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "/com/cinema/starplex/RoomView.fxml");
+        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "RoomView.fxml");
     }
 }

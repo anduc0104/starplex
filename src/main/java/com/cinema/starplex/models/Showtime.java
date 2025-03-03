@@ -4,6 +4,7 @@ package com.cinema.starplex.models;
 
 import java.sql.Timestamp;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 
 public class Showtime {
     private Integer id;
@@ -72,5 +73,14 @@ public class Showtime {
 
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getDisplayName() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+        String movieTitle = (movie != null) ? movie.getTitle() : "Unknown Movie";
+        Integer roomName = (room != null) ? room.getRoomNumber() : 0;
+        String startTimeStr = (startTime != null) ? dateFormat.format(startTime) : "Unknown Time";
+        return movieTitle + " - Room " + roomName + " - " + startTimeStr;
     }
 }
