@@ -1,0 +1,85 @@
+/* Styles for the pagination components */
+
+/* Pagination container */
+.pagination {
+    -fx-padding: 0;
+    -fx-border-width: 0;
+    -fx-background-color: transparent;
+}
+
+/* Pagination buttons */
+.pagination .pagination-control .button {
+    -fx-background-radius: 0;
+    -fx-background-color: #f4f4f4;
+    -fx-border-color: #d0d0d0;
+}
+
+.pagination .pagination-control .button:hover {
+    -fx-background-color: #e4e4e4;
+}
+
+/* Current page indicator */
+.pagination .pagination-control .toggle-button {
+    -fx-background-radius: 0;
+    -fx-background-color: #f4f4f4;
+    -fx-border-color: #d0d0d0;
+}
+
+.pagination .pagination-control .toggle-button:selected {
+    -fx-background-color: #4286f4;
+    -fx-text-fill: white;
+}
+
+/* Pagination info label */
+.pagination-info-label {
+    -fx-text-fill: #666666;
+    -fx-font-size: 12px;
+    -fx-padding: 4 0 4 4;
+}
+
+/* Search field */
+.text-field.search-field {
+    -fx-background-image: url('search-icon.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: right center;
+    -fx-padding: 5 25 5 5;
+}
+
+/* Table styles */
+.table-view {
+    -fx-table-cell-border-color: #e0e0e0;
+    -fx-background-color: white;
+}
+
+.table-view .column-header {
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #d0d0d0;
+}
+
+.table-view .column-header-background .label {
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #f7f7f7;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #b8d0ff;
+}
+
+/* ComboBox styles */
+.combo-box {
+    -fx-background-color: white;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 3;
+}
+
+.combo-box:hover {
+    -fx-border-color: #999999;
+}
+
+.combo-box .list-cell {
+    -fx-padding: 3 7 3 7;
+}
