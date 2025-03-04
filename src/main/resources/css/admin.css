@@ -1,0 +1,159 @@
+/* Dashboard */
+.nav-btn{
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+}
+
+.nav-btn:hover{
+    -fx-background-color: #1071e1;
+}
+.signout-btn:hover{
+    -fx-background-color: #d83f5a;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-transition: all 0.1s ease-in-out;
+}
+
+.bg-white{
+   -fx-background-color: #fff;
+   -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,.3), 8,0,0,0);
+   -fx-background-radius: 8px;
+}
+.bg-white:hover{
+   -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,.5), 8,0,0,0);
+}
+
+.card{
+    -fx-background-color: #2b428c;
+    -fx-background-radius: 8px;
+}
+
+.card:hover{
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,.5), 5,0,0,0);
+}
+
+/* Movie */
+
+.add-new-btn{
+    -fx-background-color : #EAB308;
+    -fx-background-radius: 6px;
+    -fx-cursor:hand;
+}
+
+.add-new-btn:hover{
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-transition: all 0.1s ease-in-out;
+}
+
+.search{
+    -fx-border-color: #1e242e;
+    -fx-background-color: #fff;
+    -fx-font-size: 14px;
+    -fx-padding:0px 0px 0px 30px;
+}
+
+.search:focused{
+    -fx-border-color: #ae2d3c;
+    -fx-border-width: 2px;
+}
+
+.table{
+    -fx-table-cell-border-color: #1e242e;
+}
+
+.table .column-header {
+    -fx-alignment: CENTER;
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+}
+
+.table .cell-value {
+    -fx-alignment: CENTER;
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+}
+
+/* Add New Movie */
+
+.back-btn{
+    -fx-font-size: 14px;
+    -fx-background-color: #1e242e;
+    -fx-background-radius: 6px;
+    -fx-cursor: hand;
+}
+
+.back-btn:hover{
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-transition: all 0.1s ease-in-out;
+}
+
+.input-field{
+    -fx-border-color: #1e242e;
+    -fx-background-color: #fff;
+    -fx-border-radius: 0px 10px 0px 0px;
+}
+
+.input-field:focused{
+    -fx-border-color: #ae2d3c;
+    -fx-border-width: 2px;
+}
+
+.add-image-btn{
+    -fx-font-size: 14px;
+    -fx-background-color: #7937bf;
+    -fx-background-radius: 6px;
+    -fx-cursor: hand;
+}
+
+.add-image-btn:hover{
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-transition: all 0.1s ease-in-out;
+}
+
+.save-btn{
+    -fx-font-size: 14px;
+    -fx-background-color: #EAB308;
+    -fx-background-radius: 6px;
+    -fx-cursor: hand;
+}
+
+.save-btn:hover{
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-transition: all 0.1s ease-in-out;
+}
+
+.clear-btn{
+    -fx-font-size: 14px;
+    -fx-background-color: #FF6464;
+    -fx-background-radius: 6px;
+    -fx-cursor: hand;
+}
+
+.clear-btn:hover{
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-transition: all 0.1s ease-in-out;
+}
+
+.description-field{
+    -fx-border-color: #1e242e;
+    -fx-background-color: #fff;
+    -fx-wrap-text: true;
+}
+
+.description-field:focused{
+    -fx-border-color: #ae2d3c;
+    -fx-border-width: 2px;
+}
+
+.label-input{
+    -fx-font-size: 16px;
+}
+
+
