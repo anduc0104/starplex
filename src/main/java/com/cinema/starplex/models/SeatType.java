@@ -9,15 +9,7 @@ public class SeatType {
     private BigDecimal price;
     private Timestamp createdAt;
 
-    public SeatType(Integer id, String name, Timestamp createdAt) {
-        this.id = id;
-        this.name = name;
-        this.createdAt = createdAt;
-    }
-
-// Getters and Setters
-    public SeatType() {}
-
+    // Constructor
     public SeatType(Integer id, String name, BigDecimal price, Timestamp createdAt) {
         this.id = id;
         this.name = name;
@@ -25,8 +17,20 @@ public class SeatType {
         this.createdAt = createdAt;
     }
 
-    // Getters and Setters
+    public SeatType(Integer seatTypeId, String seatType) {
+        this.id = seatTypeId;
+        this.name = seatType;
+    }
 
+    public SeatType() {
+
+    }
+
+    public SeatType(int seatTypeId) {
+        this.id = seatTypeId;
+    }
+
+    // Getter & Setter
     public Integer getId() {
         return id;
     }
@@ -57,5 +61,15 @@ public class SeatType {
 
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
+    }
+
+    @Override
+    public String toString() {
+        return "SeatType{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", createdAt=" + createdAt +
+                '}';
     }
 }

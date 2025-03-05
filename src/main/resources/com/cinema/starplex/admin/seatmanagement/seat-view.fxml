@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.cinema.starplex.ui.controllers.admin.seatManagement.SeatController">
+    <children>
+        <AnchorPane layoutX="20.0" layoutY="20.0" prefHeight="700.0" prefWidth="1300.0"
+                    styleClass="bg-white" stylesheets="@../../../../../css/admin.css">
+            <Text text="Seat Manager"/>
+            <children>
+                <!-- Button Add -->
+                <Button layoutX="33.0" layoutY="34.0" mnemonicParsing="false" prefHeight="30.0"
+                        prefWidth="75.0" styleClass="add-new-btn" stylesheets="@../../../../../css/admin.css"
+                        text="Add" textFill="WHITE" onAction="#handleAdd">
+                    <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                    </font>
+                </Button>
+
+                <!-- Search Field -->
+                <TextField fx:id="searchField" layoutX="163.0" layoutY="34.0" prefHeight="30.0"
+                           promptText="Search by Seat Number" styleClass="search"
+                           stylesheets="@../../../../../css/admin.css" />
+
+                <!-- Table -->
+                <TableView fx:id="seatTable" layoutX="20.0" layoutY="86.0" prefHeight="546.0"
+                           prefWidth="1260.0" styleClass="table" stylesheets="@../../../../../css/admin.css">
+                    <columns>
+                        <TableColumn fx:id="colId" prefWidth="50.0" text="ID" />
+                        <TableColumn fx:id="colRoomId" prefWidth="150.0" text="Room Number" />
+                        <TableColumn fx:id="colSeatTypeId" prefWidth="150.0" text="Seat Type" />
+                        <TableColumn fx:id="colSeatNumber" prefWidth="150.0" text="Seat Number" />
+                        <TableColumn fx:id="colAction" prefWidth="100.0" text="Action" />
+                    </columns>
+                </TableView>
+            </children>
+        </AnchorPane>
+    </children>
+    <ComboBox fx:id="roomComboBox" />
+    <ComboBox fx:id="seatTypeComboBox" />
+</AnchorPane>

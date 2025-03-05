@@ -57,9 +57,17 @@ public class MainLayoutController {
     public void managementShowtime(ActionEvent event) {
     }
 
-    public void managementSeat(ActionEvent event) {
+    public void managementSeat() {
+        FXMLLoader loader = SceneSwitcher.loadView("admin/seatmanagement/seat-view.fxml");
+        assert loader != null;
+        Parent newView = loader.getRoot();
+        mainBorderPane.setCenter(newView);
     }
 
-    public void managementSeatType(ActionEvent event) {
+    public void managementSeatType() {
+        FXMLLoader loader = SceneSwitcher.loadView("admin/seattypemanagement/seat-type-view.fxml");
+        assert loader != null;
+        Parent newView = loader.getRoot();
+        mainBorderPane.setCenter(newView);
     }
 }

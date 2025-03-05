@@ -1,7 +1,7 @@
 CREATE TABLE seats (
     id SERIAL PRIMARY KEY,
-    room_id INTEGER NULL REFERENCES rooms(id) ON DELETE CASCADE,
-    seat_type_id INTEGER NULL REFERENCES seat_types(id) ON DELETE CASCADE,
-    seat_number VARCHAR(10) NULL,
+    room_id INTEGER NOT NULL REFERENCES rooms(id) ON DELETE CASCADE,
+    seat_type_id INTEGER NOT NULL REFERENCES seat_types(id) ON DELETE CASCADE,
+    seat_number VARCHAR(10) NOT NULL,
     created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP
 );

@@ -1,6 +1,7 @@
 package com.cinema.starplex.models;
 
 import java.sql.Timestamp;
+import com.cinema.starplex.models.MovieType;
 
 public class MovieGenre {
     private Integer id;

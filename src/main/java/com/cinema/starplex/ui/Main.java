@@ -1,7 +1,5 @@
 package com.cinema.starplex.ui;
 
-import com.cinema.starplex.util.DatabaseConnection;
-import com.cinema.starplex.util.SceneSwitcher;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,7 +9,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/cinema/starplex/LoginView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/cinema/starplex/admin/main-layout.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
         //css

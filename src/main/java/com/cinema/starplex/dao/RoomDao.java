@@ -10,7 +10,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoomDao implements BaseDao<Room>{
+public class RoomDao implements BaseDao<Room> {
     private Connection connection;
 
     public RoomDao() {
@@ -196,5 +196,21 @@ public class RoomDao implements BaseDao<Room>{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public Room findByNumber(int i) {
+        String query = "SELECT * FROM rooms WHERE room_number =?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, i);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return mapResultSetToRoom(resultSet);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

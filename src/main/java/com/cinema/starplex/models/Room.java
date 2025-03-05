@@ -19,6 +19,15 @@ public class Room {
     public Room() {
     }
 
+    public Room(int roomId, int roomNumber) {
+        this.id = roomId;
+        this.roomNumber = roomNumber;
+    }
+
+    public Room(int roomId) {
+        this.id = roomId;
+    }
+
     // Getters and Setters
 
     public Integer getId() {

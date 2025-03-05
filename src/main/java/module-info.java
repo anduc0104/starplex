@@ -8,7 +8,8 @@ module com.cinema.starplex {
 
     requires spring.security.crypto;
     requires java.sql;
-    requires java.naming;
+    requires org.kordamp.ikonli.javafx;
+    requires org.kordamp.ikonli.fontawesome5;
 
     opens com.cinema.starplex.ui.controllers to javafx.fxml;
     opens com.cinema.starplex.ui.controllers.admin to javafx.fxml;
@@ -22,7 +23,10 @@ module com.cinema.starplex {
 
     opens com.cinema.starplex.ui.controllers.admin.movieManagement to javafx.fxml;
 
-    opens com.cinema.starplex.ui to javafx.graphics;
     exports com.cinema.starplex.ui.controllers;
-    exports com.cinema.starplex.ui;
+    exports com.cinema.starplex.ui.controllers.admin.seatManagement;
+    opens com.cinema.starplex.ui.controllers.admin.seatManagement to javafx.fxml;
+    exports com.cinema.starplex.ui.controllers.admin.seatTypeManagement;
+    opens com.cinema.starplex.ui.controllers.admin.seatTypeManagement to javafx.fxml;
+
 }

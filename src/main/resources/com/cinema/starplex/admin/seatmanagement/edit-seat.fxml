@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="600.0" prefWidth="1200.0"
+            xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.cinema.starplex.ui.controllers.admin.seatManagement.EditSeatController">
+    <children>
+        <AnchorPane layoutX="20.0" layoutY="20.0" prefHeight="700.0" prefWidth="1300.0"
+                    styleClass="bg-white" stylesheets="@../../../../../css/admin.css">
+            <Text text="Seat Manager"/>
+            <children>
+                <!-- Nút quay lại -->
+                <Button onAction="#handleBack" fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="30.0"
+                        prefWidth="75.0" styleClass="back-btn" text="Back" textFill="WHITE"/>
+
+                <!-- Tiêu đề -->
+                <Label layoutX="505.0" layoutY="9.0" text="Edit Seat" textFill="#25ff0d">
+                    <font>
+                        <Font name="System Bold" size="28.0"/>
+                    </font>
+                </Label>
+
+                <!-- Nhập số ghế -->
+                <Label layoutX="400.0" layoutY="150.0" text="Seat Number:" styleClass="label-input"/>
+                <TextField fx:id="seatNumberField" layoutX="530.0" layoutY="145.0" prefHeight="30.0"
+                           prefWidth="250.0" styleClass="input-field"/>
+
+                <!-- Chọn phòng -->
+                <Label layoutX="400.0" layoutY="220.0" text="Room:" styleClass="label-input"/>
+                <ComboBox fx:id="roomComboBox" layoutX="530.0" layoutY="215.0" prefHeight="30.0"
+                          prefWidth="250.0" styleClass="input-field"/>
+
+                <!-- Chọn loại ghế -->
+                <Label layoutX="400.0" layoutY="290.0" text="Seat Type:" styleClass="label-input"/>
+                <ComboBox fx:id="seatTypeComboBox" layoutX="530.0" layoutY="285.0" prefHeight="30.0"
+                          prefWidth="250.0" styleClass="input-field"/>
+
+                <!-- Nút lưu và hủy -->
+                <Button onAction="#handleSave" fx:id="saveButton" layoutX="460.0" layoutY="380.0"
+                        mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0"
+                        styleClass="save-btn" text="Edit" textFill="WHITE"/>
+
+                <Button onAction="#handleClear" fx:id="clearButton" layoutX="620.0" layoutY="380.0"
+                        mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0"
+                        styleClass="clear-btn" text="Clear" textFill="WHITE"/>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>
