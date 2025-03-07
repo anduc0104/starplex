@@ -41,4 +41,11 @@ public class MainLayoutController {
         Parent newView = loader.getRoot();
         mainBorderPane.setCenter(newView);
     }
+
+    public void genreScene(ActionEvent actionEvent) {
+        FXMLLoader loader = SceneSwitcher.loadView("admin/moviemanagement/genre-view.fxml");
+        assert loader != null;
+        Parent newView = loader.getRoot();
+        mainBorderPane.setCenter(newView);
+    }
 }

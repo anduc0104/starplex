@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cinema.starplex.ui.controllers.admin.movieManagement.GenreViewController">
+   <children>
+      <AnchorPane layoutX="20.0" layoutY="20.0" prefHeight="560.0" prefWidth="1160.0" styleClass="bg-white" stylesheets="@../../../../../css/admin.css">
+         <children>
+            <TableView fx:id="genreTable" layoutX="250.0" layoutY="86.0" prefHeight="460.0" prefWidth="660.0" styleClass="table" stylesheets="@../../../../../css/admin.css">
+               <columns>
+                  <TableColumn fx:id="idColumn" prefWidth="84.0" text="ID" />
+                  <TableColumn fx:id="genreColumn" prefWidth="270.0" text="Genre" />
+                  <TableColumn fx:id="actionColumn" minWidth="0.0" prefWidth="208.0" text="Action" />
+               </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <Button layoutX="43.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleSwitchAddNew" prefHeight="30.0" prefWidth="80.0" styleClass="add-new-btn" stylesheets="@../../../../../css/admin.css" text="Add New" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Button>
+      <TextField fx:id="searchField" layoutX="173.0" layoutY="44.0" prefHeight="30.0" promptText="Search by movie title" styleClass="search" stylesheets="@../../../../../css/admin.css" />
+   </children>
+</AnchorPane>

@@ -1,5 +1,4 @@
 module com.cinema.starplex {
-    requires javafx.controls;
     requires javafx.fxml;
 
     requires org.kordamp.bootstrapfx.core;
@@ -8,6 +7,7 @@ module com.cinema.starplex {
 
     requires spring.security.crypto;
     requires java.sql;
+    requires org.controlsfx.controls;
 
     opens com.cinema.starplex.ui.controllers to javafx.fxml;
     opens com.cinema.starplex.ui.controllers.admin to javafx.fxml;

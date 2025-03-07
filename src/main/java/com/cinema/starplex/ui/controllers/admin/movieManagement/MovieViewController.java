@@ -24,11 +24,13 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class MovieViewController {
 
@@ -66,7 +68,11 @@ public class MovieViewController {
         titleColumn.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
         directorColumn.setCellValueFactory(cellData -> cellData.getValue().directorProperty());
         actorsColumn.setCellValueFactory(cellData -> cellData.getValue().actorsProperty());
-        genreColumn.setCellValueFactory(cellData -> cellData.getValue().genreProperty());
+        genreColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(
+                cellData.getValue().getGenres().stream()
+                        .map(genre -> genre.getName())
+                        .collect(Collectors.joining(", "))
+        ));
         durationColumn.setCellValueFactory(cellData -> cellData.getValue().durationProperty());
         releaseDateColumn.setCellValueFactory(cellData -> cellData.getValue().releaseDateProperty());
         descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
@@ -79,16 +85,14 @@ public class MovieViewController {
                 try {
                     Image image;
                     if (imagePath.startsWith("http") || imagePath.startsWith("https")) {
-                        // Nếu là URL trực tuyến
                         image = new Image(imagePath);
                     } else {
-                        // Nếu là đường dẫn cục bộ
-                        File file = new File(imagePath);
+                        File file = new File(new URI(imagePath)); // Chuyển đổi lại từ URI
                         if (file.exists()) {
-                            image = new Image(file.toURI().toString()); // Chuyển đổi thành "file:/"
+                            image = new Image(file.toURI().toString());
                         } else {
                             System.err.println("File not found: " + imagePath);
-                            image = new Image(getClass().getResource("/images/default.jpg").toExternalForm()); // Ảnh mặc định
+                            image = new Image(getClass().getResource("/images/default.jpg").toExternalForm());
                         }
                     }
                     imageView.setImage(image);
@@ -100,6 +104,7 @@ public class MovieViewController {
             imageView.setFitHeight(100);
             return new SimpleObjectProperty<>(imageView);
         });
+
         setupActionColumn();
         loadMovies();
         setupSearchFilter();
@@ -198,8 +203,8 @@ public class MovieViewController {
                 int affectedRows = pstmt.executeUpdate();
 
                 if (affectedRows > 0) {
-                    movieTable.getItems().remove(movie);
                     System.out.println("Movie deleted: " + movie.getTitle());
+                    loadMovies();
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -210,9 +215,9 @@ public class MovieViewController {
 
     @FXML
     public void handleSwitchAddNew(ActionEvent actionEvent) {
-        try{
+        try {
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            SceneSwitcher.switchTo(stage,"admin/moviemanagement/add-movie.fxml");
+            SceneSwitcher.switchTo(stage, "admin/moviemanagement/add-movie.fxml");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -262,8 +267,4 @@ public class MovieViewController {
 
         System.out.println("Search filter applied!");
     }
-
-
-
-
 }
