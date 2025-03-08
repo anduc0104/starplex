@@ -1,4 +1,4 @@
-CREATE TABLE seat_types (
+CREATE TABLE seat_type (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NULL,
     price DECIMAL(10,2) NULL,
