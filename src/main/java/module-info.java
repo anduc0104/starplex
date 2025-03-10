@@ -14,6 +14,7 @@ module com.cinema.starplex {
 
     opens com.cinema.starplex.ui.controllers to javafx.fxml;
     opens com.cinema.starplex.ui.controllers.admin to javafx.fxml;
+    opens com.cinema.starplex.ui.controllers.staff to javafx.fxml;
 
     opens com.cinema.starplex.ui to javafx.fxml;
     exports com.cinema.starplex.ui to javafx.graphics;

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.ScrollPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.cinema.starplex.ui.controllers.staff.ListMovieLayoutController"
+            prefHeight="500.0" prefWidth="700.0"
+            style="-fx-background-color: #10141b; -fx-padding: 10;"
+            stylesheets="@../../../../css/list-movie-layout.css">
+
+    <ScrollPane fitToWidth="true" vbarPolicy="AS_NEEDED" hbarPolicy="NEVER" style="-fx-background-color: transparent; -fx-background: transparent;">
+
+        <GridPane fx:id="movieGrid"
+                hgap="20" vgap="20"
+                style="-fx-padding: 10;"
+                AnchorPane.topAnchor="50.0"
+                AnchorPane.bottomAnchor="50.0"
+                AnchorPane.leftAnchor="50.0"
+                AnchorPane.rightAnchor="50.0"
+                minHeight="1300">
+            <!-- Các bộ phim sẽ được thêm vào đây từ mã điều khiển -->
+        </GridPane>
+    </ScrollPane>
+</AnchorPane>

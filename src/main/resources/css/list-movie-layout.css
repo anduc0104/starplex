@@ -1,0 +1,45 @@
+/* styles.css */
+.movie-box {
+    -fx-background-color: #10141b; /* Màu nền */
+    -fx-padding: 15;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-border-color: #334155;
+    -fx-border-width: 1px;
+    -fx-pref-width: 400;
+    -fx-min-width: 400;
+    -fx-max-width: 400;
+    -fx-pref-height: 200;
+    -fx-min-height:200;
+    -fx-max-height: 200;
+}
+
+.movie-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-fill: #FFCC00; /* Màu chữ tiêu đề */
+    -fx-max-width: 230; /* Giới hạn chiều rộng tối đa */
+    -fx-wrap-text: true; /* Cho phép text xuống dòng */
+    -fx-text-overflow: clip; /* Cắt text nếu vượt quá chiều rộng */
+    -fx-wraping-width: 230;
+}
+
+.movie-info {
+    -fx-font-size: 10px;
+    -fx-fill: #FFFFFF; /* Màu chữ thông tin */
+    -fx-max-width: 230; /* Giới hạn chiều rộng tối đa */
+    -fx-wrap-text: true; /* Cho phép text xuống dòng */
+    -fx-text-overflow: clip; /* Cắt text nếu vượt quá chiều rộng */
+}
+
+.movie-description {
+    -fx-font-size: 10px;
+    -fx-fill: #FF0000; /* Màu chữ cho description */
+    -fx-max-width: 230; /* Giới hạn chiều rộng tối đa */
+    -fx-wrap-text: true; /* Cho phép text xuống dòng */
+    -fx-text-overflow: clip; /* Cắt text nếu vượt quá chiều rộng */
+}
+
+.container {
+    -fx-background-color: #2C2C2C; /* Màu nền cho toàn bộ */
+}
