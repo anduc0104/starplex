@@ -17,25 +17,20 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.geometry.Pos;
 import javafx.util.StringConverter;
 import org.kordamp.ikonli.javafx.FontIcon;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
+
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
 public class SeatController {
-    @FXML
-    private ComboBox<Room> roomComboBox; // ComboBox cho Room
-    @FXML
-    private ComboBox<SeatType> seatTypeComboBox; // ComboBox cho SeatType
+    public TextField searchField;
     @FXML
     private TableView<Seat> seatTable;
     @FXML
@@ -51,7 +46,6 @@ public class SeatController {
 
     private final SeatDao seatDao = new SeatDao();
     private final RoomDao roomDao = new RoomDao(); // Khởi tạo RoomDao
-    private final SeatTypeDao seatTypeDao = new SeatTypeDao(); // Khởi tạo SeatTypeDao
 
     @FXML
     public void initialize() {
@@ -69,49 +63,8 @@ public class SeatController {
 
         addActionButtons();
         loadSeats();
-        loadRooms(); // Tải danh sách phòng
-        loadSeatTypes(); // Tải danh sách loại ghế
     }
 
-    private void loadRooms() {
-        // Danh sách Room
-        ObservableList<Room> rooms = FXCollections.observableArrayList(roomDao.findAll()); // Tải dữ liệu từ RoomDao
-        roomComboBox.setItems(rooms);
-
-        // Đặt StringConverter để hiển thị room_number
-        roomComboBox.setConverter(new StringConverter<Room>() {
-            @Override
-            public String toString(Room room) {
-                return room != null ? String.valueOf(room.getRoomNumber()) : ""; // Hiển thị room_number
-            }
-
-            @Override
-            public Room fromString(String string) {
-                // Xử lý chuyển đổi từ String về Room nếu cần
-                return roomDao.findByNumber(Integer.parseInt(string));
-            }
-        });
-    }
-
-    private void loadSeatTypes() {
-        // Danh sách SeatType
-        ObservableList<SeatType> seatTypes = FXCollections.observableArrayList(seatTypeDao.findAll()); // Tải dữ liệu từ SeatTypeDao
-        seatTypeComboBox.setItems(seatTypes);
-
-        // Đặt StringConverter để hiển thị name
-        seatTypeComboBox.setConverter(new StringConverter<SeatType>() {
-            @Override
-            public String toString(SeatType seatType) {
-                return seatType != null ? seatType.getName() : ""; // Hiển thị name
-            }
-
-            @Override
-            public SeatType fromString(String string) {
-                // Xử lý chuyển đổi từ String về SeatType nếu cần
-                return seatTypeDao.findByName(string);
-            }
-        });
-    }
 
     private void addActionButtons() {
         colAction.setCellFactory(param -> new TableCell<>() {
@@ -216,53 +169,6 @@ public class SeatController {
         }
     }
 
-    private void showSeatDialog(Seat seat) {
-        Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setTitle(seat == null ? "Add seat" : "Edit seat");
-        dialog.setHeaderText(null);
-
-        TextField seatNumberField = new TextField(seat == null ? "" : seat.getSeatNumber());
-
-        if (seat != null) {
-            roomComboBox.setValue(seat.getRoom());
-            seatTypeComboBox.setValue(seat.getSeatType());
-        }
-
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.add(new Label("Room:"), 0, 0);
-        grid.add(roomComboBox, 1, 0);
-        grid.add(new Label("Seat Type:"), 0, 1);
-        grid.add(seatTypeComboBox, 1, 1);
-        grid.add(new Label("Seat Number:"), 0, 2);
-        grid.add(seatNumberField, 1, 2);
-
-        dialog.getDialogPane().setContent(grid);
-        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-
-        dialog.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.OK) {
-                try {
-                    Room selectedRoom = roomComboBox.getValue();
-                    SeatType selectedSeatType = seatTypeComboBox.getValue();
-                    String seatNumber = seatNumberField.getText();
-
-                    if (seat == null) {
-                        seatDao.save(new Seat(null, selectedRoom, selectedSeatType, seatNumber, new Timestamp(System.currentTimeMillis())));
-                    } else {
-                        seat.setRoom(selectedRoom);
-                        seat.setSeatType(selectedSeatType);
-                        seat.setSeatNumber(seatNumber);
-                        seatDao.update(seat);
-                    }
-                    loadSeats();
-                } catch (Exception e) {
-                    showAlert("Error", "Please select a valid room and seat type!");
-                }
-            }
-        });
-    }
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

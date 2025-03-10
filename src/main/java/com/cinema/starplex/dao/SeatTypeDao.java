@@ -12,7 +12,7 @@ public class SeatTypeDao implements BaseDao<SeatType> {
 
     @Override
     public void save(SeatType seatType) {
-        String sql = "INSERT INTO seat_type (name, price) VALUES (?, ?)";
+        String sql = "INSERT INTO seat_types (name, price) VALUES (?, ?)";
         try (Connection conn = DatabaseConnection.getConn();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -46,7 +46,7 @@ public class SeatTypeDao implements BaseDao<SeatType> {
             return;
         }
 
-        String sql = "UPDATE seat_type SET name = ?, price = ? WHERE id = ?";
+        String sql = "UPDATE seat_types SET name = ?, price = ? WHERE id = ?";
         try (Connection conn = DatabaseConnection.getConn();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -65,7 +65,7 @@ public class SeatTypeDao implements BaseDao<SeatType> {
 
     @Override
     public void delete(long id) {
-        String sql = "DELETE FROM seat_type WHERE id = ?";
+        String sql = "DELETE FROM seat_types WHERE id = ?";
         try (Connection conn = DatabaseConnection.getConn();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setLong(1, id);
@@ -80,7 +80,7 @@ public class SeatTypeDao implements BaseDao<SeatType> {
 
     @Override
     public SeatType findById(long id) {
-        String sql = "SELECT * FROM seat_type WHERE id = ?";
+        String sql = "SELECT * FROM seat_types WHERE id = ?";
         try (Connection conn = DatabaseConnection.getConn();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -103,7 +103,7 @@ public class SeatTypeDao implements BaseDao<SeatType> {
     @Override
     public List<SeatType> findAll() {
         List<SeatType> seatTypes = new ArrayList<>();
-        String sql = "SELECT * FROM seat_type ORDER BY id DESC";
+        String sql = "SELECT * FROM seat_types ORDER BY id DESC";
         try (Connection conn = DatabaseConnection.getConn();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
@@ -123,7 +123,7 @@ public class SeatTypeDao implements BaseDao<SeatType> {
     }
 
     public boolean existsById(int id) {
-        String sql = "SELECT COUNT(*) FROM seat_type WHERE id = ?";
+        String sql = "SELECT COUNT(*) FROM seat_types WHERE id = ?";
         try (Connection conn = DatabaseConnection.getConn();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -139,7 +139,7 @@ public class SeatTypeDao implements BaseDao<SeatType> {
     }
 
     public SeatType findByName(String string) {
-        String sql = "SELECT * FROM seat_type WHERE name = ?";
+        String sql = "SELECT * FROM seat_types WHERE name = ?";
         try (Connection conn = DatabaseConnection.getConn();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 

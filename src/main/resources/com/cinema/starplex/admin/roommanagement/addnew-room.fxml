@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.geometry.Insets?>
+<AnchorPane prefHeight="600.0" prefWidth="1200.0"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.cinema.starplex.ui.controllers.admin.roommanagement.AddnewRoomController">
+    <AnchorPane layoutX="20.0" layoutY="20.0" styleClass="bg-white" stylesheets="@../../../../../css/admin.css"
+                AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                AnchorPane.topAnchor="0.0">
+        <!--                button go back-->
+        <VBox spacing="24" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0"
+              AnchorPane.topAnchor="24.0">
+            <Text text="Room Manager"/>
+            <HBox>
+                <Button layoutX="33.0" layoutY="34.0" mnemonicParsing="false" onAction="#handleAdd" prefHeight="30.0"
+                        prefWidth="75.0" styleClass="add-new-btn" stylesheets="@../../../../../css/admin.css" text="Add"
+                        textFill="WHITE">
+                    <font>
+                        <Font name="System Bold Italic" size="12.0"/>
+                    </font>
+                </Button>
+
+                <!-- Search Field -->
+                <TextField fx:id="searchField" layoutX="163.0" layoutY="34.0" prefHeight="30.0"
+                           promptText="Search by Seat Number" styleClass="search"
+                           stylesheets="@../../../../../css/admin.css"/>
+            </HBox>
+            <HBox spacing="10" alignment="CENTER_LEFT">
+            <GridPane hgap="10" vgap="10">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+
+                <Label text="Room Number:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="roomNumberField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Total Seats:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="totalSeatsField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <HBox GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.columnSpan="2">
+                    <Button fx:id="saveButton" text="Save" onAction="#handleSaveButton" prefWidth="80"/>
+                    <Button fx:id="updateButton" text="Update" onAction="#handleUpdateButton" prefWidth="80"
+                            disable="true"/>
+                    <Button fx:id="deleteButton" text="Delete" onAction="#handleDeleteButton" prefWidth="80"
+                            disable="true"/>
+                    <Button fx:id="clearButton" text="Clear" onAction="#handleClearButton" prefWidth="80"/>
+                </HBox>
+            </GridPane>
+
+        </VBox>
+    </AnchorPane>
+</AnchorPane>

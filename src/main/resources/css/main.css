@@ -54,3 +54,19 @@
 .table .table-cell {
     -fx-padding: 8px;
 }
+
+.p1{
+    -fx-padding:16px;
+}
+.p2{
+    -fx-padding: 24px;
+}
+.p3{
+    -fx-padding: 28px;
+}
+.p4{
+    -fx-padding: 32em;
+}
+.w-100{
+    -fx-width: 100%;
+}

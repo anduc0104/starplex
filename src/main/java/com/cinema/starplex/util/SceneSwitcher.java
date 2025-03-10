@@ -1,7 +1,9 @@
 package com.cinema.starplex.util;
 
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
 
@@ -25,18 +27,14 @@ public class SceneSwitcher {
             Scene scene = new Scene(fxmlLoader.load());
             scene.getStylesheets().add(SceneSwitcher.class.getResource("/css/main.css").toExternalForm());
             scene.getStylesheets().add(SceneSwitcher.class.getResource("/css/admin.css").toExternalForm());
-            if (fxmlFile == "LoginView.fxml") {
-                stage.setFullScreen(true);
-            }
-            stage.setScene(scene);
-            System.out.println("Stylesheets: " + scene.getStylesheets());
 
+            stage.setScene(scene);
             stage.setFullScreenExitHint("");
+
             if (fxmlFile == "LoginView.fxml") {
                 stage.setFullScreen(false);
             } else {
-//                stage.setFullScreen(true);
-                stage.setFullScreen(false);
+                stage.setMaximized(true);
             }
             stage.show();
             stage.centerOnScreen();

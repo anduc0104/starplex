@@ -61,6 +61,7 @@
 }
 
 .table{
+    -fx-width: 100%;
     -fx-table-cell-border-color: #1e242e;
 }
 
@@ -155,5 +156,7 @@
 .label-input{
     -fx-font-size: 16px;
 }
-
+.titlePage{
+    -fx-font-size: 24px;
+}
 

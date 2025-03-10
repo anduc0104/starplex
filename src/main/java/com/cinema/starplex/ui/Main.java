@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/cinema/starplex/admin/main-layout.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/cinema/starplex/LoginView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
         //css
@@ -18,14 +18,9 @@ public class Main extends Application {
 
         //font
         Font font = Font.loadFont(getClass().getResourceAsStream("/font/Montserrat-ExtraLight.ttf"), 16);
-        System.out.println(font);
 
-
-//        DatabaseInitializer.initializeDatabase();
         primaryStage.setTitle("Home Page");
         primaryStage.setScene(scene);
-//        primaryStage.setFullScreenExitHint("");
-//        primaryStage.setFullScreen(true);
         primaryStage.show();
     }
 }
