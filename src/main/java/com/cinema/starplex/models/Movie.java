@@ -3,6 +3,7 @@ package com.cinema.starplex.models;
 import java.sql.Date;
 import java.sql.Timestamp;
 import javafx.beans.property.*;
+import javafx.collections.ObservableList;
 
 
 public class Movie {
@@ -10,20 +11,20 @@ public class Movie {
     private StringProperty title;
     private StringProperty director;
     private StringProperty actors;
-    private StringProperty genre;
+    private ListProperty<Genre> genres;
     private StringProperty duration;
     private StringProperty releaseDate;
     private StringProperty description;
     private StringProperty image;
 
-    public Movie (){}
+    public Movie() {}
 
-    public Movie(IntegerProperty id, StringProperty title, StringProperty director, StringProperty actors, StringProperty genre, StringProperty duration, StringProperty releaseDate, StringProperty description, StringProperty image) {
+    public Movie(IntegerProperty id, StringProperty title, StringProperty director, StringProperty actors, ListProperty<Genre> genres, StringProperty duration, StringProperty releaseDate, StringProperty description, StringProperty image) {
         this.id = id;
         this.title = title;
         this.director = director;
         this.actors = actors;
-        this.genre = genre;
+        this.genres = genres;
         this.duration = duration;
         this.releaseDate = releaseDate;
         this.description = description;
@@ -78,16 +79,16 @@ public class Movie {
         this.actors.set(actors);
     }
 
-    public String getGenre() {
-        return genre.get();
+    public ObservableList<Genre> getGenres() {
+        return genres.get();
     }
 
-    public StringProperty genreProperty() {
-        return genre;
+    public ListProperty<Genre> genresProperty() {
+        return genres;
     }
 
-    public void setGenre(String genre) {
-        this.genre.set(genre);
+    public void setGenres(ObservableList<Genre> genres) {
+        this.genres.set(genres);
     }
 
     public String getDuration() {
