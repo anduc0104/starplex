@@ -2,6 +2,8 @@ package com.cinema.starplex.ui.controllers.staff;
 
 import com.cinema.starplex.dao.MovieDao;
 import com.cinema.starplex.models.Movie;
+import com.cinema.starplex.dao.MovieGenreDao;
+import com.cinema.starplex.models.MovieGenre;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
@@ -22,9 +24,13 @@ public class ListMovieLayoutController {
 
     private MovieDao movieDao;
 
+    private MovieGenreDao movieGenreDao;
+
     @FXML
     public void initialize() {
         movieDao = new MovieDao();
+        movieGenreDao = new MovieGenreDao();
+        loadMovieGenres();
         loadMovies();
     }
 
@@ -47,6 +53,10 @@ public class ListMovieLayoutController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private void loadMovieGenres() {
+
     }
 
     private HBox createMovieBox(Movie movie) {
@@ -83,7 +93,6 @@ public class ListMovieLayoutController {
         // Thêm các Text vào TextFlow
         textFlow.getChildren().addAll(genreText, titleText, durationText, releaseDateText, descriptionText);
         detailsBox.getChildren().add(textFlow);
-
         movieBox.getChildren().addAll(imageView, detailsBox);
         addZoomEffect(movieBox);
 

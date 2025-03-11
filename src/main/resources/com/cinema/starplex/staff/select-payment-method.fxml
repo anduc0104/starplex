@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefWidth="800" prefHeight="500" style="-fx-background-color: #121212;">
+    <VBox spacing="20" alignment="CENTER" layoutX="50" layoutY="50">
+        <!-- Thông tin phim -->
+        <GridPane hgap="10" vgap="5" style="-fx-background-color: #1E1E1E; -fx-padding: 15; -fx-border-radius: 10;">
+            <Label text="Phim" style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+            <Label text="CAPTAIN AMERICA: THẾ GIỚI MỚI - T13 - 2D" style="-fx-text-fill: white;" GridPane.columnIndex="1"/>
+
+            <Label text="Ngày giờ chiếu" style="-fx-text-fill: white;" GridPane.rowIndex="1"/>
+            <Label text="15:40 - 11/03/2025" style="-fx-text-fill: orange;" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+            <Label text="Định dạng" style="-fx-text-fill: white;" GridPane.rowIndex="2"/>
+            <Label text="2D" style="-fx-text-fill: white;" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+            <Label text="Ghế" style="-fx-text-fill: white;" GridPane.rowIndex="3"/>
+            <Label text="H10" style="-fx-text-fill: white;" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+        </GridPane>
+
+        <!-- Phương thức thanh toán -->
+        <VBox spacing="10" style="-fx-background-color: #1E1E1E; -fx-padding: 15; -fx-border-radius: 10;">
+            <Label text="Phương thức thanh toán" style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+            <RadioButton text="VietQR" style="-fx-text-fill: white;" selected="true"/>
+            <RadioButton text="VNPAY" style="-fx-text-fill: white;"/>
+            <RadioButton text="Viettel Money" style="-fx-text-fill: white;"/>
+
+            <!-- Chi phí -->
+            <GridPane hgap="10" vgap="5">
+                <Label text="Thanh toán" style="-fx-text-fill: white;"/>
+                <Label text="75.000đ" style="-fx-text-fill: white;" GridPane.columnIndex="1"/>
+                <Label text="Phí" style="-fx-text-fill: white;" GridPane.rowIndex="1"/>
+                <Label text="0đ" style="-fx-text-fill: white;" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                <Label text="Tổng cộng" style="-fx-text-fill: white;" GridPane.rowIndex="2"/>
+                <Label text="75.000đ" style="-fx-text-fill: white; -fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+            </GridPane>
+
+            <!-- Nút thanh toán -->
+            <Button text="Thanh toán" style="-fx-background-color: #EF4444; -fx-text-fill: white; -fx-font-weight: bold;" maxWidth="Infinity"/>
+        </VBox>
+    </VBox>
+</AnchorPane>
