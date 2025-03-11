@@ -1,54 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1200.0"
-            xmlns="http://javafx.com/javafx/8"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.cinema.starplex.ui.controllers.admin.seatManagement.EditSeatController">
-    <children>
-        <AnchorPane layoutX="20.0" layoutY="20.0" prefHeight="700.0" prefWidth="1300.0"
-                    styleClass="bg-white" stylesheets="@../../../../../css/admin.css">
-            <Text text="Seat Manager"/>
-            <children>
-                <!-- Nút quay lại -->
-                <Button onAction="#handleBack" fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="30.0"
-                        prefWidth="75.0" styleClass="back-btn" text="Back" textFill="WHITE"/>
+<AnchorPane prefHeight="600.0" prefWidth="1200.0" style="-fx-min-width: 100%;"
+    xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.cinema.starplex.ui.controllers.admin.seatManagement.EditSeatController">
+    <VBox spacing="24" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0"
+        AnchorPane.rightAnchor="24.0"
+        AnchorPane.topAnchor="24.0">
+        <HBox spacing="500">
+            <!-- Nút quay lại -->
+            <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false"
+                onAction="#handleBack"
+                prefHeight="30.0" prefWidth="75.0" styleClass="back-btn" text="Back"
+                textFill="WHITE" />
 
-                <!-- Tiêu đề -->
-                <Label layoutX="505.0" layoutY="9.0" text="Edit Seat" textFill="#25ff0d">
-                    <font>
-                        <Font name="System Bold" size="28.0"/>
-                    </font>
-                </Label>
+            <Text text="Edit Seat" styleClass="titlePage" />
+        </HBox>
 
-                <!-- Nhập số ghế -->
-                <Label layoutX="400.0" layoutY="150.0" text="Seat Number:" styleClass="label-input"/>
-                <TextField fx:id="seatNumberField" layoutX="530.0" layoutY="145.0" prefHeight="30.0"
-                           prefWidth="250.0" styleClass="input-field"/>
+        <VBox spacing="24">
 
+            <!-- Nhập số ghế -->
+            <VBox>
+                <Label styleClass="label-input" text="Seat Number:" />
+                <TextField fx:id="seatNumberField" prefHeight="30.0" prefWidth="1200"
+                    styleClass="input-field " />
+            </VBox>
+
+            <VBox>
                 <!-- Chọn phòng -->
-                <Label layoutX="400.0" layoutY="220.0" text="Room:" styleClass="label-input"/>
-                <ComboBox fx:id="roomComboBox" layoutX="530.0" layoutY="215.0" prefHeight="30.0"
-                          prefWidth="250.0" styleClass="input-field"/>
+                <Label styleClass="label-input" text="Room:" />
+                <ComboBox fx:id="roomComboBox" prefHeight="30.0" prefWidth="Infinity"
+                    styleClass="input-field" />
+            </VBox>
 
+            <VBox>
                 <!-- Chọn loại ghế -->
-                <Label layoutX="400.0" layoutY="290.0" text="Seat Type:" styleClass="label-input"/>
-                <ComboBox fx:id="seatTypeComboBox" layoutX="530.0" layoutY="285.0" prefHeight="30.0"
-                          prefWidth="250.0" styleClass="input-field"/>
+                <Label styleClass="label-input" text="Seat Type:" />
+                <ComboBox fx:id="seatTypeComboBox" prefHeight="30.0" prefWidth="Infinity"
+                    styleClass="input-field" />
+            </VBox>
 
-                <!-- Nút lưu và hủy -->
-                <Button onAction="#handleSave" fx:id="saveButton" layoutX="460.0" layoutY="380.0"
-                        mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0"
-                        styleClass="save-btn" text="Edit" textFill="WHITE"/>
+            <HBox alignment="CENTER_RIGHT" spacing="24">
+                <Button fx:id="saveButton" alignment="CENTER" layoutX="460.0" layoutY="380.0"
+                    mnemonicParsing="false"
+                    onAction="#handleSave" prefHeight="30.0" prefWidth="120.0" styleClass="save-btn"
+                    text="Edit"
+                    textFill="WHITE" />
 
-                <Button onAction="#handleClear" fx:id="clearButton" layoutX="620.0" layoutY="380.0"
-                        mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0"
-                        styleClass="clear-btn" text="Clear" textFill="WHITE"/>
-            </children>
-        </AnchorPane>
-    </children>
+                <Button fx:id="clearButton" layoutX="620.0" layoutY="380.0" mnemonicParsing="false"
+                    onAction="#handleClear"
+                    prefHeight="30.0" prefWidth="120.0" styleClass="clear-btn" text="Clear"
+                    textFill="WHITE" />
+            </HBox>
+        </VBox>
+    </VBox>
 </AnchorPane>

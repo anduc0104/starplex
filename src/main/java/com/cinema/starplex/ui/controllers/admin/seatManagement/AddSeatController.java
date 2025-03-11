@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.util.StringConverter;
+
 import java.sql.Timestamp;
 import java.util.Optional;
 
@@ -110,15 +111,7 @@ public class AddSeatController {
 
     @FXML
     private void handleBack(ActionEvent event) {
-        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
-        confirm.setTitle("Confirm exit");
-        confirm.setHeaderText("Are you sure you want to exit?");
-        confirm.setContentText("Changes will not be saved.");
-
-        Optional<ButtonType> result = confirm.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            returnToSeatView(event);
-        }
+        returnToSeatView(event);
     }
 
     @FXML

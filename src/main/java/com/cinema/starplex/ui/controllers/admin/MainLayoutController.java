@@ -45,7 +45,7 @@ public class MainLayoutController {
     }
 
     public void managementRoom() {
-        FXMLLoader loader = SceneSwitcher.loadView("admin/roommanagement/room-view.fxml");
+        FXMLLoader loader = SceneSwitcher.loadView("admin/roommanagement/list-room.fxml");
         assert loader != null;
         Parent newView = loader.getRoot();
         mainBorderPane.setCenter(newView);

@@ -132,15 +132,8 @@ public class EditSeatController {
 
     @FXML
     private void handleBack(ActionEvent event) {
-        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
-        confirm.setTitle("Confirm exit");
-        confirm.setHeaderText("Are you sure you want to exit?");
-        confirm.setContentText("Changes will not be saved.");
+                    returnToSeatView(event);
 
-        Optional<ButtonType> result = confirm.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            returnToSeatView(event);
-        }
     }
 
     @FXML

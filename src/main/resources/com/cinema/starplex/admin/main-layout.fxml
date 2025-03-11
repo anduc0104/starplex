@@ -34,8 +34,8 @@
                     <Button mnemonicParsing="false" onAction="#managementRoom" styleClass="nav-btn"
                             stylesheets="@../../../../css/admin.css" text="Room" textFill="WHITE"/>
                     <!--People Films-->
-                    <Button mnemonicParsing="false" onAction="#managementPeopleFilms" styleClass="nav-btn"
-                            stylesheets="@../../../../css/admin.css" text="People Films" textFill="WHITE"/>
+                    <!-- <Button mnemonicParsing="false" onAction="#managementPeopleFilms" styleClass="nav-btn"
+                            stylesheets="@../../../../css/admin.css" text="People Films" textFill="WHITE"/> -->
                     <!--Showtime -->
                     <Button mnemonicParsing="false" onAction="#managementShowtime" styleClass="nav-btn"
                             stylesheets="@../../../../css/admin.css" text="Showtime" textFill="WHITE"/>

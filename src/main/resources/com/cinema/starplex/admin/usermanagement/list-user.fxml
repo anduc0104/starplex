@@ -8,32 +8,41 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.scene.text.Text?>
-<VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.cinema.starplex.ui.controllers.admin.usermanagement.ListUserController"
+<AnchorPane prefHeight="600.0" prefWidth="1200.0" style="-fx-min-width: 100%;" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.cinema.starplex.ui.controllers.admin.usermanagement.ListUserController"
 >
-    <Text text="User Management"/>
+    <VBox spacing="24" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0"
+          AnchorPane.rightAnchor="24.0"
+          AnchorPane.topAnchor="24.0">
+        <HBox alignment="CENTER">
+            <Text text="User Manager" styleClass="titlePage" textAlignment="CENTER"/>
+        </HBox>
+        <HBox>
+            <Button layoutX="33.0" layoutY="34.0" mnemonicParsing="false" onAction="#addNewScene"
+                    prefHeight="30.0" prefWidth="75.0" styleClass="add-new-btn"
+                    stylesheets="@../../../../../css/admin.css" text="Add" textFill="WHITE">
+                <font>
+                    <Font name="System Bold Italic" size="12.0"/>
+                </font>
+            </Button>
 
-    <HBox>
-        <Button onAction="#addNewScene" layoutX="33.0" layoutY="34.0" mnemonicParsing="false" prefHeight="30.0"
-                prefWidth="75.0" styleClass="add-new-btn" stylesheets="@../../../../../css/admin.css"
-                text="Add New" textFill="WHITE">
-            <font>
-                <Font name="System Bold Italic" size="12.0"/>
-            </font>
-        </Button>
-        <TextField layoutX="163.0" layoutY="34.0" prefHeight="30.0"
-                   promptText="Search by movie title" styleClass="search"
-                   stylesheets="@../../../../../css/admin.css"/>
-    </HBox>
-    <TableView fx:id="tableView" styleClass="table" stylesheets="@../../../../../css/admin.css">
-        <columns>
-            <TableColumn fx:id="idColumn" text="ID"/>
-            <TableColumn fx:id="fullNameColumn" text="Full Name"/>
-            <TableColumn fx:id="usernameColumn" text="Username"/>
-            <TableColumn fx:id="mailColumn" text="Mail"/>
-            <TableColumn fx:id="phoneColumn" text="Phone"/>
-            <TableColumn fx:id="roleColumn" text="Role"/>
-            <TableColumn fx:id="actionColumn" text="Action"/>
-        </columns>
-    </TableView>
-</VBox>
+            <!-- Search Field -->
+            <!--            <TextField fx:id="searchField" layoutX="163.0" layoutY="34.0" prefHeight="30.0"-->
+            <!--                       promptText="Search by Seat Number" styleClass="search"-->
+            <!--                       stylesheets="@../../../../../css/admin.css"/>-->
+        </HBox>
+        <TableView fx:id="tableView" layoutX="20.0" layoutY="86.0" prefHeight="546.0" prefWidth="1260.0"
+                   styleClass="table" stylesheets="@../../../../../css/admin.css">
+            <columns>
+                <TableColumn fx:id="idColumn" text="ID"/>
+                <TableColumn fx:id="fullNameColumn" text="Full Name"/>
+                <TableColumn fx:id="usernameColumn" text="Username"/>
+                <TableColumn fx:id="mailColumn" text="Mail"/>
+                <TableColumn fx:id="phoneColumn" text="Phone"/>
+                <TableColumn fx:id="roleColumn" text="Role"/>
+                <TableColumn fx:id="actionColumn" text="Action"/>
+            </columns>
+        </TableView>
+    </VBox>
+
+</AnchorPane>

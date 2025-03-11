@@ -6,44 +6,45 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="600.0" prefWidth="1200.0"
-            xmlns="http://javafx.com/javafx/8"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.cinema.starplex.ui.controllers.admin.seatTypeManagement.AddSeatTypeController">
-    <children>
-        <AnchorPane layoutX="20.0" layoutY="20.0" prefHeight="700.0" prefWidth="1300.0"
-                    styleClass="bg-white" stylesheets="@../../../../../css/admin.css">
-            <Text text="Seat Type Manager"/>
-            <children>
-                <!-- Nút quay lại -->
-                <Button onAction="#handleBack" fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="30.0"
-                        prefWidth="75.0" styleClass="back-btn" text="Back" textFill="WHITE"/>
+    xmlns="http://javafx.com/javafx/8"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.cinema.starplex.ui.controllers.admin.seatTypeManagement.AddSeatTypeController">
+    <VBox spacing="24" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0"
+        AnchorPane.rightAnchor="24.0"
+        AnchorPane.topAnchor="24.0">
+        <HBox spacing="500">
+            <!-- Nút quay lại -->
+            <Button onAction="#handleBack" fx:id="backButton" mnemonicParsing="false"
+                layoutX="14.0" layoutY="14.0"
+                prefHeight="30.0"
+                prefWidth="75.0" styleClass="back-btn" text="Back" textFill="WHITE" />
 
-                <!-- Tiêu đề -->
-                <Label layoutX="505.0" layoutY="9.0" text="Add New Seat Type" textFill="#25ff0d">
-                    <font>
-                        <Font name="System Bold" size="28.0"/>
-                    </font>
-                </Label>
+            <Text text="Seat Type Manager" />
+        </HBox>
+        <!-- Nhập tên loại ghế -->
+        <VBox>
+            <Label layoutX="400.0" layoutY="150.0" text="Chair Type Name:" styleClass="label-input" />
+            <TextField fx:id="nameField" layoutX="530.0" layoutY="145.0" prefHeight="30.0"
+                prefWidth="250.0" styleClass="input-field" />
+        </VBox>
 
-                <!-- Nhập tên loại ghế -->
-                <Label layoutX="400.0" layoutY="150.0" text="Chair Type Name:" styleClass="label-input"/>
-                <TextField fx:id="nameField" layoutX="530.0" layoutY="145.0" prefHeight="30.0"
-                           prefWidth="250.0" styleClass="input-field"/>
+        <!-- Nhập giá ghế -->
+        <VBox>
+            <Label layoutX="400.0" layoutY="220.0" text="Seat Price:" styleClass="label-input" />
+            <TextField fx:id="priceField" layoutX="530.0" layoutY="215.0" prefHeight="30.0"
+                prefWidth="250.0" styleClass="input-field" />
+        </VBox>
 
-                <!-- Nhập giá ghế -->
-                <Label layoutX="400.0" layoutY="220.0" text="Seat Price:" styleClass="label-input"/>
-                <TextField fx:id="priceField" layoutX="530.0" layoutY="215.0" prefHeight="30.0"
-                           prefWidth="250.0" styleClass="input-field"/>
+        <!-- Nút lưu và hủy -->
+        <HBox alignment="CENTER_RIGHT" spacing="24">
+            <!-- Nút lưu và hủy -->
+            <Button onAction="#handleSave" fx:id="saveButton" layoutX="460.0" layoutY="380.0"
+                mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0"
+                styleClass="save-btn" text="Save" textFill="WHITE" />
 
-                <!-- Nút lưu và hủy -->
-                <Button onAction="#handleSave" fx:id="saveButton" layoutX="460.0" layoutY="350.0"
-                        mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0"
-                        styleClass="save-btn" text="Save" textFill="WHITE"/>
-
-                <Button onAction="#handleClear" fx:id="clearButton" layoutX="620.0" layoutY="350.0"
-                        mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0"
-                        styleClass="clear-btn" text="Clear" textFill="WHITE"/>
-            </children>
-        </AnchorPane>
-    </children>
+            <Button onAction="#handleClear" fx:id="clearButton" layoutX="620.0" layoutY="380.0"
+                mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0"
+                styleClass="clear-btn" text="Clear" textFill="WHITE" />
+        </HBox>
+    </VBox>
 </AnchorPane>

@@ -21,14 +21,11 @@
                   <Font name="System Bold Italic" size="12.0" />
                </font>
             </Button>
-            <TextField layoutX="163.0" layoutY="34.0" prefHeight="30.0"
-               promptText="Search by movie title" styleClass="search"
-               stylesheets="@../../../../../css/admin.css" />
-            <TableView fx:id="movieTable" layoutX="20.0" layoutY="86.0" prefHeight="460.0"
-               prefWidth="1120.0" styleClass="table" stylesheets="@../../../../../css/admin.css">
-               <columns>
-                  <TableColumn fx:id="idColumn" prefWidth="35.0" text="ID" />
-                  <TableColumn fx:id="imageColumn" prefWidth="115.0" text="Image" />
+            <TextField fx:id="searchField" layoutX="163.0" layoutY="34.0" prefHeight="30.0" promptText="Search by movie title" styleClass="search" stylesheets="@../../../../../css/admin.css" />
+            <TableView fx:id="movieTable" layoutX="20.0" layoutY="86.0" prefHeight="460.0" prefWidth="1120.0" styleClass="table" stylesheets="@../../../../../css/admin.css">
+              <columns>
+                <TableColumn fx:id="idColumn" prefWidth="35.0" text="ID" />
+                <TableColumn fx:id="imageColumn" prefWidth="115.0" text="Image" />
                   <TableColumn fx:id="titleColumn" prefWidth="117.0" text="Movie title" />
                   <TableColumn fx:id="directorColumn" prefWidth="95.0" text="Director" />
                   <TableColumn fx:id="actorsColumn" prefWidth="95.0" text="Actors" />
