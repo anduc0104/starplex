@@ -13,7 +13,7 @@
         AnchorPane.rightAnchor="24.0"
         AnchorPane.topAnchor="24.0">
         <HBox alignment="CENTER">
-            <Text text="Seat Type Manager" styleClass="titlePage" textAlignment="CENTER" />
+            <Text text="Seat Type Management" styleClass="titlePage" textAlignment="CENTER" />
         </HBox>
         <HBox>
             <!-- Button Add -->

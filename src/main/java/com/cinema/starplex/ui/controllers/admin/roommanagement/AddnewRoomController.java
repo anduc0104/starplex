@@ -33,7 +33,7 @@ public class AddnewRoomController {
 
     private void returnToRoomView(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cinema/starplex/admin/roomanagement/list-room.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cinema/starplex/admin/roommanagement/list-room.fxml"));
             Parent seatView = loader.load();
 
             AnchorPane root = (AnchorPane) ((Button) event.getSource()).getScene().getRoot();
@@ -75,13 +75,7 @@ public class AddnewRoomController {
     }
 
     @FXML
-    private void handleClearButton(ActionEvent event) {
-        roomNumberField.clear();
-        totalSeatsField.clear();
-    }
-
-    @FXML
-    private void handleSaveButton(ActionEvent event) {
+    private void handleSave(ActionEvent event) {
         if (validateFields()) {
             Room room = new Room();
             room.setRoomNumber(Integer.parseInt(roomNumberField.getText()));
@@ -92,7 +86,7 @@ public class AddnewRoomController {
 
                 if (success) {
                     showAlert(Alert.AlertType.INFORMATION, "Success", "Room saved successfully");
-                    clearFields();
+                    handleClear();
                     returnToRoomView(event);
                 } else {
                     showAlert(Alert.AlertType.ERROR, "Error", "Failed to save room");
@@ -103,12 +97,6 @@ public class AddnewRoomController {
         }
     }
 
-    private void clearFields() {
-        roomNumberField.clear();
-        totalSeatsField.clear();
-        selectedRoom = null;
-    }
-
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -117,4 +105,9 @@ public class AddnewRoomController {
         alert.showAndWait();
     }
 
+
+    public void handleClear() {
+        roomNumberField.clear();
+        totalSeatsField.clear();
+    }
 }

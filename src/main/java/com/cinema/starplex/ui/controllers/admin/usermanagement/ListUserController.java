@@ -48,82 +48,92 @@ public class ListUserController {
     public void initialize() {
         userDao = new UserDao();
         configAttribute();
-//        addActionButtons();
+        addActionButtons();
         loadUserData();
 
     }
 
-//    private void addActionButtons() {
-//        actionColumn.setCellFactory(new Callback<>() {
-//            @Override
-//            public TableCell<UserFX, Void> call(final TableColumn<UserFX, Void> param) {
-//                return new TableCell<>() {
-//                    private final HBox actionBox = createActionButtons();
-//
-//                    @Override
-//                    protected void updateItem(Void item, boolean empty) {
-//                        super.updateItem(item, empty);
-//                        if (empty) {
-//                            setGraphic(null);
-//                        } else {
-//                            UserFX userFX = getTableView().getItems().get(getIndex());
-//                            setActionHandlers(actionBox, userFX);
-//                            setGraphic(actionBox);
-//                        }
-//                    }
-//                };
-//            }
-//        });
-//    }
-//
-//    private HBox createActionButtons() {
-//        HBox hBox = new HBox(10);
-//        hBox.setAlignment(Pos.CENTER);
-//
-//        FontIcon editIcon = new FontIcon(FontAwesomeSolid.EDIT);
-//        FontIcon trashIcon = new FontIcon(FontAwesomeSolid.TRASH_ALT);
-//
-//        editIcon.setIconSize(20);
-//        editIcon.setIconColor(Paint.valueOf("#4CAF50")); // Màu xanh lá cho "Sửa"
-//        trashIcon.setIconSize(20);
-//        trashIcon.setIconColor(Paint.valueOf("#F44336")); // Màu đỏ cho "Xóa"
-//
-//        hBox.getChildren().addAll(editIcon, trashIcon);
-//        return hBox;
-//    }
-//
-//    private void setActionHandlers(HBox actionBox, UserFX userFX) {
-//        FontIcon editIcon = (FontIcon) actionBox.getChildren().get(0);
-//        FontIcon trashIcon = (FontIcon) actionBox.getChildren().get(1);
-//
-//        editIcon.setOnMouseClicked(event -> handleEdit(userFX));
-//        trashIcon.setOnMouseClicked(event -> handleDelete(userFX));
-//    }
+    private void addActionButtons() {
+        actionColumn.setCellFactory(param -> new TableCell<>() {
+            private final HBox actionBox = new HBox(10);
 
-//    private void handleEdit(UserFX userFX) {
-//        if (userFX == null) {
-//            showAlert("Error", "Please select a chair type to repair!");
-//            return;
-//        }
-//
-//        FXMLLoader loader = SceneSwitcher.loadView("admin/usermanagement/edit-user.fxml");
-//        if (loader != null) {
-//            EditUserController controller = loader.getController();
-//            controller.setUser(userFX);
-//
-//            Parent newView = loader.getRoot();
-//            AnchorPane anchorPane = (AnchorPane) TableView.getScene().getRoot();
-//            BorderPane mainPane = (BorderPane) anchorPane.lookup("#mainBorderPane");
-//
-//            if (mainPane != null) {
-//                mainPane.setCenter(newView);
-//            } else {
-//                System.err.println("BorderPane with ID 'mainBorderPane' not found");
-//            }
-//        } else {
-//            System.err.println("Could not load edit-seat-type.fxml");
-//        }
-//    }
+            private final FontIcon editIcon = new FontIcon(FontAwesomeSolid.EDIT);
+            private final FontIcon deleteIcon = new FontIcon(FontAwesomeSolid.TRASH_ALT);
+
+            {
+                // Đặt kích thước và màu sắc cho các biểu tượng
+                editIcon.setIconSize(20);
+                editIcon.setIconColor(Paint.valueOf("#4CAF50")); // Màu xanh lá cho "Sửa"
+
+                deleteIcon.setIconSize(20);
+                deleteIcon.setIconColor(Paint.valueOf("#F44336")); // Màu đỏ cho "Xóa"
+
+                actionBox.getChildren().addAll(editIcon, deleteIcon);
+                actionBox.setAlignment(Pos.CENTER); // Căn giữa HBox
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    UserFX user = getTableView().getItems().get(getIndex());
+                    setActionHandlers(actionBox, user);
+                    setGraphic(actionBox);
+                }
+            }
+        });
+    }
+
+    private HBox createActionButtons() {
+        HBox hBox = new HBox(10);
+        hBox.setAlignment(Pos.CENTER);
+
+        FontIcon editIcon = new FontIcon(FontAwesomeSolid.EDIT);
+        FontIcon trashIcon = new FontIcon(FontAwesomeSolid.TRASH_ALT);
+
+        editIcon.setIconSize(20);
+        editIcon.setIconColor(Paint.valueOf("#4CAF50")); // Màu xanh lá cho "Sửa"
+        trashIcon.setIconSize(20);
+        trashIcon.setIconColor(Paint.valueOf("#F44336")); // Màu đỏ cho "Xóa"
+
+        hBox.getChildren().addAll(editIcon, trashIcon);
+        return hBox;
+    }
+
+    private void setActionHandlers(HBox actionBox, UserFX userFX) {
+        FontIcon editIcon = (FontIcon) actionBox.getChildren().get(0);
+        FontIcon trashIcon = (FontIcon) actionBox.getChildren().get(1);
+
+        editIcon.setOnMouseClicked(event -> handleEdit(userFX));
+        trashIcon.setOnMouseClicked(event -> handleDelete(userFX));
+    }
+
+    private void handleEdit(UserFX userFX) {
+        if (userFX == null) {
+            showAlert("Error", "Please select a chair type to repair!");
+            return;
+        }
+
+        FXMLLoader loader = SceneSwitcher.loadView("admin/usermanagement/edit-user.fxml");
+        if (loader != null) {
+            EditUserController controller = loader.getController();
+            controller.setUser(userFX);
+
+            Parent newView = loader.getRoot();
+            AnchorPane anchorPane = (AnchorPane) tableView.getScene().getRoot();
+            BorderPane mainPane = (BorderPane) anchorPane.lookup("#mainBorderPane");
+
+            if (mainPane != null) {
+                mainPane.setCenter(newView);
+            } else {
+                System.err.println("BorderPane with ID 'mainBorderPane' not found");
+            }
+        } else {
+            System.err.println("Could not load edit-seat-type.fxml");
+        }
+    }
 
     private void handleDelete(UserFX userFX) {
         if (userFX == null) {

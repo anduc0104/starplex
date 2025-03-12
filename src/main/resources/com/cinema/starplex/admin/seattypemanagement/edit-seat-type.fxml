@@ -20,7 +20,7 @@
                 prefHeight="30.0" prefWidth="75.0" styleClass="back-btn" text="Back"
                 textFill="WHITE" />
 
-            <Text text="Edit Seat Type" styleClass="titlePage" />
+            <Text text="Edit seat type" styleClass="titlePage" />
         </HBox>
 
         <!-- Nhập tên loại ghế -->
@@ -38,13 +38,13 @@
         </VBox>
 
         <HBox alignment="CENTER_RIGHT" spacing="24">
-            <Button fx:id="saveButton" alignment="CENTER" layoutX="460.0" layoutY="380.0"
+            <Button fx:id="saveButton" alignment="CENTER"
                 mnemonicParsing="false"
                 onAction="#handleSave" prefHeight="30.0" prefWidth="120.0" styleClass="save-btn"
                 text="Edit"
                 textFill="WHITE" />
 
-            <Button fx:id="clearButton" layoutX="620.0" layoutY="380.0" mnemonicParsing="false"
+            <Button fx:id="clearButton" alignment="CENTER" 
                 onAction="#handleClear"
                 prefHeight="30.0" prefWidth="120.0" styleClass="clear-btn" text="Clear"
                 textFill="WHITE" />

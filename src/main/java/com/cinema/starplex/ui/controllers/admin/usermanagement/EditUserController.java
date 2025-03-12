@@ -60,16 +60,26 @@ public class EditUserController {
         userDao = new UserDao();
     }
 
-    public void goBack(ActionEvent event) {
-        FXMLLoader loader = SceneSwitcher.loadView("admin/usermanagement/list-user.fxml");
-        if (loader != null) {
-            Parent newView = loader.getRoot(); // Lấy Root từ FXMLLoader
-            AnchorPane anchorPane = (AnchorPane) ((Node) event.getSource()).getScene().getRoot();
-            BorderPane mainPane = (BorderPane) anchorPane.lookup("#mainBorderPane");
-            mainPane.setCenter(newView); // Thay đổi nội dung của center
-        } else {
-            System.err.println("Failed to load addnew-user.fxml");
+    private void returnToUserView(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cinema/starplex/admin/usermanagement/list-user.fxml"));
+            Parent seatView = loader.load();
+
+            AnchorPane root = (AnchorPane) ((Button) event.getSource()).getScene().getRoot();
+            BorderPane mainPane = (BorderPane) root.lookup("#mainBorderPane");
+
+            if (mainPane != null) {
+                mainPane.setCenter(seatView);
+            } else {
+                System.err.println("BorderPane with ID 'mainBorderPane' not found");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
+
+    public void goBack(ActionEvent event) {
+        returnToUserView(event);
     }
 
     public void setUser(UserFX user) {
@@ -164,7 +174,7 @@ public class EditUserController {
                 userDao.update(existingUser);
 //                System.out.println(existingUser.getRole());
                 showAlert("Success", "User updated successfully!", Alert.AlertType.INFORMATION);
-                goBack(event);
+                returnToUserView(event);
             } catch (Exception e) {
                 showAlert("Error", "Failed to update user: " + e.getMessage(), Alert.AlertType.ERROR);
             }
@@ -212,5 +222,17 @@ public class EditUserController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public void handleClear(ActionEvent event) {
+        usernameField.clear();
+        passwordField.clear();
+        passwordConfirmedField.clear();
+        fullNameField.clear();
+        emailField.clear();
+        phoneField.clear();
+        roleComboBox.setValue(null);
+        //Xóa thong bao loi
+        clearErrors();
     }
 }

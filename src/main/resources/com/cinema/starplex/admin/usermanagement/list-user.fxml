@@ -15,7 +15,7 @@
           AnchorPane.rightAnchor="24.0"
           AnchorPane.topAnchor="24.0">
         <HBox alignment="CENTER">
-            <Text text="User Manager" styleClass="titlePage" textAlignment="CENTER"/>
+            <Text text="User Management" styleClass="titlePage" textAlignment="CENTER"/>
         </HBox>
         <HBox>
             <Button layoutX="33.0" layoutY="34.0" mnemonicParsing="false" onAction="#addNewScene"
@@ -44,5 +44,4 @@
             </columns>
         </TableView>
     </VBox>
-
 </AnchorPane>

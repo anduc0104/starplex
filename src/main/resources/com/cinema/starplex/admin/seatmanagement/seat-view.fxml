@@ -17,7 +17,7 @@
           AnchorPane.rightAnchor="24.0"
           AnchorPane.topAnchor="24.0">
         <HBox alignment="CENTER">
-            <Text text="Seat Manager" styleClass="titlePage" textAlignment="CENTER"/>
+            <Text text="Seat Management" styleClass="titlePage" textAlignment="CENTER"/>
         </HBox>
         <HBox>
             <Button layoutX="33.0" layoutY="34.0" mnemonicParsing="false" onAction="#handleAdd"
