@@ -1,5 +1,10 @@
 package com.cinema.starplex.models;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import java.sql.Timestamp;
 
 
@@ -7,6 +12,7 @@ public class User {
     private Integer id;
     private String fullName;
     private String username;
+    private String full_name;
     private String email;
     private String password;
     private String phone;
@@ -16,9 +22,10 @@ public class User {
     public User() {
     }
 
-    public User(Integer id, String username, String email, String password, String phone, String role, Timestamp createdAt) {
+    public User(Integer id, String username, String full_name, String email, String password, String phone, String role, Timestamp createdAt) {
         this.id = id;
         this.username = username;
+        this.full_name = full_name;
         this.email = email;
         this.password = password;
         this.phone = phone;
@@ -39,6 +46,43 @@ public class User {
         this.username = username;
         this.password = hashedPassword;
     }
+
+    public User(int id, String fullname, String username, String email, String phone, String role) {
+        this.id = id;
+        this.full_name = fullname;
+        this.username = username;
+        this.email = email;
+        this.phone = phone;
+        this.role = role;
+    }
+
+    public User(String fullName, String username, String email, String password, String phone, String role) {
+        this.full_name = fullName;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.role = role;
+    }
+
+    public User(int id, String fullName, String username, String email, String phone, String role, String password) {
+        this.id = id;
+        this.full_name = fullName;
+        this.username = username;
+        this.email = email;
+        this.phone = phone;
+        this.role = role;
+        this.password = password;
+    }
+
+//    public User(IntegerProperty id, StringProperty fullname, StringProperty username, StringProperty email, StringProperty phone, StringProperty role) {
+//        this.id = id;
+//        this.full_name = String.valueOf(fullname);
+//        this.username = String.valueOf(username);
+//        this.email = String.valueOf(email);
+//        this.phone = phone;
+//        this.role = role;
+//    }
 
     // Getters and Setters
 
@@ -106,13 +150,11 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    public User(Integer id, String username, String email, String password, String phone, String role) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.phone = phone;
-        this.role = role;
-        this.createdAt = createdAt;
+    public String getFull_name() {
+        return full_name;
+    }
+
+    public void setFull_name(String full_name) {
+        this.full_name = full_name;
     }
 }

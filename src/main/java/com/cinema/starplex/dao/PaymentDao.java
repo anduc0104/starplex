@@ -21,7 +21,7 @@ public class PaymentDao implements BaseDao<Payment>{
     }
 
     @Override
-    public void delete(Payment entity) {
+    public void delete(long id) {
 
     }
 

@@ -7,15 +7,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class MainLayoutController {
     @FXML
-    Button buttonLogout;
+    MenuItem buttonLogout;
 
     @FXML
     private BorderPane mainBorderPane;
+
 
     public void logout(ActionEvent actionEvent) {
         SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(), "LoginView.fxml");
@@ -41,9 +43,10 @@ public class MainLayoutController {
         Parent newView = loader.getRoot();
         mainBorderPane.setCenter(newView);
     }
-    public void managementRoom(){
-        FXMLLoader loader = SceneSwitcher.loadView("admin/roommanagement/room-view.fxml");
-        assert loader!= null;
+
+    public void managementRoom() {
+        FXMLLoader loader = SceneSwitcher.loadView("admin/roommanagement/list-room.fxml");
+        assert loader != null;
         Parent newView = loader.getRoot();
         mainBorderPane.setCenter(newView);
     }
@@ -52,5 +55,19 @@ public class MainLayoutController {
     }
 
     public void managementShowtime(ActionEvent event) {
+    }
+
+    public void managementSeat() {
+        FXMLLoader loader = SceneSwitcher.loadView("admin/seatmanagement/seat-view.fxml");
+        assert loader != null;
+        Parent newView = loader.getRoot();
+        mainBorderPane.setCenter(newView);
+    }
+
+    public void managementSeatType() {
+        FXMLLoader loader = SceneSwitcher.loadView("admin/seattypemanagement/seat-type-view.fxml");
+        assert loader != null;
+        Parent newView = loader.getRoot();
+        mainBorderPane.setCenter(newView);
     }
 }

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.cinema.starplex.ui.controllers.admin.roommanagement.EditRoomController"
+            prefHeight="400.0" prefWidth="600.0">
+    <VBox spacing="24" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0"
+          AnchorPane.rightAnchor="24.0"
+          AnchorPane.topAnchor="24.0">
+        <HBox spacing="500">
+            <!-- Nút quay lại -->
+            <Button onAction="#handleBack" fx:id="backButton"
+                    layoutX="14.0" layoutY="14.0"
+                    prefHeight="30.0"
+                    prefWidth="75.0" styleClass="back-btn" text="Back" textFill="WHITE"/>
+            <Text text="Add new room" styleClass="titlePage"/>
+        </HBox>
+        <!--                button go back-->
+        <VBox spacing="24">
+            <VBox spacing="16">
+                <VBox>
+                    <Label text="Room Number:"/>
+                    <TextField fx:id="roomNumberField"/>
+                </VBox>
+                <VBox>
+                    <Label text="Total Seats:"/>
+                    <TextField fx:id="totalSeatsField"/>
+                </VBox>
+                <HBox alignment="CENTER_RIGHT" spacing="24">
+                    <Button fx:id="saveButton" alignment="CENTER"
+                            onAction="#handleSave" prefHeight="30.0" prefWidth="120.0" styleClass="save-btn"
+                            text="Edit"
+                            textFill="WHITE"/>
+                    <Button fx:id="clearButton" alignment="CENTER"
+                            onAction="#handleClear"
+                            prefHeight="30.0" prefWidth="120.0" styleClass="clear-btn" text="Clear"
+                            textFill="WHITE"/>
+                </HBox>
+            </VBox>
+        </VBox>
+    </VBox>
+</AnchorPane>

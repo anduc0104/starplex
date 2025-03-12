@@ -21,7 +21,7 @@ public class MovieTypeDao implements BaseDao<MovieType>{
     }
 
     @Override
-    public void delete(MovieType entity) {
+    public void delete(long id) {
 
     }
 

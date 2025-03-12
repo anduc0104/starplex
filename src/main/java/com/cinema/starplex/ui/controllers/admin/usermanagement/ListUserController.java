@@ -1,12 +1,14 @@
 package com.cinema.starplex.ui.controllers.admin.usermanagement;
 
 import com.cinema.starplex.dao.UserDao;
+import com.cinema.starplex.models.User;
 import com.cinema.starplex.models.UserFX;
 import com.cinema.starplex.util.SceneSwitcher;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
@@ -14,8 +16,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Paint;
+import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
+import org.kordamp.ikonli.javafx.FontIcon;
 
+import javax.security.auth.callback.Callback;
 import java.io.IOException;
+import java.util.Optional;
 
 public class ListUserController {
     @FXML
@@ -41,30 +48,28 @@ public class ListUserController {
     public void initialize() {
         userDao = new UserDao();
         configAttribute();
-        setupActionColumn();
+        addActionButtons();
         loadUserData();
 
     }
 
-    private void setupActionColumn() {
+    private void addActionButtons() {
         actionColumn.setCellFactory(param -> new TableCell<>() {
-            private final Button editButton = new Button("Edit");
-            private final Button deleteButton = new Button("Delete");
-            private final HBox buttonBox = new HBox(10, editButton, deleteButton);
+            private final HBox actionBox = new HBox(10);
+
+            private final FontIcon editIcon = new FontIcon(FontAwesomeSolid.EDIT);
+            private final FontIcon deleteIcon = new FontIcon(FontAwesomeSolid.TRASH_ALT);
 
             {
-                editButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
-                deleteButton.setStyle("-fx-background-color: #F44336; -fx-text-fill: white;");
+                // Đặt kích thước và màu sắc cho các biểu tượng
+                editIcon.setIconSize(20);
+                editIcon.setIconColor(Paint.valueOf("#4CAF50")); // Màu xanh lá cho "Sửa"
 
-                editButton.setOnAction(event -> {
-                    UserFX user = getTableView().getItems().get(getIndex());
-                    handleEdit(user, event);
-                });
+                deleteIcon.setIconSize(20);
+                deleteIcon.setIconColor(Paint.valueOf("#F44336")); // Màu đỏ cho "Xóa"
 
-                deleteButton.setOnAction(event -> {
-                    UserFX user = getTableView().getItems().get(getIndex());
-                    handleDelete(user);
-                });
+                actionBox.getChildren().addAll(editIcon, deleteIcon);
+                actionBox.setAlignment(Pos.CENTER); // Căn giữa HBox
             }
 
             @Override
@@ -73,43 +78,75 @@ public class ListUserController {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    setGraphic(buttonBox);
+                    UserFX user = getTableView().getItems().get(getIndex());
+                    setActionHandlers(actionBox, user);
+                    setGraphic(actionBox);
                 }
             }
         });
     }
 
+    private HBox createActionButtons() {
+        HBox hBox = new HBox(10);
+        hBox.setAlignment(Pos.CENTER);
 
-    private void handleEdit(UserFX user, ActionEvent event) {
+        FontIcon editIcon = new FontIcon(FontAwesomeSolid.EDIT);
+        FontIcon trashIcon = new FontIcon(FontAwesomeSolid.TRASH_ALT);
+
+        editIcon.setIconSize(20);
+        editIcon.setIconColor(Paint.valueOf("#4CAF50")); // Màu xanh lá cho "Sửa"
+        trashIcon.setIconSize(20);
+        trashIcon.setIconColor(Paint.valueOf("#F44336")); // Màu đỏ cho "Xóa"
+
+        hBox.getChildren().addAll(editIcon, trashIcon);
+        return hBox;
+    }
+
+    private void setActionHandlers(HBox actionBox, UserFX userFX) {
+        FontIcon editIcon = (FontIcon) actionBox.getChildren().get(0);
+        FontIcon trashIcon = (FontIcon) actionBox.getChildren().get(1);
+
+        editIcon.setOnMouseClicked(event -> handleEdit(userFX));
+        trashIcon.setOnMouseClicked(event -> handleDelete(userFX));
+    }
+
+    private void handleEdit(UserFX userFX) {
+        if (userFX == null) {
+            showAlert("Error", "Please select a chair type to repair!");
+            return;
+        }
+
         FXMLLoader loader = SceneSwitcher.loadView("admin/usermanagement/edit-user.fxml");
         if (loader != null) {
-            Parent newView = loader.getRoot(); // Lấy Root từ FXMLLoader
-
             EditUserController controller = loader.getController();
-            if (controller != null) {
-                controller.setUser(user); // Truyền dữ liệu vào EditUserController
-            }
+            controller.setUser(userFX);
 
-            AnchorPane anchorPane = (AnchorPane) ((Node) event.getSource()).getScene().getRoot();
+            Parent newView = loader.getRoot();
+            AnchorPane anchorPane = (AnchorPane) tableView.getScene().getRoot();
             BorderPane mainPane = (BorderPane) anchorPane.lookup("#mainBorderPane");
-            mainPane.setCenter(newView); // Thay đổi nội dung của center
+
+            if (mainPane != null) {
+                mainPane.setCenter(newView);
+            } else {
+                System.err.println("BorderPane with ID 'mainBorderPane' not found");
+            }
         } else {
-            System.err.println("Failed to load edit-user.fxml");
+            System.err.println("Could not load edit-seat-type.fxml");
         }
     }
 
-    private void handleDelete(UserFX user) {
-        try {
-            System.out.println("Delete user: " + user.idProperty().get());
-            userDao.deleteUserFX(user);
-            loadUserData();
-            showAlert("Success", "User has been deleted successfully", Alert.AlertType.INFORMATION);
-        } catch (Exception e) {
-            System.out.println("Error deleting user: " + e.getMessage());
-            e.printStackTrace();
-            showAlert("Error", "Failed to delete user: " + e.getMessage(), Alert.AlertType.ERROR);
+    private void handleDelete(UserFX userFX) {
+        if (userFX == null) {
+            showAlert("Error", "Please select a chair type to delete!");
+            return;
         }
-        // Hiển thị hộp thoại xác nhận và xóa User từ database
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this chair type?", ButtonType.YES, ButtonType.NO);
+        Optional<ButtonType> result = confirm.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.YES) {
+            userDao.delete(userFX.idProperty().longValue());
+            loadUserData();
+            showAlert("Success", "User has been deleted successfully");
+        }
     }
 
 
@@ -142,8 +179,8 @@ public class ListUserController {
         }
     }
 
-    private void showAlert(String title, String message, Alert.AlertType alertType) {
-        Alert alert = new Alert(alertType);
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);

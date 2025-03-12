@@ -19,7 +19,7 @@ public class RoomController {
     }
 
     public void deleteRoom(Room room) {
-        roomDao.delete(room);
+        roomDao.delete(room.getId().longValue());
         System.out.println("Room deleted successfully!");
     }
 

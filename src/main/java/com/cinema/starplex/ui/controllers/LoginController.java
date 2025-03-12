@@ -40,18 +40,13 @@ public class LoginController {
         if (!validateFields(username, password)) {
             return;
         }
-        System.out.println(username);
-        System.out.println(password);
-
-
         UserDao userDao = new UserDao();
         User user = userDao.login(username, password);
         if (user != null) {
             System.out.println("login successful");
             System.out.println(user);
             Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            SceneSwitcher.switchTo(currentStage, "Dashboard-View.fxml");
-//            SceneSwitcher.switchTo(currentStage, "staff/staff-detail.fxml");
+            SceneSwitcher.switchTo(currentStage, "admin/main-layout.fxml");
         } else {
             System.out.println("login failed");
             showError(usernameField, usernameError, "Invalid username or password");
@@ -95,12 +90,4 @@ public class LoginController {
         passwordField.setStyle("");
     }
 
-    public void switchToRegister(ActionEvent actionEvent) {
-        try {
-            SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),"RegisterView.fxml");
-            System.out.println("Register scene loaded");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

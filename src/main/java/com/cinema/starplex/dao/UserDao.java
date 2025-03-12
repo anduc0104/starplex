@@ -3,50 +3,123 @@ package com.cinema.starplex.dao;
 import com.cinema.starplex.models.User;
 import com.cinema.starplex.models.UserFX;
 import com.cinema.starplex.util.DatabaseConnection;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserDao implements BaseDao<User> {
-    private Connection connection;
+    private User user;
+    private Connection conn;
 
     public UserDao() {
-        this.connection = DatabaseConnection.getConn();
+        user = new User();
+        conn = DatabaseConnection.getConn();
+    }
+
+    @Override
+    public void save(User user) {
+        String sql = "INSERT INTO users (username, password, full_name, email, phone, role) VALUES (?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, user.getUsername());
+            pstmt.setString(2, BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+            pstmt.setString(3, user.getFull_name()); // Sửa lại chỗ này nếu getter đúng là getFullName()
+            pstmt.setString(4, user.getEmail());
+            pstmt.setString(5, user.getPhone());
+            pstmt.setString(6, user.getRole());
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean isUsernameExists(String username) {
+        String query = "SELECT COUNT(*) FROM users WHERE username = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0; // Nếu COUNT(*) > 0 thì username đã tồn tại
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 
-    public UserDao(Connection connection) {
-        this.connection = connection;
+    @Override
+    public boolean insert(User entity) {
+        return false;
+    }
+
+    @Override
+    public void update(User user) {
+        String sql = "UPDATE users SET full_name = ?, username = ? , email = ?, phone = ?, role = ? WHERE id = ?";
+        boolean updatePassword = (user.getPassword() != null && !user.getPassword().isEmpty());
+
+        if (updatePassword) {
+            sql = "UPDATE users SET full_name = ?, username = ? , email = ?, phone = ?, role = ?, password = ? WHERE id = ?";
+        }
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, user.getFull_name());
+            pstmt.setString(2, user.getUsername());
+            pstmt.setString(3, user.getEmail());
+            pstmt.setString(4, user.getPhone());
+            pstmt.setString(5, user.getRole());
+
+            if (updatePassword) {
+                pstmt.setString(6, BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+                pstmt.setInt(7, user.getId());
+            } else {
+                pstmt.setInt(6, user.getId());
+            }
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error updating user: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void delete(long id) {
+        System.out.println(id);
+        String sql = "DELETE FROM users WHERE id = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setLong(1, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error deleting user: " + e.getMessage());
+        }
     }
 
     @Override
     public User findById(long id) {
         String query = "SELECT * FROM users WHERE id = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setLong(1, id);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    return mapResultSetToUser(resultSet);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setLong(1, id);
+            ResultSet rs = stmt.executeQuery();
 
-    public User findByUsername(String username) {
-        String query = "SELECT * FROM users WHERE username = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, username);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    return mapResultSetToUser(resultSet);
-                }
+            if (rs.next()) {
+                return new User(
+                        rs.getInt("id"),
+                        rs.getString("full_name"),
+                        rs.getString("username"),
+                        rs.getString("email"),
+                        rs.getString("phone"),
+                        rs.getString("role"),
+                        rs.getString("password") // Lấy password cũ nếu không cập nhật
+                );
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -56,213 +129,58 @@ public class UserDao implements BaseDao<User> {
 
     @Override
     public List<User> findAll() {
-        List<User> users = new ArrayList<>();
-        String query = "SELECT * FROM users";
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
-            while (resultSet.next()) {
-                users.add(mapResultSetToUser(resultSet));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return users;
-    }
 
-    @Override
-    public void save(User user) {
-        if (user.getId() == null) {
-            insert(user);
-        } else {
-            update(user);
-        }
-    }
-
-    @Override
-    public boolean insert(User user) {
-        if (connection == null) {
-            throw new IllegalStateException("Database connection is NULL!");
-        }
-
-        String query = "INSERT INTO users (username, email, password, phone, role, created_at) VALUES (?, ?, ?, ?, ?, NOW())";
-        try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setString(1, user.getUsername());
-            statement.setString(2, user.getEmail());
-            statement.setString(3, user.getPassword());
-            statement.setString(4, user.getPhone());
-            statement.setString(5, user.getRole());
-
-            int affectedRows = statement.executeUpdate();
-            if (affectedRows == 0) {
-                return false;
-            }
-
-            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    user.setId(generatedKeys.getInt(1));
-                    return true;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    @Override
-    public void update(User user) {
-        String query = "UPDATE users SET username = ?, email = ?, password = ?, phone = ?, role = ? WHERE id = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, user.getUsername());
-            statement.setString(2, user.getEmail());
-            statement.setString(3, user.getPassword());
-            statement.setString(4, user.getPhone());
-            statement.setString(5, user.getRole());
-            statement.setInt(6, user.getId());
-
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void delete(User user) {
-        String query = "DELETE FROM users WHERE id = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, user.getId());
-            int affectedRows = statement.executeUpdate();
-            if (affectedRows > 0) {
-                delete(findById(user.getId()));
-                System.out.println("User deleted with ID: " + user.getId());
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void deleteUserFX(UserFX user) {
-        String query = "DELETE FROM users WHERE id = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, user.getId());
-            int affectedRows = statement.executeUpdate();
-            if (affectedRows > 0) {
-                delete(findById(user.getId()));
-                System.out.println("User deleted with ID: " + user.getId());
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private User mapResultSetToUser(ResultSet resultSet) throws SQLException {
-        return new User(
-                resultSet.getInt("id"),
-                resultSet.getString("username"),
-                resultSet.getString("email"),
-                resultSet.getString("password"),
-                resultSet.getString("phone"),
-                resultSet.getString("role"),
-                resultSet.getTimestamp("created_at")
-        );
-    }
-
-    public User register(String username, String password, String email, String phone, String role) {
-        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(hashedPassword);
-        user.setEmail(email);
-        user.setPhone(phone);
-        user.setRole(role);
-        user.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-
-        boolean isUserCreated = insert(user);
-        if (isUserCreated) {
-            return user;
-        }
-        return null;
-    }
-
-    public boolean isUserExists(String username, String email) {
-        String query = "SELECT COUNT(*) FROM users WHERE username = ? OR email = ?";
-        try (Connection conn = DatabaseConnection.getConn();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1, username);
-            stmt.setString(2, email);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next() && rs.getInt(1) > 0) {
-                return true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
+        return List.of();
     }
 
     public User login(String username, String password) throws SQLException {
+        System.out.println(username);
+        System.out.println(password);
         User user = null;
-        String sql = "Select username, password from users where username = ? and password = ?";
+        String sql = "Select * from users where username = ?";
         Connection conn = DatabaseConnection.getConn();
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
             pstmt.setString(1, username);
-            pstmt.setString(2, password);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    user = new User();
-                    user.setUsername(rs.getString("username"));
-                    user.setPassword(rs.getString("password"));
-                    return user;
+                    String hashedPassword = rs.getString("password");
+
+                    if (BCrypt.checkpw(password, hashedPassword)) {
+                        user = new User();
+                        user.setId(rs.getInt("id"));
+                        user.setUsername(rs.getString("username"));
+                        user.setPassword(hashedPassword);
+                        user.setEmail(rs.getString("email"));
+                        return user;
+                    }
                 }
-                return user;
+                return null;
             }
         }
-    }
-
-    public void closeConnection() {
-        if (connection != null) {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public boolean isUsernameExists(String username) {
-        String query = "SELECT COUNT(*) FROM users WHERE username =?";
-        try (Connection conn = DatabaseConnection.getConn();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1, username);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next() && rs.getInt(1) > 0) {
-                return true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
     }
 
     public ObservableList<UserFX> loadUsers() {
         ObservableList<UserFX> users = FXCollections.observableArrayList();
-        try (Connection conn = DatabaseConnection.getConn();
-             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users")) {
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                users.add(new UserFX(
-                        rs.getInt("id"),
-                        rs.getString("fullname"),
-                        rs.getString("username"),
-                        rs.getString("email"),
-                        rs.getString("phone"),
-                        rs.getString("role")
-                ));
+        String sql = "SELECT * FROM users ";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    users.add(new UserFX(
+                            new SimpleIntegerProperty(rs.getInt("id")),
+                            new SimpleStringProperty(rs.getString("full_name")),
+                            new SimpleStringProperty(rs.getString("username")),
+                            new SimpleStringProperty(rs.getString("email")),
+                            new SimpleStringProperty(rs.getString("phone")),
+                            new SimpleStringProperty(rs.getString("role"))
+
+                    ));
+                }
+                return users;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return users;
     }
+
 }

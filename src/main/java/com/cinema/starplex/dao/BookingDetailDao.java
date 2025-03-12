@@ -1,5 +1,6 @@
 package com.cinema.starplex.dao;
 
+import com.cinema.starplex.models.Booking;
 import com.cinema.starplex.models.BookingDetail;
 
 import java.util.List;
@@ -21,9 +22,10 @@ public class BookingDetailDao implements BaseDao<BookingDetail> {
     }
 
     @Override
-    public void delete(BookingDetail entity) {
+    public void delete(long id) {
 
     }
+
 
     @Override
     public BookingDetail findById(long id) {

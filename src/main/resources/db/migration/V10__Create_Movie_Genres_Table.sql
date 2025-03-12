@@ -1,0 +1,4 @@
+CREATE TABLE movie_genres (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) UNIQUE NOT NULL
+);

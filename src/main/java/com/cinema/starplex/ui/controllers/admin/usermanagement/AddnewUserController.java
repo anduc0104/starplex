@@ -58,17 +58,26 @@ public class AddnewUserController {
         userDao = new UserDao();
     }
 
+    private void returnToUserView(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cinema/starplex/admin/usermanagement/list-user.fxml"));
+            Parent seatView = loader.load();
+
+            AnchorPane root = (AnchorPane) ((Button) event.getSource()).getScene().getRoot();
+            BorderPane mainPane = (BorderPane) root.lookup("#mainBorderPane");
+
+            if (mainPane != null) {
+                mainPane.setCenter(seatView);
+            } else {
+                System.err.println("BorderPane with ID 'mainBorderPane' not found");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public void goBack(ActionEvent event) {
-        FXMLLoader loader = SceneSwitcher.loadView("admin/usermanagement/list-user.fxml");
-        if (loader != null) {
-            Parent newView = loader.getRoot(); // Lấy Root từ FXMLLoader
-            AnchorPane anchorPane = (AnchorPane) ((Node) event.getSource()).getScene().getRoot();
-            BorderPane mainPane = (BorderPane) anchorPane.lookup("#mainBorderPane");
-            mainPane.setCenter(newView); // Thay đổi nội dung của center
-        } else {
-            System.err.println("Failed to load addnew-user.fxml");
-        }
+        returnToUserView(event);
     }
 
     public void addUser(ActionEvent event) {
@@ -141,7 +150,7 @@ public class AddnewUserController {
                 roleComboBox.setValue(null);
 
                 showAlert("Success", "User has been added successfully!", Alert.AlertType.INFORMATION);
-                goBack(event);  // Chuyển về trang danh sách user
+                returnToUserView(event);  // Chuyển về trang danh sách user
             } catch (Exception e) {  // Bắt lỗi nếu có vấn đề khi lưu user
                 showAlert("Error", "Failed to add user: " + e.getMessage(), Alert.AlertType.ERROR);
             }
@@ -190,4 +199,15 @@ public class AddnewUserController {
         alert.showAndWait();
     }
 
+    public void handleClear(ActionEvent event) {
+        fullNameField.clear();
+        usernameField.clear();
+        emailField.clear();
+        passwordField.clear();
+        passwordConfirmedField.clear();
+        phoneField.clear();
+        roleComboBox.setValue(null);
+//        xóa thng báo lỗi
+        clearErrors();
+    }
 }

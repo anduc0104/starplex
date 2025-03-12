@@ -9,59 +9,76 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.collections.FXCollections?>
 <AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.cinema.starplex.ui.controllers.admin.usermanagement.EditUserController"
-            prefHeight="400.0" prefWidth="600.0">
-    <VBox>
-        <HBox spacing="10">
-            <Button text="Back" onAction="#goBack"/>
-            <Text layoutX="43.0" layoutY="14.0" text="Add new user"/>
+    xmlns:fx="http://javafx.com/fxml"
+    fx:controller="com.cinema.starplex.ui.controllers.admin.usermanagement.EditUserController"
+    prefHeight="400.0" prefWidth="600.0">
+    <VBox spacing="24" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0"
+        AnchorPane.rightAnchor="24.0"
+        AnchorPane.topAnchor="24.0">
+        <HBox spacing="500">
+            <!-- Nút quay lại -->
+            <Button fx:id="backButton" layoutX="14.0" layoutY="14.0"
+                mnemonicParsing="false" onAction="#goBack"
+                prefHeight="30.0" prefWidth="75.0" styleClass="back-btn" text="Back"
+                textFill="WHITE" />
+            <Text text="Edit user" styleClass="titlePage" />
         </HBox>
-        <GridPane hgap="10" vgap="10">
-            <!--fullname-->
-            <Label text="Full Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-            <TextField fx:id="fullNameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-            <Label fx:id="fullNameError" layoutX="35.0" GridPane.rowIndex="1" layoutY="235.0" textFill="red"
-                   style="-fx-font-size: 12px;"/>
-            <!--username-->
-            <Label text="Username:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-            <TextField fx:id="usernameField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-            <Label fx:id="usernameError" layoutX="35.0" layoutY="235.0" GridPane.rowIndex="3" textFill="red"
-                   style="-fx-font-size: 12px;"/>
-            <!--email-->
-            <Label text="Email:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-            <TextField fx:id="emailField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-            <Label fx:id="emailError" layoutX="35.0" layoutY="235.0" GridPane.rowIndex="5" textFill="red"
-                   style="-fx-font-size: 12px;"/>
-            <!--password-->
-            <Label text="Password:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
-            <PasswordField fx:id="passwordField" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
-            <Label fx:id="passwordError" layoutX="35.0" layoutY="235.0" GridPane.rowIndex="7" textFill="red"
-                   style="-fx-font-size: 12px;"/>
-            <!-- password confirmed -->
-            <Label text="Password Confirmed:" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
-            <PasswordField fx:id="passwordConfirmedField" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
-            <Label fx:id="passwordConfirmedError" layoutX="35.0" layoutY="235.0" GridPane.rowIndex="9" textFill="red"
-                   style="-fx-font-size: 12px;"/>
-            <!-- phone -->
-            <Label text="Phone:" GridPane.rowIndex="10" GridPane.columnIndex="0"/>
-            <TextField fx:id="phoneField" GridPane.rowIndex="10" GridPane.columnIndex="1"/>
-            <Label fx:id="phoneError" layoutX="35.0" GridPane.rowIndex="11" layoutY="235.0" textFill="red"
-                   style="-fx-font-size: 12px;"/>
-            <!-- role -->
-            <Label text="Role:" GridPane.rowIndex="12" GridPane.columnIndex="0"/>
-            <ComboBox fx:id="roleComboBox" GridPane.rowIndex="12" GridPane.columnIndex="1">
-                <items>
-                    <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="admin"/>
-                        <String fx:value="staff"/>
-                    </FXCollections>
-                </items>
-            </ComboBox>
-            <Label fx:id="roleError" layoutX="35.0" layoutY="235.0" GridPane.rowIndex="13" textFill="red"
-                   style="-fx-font-size: 12px;"/>
-        </GridPane>
 
-        <Button text="Update" onAction="#updateUser"/>
+        <VBox spacing="16">
+            <VBox>
+                <Label text="Full Name:" />
+                <TextField styleClass="input-field" fx:id="fullNameField" />
+                <Label fx:id="fullNameError" textFill="red" style="-fx-font-size: 12px;" />
+            </VBox>
+
+            <VBox>
+                <Label text="Username:" />
+                <TextField styleClass="input-field" fx:id="usernameField" />
+                <Label fx:id="usernameError" textFill="red" style="-fx-font-size: 12px;" />
+            </VBox>
+
+            <VBox>
+                <Label text="Email:" />
+                <TextField styleClass="input-field" fx:id="emailField" />
+                <Label fx:id="emailError" textFill="red" style="-fx-font-size: 12px;" />
+            </VBox>
+
+            <VBox>
+                <Label text="Password:" />
+                <PasswordField styleClass="input-field" fx:id="passwordField" />
+                <Label fx:id="passwordError" textFill="red" style="-fx-font-size: 12px;" />
+            </VBox>
+
+            <VBox>
+                <Label text="Password Confirmed:" />
+                <PasswordField styleClass="input-field" fx:id="passwordConfirmedField" />
+                <Label fx:id="passwordConfirmedError" textFill="red" style="-fx-font-size: 12px;" />
+            </VBox>
+
+            <VBox>
+                <Label text="Phone:" />
+                <TextField styleClass="input-field" fx:id="phoneField" />
+                <Label fx:id="phoneError" textFill="red" style="-fx-font-size: 12px;" />
+            </VBox>
+
+            <VBox>
+                <Label text="Role:" />
+                <ComboBox fx:id="roleComboBox" styleClass="input-field" prefWidth="Infinity">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="admin" />
+                            <String fx:value="staff" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+                <Label fx:id="roleError" textFill="red" style="-fx-font-size: 12px;" />
+            </VBox>
+        </VBox>
+        <HBox alignment="CENTER_RIGHT" spacing="24">
+            <Button onAction="#updateUser" fx:id="saveButton" text="Edit" textFill="WHITE"
+                styleClass="save-btn" prefHeight="30.0" prefWidth="120.0" alignment="CENTER" />
+            <Button onAction="#handleClear" fx:id="clearButton" text="Clear" textFill="WHITE"
+                styleClass="clear-btn" prefHeight="30.0" prefWidth="120.0" alignment="CENTER" />
+        </HBox>
     </VBox>
 </AnchorPane>

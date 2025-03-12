@@ -61,6 +61,7 @@
 }
 
 .table{
+    -fx-width: 100%;
     -fx-table-cell-border-color: #1e242e;
 }
 
@@ -155,5 +156,16 @@
 .label-input{
     -fx-font-size: 16px;
 }
+.titlePage{
+    -fx-font-size: 24px;
+}
 
+.scroll-pane{
+       -fx-background-color: transparent;
+       -fx-border:none;
+       -fx-width:100%;
+       -fx-max-width: 100%;
+       -fx-height: 100%;
+       -fx-max-height: 100%;
+}
 

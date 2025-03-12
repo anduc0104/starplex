@@ -1,5 +1,7 @@
 package com.cinema.starplex.dao;
 
+import com.cinema.starplex.models.Booking;
+
 import java.util.List;
 
 public class Director implements BaseDao<Director>{
@@ -19,7 +21,7 @@ public class Director implements BaseDao<Director>{
     }
 
     @Override
-    public void delete(Director entity) {
+    public void delete(long id) {
 
     }
 

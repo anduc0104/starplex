@@ -63,12 +63,6 @@
                         <Font size="15.0"/>
                     </font>
                 </Button>
-                <Hyperlink layoutX="41.0" layoutY="325.0" onAction="#switchToRegister"
-                           text="Don't have an account yet? Register" textFill="#d01818">
-                    <font>
-                        <Font size="13.0"/>
-                    </font>
-                </Hyperlink>
             </children>
         </AnchorPane>
     </right>

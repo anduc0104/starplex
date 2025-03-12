@@ -1,32 +1,35 @@
 package com.cinema.starplex.models;
 
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import java.sql.Timestamp;
-
 public class UserFX {
-    private IntegerProperty id = new SimpleIntegerProperty();
-    private StringProperty fullName = new SimpleStringProperty();
-    private StringProperty username = new SimpleStringProperty();
-    private StringProperty email = new SimpleStringProperty();
-    private StringProperty phone = new SimpleStringProperty();
-    private StringProperty role = new SimpleStringProperty();
+    private IntegerProperty id;
+    private StringProperty fullName;
+    private StringProperty username;
+    private StringProperty email;
+    private StringProperty phone;
+    private StringProperty role;
 
-    public UserFX(Integer id, String fullName, String username, String email, String phone, String role) {
-        this.id.set(id);
-        this.fullName.set(fullName);
-        this.username.set(username);
-        this.email.set(email);
-        this.phone.set(phone);
-        this.role.set(role);
+    public UserFX() {
     }
 
-    public Integer getId() { return id.get(); }
-    public void setId(int id) { this.id.set(id); }
-    public IntegerProperty idProperty() { return id; }
+    public UserFX(IntegerProperty id, StringProperty fullName, StringProperty username, StringProperty email, StringProperty phone, StringProperty role) {
+        this.id = id;
+        this.fullName = fullName;
+        this.username = username;
+        this.email = email;
+        this.phone = phone;
+        this.role = role;
+    }
+
+    public IntegerProperty idProperty() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id.set(id);
+    }
 
     public String getFullName() {
         return fullName.get();
@@ -87,5 +90,6 @@ public class UserFX {
     public void setRole(String role) {
         this.role.set(role);
     }
+
 
 }

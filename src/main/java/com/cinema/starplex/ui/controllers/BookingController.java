@@ -1,7 +1,7 @@
 package com.cinema.starplex.ui.controllers;
 
 import com.cinema.starplex.dao.BookingDao;
-import com.cinema.starplex.dao.ShowtimeDao;
+import com.cinema.starplex.dao.ShowTimeDao;
 import com.cinema.starplex.dao.UserDao;
 import com.cinema.starplex.models.Booking;
 import com.cinema.starplex.models.Showtime;
@@ -20,7 +20,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.flywaydb.core.api.resource.Resource;
 
 import java.math.BigDecimal;
 import java.net.URL;
@@ -99,7 +98,7 @@ public class BookingController implements Initializable {
 
     private BookingDao bookingDao;
     private UserDao userDao;
-    private ShowtimeDao showtimeDao;
+    private ShowTimeDao showtimeDao;
     private ObservableList<Booking> bookingList;
     private final String[] STATUSES = {"PENDING", "CONFIRMED", "CANCELLED", "COMPLETED"};
 
@@ -107,7 +106,7 @@ public class BookingController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         bookingDao = new BookingDao();
         userDao = new UserDao();
-        showtimeDao = new ShowtimeDao();
+        showtimeDao = new ShowTimeDao();
 
         //khoi tao cot trong bang
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -299,7 +298,7 @@ public class BookingController implements Initializable {
             int id = Integer.parseInt(idField.getText());
             Booking booking = bookingDao.findById(id);
             if (booking != null) {
-                bookingDao.delete(booking);
+                bookingDao.delete(booking.getId().longValue());
                 showAlert(Alert.AlertType.INFORMATION, "Success", "Booking deleted successfully!");
                 loadBookingData();
                 updateStatistics();

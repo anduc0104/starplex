@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 import java.sql.*;
 import java.util.*;
 
-public class RoomDao implements BaseDao<Room>{
+public class RoomDao implements BaseDao<Room> {
     private Connection connection;
 
     public RoomDao() {
@@ -79,10 +79,10 @@ public class RoomDao implements BaseDao<Room>{
     }
 
     @Override
-    public void delete(Room room) {
+    public void delete(long id) {
         String query = "DELETE FROM rooms WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, room.getId());
+            statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -274,5 +274,21 @@ public class RoomDao implements BaseDao<Room>{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public Room findByNumber(int i) {
+        String query = "SELECT * FROM rooms WHERE room_number =?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, i);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return mapResultSetToRoom(resultSet);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

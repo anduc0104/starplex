@@ -1,6 +1,5 @@
 package com.cinema.starplex.models;
 
-
 import java.sql.Timestamp;
 
 public class MovieType {

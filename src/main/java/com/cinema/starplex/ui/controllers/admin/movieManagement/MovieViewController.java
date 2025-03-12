@@ -3,11 +3,16 @@ package com.cinema.starplex.ui.controllers.admin.movieManagement;
 import com.cinema.starplex.dao.MovieDao;
 import com.cinema.starplex.models.Movie;
 import com.cinema.starplex.util.DatabaseConnection;
+import com.cinema.starplex.util.SceneSwitcher;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -19,10 +24,13 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class MovieViewController {
 
@@ -48,26 +56,26 @@ public class MovieViewController {
     private TableColumn<Movie, String> descriptionColumn;
     @FXML
     private TableColumn<Movie, Void> actionColumn;
+    @FXML
+    private TextField searchField;
 
-
+    private final ObservableList<Movie> movieList = FXCollections.observableArrayList();
     private final MovieDao movieDao = new MovieDao();
 
     @FXML
     public void initialize() throws SQLException {
-        idColumn.setCellValueFactory(cellData ->
-                new SimpleObjectProperty<>(cellData.getValue().getId()));
+        idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
         titleColumn.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
         directorColumn.setCellValueFactory(cellData -> cellData.getValue().directorProperty());
         actorsColumn.setCellValueFactory(cellData -> cellData.getValue().actorsProperty());
-        genreColumn.setCellValueFactory(cellData -> cellData.getValue().genreProperty());
-        durationColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(String.valueOf(cellData.getValue().getDuration())));
-
-        releaseDateColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getReleaseDate().toString()));
-
+        genreColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(
+                cellData.getValue().getGenres().stream()
+                        .map(genre -> genre.getName())
+                        .collect(Collectors.joining(", "))
+        ));
+        durationColumn.setCellValueFactory(cellData -> cellData.getValue().durationProperty());
+        releaseDateColumn.setCellValueFactory(cellData -> cellData.getValue().releaseDateProperty());
         descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
-
 
         imageColumn.setCellValueFactory(cellData -> {
             ImageView imageView = new ImageView();
@@ -77,16 +85,14 @@ public class MovieViewController {
                 try {
                     Image image;
                     if (imagePath.startsWith("http") || imagePath.startsWith("https")) {
-                        // Nếu là URL trực tuyến
                         image = new Image(imagePath);
                     } else {
-                        // Nếu là đường dẫn cục bộ
-                        File file = new File(imagePath);
+                        File file = new File(new URI(imagePath)); // Chuyển đổi lại từ URI
                         if (file.exists()) {
-                            image = new Image(file.toURI().toString()); // Chuyển đổi thành "file:/"
+                            image = new Image(file.toURI().toString());
                         } else {
                             System.err.println("File not found: " + imagePath);
-                            image = new Image(getClass().getResource("/images/default.jpg").toExternalForm()); // Ảnh mặc định
+                            image = new Image(getClass().getResource("/images/default.jpg").toExternalForm());
                         }
                     }
                     imageView.setImage(image);
@@ -98,8 +104,10 @@ public class MovieViewController {
             imageView.setFitHeight(100);
             return new SimpleObjectProperty<>(imageView);
         });
+
         setupActionColumn();
         loadMovies();
+        setupSearchFilter();
     }
 
     private void setupActionColumn() {
@@ -142,8 +150,18 @@ public class MovieViewController {
     }
 
     private void loadMovies() throws SQLException {
+        movieList.clear();
         ObservableList<Movie> movies = movieDao.getMovies();
         movieTable.setItems(movies);
+
+        if (movies != null) {
+            movieList.addAll(movies);
+            System.out.println("Movies loaded: " + movieList.size());
+        } else {
+            System.out.println("Failed to load movies!");
+        }
+
+        movieTable.setItems(movieList);
     }
 
     private void handleEdit(Movie movie) {
@@ -175,7 +193,7 @@ public class MovieViewController {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            movieDao.delete(movie);
+            movieDao.delete(movie.idProperty().longValue());
             String sql = "DELETE FROM movies WHERE id = ?";
 
             try (Connection conn = DatabaseConnection.getConn();
@@ -185,8 +203,8 @@ public class MovieViewController {
                 int affectedRows = pstmt.executeUpdate();
 
                 if (affectedRows > 0) {
-                    movieTable.getItems().remove(movie);
                     System.out.println("Movie deleted: " + movie.getTitle());
+                    loadMovies();
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -195,5 +213,58 @@ public class MovieViewController {
 
     }
 
+    @FXML
+    public void handleSwitchAddNew(ActionEvent actionEvent) {
+        try {
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            SceneSwitcher.switchTo(stage, "admin/moviemanagement/add-movie.fxml");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    private void setupSearchFilter() {
+        if (movieList == null) {
+            System.out.println("movieList is NULL!");
+            return;
+        }
+
+        System.out.println("Movie List Size: " + movieList.size());
+        for (Movie m : movieList) {
+            System.out.println("Movie: " + m.getTitle());
+        }
+
+        if (movieList.isEmpty()) {
+            System.out.println("Movie List is empty!");
+            return;
+        }
+
+        // Dùng `FilteredList` bọc `movieList` để bộ lọc hoạt động động
+        FilteredList<Movie> filteredMovies = new FilteredList<>(movieList, p -> true);
+
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("Search: " + newValue);
+
+            filteredMovies.setPredicate(movie -> {
+                if (newValue == null || newValue.trim().isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+                boolean match = movie.getTitle().toLowerCase().contains(lowerCaseFilter);
+
+                if (match) {
+                    System.out.println("Matched: " + movie.getTitle());
+                }
+
+                return match;
+            });
+
+            System.out.println("Filtered Movies: " + filteredMovies.size());
+        });
+
+        // Cập nhật danh sách sau khi lọc
+        movieTable.setItems(filteredMovies);
+
+        System.out.println("Search filter applied!");
+    }
 }

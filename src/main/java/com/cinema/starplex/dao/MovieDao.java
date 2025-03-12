@@ -1,92 +1,98 @@
 package com.cinema.starplex.dao;
 
+import com.cinema.starplex.models.Genre;
 import com.cinema.starplex.models.Movie;
-import com.cinema.starplex.models.Showtime;
 import com.cinema.starplex.util.DatabaseConnection;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
-public class MovieDao implements BaseDao<Movie>{
-    private Connection connection;
+public class MovieDao implements BaseDao<Movie> {
+
+    private final Connection conn;
 
     public MovieDao() {
-        this.connection = DatabaseConnection.getConn();
+        conn = DatabaseConnection.getConn();
     }
 
-    public MovieDao(Connection connection) {
-        this.connection = connection;
-    }
+    public ObservableList<Movie> getMovies() throws SQLException {
+        ObservableList<Movie> movies = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM movies";
 
-    public Connection getConnection() {
-        return connection;
-    }
-    @Override
-    public void save(Movie movie) {
-        if (movie.getId() == null) {
-            insert(movie);
-        } else {
-            update(movie);
-        }
-    }
+        try (PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                int movieId = rs.getInt("id");
+                List<Genre> genres = getGenresByMovieId(movieId);
 
-    @Override
-    public boolean insert(Movie movie) {
-        String query = "INSERT INTO movies (title, duration, release_date, rating, description, created_at) VALUES (?,?, ?, ?, ?, NOW())";
-        try(PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setString(1, movie.getTitle());
-            statement.setFloat(2, movie.getDuration());
-            statement.setLong(3, movie.getReleaseDate().getTime());
-            statement.setString(4, movie.getRating());
-            statement.setString(5, movie.getDescription());
-            statement.setLong(6, movie.getCreatedAt().getTime());
-
-            int affectedRows = statement.executeUpdate();
-            if (affectedRows == 0) {
-                return false;
+                movies.add(new Movie(
+                        new SimpleIntegerProperty(rs.getInt("id")),
+                        new SimpleStringProperty(rs.getString("title")),
+                        new SimpleStringProperty(rs.getString("directors")),
+                        new SimpleStringProperty(rs.getString("actors")),
+                        new SimpleListProperty<>(FXCollections.observableArrayList(genres)),
+                        new SimpleStringProperty(rs.getString("duration")),
+                        new SimpleStringProperty(rs.getString("release_date")),
+                        new SimpleStringProperty(rs.getString("description")),
+                        new SimpleStringProperty(rs.getString("images"))
+                ));
             }
-
-            try(ResultSet generateKeys = statement.getGeneratedKeys()) {
-                if (generateKeys.next()) {
-                    movie.setId(generateKeys.getInt(1));
-                    return true;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+        System.out.println("Movies loaded: " + movies.size()); // Kiểm tra số lượng dữ liệu
+        return movies;
+    }
+
+    public List<Genre> getGenresByMovieId(int movieId) throws SQLException {
+        List<Genre> genres = new ArrayList<>();
+        String sql = "SELECT g.id, g.name FROM movie_genres g " +
+                "JOIN movie_type mt ON g.id = mt.genre_id " +
+                "WHERE mt.movie_id = ?";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, movieId);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                // Chuyển đổi int và String sang IntegerProperty và StringProperty
+                genres.add(new Genre(
+                        new SimpleIntegerProperty(rs.getInt("id")),
+                        new SimpleStringProperty(rs.getString("name"))
+                ));
+            }
+        }
+        return genres;
+    }
+
+
+    @Override
+    public void save(Movie entity) {}
+
+
+    @Override
+    public boolean insert(Movie entity) {
         return false;
     }
 
     @Override
-    public void update(Movie movie) {
-        String query = "UPDATE bookings SET title=?, duration=?, release_date=?, rating=?, description=?, created_at=? WHERE id=?";
-        try(PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, movie.getTitle());
-            statement.setFloat(2, movie.getDuration());
-            statement.setLong(3, movie.getReleaseDate().getTime());
-            statement.setString(4, movie.getRating());
-            statement.setString(5, movie.getDescription());
-            statement.setLong(6, movie.getCreatedAt().getTime());
-            statement.setInt(7, movie.getId());
-
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void update(Movie entity) {
     }
 
     @Override
-    public void delete(Movie movie) {
-        String query = "DELETE FROM movies WHERE id=?";
-        try(PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, movie.getId());
-            int affectedRows = statement.executeUpdate();
-            if (affectedRows > 0) {
-                System.out.println("Movie deleted: " + movie.getTitle());
-            }
+    public void delete(long id) {
+        String sql = "DELETE FROM movies WHERE id =?";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setLong(1, id);
+            pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -94,54 +100,11 @@ public class MovieDao implements BaseDao<Movie>{
 
     @Override
     public Movie findById(long id) {
-        String query = "SELECT m.* " +
-                "FROM movies m " +
-                "WHERE m.id = ?";
-        try(PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setLong(1, id);
-
-            try(ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    return mapResultSetToMovie(resultSet);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         return null;
     }
 
     @Override
     public List<Movie> findAll() {
         return List.of();
-    }
-
-    private Movie mapResultSetToMovie(ResultSet resultSet) throws SQLException {
-        Movie movie = new Movie();
-        movie.setId(resultSet.getInt("id"));
-        movie.setTitle(resultSet.getString("title"));
-        movie.setDuration(resultSet.getFloat("duration"));
-        movie.setReleaseDate(resultSet.getDate("release_date")); // ✅ Đúng
-        movie.setRating(resultSet.getString("rating"));
-        movie.setDescription(resultSet.getString("description"));
-        movie.setCreatedAt(resultSet.getTimestamp("created_at"));
-        return movie;
-    }
-
-    public ObservableList<Movie> getMovies() {
-        ObservableList<Movie> movies = FXCollections.observableArrayList();
-        String query = "SELECT m.* " +
-                "FROM movies m " +
-                "ORDER BY m.release_date DESC";
-        try(Statement statement = connection.createStatement()) {
-            try(ResultSet resultSet = statement.executeQuery(query)) {
-                while (resultSet.next()) {
-                    movies.add(mapResultSetToMovie(resultSet));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return movies;
     }
 }
