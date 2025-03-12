@@ -1,4 +1,9 @@
 module com.cinema.starplex {
+    requires javafx.controls;
+
+    opens com.cinema.starplex.ui.controllers.admin.showtimesManagement to javafx.fxml;
+
+
     requires javafx.fxml;
 
     requires org.kordamp.bootstrapfx.core;
@@ -18,6 +23,7 @@ module com.cinema.starplex {
     opens com.cinema.starplex.ui.controllers.admin.usermanagement to javafx.fxml;
     exports com.cinema.starplex.dao;
     exports com.cinema.starplex.models;
+
 
     opens com.cinema.starplex.ui.controllers.admin.movieManagement to javafx.fxml;
 

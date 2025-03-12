@@ -52,9 +52,13 @@
                                 style="-fx-background-color: #EF4444; -fx-background-radius: 8px; -fx-cursor: hand;"
                                 styleClass="signout-btn" stylesheets="@../../../../css/admin.css" text="Sign out"/>
                         <!--button genre-->
-                        <Button onAction="#genreScene" layoutY="370.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="160.0"
-                                styleClass="nav-btn" stylesheets="@../../../../css/admin.css" text="Genre"
-                                textFill="WHITE"/>
+                        <Button layoutY="370.0" mnemonicParsing="false" onAction="#genreScene" prefHeight="45.0"
+                                prefWidth="160.0" styleClass="nav-btn" stylesheets="@../../../../css/admin.css"
+                                text="Genre" textFill="WHITE"/>
+                        <!--button showtime-->
+                        <Button layoutY="400.0" mnemonicParsing="false" onAction="#showtimeScene" prefHeight="45.0"
+                                prefWidth="160.0" styleClass="nav-btn" stylesheets="@../../../../css/admin.css"
+                                text="showtime" textFill="WHITE"/>
 
 
                     </children>
