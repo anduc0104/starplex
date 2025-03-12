@@ -4,6 +4,7 @@ import com.cinema.starplex.dao.MovieDao;
 import com.cinema.starplex.models.Movie;
 import com.cinema.starplex.util.DatabaseConnection;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -53,14 +54,20 @@ public class MovieViewController {
 
     @FXML
     public void initialize() throws SQLException {
-        idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
+        idColumn.setCellValueFactory(cellData ->
+                new SimpleObjectProperty<>(cellData.getValue().getId()));
         titleColumn.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
         directorColumn.setCellValueFactory(cellData -> cellData.getValue().directorProperty());
         actorsColumn.setCellValueFactory(cellData -> cellData.getValue().actorsProperty());
         genreColumn.setCellValueFactory(cellData -> cellData.getValue().genreProperty());
-        durationColumn.setCellValueFactory(cellData -> cellData.getValue().durationProperty());
-        releaseDateColumn.setCellValueFactory(cellData -> cellData.getValue().releaseDateProperty());
+        durationColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(String.valueOf(cellData.getValue().getDuration())));
+
+        releaseDateColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getReleaseDate().toString()));
+
         descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
+
 
         imageColumn.setCellValueFactory(cellData -> {
             ImageView imageView = new ImageView();
@@ -168,7 +175,7 @@ public class MovieViewController {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            movieDao.delete(movie.idProperty().longValue());
+            movieDao.delete(movie);
             String sql = "DELETE FROM movies WHERE id = ?";
 
             try (Connection conn = DatabaseConnection.getConn();

@@ -1,7 +1,10 @@
 package com.cinema.starplex.dao;
 
 import com.cinema.starplex.models.User;
+import com.cinema.starplex.models.UserFX;
 import com.cinema.starplex.util.DatabaseConnection;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.*;
@@ -125,14 +128,30 @@ public class UserDao implements BaseDao<User> {
 
     @Override
     public void delete(User user) {
-        if (user.getId() != null) {
-            String query = "DELETE FROM users WHERE id = ?";
-            try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setInt(1, user.getId());
-                statement.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
+        String query = "DELETE FROM users WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, user.getId());
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows > 0) {
+                delete(findById(user.getId()));
+                System.out.println("User deleted with ID: " + user.getId());
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteUserFX(UserFX user) {
+        String query = "DELETE FROM users WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, user.getId());
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows > 0) {
+                delete(findById(user.getId()));
+                System.out.println("User deleted with ID: " + user.getId());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -209,5 +228,41 @@ public class UserDao implements BaseDao<User> {
                 e.printStackTrace();
             }
         }
+    }
+
+    public boolean isUsernameExists(String username) {
+        String query = "SELECT COUNT(*) FROM users WHERE username =?";
+        try (Connection conn = DatabaseConnection.getConn();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next() && rs.getInt(1) > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public ObservableList<UserFX> loadUsers() {
+        ObservableList<UserFX> users = FXCollections.observableArrayList();
+        try (Connection conn = DatabaseConnection.getConn();
+             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users")) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                users.add(new UserFX(
+                        rs.getInt("id"),
+                        rs.getString("fullname"),
+                        rs.getString("username"),
+                        rs.getString("email"),
+                        rs.getString("phone"),
+                        rs.getString("role")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
     }
 }

@@ -151,7 +151,7 @@ public class EditUserController {
 
         if (isValid) {
             try {
-                existingUser.setFull_name(fullName);
+                existingUser.setFullName(fullName);
                 existingUser.setEmail(email);
                 existingUser.setPhone(phone);
                 existingUser.setRole(role);

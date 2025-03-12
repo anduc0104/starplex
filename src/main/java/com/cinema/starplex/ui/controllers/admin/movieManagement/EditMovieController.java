@@ -46,7 +46,7 @@ public class EditMovieController {
         actorsField.setText(movie.getActors());
         genreField.setText(movie.getGenre());
         durationField.setText(String.valueOf(movie.getDuration()));
-        releaseDatePicker.setValue(LocalDate.parse(movie.getReleaseDate()));
+        releaseDatePicker.setValue(movie.getReleaseDate().toLocalDate());
         descriptionField.setText(movie.getDescription());
 
         if (movie.getImage() != null) {
@@ -99,8 +99,8 @@ public class EditMovieController {
                 movie.setDirector(directorField.getText());
                 movie.setActors(actorsField.getText());
                 movie.setGenre(genreField.getText());
-                movie.setDuration(String.valueOf(Float.parseFloat(durationField.getText())));
-                movie.setReleaseDate(releaseDatePicker.getValue().toString());
+                movie.setDuration(Float.parseFloat(durationField.getText()));
+                movie.setReleaseDate(Date.valueOf(releaseDatePicker.getValue()));
                 movie.setDescription(descriptionField.getText());
                 movie.setImage(imagePath);
 

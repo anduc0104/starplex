@@ -4,11 +4,14 @@ import com.cinema.starplex.models.Room;
 import com.cinema.starplex.models.Seat;
 import com.cinema.starplex.models.SeatType;
 import com.cinema.starplex.util.DatabaseConnection;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 
 
+import java.math.BigDecimal;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class RoomDao implements BaseDao<Room>{
     private Connection connection;
@@ -185,6 +188,81 @@ public class RoomDao implements BaseDao<Room>{
         room.setTotalSeats(resultSet.getInt("total_seats"));
         room.setCreatedAt(resultSet.getTimestamp("created_at"));
         return room;
+    }
+
+    //staff
+    // lay dsach ghe database
+    public Map<Integer, SeatType> getSeatTypes() {
+        Map<Integer, SeatType> seatTypes = new HashMap<>();
+        String query = "SELECT * FROM seat_types";
+
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                BigDecimal price = resultSet.getBigDecimal("price");
+                System.out.printf("Seat Type ID: %d, Name: %s, Price: %.2f%n", id, name, price);
+                seatTypes.put(id, new SeatType(id, name, price));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return seatTypes;
+    }
+
+    // lay dsch phong database
+    public List<Room> getRooms() {
+        List<Room> rooms = new ArrayList<>();
+        String query = "SELECT id, room_number, total_seats  " +
+                "FROM rooms " +
+                "GROUP BY id, room_number " +
+                "ORDER BY room_number ";
+
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                int roomNumber = resultSet.getInt("room_number");
+                int totalSeats = resultSet.getInt("total_seats");
+                System.out.printf("Room ID: %d, Room Number: %d, Total Seats: %d%n", id, roomNumber, totalSeats);
+                rooms.add(new Room(id, roomNumber, totalSeats));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rooms;
+    }
+
+    public List<Seat> getSeatsForRoom(int roomId) {
+        List<Seat> seats = new ArrayList<>();
+        try {
+            String query = "SELECT s.id, s.seat_number, s.seat_type_id, b.id as booking_id " +
+                    "FROM seats s " +
+                    "LEFT JOIN booking_details bd ON bd.seat_id = s.id " +
+                    "LEFT JOIN bookings b ON bd.booking_id = b.id " +
+                    "WHERE s.room_id = ? ORDER BY s.seat_number ";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, roomId);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String seatNumber = resultSet.getString("seat_number");
+                int seatTypeId = resultSet.getInt("seat_type_id");
+                boolean isBooked = resultSet.getObject("booking_id") != null;
+
+                char rowChar = seatNumber.charAt(0);
+                int colNum = Integer.parseInt(seatNumber.substring(1));
+
+                seats.add(new Seat(id, rowChar, colNum, seatTypeId, isBooked));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return seats;
     }
 
     public void closeConnection() {

@@ -9,15 +9,24 @@ public class Seat {
     private SeatType seatType;
     private String seatNumber;
     private Timestamp createdAt;
+    private boolean isBooked;
 
     public Seat() {}
 
-    public Seat(Integer id, Room room, SeatType seatType, String seatNumber, Timestamp createdAt) {
+    public Seat(Integer id, Room room, SeatType seatType, String seatNumber, Timestamp createdAt, boolean isBooked) {
         this.id = id;
         this.room = room;
         this.seatType = seatType;
         this.seatNumber = seatNumber;
         this.createdAt = createdAt;
+        this.isBooked = isBooked;
+    }
+
+    public Seat(Integer id, char rowChar, int colNum, int seatTypeId, boolean isBooked) {
+        this.id = id;
+        this.seatNumber = rowChar + String.valueOf(colNum);
+        this.seatType = new SeatType(seatTypeId);
+        this.isBooked = isBooked;
     }
 
     // Getters and Setters
@@ -60,5 +69,45 @@ public class Seat {
 
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public boolean isBooked() {
+        return isBooked;
+    }
+
+    public void setBooked(boolean booked) {
+        isBooked = booked;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Seat seat = (Seat) obj;
+        return id == seat.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    public char getRow() {
+        if (seatNumber != null && seatNumber.length() > 0) {
+            return seatNumber.charAt(0);
+        }
+        return ' ';
+    }
+
+    // Lấy cột (column) của ghế (phần số sau ký tự đầu tiên)
+    public int getColumn() {
+        if (seatNumber != null && seatNumber.length() > 1) {
+            try {
+                return Integer.parseInt(seatNumber.substring(1));
+            } catch (NumberFormatException e) {
+                return -1; // Trả về -1 nếu xảy ra lỗi khi parse số
+            }
+        }
+        return -1;
     }
 }

@@ -19,6 +19,18 @@ public class Room {
     public Room() {
     }
 
+    public Room(int id, int roomNumber, int totalSeats) {
+        this.id = id;
+        this.roomNumber = roomNumber;
+        this.totalSeats = totalSeats;
+        this.createdAt = new Timestamp(System.currentTimeMillis());
+    }
+
+    public Room(int roomNumber, int totalSeats) {
+        this.roomNumber = roomNumber;
+        this.totalSeats = totalSeats;
+    }
+
     // Getters and Setters
 
     public Integer getId() {

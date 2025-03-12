@@ -87,10 +87,11 @@ public class BookingDao implements BaseDao<Booking>{
 
     @Override
     public Booking findById(long id) {
-        String query = "SELECT b.* FROM bookings b" +
-                "JOIN users u ON u.id = b.user_id" +
-                "JOIN showtimes s ON s.id = b.showtime_id" +
-                " WHERE b.id = ?";
+//        String query = "SELECT b.* FROM bookings b" +
+//                "JOIN users u ON u.id = b.user_id" +
+//                "JOIN showtimes s ON s.id = b.showtime_id" +
+//                " WHERE b.id = ?";
+        String query = "SELECT * FROM bookings WHERE id = ?";
         try(PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
 

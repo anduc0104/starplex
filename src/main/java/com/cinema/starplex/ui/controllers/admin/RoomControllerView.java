@@ -1,4 +1,4 @@
-package com.cinema.starplex.ui.controllers;
+package com.cinema.starplex.ui.controllers.admin;
 
 import com.cinema.starplex.dao.RoomDao;
 import com.cinema.starplex.models.Room;

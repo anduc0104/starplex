@@ -1,0 +1,122 @@
+.cinema-layout {
+    -fx-background-color: white;
+}
+
+.seat-button {
+    -fx-min-width: 40px;
+    -fx-min-height: 40px;
+    -fx-background-radius: 5px;
+}
+
+.seat-normal {
+    -fx-background-color: gray;
+}
+
+.seat-vip {
+    -fx-background-color: orange;
+}
+
+.seat-booked {
+    -fx-background-color: darkgray;
+}
+
+.seat-selected {
+    -fx-background-color: blue;
+}
+
+.screen-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+    -fx-background-color: black;
+    -fx-padding: 10px;
+    -fx-alignment: center;
+}
+
+.time-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: black;
+}
+
+.legend-label {
+    -fx-font-size: 10px;
+}
+
+.label {
+    -fx-font-size: 14px;
+}
+
+.button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #45a049;
+}
+
+.button:pressed {
+    -fx-background-color: #3d8b40;
+}
+
+/* Seat buttons */
+.seat-button {
+    -fx-min-width: 40px;
+    -fx-min-height: 40px;
+    -fx-max-width: 40px;
+    -fx-max-height: 40px;
+    -fx-font-size: 12px;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+}
+
+.seat-normal {
+    -fx-background-color: #90CAF9;
+    -fx-text-fill: black;
+}
+
+.seat-vip {
+    -fx-background-color: #9C27B0;
+    -fx-text-fill: white;
+}
+
+.seat-double {
+    -fx-background-color: #FF9800;
+    -fx-text-fill: black;
+}
+
+.seat-booked {
+    -fx-background-color: #E0E0E0;
+    -fx-text-fill: #757575;
+    -fx-opacity: 0.7;
+}
+
+.seat-selected {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-border-color: #388E3C;
+    -fx-border-width: 2px;
+}
+
+.legend-label {
+    -fx-font-size: 12px;
+}
+
+.payment-button {
+    -fx-background-color: #2196F3;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-font-size: 16px;
+}
+
+.payment-button:hover {
+    -fx-background-color: #1976D2;
+}
+
+.payment-button:pressed {
+    -fx-background-color: #0D47A1;
+}

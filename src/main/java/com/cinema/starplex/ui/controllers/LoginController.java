@@ -51,6 +51,7 @@ public class LoginController {
             System.out.println(user);
             Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             SceneSwitcher.switchTo(currentStage, "Dashboard-View.fxml");
+//            SceneSwitcher.switchTo(currentStage, "staff/staff-detail.fxml");
         } else {
             System.out.println("login failed");
             showError(usernameField, usernameError, "Invalid username or password");

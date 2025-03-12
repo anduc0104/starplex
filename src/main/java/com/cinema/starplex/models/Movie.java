@@ -1,86 +1,83 @@
 package com.cinema.starplex.models;
 
+import javafx.beans.property.*;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 
 public class Movie {
-    private Integer id;
-    private String title;
-    private Float duration;
-    private Date releaseDate;
-    private String rating;
-    private String description;
-    private Timestamp createdAt;
-
+    private final IntegerProperty id = new SimpleIntegerProperty();
+    private final StringProperty title = new SimpleStringProperty();
+    private final FloatProperty duration = new SimpleFloatProperty();
+    private final ObjectProperty<Date> releaseDate = new SimpleObjectProperty<>();
+    private final StringProperty rating = new SimpleStringProperty();
+    private final StringProperty description = new SimpleStringProperty();
+    private final StringProperty director = new SimpleStringProperty();
+    private final StringProperty actors = new SimpleStringProperty();
+    private final StringProperty genre = new SimpleStringProperty();
+    private final StringProperty image = new SimpleStringProperty();
+    private final ObjectProperty<Timestamp> createdAt = new SimpleObjectProperty<>();
 
     public Movie() {}
 
-    public Movie(Integer id, String title, Float duration, Date releaseDate, String rating, String description, Timestamp createdAt) {
-        this.id = id;
-        this.title = title;
-        this.duration = duration;
-        this.releaseDate = releaseDate;
-        this.rating = rating;
-        this.description = description;
-        this.createdAt = createdAt;
+    public Movie(Integer id, String title, float duration, Date releaseDate, String rating,
+                 String description, String director, String actors, String genre,
+                 String image, Timestamp createdAt) {
+        this.id.set(id);
+        this.title.set(title);
+        this.duration.set(duration);
+        this.releaseDate.set(releaseDate);
+        this.rating.set(rating);
+        this.description.set(description);
+        this.director.set(director);
+        this.actors.set(actors);
+        this.genre.set(genre);
+        this.image.set(image);
+        this.createdAt.set(createdAt);
     }
 
-    // Getters and Setters
+    // Getters & Setters
+    public Integer getId() { return id.get(); }
+    public void setId(int id) { this.id.set(id); }
+    public IntegerProperty idProperty() { return id; }
 
-    public Integer getId() {
-        return id;
-    }
+    public String getTitle() { return title.get(); }
+    public void setTitle(String title) { this.title.set(title); }
+    public StringProperty titleProperty() { return title; }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    public float getDuration() { return duration.get(); }
+    public void setDuration(float duration) { this.duration.set(duration); }
+    public FloatProperty durationProperty() { return duration; }
 
-    public String getTitle() {
-        return title;
-    }
+    public Date getReleaseDate() { return releaseDate.get(); }
+    public void setReleaseDate(Date releaseDate) { this.releaseDate.set(releaseDate); }
+    public ObjectProperty<Date> releaseDateProperty() { return releaseDate; }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    public String getRating() { return rating.get(); }
+    public void setRating(String rating) { this.rating.set(rating); }
+    public StringProperty ratingProperty() { return rating; }
 
-    public Float getDuration() {
-        return duration;
-    }
+    public String getDescription() { return description.get(); }
+    public void setDescription(String description) { this.description.set(description); }
+    public StringProperty descriptionProperty() { return description; }
 
-    public void setDuration(Float duration) {
-        this.duration = duration;
-    }
+    public String getDirector() { return director.get(); }
+    public void setDirector(String director) { this.director.set(director); }
+    public StringProperty directorProperty() { return director; }
 
-    public Date getReleaseDate() {
-        return releaseDate;
-    }
+    public String getActors() { return actors.get(); }
+    public void setActors(String actors) { this.actors.set(actors); }
+    public StringProperty actorsProperty() { return actors; }
 
-    public void setReleaseDate(Date releaseDate) {
-        this.releaseDate = releaseDate;
-    }
+    public String getGenre() { return genre.get(); }
+    public void setGenre(String genre) { this.genre.set(genre); }
+    public StringProperty genreProperty() { return genre; }
 
-    public String getRating() {
-        return rating;
-    }
+    public String getImage() { return image.get(); }
+    public void setImage(String image) { this.image.set(image); }
+    public StringProperty imageProperty() { return image; }
 
-    public void setRating(String rating) {
-        this.rating = rating;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
+    public Timestamp getCreatedAt() { return createdAt.get(); }
+    public void setCreatedAt(Timestamp createdAt) { this.createdAt.set(createdAt); }
+    public ObjectProperty<Timestamp> createdAtProperty() { return createdAt; }
 }

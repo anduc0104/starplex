@@ -27,19 +27,15 @@ public class DashboardController {
     }
 
     public void viewUserDetails(ActionEvent actionEvent) {
-        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(), "UserView.fxml");
+        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(), "admin/usermanagement/list-user.fxml");
     }
 
     public void viewRevenueReport(ActionEvent actionEvent) {
-        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "MovieView.fxml");
+        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "admin/moviemanagement/movie-view.fxml");
     }
 
     public void viewStaffList(ActionEvent actionEvent) {
         SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "StaffView.fxml");
-    }
-
-    public void viewChart(ActionEvent actionEvent) {
-        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "ChartView.fxml");
     }
 
     public void logout(ActionEvent actionEvent) {
@@ -47,10 +43,10 @@ public class DashboardController {
     }
 
     public void viewBookings(ActionEvent actionEvent) {
-        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "booking-view/Booking-View.fxml");
+        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "admin/booking-view/Booking-View.fxml");
     }
 
     public void viewRooms(ActionEvent actionEvent) {
-        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "RoomView.fxml");
+        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "admin/roommanagement/RoomView.fxml");
     }
 }

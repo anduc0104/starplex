@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER_RIGHT" prefHeight="686.0" prefWidth="1064.0" spacing="10" stylesheets="@../../../../css/staff-detail.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cinema.starplex.ui.controllers.staff.staffDetail.HompageStaffConroller">
+
+</VBox>

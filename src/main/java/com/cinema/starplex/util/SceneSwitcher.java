@@ -34,4 +34,9 @@ public class SceneSwitcher {
             System.err.println("Error switching scene: " + e.getMessage());
         }
     }
+
+    public static FXMLLoader loadView(String s) {
+        FXMLLoader fxmlLoader = new FXMLLoader(SceneSwitcher.class.getResource("/com/cinema/starplex/" + s));
+        return fxmlLoader;
+    }
 }

@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 
 public class User {
     private Integer id;
+    private String fullName;
     private String username;
     private String email;
     private String password;
@@ -25,12 +26,29 @@ public class User {
         this.createdAt = createdAt;
     }
 
+    public User(String fullName,String username, String email, String password, String phone, String role) {
+        this.fullName = fullName;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.role = role;
+    }
+
     public User(String username, String hashedPassword) {
         this.username = username;
         this.password = hashedPassword;
     }
 
     // Getters and Setters
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
     public Integer getId() {
         return id;

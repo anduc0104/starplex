@@ -101,7 +101,7 @@ public class ListUserController {
     private void handleDelete(UserFX user) {
         try {
             System.out.println("Delete user: " + user.idProperty().get());
-            userDao.delete(user.idProperty().longValue());
+            userDao.deleteUserFX(user);
             loadUserData();
             showAlert("Success", "User has been deleted successfully", Alert.AlertType.INFORMATION);
         } catch (Exception e) {
