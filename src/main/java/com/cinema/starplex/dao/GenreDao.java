@@ -45,12 +45,17 @@ public class GenreDao implements BaseDao<Genre> {
     }
 
     @Override
+    public boolean insert(Genre entity) {
+        return false;
+    }
+
+    @Override
     public void update(Genre entity) {
 
     }
 
     @Override
-    public void delete(Genre entity) {
+    public void delete(long id) {
 
     }
 

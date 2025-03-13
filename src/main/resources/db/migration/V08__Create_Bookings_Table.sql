@@ -1,5 +1,5 @@
 CREATE TABLE bookings (
-    id SERIAL PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INTEGER NULL REFERENCES users(id) ON DELETE CASCADE,
     showtime_id INTEGER NULL REFERENCES showtimes(id) ON DELETE CASCADE,
     total_price DECIMAL(10,2) NULL,
