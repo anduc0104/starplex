@@ -120,8 +120,4 @@ public class EditRoomController {
         totalSeatsField.clear();
     }
 
-    public void setRoom(Room room) {
-        this.selectedRoom = room;
-        populateFields(room);
-    }
 }

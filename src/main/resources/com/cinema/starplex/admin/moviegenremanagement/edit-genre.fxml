@@ -13,7 +13,7 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             prefHeight="400.0" prefWidth="600.0"
-            fx:controller="com.cinema.starplex.ui.controllers.admin.movieManagement.EditGenreController">
+            fx:controller="com.cinema.starplex.ui.controllers.admin.movieGenreManagement.EditGenreController">
     <VBox spacing="24" AnchorPane.bottomAnchor="24.0"
           AnchorPane.leftAnchor="24.0"
           AnchorPane.rightAnchor="24.0"

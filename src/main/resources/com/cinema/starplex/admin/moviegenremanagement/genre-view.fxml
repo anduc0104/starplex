@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Text?>
 <AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.cinema.starplex.ui.controllers.admin.movieManagement.GenreViewController">
+            fx:controller="com.cinema.starplex.ui.controllers.admin.movieGenreManagement.GenreViewController">
     <VBox spacing="24" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0"
           AnchorPane.rightAnchor="24.0"
           AnchorPane.topAnchor="24.0">

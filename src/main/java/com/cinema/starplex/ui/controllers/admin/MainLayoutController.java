@@ -71,7 +71,12 @@ public class MainLayoutController {
         mainBorderPane.setCenter(newView);
     }
 
-    public void genreScene(ActionEvent event) {
+
+    public void managementBooking(ActionEvent event) {
+
+    }
+
+    public void movieGenreScene(ActionEvent event) {
         FXMLLoader loader = SceneSwitcher.loadView("admin/moviegenremanagement/genre-view.fxml");
         assert loader != null;
         Parent newView = loader.getRoot();

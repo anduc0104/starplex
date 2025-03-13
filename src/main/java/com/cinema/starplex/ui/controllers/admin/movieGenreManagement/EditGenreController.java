@@ -1,19 +1,17 @@
-package com.cinema.starplex.ui.controllers.admin.movieManagement;
+package com.cinema.starplex.ui.controllers.admin.movieGenreManagement;
 
 import com.cinema.starplex.models.Genre;
 import com.cinema.starplex.util.DatabaseConnection;
-import com.cinema.starplex.util.SceneSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import org.controlsfx.control.CheckComboBox;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -44,8 +42,9 @@ public class EditGenreController {
             if (affectedRows > 0) {
                 genre.setName(nameField.getText());
 
-                Stage stage = (Stage) saveButton.getScene().getWindow();
-                stage.close(); // Đóng cửa sổ sau khi lưu
+                handleClear(actionEvent);
+                showAlert("Success", "Genre edited Successfully", Alert.AlertType.INFORMATION);
+                returnToGenreView(actionEvent);
             }
         }
     }
@@ -77,5 +76,11 @@ public class EditGenreController {
             e.printStackTrace();
         }
     }
-
+    private void showAlert(String title, String message, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 }

@@ -30,8 +30,8 @@
                     <!--button movie-->
                     <Button mnemonicParsing="false" onAction="#movieScene" styleClass="nav-btn"
                             stylesheets="@../../../../css/admin.css" text="Movie" textFill="WHITE"/>
-                    <!--button movie genre -->
-                    <Button mnemonicParsing="false" onAction="#genreScene" styleClass="nav-btn"
+                    <!--button movie genres-->
+                    <Button mnemonicParsing="false" onAction="#movieGenreScene" styleClass="nav-btn"
                             stylesheets="@../../../../css/admin.css" text="Movie Genre" textFill="WHITE"/>
                     <!--button user-->
                     <Button mnemonicParsing="false" onAction="#managementUser" styleClass="nav-btn"

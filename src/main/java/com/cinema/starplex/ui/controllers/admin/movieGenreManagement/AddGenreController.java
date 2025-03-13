@@ -1,23 +1,18 @@
-package com.cinema.starplex.ui.controllers.admin.movieManagement;
+package com.cinema.starplex.ui.controllers.admin.movieGenreManagement;
 
 import com.cinema.starplex.util.DatabaseConnection;
-import com.cinema.starplex.util.SceneSwitcher;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
-import org.controlsfx.control.CheckComboBox;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class AddGenreController {
@@ -31,7 +26,7 @@ public class AddGenreController {
 
 
     @FXML
-    private void handleSave() {
+    private void handleSave(ActionEvent event) {
         String genreName = nameField.getText();
 
         if (genreName.isEmpty()) {
@@ -51,6 +46,7 @@ public class AddGenreController {
             stmt.executeUpdate();
             showAlert("Success", "Genre added Successfully", Alert.AlertType.INFORMATION);
             handleClear();
+            returnToGenreView(event);
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert("Error", "Failed to add genre.", Alert.AlertType.ERROR);

@@ -6,7 +6,6 @@ module com.cinema.starplex {
     opens com.cinema.starplex to javafx.fxml;
 
     requires java.naming;
-    requires jbcrypt;
 
     opens com.cinema.starplex.ui.controllers to javafx.fxml;
     opens com.cinema.starplex.ui.controllers.admin to javafx.fxml;
@@ -47,4 +46,6 @@ module com.cinema.starplex {
     exports com.cinema.starplex.ui.controllers.admin.seatTypeManagement;
     opens com.cinema.starplex.ui.controllers.admin.showtimemanagement;
     exports com.cinema.starplex.ui.controllers.admin.showtimemanagement;
+    exports com.cinema.starplex.ui.controllers.admin.movieGenreManagement;
+    opens com.cinema.starplex.ui.controllers.admin.movieGenreManagement to javafx.fxml;
 }
