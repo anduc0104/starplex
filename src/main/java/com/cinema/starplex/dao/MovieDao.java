@@ -9,6 +9,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -44,8 +45,7 @@ public class MovieDao implements BaseDao<Movie> {
                         new SimpleStringProperty(rs.getString("duration")),
                         new SimpleStringProperty(rs.getString("release_date")),
                         new SimpleStringProperty(rs.getString("description")),
-                        new SimpleStringProperty(rs.getString("images"))
-                ));
+                        new SimpleStringProperty(rs.getString("images"))));
             }
         }
         System.out.println("Movies loaded: " + movies.size()); // Kiểm tra số lượng dữ liệu
@@ -55,7 +55,7 @@ public class MovieDao implements BaseDao<Movie> {
     public List<Genre> getGenresByMovieId(int movieId) throws SQLException {
         List<Genre> genres = new ArrayList<>();
         String sql = "SELECT g.id, g.name FROM movie_genres g " +
-                "JOIN movie_type mt ON g.id = mt.genre_id " +
+                "JOIN movie_movie_genres mt ON g.id = mt.genre_id " +
                 "WHERE mt.movie_id = ?";
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -65,17 +65,39 @@ public class MovieDao implements BaseDao<Movie> {
                 // Chuyển đổi int và String sang IntegerProperty và StringProperty
                 genres.add(new Genre(
                         new SimpleIntegerProperty(rs.getInt("id")),
-                        new SimpleStringProperty(rs.getString("name"))
-                ));
+                        new SimpleStringProperty(rs.getString("name"))));
             }
         }
         return genres;
     }
 
-
     @Override
-    public void save(Movie entity) {}
+    public void save(Movie entity) {
+        String sql = "INSERT INTO movies (title, duration, release_date, description, images) VALUES (?, ?, ?, ?, ?)";
+        try (Connection conn = DatabaseConnection.getConn();
+             PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+            stmt.setString(1, entity.getTitle());
+            // stmt.setString(2, director);
+            // stmt.setString(3, actors);
+            stmt.setString(2, entity.getDuration());
+            stmt.setString(3, entity.getReleaseDate().toString());
+            stmt.setString(4, entity.getDescription());
+            stmt.setString(5, entity.getImage());
 
+            int affectedRows = stmt.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Adding seats fails, no lines are affected.");
+            }
+
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    entity.setId(rs.getInt(1));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public boolean insert(Movie entity) {
@@ -89,12 +111,13 @@ public class MovieDao implements BaseDao<Movie> {
     @Override
     public void delete(long id) {
         String sql = "DELETE FROM movies WHERE id =?";
+        try (Connection conn = DatabaseConnection.getConn();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setLong(1, id);
-            pstmt.executeUpdate();
+            stmt.setLong(1, id);
+            stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error when deleting chair: " + e.getMessage());
         }
     }
 

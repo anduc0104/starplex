@@ -12,41 +12,34 @@
 <AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.cinema.starplex.ui.controllers.admin.roommanagement.ListRoomController">
-    <AnchorPane layoutX="20.0" layoutY="20.0" prefHeight="700.0" prefWidth="1300.0"
-                styleClass="bg-white" stylesheets="@../../../../../css/admin.css">
-        <VBox spacing="24" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0"
-              AnchorPane.topAnchor="24.0">
-            <Text text="Room Management"/>
-            <HBox>
-                <Button layoutX="33.0" layoutY="34.0" mnemonicParsing="false" onAction="#handleAdd"
-                        prefHeight="30.0" prefWidth="75.0" styleClass="add-new-btn"
-                        stylesheets="@../../../../../css/admin.css" text="Add" textFill="WHITE">
-                    <font>
-                        <Font name="System Bold Italic" size="12.0"/>
-                    </font>
-                </Button>
+    <VBox spacing="24" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0"
+          AnchorPane.rightAnchor="24.0"
+          AnchorPane.topAnchor="24.0">
+        <HBox alignment="CENTER">
+            <Text text="Room Management" styleClass="titlePage" textAlignment="CENTER"/>
+        </HBox>
+        <HBox>
+            <Button layoutX="33.0" layoutY="34.0" mnemonicParsing="false" onAction="#handleAdd"
+                    prefHeight="30.0" prefWidth="75.0" styleClass="add-new-btn"
+                    stylesheets="@../../../../../css/admin.css" text="Add" textFill="WHITE">
+                <font>
+                    <Font name="System Bold Italic" size="12.0"/>
+                </font>
+            </Button>
+            <!-- Search Field -->
+            <!--            <TextField fx:id="searchField" layoutX="163.0" layoutY="34.0" prefHeight="30.0"-->
+            <!--                       promptText="Search by Seat Number" styleClass="search"-->
+            <!--                       stylesheets="@../../../../../css/admin.css"/>-->
+        </HBox>
 
-                <!-- Search Field -->
-                <TextField fx:id="searchField" layoutX="163.0" layoutY="34.0" prefHeight="30.0"
-                           promptText="Search by Seat Number" styleClass="search"
-                           stylesheets="@../../../../../css/admin.css"/>
-            </HBox>
-
-            <HBox spacing="10" alignment="CENTER_LEFT">
-                <Region HBox.hgrow="ALWAYS"/>
-
-                <Label text="Items per page:"/>
-                <ComboBox fx:id="pageSizeComboBox" prefWidth="80"/>
-            </HBox>
-            <TableView fx:id="roomTableView" layoutX="20.0" layoutY="86.0" prefHeight="546.0"
-                       prefWidth="1260.0" styleClass="table" stylesheets="@../../../../../css/admin.css">
-                <columns>
-                    <TableColumn fx:id="idColumn" text="ID" prefWidth="50"/>
-                    <TableColumn fx:id="roomNumberColumn" text="Room Number" prefWidth="150"/>
-                    <TableColumn fx:id="totalSeatsColumn" text="Total Seats" prefWidth="150"/>
-                </columns>
-            </TableView>
-        </VBox>
-
-    </AnchorPane>
+        <TableView fx:id="roomTableView" layoutX="20.0" layoutY="86.0" prefHeight="546.0"
+                   prefWidth="1260.0" styleClass="table" stylesheets="@../../../../../css/admin.css">
+            <columns>
+                <TableColumn fx:id="idColumn" text="ID" prefWidth="50"/>
+                <TableColumn fx:id="roomNumberColumn" text="Room Number" prefWidth="150"/>
+                <TableColumn fx:id="totalSeatsColumn" text="Total Seats" prefWidth="150"/>
+                <TableColumn fx:id="colAction" text="Total Seats" prefWidth="150"/>
+            </columns>
+        </TableView>
+    </VBox>
 </AnchorPane>

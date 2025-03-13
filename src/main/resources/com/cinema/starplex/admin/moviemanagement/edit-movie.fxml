@@ -10,38 +10,85 @@
 <?import javafx.scene.text.Font?>
 
 <?import org.controlsfx.control.CheckComboBox?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cinema.starplex.ui.controllers.admin.movieManagement.EditMovieController">
-    <children>
-        <AnchorPane layoutX="20.0" layoutY="20.0" prefHeight="560.0" prefWidth="1160.0" styleClass="bg-white" stylesheets="@../../../../../css/admin.css">
-            <children>
-                <Button onAction="#handleBack" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="75.0" styleClass="back-btn" stylesheets="@../../../../../css/admin.css" text="Back" textFill="WHITE">
-                    <font>
-                        <Font name="System Bold Italic" size="12.0" />
-                    </font></Button>
-                <Label layoutX="505.0" layoutY="9.0" text="Edit Movie" textFill="#25ff0d">
-                    <font>
-                        <Font name="System Bold" size="28.0" />
-                    </font></Label>
-                <AnchorPane layoutX="791.0" layoutY="95.0" prefHeight="150.0" prefWidth="200.0" styleClass="bg-white" stylesheets="@../../../../../css/admin.css" />
-                <Button onAction="#handleEditImage" fx:id="addImageButton" layoutX="683.0" layoutY="155.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" styleClass="add-image-btn" stylesheets="@../../../../../css/admin.css" text="Add image" textFill="WHITE" />
-                <Label layoutX="115.0" layoutY="100.0" styleClass="label-input" stylesheets="@../../../../../css/admin.css" text="Movie title :" />
-                <TextField fx:id="titleField" layoutX="210.0" layoutY="100.0" prefHeight="27.0" prefWidth="220.0" styleClass="input-field" stylesheets="@../../../../../css/admin.css" />
-                <Label layoutX="134.0" layoutY="170.0" styleClass="label-input" stylesheets="@../../../../../css/admin.css" text="Director :" />
-                <TextField fx:id="directorField" layoutX="210.0" layoutY="170.0" prefHeight="27.0" prefWidth="220.0" styleClass="input-field" stylesheets="@../../../../../css/admin.css" />
-                <Label layoutX="144.0" layoutY="240.0" styleClass="label-input" stylesheets="@../../../../../css/admin.css" text="Actors :" />
-                <TextField fx:id="actorsField" layoutX="210.0" layoutY="240.0" prefHeight="27.0" prefWidth="220.0" styleClass="input-field" stylesheets="@../../../../../css/admin.css" />
-                <Label layoutX="146.0" layoutY="310.0" styleClass="label-input" stylesheets="@../../../../../css/admin.css" text="Genre :" />
-                <CheckComboBox fx:id="genreCheckComboBox" layoutX="210" layoutY="310" prefHeight="27.0" prefWidth="220.0"/>
-                <Label layoutX="126.0" layoutY="380.0" styleClass="label-input" stylesheets="@../../../../../css/admin.css" text="Duration :" />
-                <TextField fx:id="durationField" layoutX="210.0" layoutY="380.0" prefHeight="27.0" prefWidth="220.0" styleClass="input-field" stylesheets="@../../../../../css/admin.css" />
-                <Label layoutX="100.0" layoutY="450.0" styleClass="label-input" stylesheets="@../../../../../css/admin.css" text="Release Date :" />
-                <DatePicker fx:id="releaseDatePicker" layoutX="210.0" layoutY="448.0" prefHeight="30.0" prefWidth="220.0" />
-                <Label layoutX="624.0" layoutY="380.0" styleClass="label-input" stylesheets="@../../../../../css/admin.css" text="Description :" />
-                <TextArea fx:id="descriptionField" layoutX="728.0" layoutY="302.0" prefHeight="182.0" prefWidth="327.0" styleClass="description-field" stylesheets="@../../../../../css/admin.css" />
-                <Button onAction="#handleEditMovie" fx:id="saveButton" layoutX="468.0" layoutY="510.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="75.0" styleClass="save-btn" stylesheets="@../../../../../css/admin.css" text="Edit" textFill="WHITE" />
-                <Button onAction="#handleEditClear" fx:id="clearButton" layoutX="618.0" layoutY="510.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="75.0" styleClass="clear-btn" stylesheets="@../../../../../css/admin.css" text="Clear" textFill="WHITE" />
-                <ImageView fx:id="movieImageView" fitHeight="150.0" fitWidth="200.0" layoutX="791.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true" />
-            </children>
-        </AnchorPane>
-    </children>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.ScrollPane?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            prefHeight="400.0" prefWidth="600.0"
+            fx:controller="com.cinema.starplex.ui.controllers.admin.movieManagement.EditMovieController">
+    <ScrollPane fitToWidth="true" AnchorPane.bottomAnchor="24.0"
+                AnchorPane.leftAnchor="24.0"
+                AnchorPane.rightAnchor="0"
+                AnchorPane.topAnchor="24.0">
+        <VBox spacing="24">
+            <HBox spacing="500">
+                <!-- Nút quay lại -->
+                <Button fx:id="backButton" layoutX="14.0" layoutY="14.0"
+                        mnemonicParsing="false" onAction="#goBack"
+                        prefHeight="30.0" prefWidth="75.0" styleClass="back-btn" text="Back"
+                        textFill="WHITE"/>
+                <Text text="Edit movie" styleClass="titlePage"/>
+            </HBox>
+            <VBox spacing="16">
+                <VBox spacing="8">
+                    <Button onAction="#handleEditImage" fx:id="addImageButton"
+                            mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" styleClass="add-image-btn"
+                            stylesheets="@../../../../../css/admin.css" text="Add image" textFill="WHITE"/>
+                    <ImageView fx:id="movieImageView" fitHeight="150.0" fitWidth="200.0"
+                               pickOnBounds="true" preserveRatio="true"/>
+                </VBox>
+                <VBox>
+                    <Label layoutX="115.0" layoutY="100.0" styleClass="label-input"
+                           stylesheets="@../../../../../css/admin.css" text="Movie title :"/>
+                    <TextField fx:id="titleField"
+                               styleClass="input-field" stylesheets="@../../../../../css/admin.css"/>
+                </VBox>
+<!--                <VBox>-->
+<!--                    <Label layoutX="134.0" layoutY="170.0" styleClass="label-input"-->
+<!--                           stylesheets="@../../../../../css/admin.css" text="Director :"/>-->
+<!--                    <TextField fx:id="directorField"-->
+<!--                               styleClass="input-field" stylesheets="@../../../../../css/admin.css"/>-->
+<!--                </VBox>-->
+<!--                <VBox>-->
+<!--                    <Label layoutX="144.0" layoutY="240.0" styleClass="label-input"-->
+<!--                           stylesheets="@../../../../../css/admin.css" text="Actors :"/>-->
+<!--                    <TextField fx:id="actorsField"-->
+<!--                               styleClass="input-field" stylesheets="@../../../../../css/admin.css"/>-->
+<!--                </VBox>-->
+                <VBox>
+                    <Label styleClass="label-input"
+                           stylesheets="@../../../../../css/admin.css" text="Genre :"/>
+                    <CheckComboBox fx:id="genreCheckComboBox"/>
+                </VBox>
+                <VBox>
+                    <Label layoutX="126.0" layoutY="380.0" styleClass="label-input"
+                           stylesheets="@../../../../../css/admin.css" text="Duration :"/>
+                    <TextField fx:id="durationField"
+                               styleClass="input-field" stylesheets="@../../../../../css/admin.css"/>
+                </VBox>
+                <VBox>
+                    <Label layoutX="100.0" layoutY="450.0" styleClass="label-input"
+                           stylesheets="@../../../../../css/admin.css" text="Release Date :"/>
+                    <DatePicker fx:id="releaseDatePicker"/>
+                </VBox>
+                <VBox>
+                    <Label layoutX="624.0" layoutY="380.0" styleClass="label-input"
+                           stylesheets="@../../../../../css/admin.css" text="Description :"/>
+                    <TextArea fx:id="descriptionField" prefHeight="182.0"
+                              styleClass="description-field" stylesheets="@../../../../../css/admin.css"/>
+
+                </VBox>
+                <HBox alignment="CENTER_RIGHT" spacing="24">
+                    <Button onAction="#handleEditMovie" fx:id="saveButton"
+                            mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" styleClass="save-btn"
+                            text="Edit" textFill="WHITE"/>
+                    <Button onAction="#handleEditClear" fx:id="clearButton"
+                            mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" styleClass="clear-btn"
+                            text="Clear" textFill="WHITE"/>
+                </HBox>
+            </VBox>
+        </VBox>
+    </ScrollPane>
 </AnchorPane>

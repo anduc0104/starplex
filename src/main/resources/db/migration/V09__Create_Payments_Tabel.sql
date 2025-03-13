@@ -1,5 +1,5 @@
 CREATE TABLE payments (
-    id SERIAL PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     booking_id INTEGER NULL REFERENCES bookings(id) ON DELETE CASCADE,
     amount DECIMAL(10,2) NULL,
     payment_method VARCHAR(50) NULL CHECK (payment_method IN ('Credit Card', 'PayPal', 'Cash')),

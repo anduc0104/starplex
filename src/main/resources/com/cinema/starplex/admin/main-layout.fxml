@@ -7,10 +7,12 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.layout.HBox?>
-<?import java.awt.Image?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Region?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.cinema.starplex.ui.controllers.admin.MainLayoutController">
@@ -18,7 +20,8 @@
                 AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
                 AnchorPane.topAnchor="0.0">
         <left>
-            <AnchorPane prefHeight="600.0" prefWidth="160.0" style="-fx-background-color: #111827;"
+            <AnchorPane prefHeight="600.0" prefWidth="160.0"
+                        style="-fx-background-color: #111827; -fx-margin-top: 48px;"
                         BorderPane.alignment="CENTER_LEFT">
                 <VBox>
                     <!--dashboard-->
@@ -27,6 +30,9 @@
                     <!--button movie-->
                     <Button mnemonicParsing="false" onAction="#movieScene" styleClass="nav-btn"
                             stylesheets="@../../../../css/admin.css" text="Movie" textFill="WHITE"/>
+                    <!--button movie genre -->
+                    <Button mnemonicParsing="false" onAction="#genreScene" styleClass="nav-btn"
+                            stylesheets="@../../../../css/admin.css" text="Movie Genre" textFill="WHITE"/>
                     <!--button user-->
                     <Button mnemonicParsing="false" onAction="#managementUser" styleClass="nav-btn"
                             stylesheets="@../../../../css/admin.css" text="User" textFill="WHITE"/>
@@ -51,22 +57,15 @@
         </left>
         <top>
             <HBox styleClass="headerAdmin">
-                <Pane styleClass="logoAdmin" accessibleText=""/>
+                <ImageView fitHeight="28.0" fitWidth="80">
+                    <image>
+                        <Image url="@../../../../images/logo-text-new.png"/>
+                    </image>
+                </ImageView>
+                <Region HBox.hgrow="ALWAYS"/>
                 <!-- HBox đóng vai trò là button -->
-                <HBox>
-                    <Label text="admin"/>
-                    <HBox spacing="10">
-                        <!--                        <ImageView fitHeight="30" fitWidth="50" pickOnBounds="true" preserveRatio="true">-->
-                        <!--                            <Image url="https://cmsassets.rgpub.io/sanity/images/dsfx7636/news_live/f657721a7eb06acae52a29ad3a951f20c1e5fc60-1920x1080.jpg"/>-->
-                        <!--                        </ImageView>-->
-                        <MenuButton text="User Name" style="-fx-background-color: #fff; -fx-text-fill: white;">
-                            <items>
-                                <!--                        <MenuItem style="-fx-padding: 10" text="Settings" onAction="#handleSettings"/>-->
-                                <MenuItem fx:id="buttonLogout" style="-fx-padding: 10" text="Logout" onAction="#logout"/>
-                            </items>
-                        </MenuButton>
-                    </HBox>
-                </HBox>
+                <Button fx:id="buttonLogout" styleClass="btn-logout" text="Logout"
+                        onAction="#logout"/>
             </HBox>
         </top>
         <center>

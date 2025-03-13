@@ -3,10 +3,15 @@ package com.cinema.starplex.ui.controllers.admin.roommanagement;
 import com.cinema.starplex.dao.RoomDao;
 import com.cinema.starplex.models.Room;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
-import java.awt.event.ActionEvent;
+import javafx.event.ActionEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 
 public class EditRoomController {
     @FXML
@@ -19,6 +24,12 @@ public class EditRoomController {
 
     public void initialize() {
         roomDao = new RoomDao();
+    }
+
+    public void setRoom(Room room) {
+        this.selectedRoom = room;
+        roomNumberField.setText(String.valueOf(room.getRoomNumber()));
+        totalSeatsField.setText(String.valueOf(room.getTotalSeats()));
     }
 
     private boolean validateFields() {
@@ -47,7 +58,7 @@ public class EditRoomController {
     }
 
     @FXML
-    private void handleUpdateButton(ActionEvent event) {
+    private void handleSave(ActionEvent event) {
         if (selectedRoom != null && validateFields()) {
             selectedRoom.setRoomNumber(Integer.parseInt(roomNumberField.getText()));
             selectedRoom.setTotalSeats(Integer.parseInt(totalSeatsField.getText()));
@@ -80,5 +91,32 @@ public class EditRoomController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private void handleBack(ActionEvent event) {
+        returnToMovieView(event);
+    }
+
+    private void returnToMovieView(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cinema/starplex/admin/roommanagement/list-room.fxml"));
+            Parent seatView = loader.load();
+
+            AnchorPane root = (AnchorPane) ((Button) event.getSource()).getScene().getRoot();
+            BorderPane mainPane = (BorderPane) root.lookup("#mainBorderPane");
+
+            if (mainPane != null) {
+                mainPane.setCenter(seatView);
+            } else {
+                System.err.println("BorderPane with ID 'mainBorderPane' not found");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void handleClear(ActionEvent event) {
+        roomNumberField.clear();
+        totalSeatsField.clear();
     }
 }

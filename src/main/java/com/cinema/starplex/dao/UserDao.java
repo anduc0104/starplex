@@ -161,7 +161,7 @@ public class UserDao implements BaseDao<User> {
 
     public ObservableList<UserFX> loadUsers() {
         ObservableList<UserFX> users = FXCollections.observableArrayList();
-        String sql = "SELECT * FROM users";
+        String sql = "SELECT * FROM users ";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {

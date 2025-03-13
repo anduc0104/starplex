@@ -12,12 +12,12 @@
 <?import javafx.scene.text.Text?>
 <AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.cinema.starplex.ui.controllers.admin.movieManagement.MovieViewController">
+            fx:controller="com.cinema.starplex.ui.controllers.admin.movieManagement.GenreViewController">
     <VBox spacing="24" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0"
           AnchorPane.rightAnchor="24.0"
           AnchorPane.topAnchor="24.0">
         <HBox alignment="CENTER">
-            <Text text="Movie Management" styleClass="titlePage" textAlignment="CENTER"/>
+            <Text text="Movie Genre Management" styleClass="titlePage" textAlignment="CENTER"/>
         </HBox>
         <HBox>
             <Button layoutX="33.0" layoutY="34.0" mnemonicParsing="false" onAction="#handleAdd"
@@ -33,20 +33,12 @@
             <!--                       promptText="Search by Seat Number" styleClass="search"-->
             <!--                       stylesheets="@../../../../../css/admin.css"/>-->
         </HBox>
-
-        <TableView fx:id="movieTable" layoutX="20.0" layoutY="86.0" prefHeight="546.0" prefWidth="1260.0"
+        <TableView fx:id="genreTable" layoutX="250.0" layoutY="86.0" prefHeight="460.0" prefWidth="660.0"
                    styleClass="table" stylesheets="@../../../../../css/admin.css">
             <columns>
-                <TableColumn fx:id="idColumn" prefWidth="35.0" text="ID"/>
-                <TableColumn fx:id="imageColumn" prefWidth="115.0" text="Image"/>
-                <TableColumn fx:id="titleColumn" prefWidth="117.0" text="Movie title"/>
-                <TableColumn fx:id="directorColumn" prefWidth="95.0" text="Director"/>
-                <TableColumn fx:id="actorsColumn" prefWidth="95.0" text="Actors"/>
-                <TableColumn fx:id="genreColumn" prefWidth="105.0" text="Genre"/>
-                <TableColumn fx:id="durationColumn" prefWidth="93.0" text="Duration"/>
-                <TableColumn fx:id="releaseDateColumn" prefWidth="125.0" text="Release Date"/>
-                <TableColumn fx:id="descriptionColumn" prefWidth="187.0" text="Description"/>
-                <TableColumn fx:id="actionColumn" prefWidth="152.0" text="Action"/>
+                <TableColumn fx:id="idColumn" prefWidth="84.0" text="ID"/>
+                <TableColumn fx:id="genreColumn" prefWidth="270.0" text="Genre"/>
+                <TableColumn fx:id="actionColumn" minWidth="0.0" prefWidth="208.0" text="Action"/>
             </columns>
         </TableView>
     </VBox>

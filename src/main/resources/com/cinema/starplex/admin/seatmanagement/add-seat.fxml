@@ -6,51 +6,50 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="600.0" prefWidth="1200.0"
-            xmlns="http://javafx.com/javafx/8"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.cinema.starplex.ui.controllers.admin.seatManagement.AddSeatController">
+    xmlns="http://javafx.com/javafx/8"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.cinema.starplex.ui.controllers.admin.seatManagement.AddSeatController">
     <VBox spacing="24" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0"
-          AnchorPane.rightAnchor="24.0"
-          AnchorPane.topAnchor="24.0">
+        AnchorPane.rightAnchor="24.0"
+        AnchorPane.topAnchor="24.0">
         <HBox spacing="500">
             <!-- Nút quay lại -->
             <Button onAction="#handleBack" fx:id="backButton" mnemonicParsing="false"
-                    layoutX="14.0" layoutY="14.0"
-                    prefHeight="30.0"
-                    prefWidth="75.0" styleClass="back-btn" text="Back" textFill="WHITE"/>
-            <Text text="Seat Manager" styleClass="titlePage"/>
+                layoutX="14.0" layoutY="14.0"
+                prefHeight="30.0"
+                prefWidth="75.0" styleClass="back-btn" text="Back" textFill="WHITE" />
+            <Text text="Add new seat" styleClass="titlePage" />
         </HBox>
 
         <VBox>
             <!-- Nhập số ghế -->
-            <Label layoutX="400.0" layoutY="150.0" text="Seat Number:" styleClass="label-input"/>
+            <Label layoutX="400.0" layoutY="150.0" text="Seat Number:" styleClass="label-input" />
             <TextField fx:id="seatNumberField" prefHeight="30.0"
-                       prefWidth="12000.0" styleClass="input-field"/>
+                prefWidth="12000.0" styleClass="input-field" />
         </VBox>
 
         <VBox>
             <!-- Chọn phòng -->
-            <Label text="Room:" styleClass="label-input"/>
+            <Label text="Room:" styleClass="label-input" />
             <ComboBox fx:id="roomComboBox" prefHeight="30.0"
-                      prefWidth="Infinity" styleClass="input-field"/>
+                prefWidth="Infinity" styleClass="input-field" />
         </VBox>
 
         <VBox>
             <!-- Chọn loại ghế -->
-            <Label layoutX="400.0" layoutY="290.0" text="Seat Type:" styleClass="label-input"/>
+            <Label layoutX="400.0" layoutY="290.0" text="Seat Type:" styleClass="label-input" />
             <ComboBox fx:id="seatTypeComboBox" prefHeight="30.0"
-                      prefWidth="Infinity" styleClass="input-field"/>
+                prefWidth="Infinity" styleClass="input-field" />
         </VBox>
 
         <HBox alignment="CENTER_RIGHT" spacing="24">
             <!-- Nút lưu và hủy -->
-            <Button onAction="#handleSave" fx:id="saveButton" layoutX="460.0" layoutY="380.0"
-                    mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0"
-                    styleClass="save-btn" text="Save" textFill="WHITE"/>
+            <Button onAction="#handleSave" fx:id="saveButton" alignment="CENTER" prefHeight="30.0"
+                prefWidth="120.0"
+                styleClass="save-btn" text="Save" textFill="WHITE" />
 
-            <Button onAction="#handleClear" fx:id="clearButton" layoutX="620.0" layoutY="380.0"
-                    mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0"
-                    styleClass="clear-btn" text="Clear" textFill="WHITE"/>
+            <Button onAction="#handleClear" fx:id="clearButton" alignment="CENTER"  prefHeight="30.0" prefWidth="120.0"
+                styleClass="clear-btn" text="Clear" textFill="WHITE" />
         </HBox>
     </VBox>
 </AnchorPane>

@@ -103,7 +103,7 @@ public class SeatTypeDao implements BaseDao<SeatType> {
     @Override
     public List<SeatType> findAll() {
         List<SeatType> seatTypes = new ArrayList<>();
-        String sql = "SELECT * FROM seat_types ORDER BY id DESC";
+        String sql = "SELECT * FROM seat_types";
         try (Connection conn = DatabaseConnection.getConn();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {

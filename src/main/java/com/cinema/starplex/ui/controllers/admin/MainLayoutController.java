@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 public class MainLayoutController {
     @FXML
-    MenuItem buttonLogout;
+    Button buttonLogout;
 
     @FXML
     private BorderPane mainBorderPane;
@@ -66,6 +66,13 @@ public class MainLayoutController {
 
     public void managementSeatType() {
         FXMLLoader loader = SceneSwitcher.loadView("admin/seattypemanagement/seat-type-view.fxml");
+        assert loader != null;
+        Parent newView = loader.getRoot();
+        mainBorderPane.setCenter(newView);
+    }
+
+    public void genreScene(ActionEvent event) {
+        FXMLLoader loader = SceneSwitcher.loadView("admin/moviegenremanagement/genre-view.fxml");
         assert loader != null;
         Parent newView = loader.getRoot();
         mainBorderPane.setCenter(newView);

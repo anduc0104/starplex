@@ -1,19 +1,19 @@
 package com.cinema.starplex.models;
 
 import java.sql.Timestamp;
-import com.cinema.starplex.models.MovieType;
 
 public class MovieGenre {
     private Integer id;
-    private Movie movie;
-    private MovieType movieType;
+    private String name;
+    private Timestamp createdAt;
 
-    public MovieGenre() {}
-
-    public MovieGenre(Integer id, Movie movie, MovieType movieType) {
+    public MovieGenre(Integer id, String name, Timestamp createdAt) {
         this.id = id;
-        this.movie = movie;
-        this.movieType = movieType;
+        this.name = name;
+        this.createdAt = createdAt;
+    }
+
+    public MovieGenre() {
     }
 
     // Getters and Setters
@@ -26,19 +26,19 @@ public class MovieGenre {
         this.id = id;
     }
 
-    public Movie getMovie() {
-        return movie;
+    public String getName() {
+        return name;
     }
 
-    public void setMovie(Movie movie) {
-        this.movie = movie;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public MovieType getMovieType() {
-        return movieType;
+    public Timestamp getCreatedAt() {
+        return createdAt;
     }
 
-    public void setMovieType(MovieType movieType) {
-        this.movieType = movieType;
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
     }
 }

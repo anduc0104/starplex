@@ -6,8 +6,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.controlsfx.control.CheckComboBox;
 
@@ -68,9 +72,22 @@ public class AddGenreController {
 
     @FXML
     public void handleBack(ActionEvent actionEvent) {
+        returnToGenreView(actionEvent);
+    }
+
+    private void returnToGenreView(ActionEvent event) {
         try {
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            SceneSwitcher.switchTo(stage, "admin/moviemanagement/genre-view.fxml");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cinema/starplex/admin/moviegenremanagement/genre-view.fxml"));
+            Parent seatView = loader.load();
+
+            AnchorPane root = (AnchorPane) ((Button) event.getSource()).getScene().getRoot();
+            BorderPane mainPane = (BorderPane) root.lookup("#mainBorderPane");
+
+            if (mainPane != null) {
+                mainPane.setCenter(seatView);
+            } else {
+                System.err.println("BorderPane with ID 'mainBorderPane' not found");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -70,16 +70,7 @@ public class AddSeatTypeController {
 
     @FXML
     private void handleBack(ActionEvent event) {
-        // Xác nhận trước khi quay lại
-        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
-        confirm.setTitle("Confirm return");
-        confirm.setHeaderText("Are you sure you want to return?");
-        confirm.setContentText("The entered data will not be saved.");
-
-        Optional<ButtonType> result = confirm.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            returnToSeatTypeView(event);
-        }
+                    returnToSeatTypeView(event);
     }
 
     @FXML

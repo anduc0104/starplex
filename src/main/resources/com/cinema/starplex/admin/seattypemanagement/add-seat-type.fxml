@@ -19,7 +19,7 @@
                 prefHeight="30.0"
                 prefWidth="75.0" styleClass="back-btn" text="Back" textFill="WHITE" />
 
-            <Text text="Seat Type Manager" />
+            <Text text="Add new seat type" />
         </HBox>
         <!-- Nhập tên loại ghế -->
         <VBox>
@@ -38,11 +38,11 @@
         <!-- Nút lưu và hủy -->
         <HBox alignment="CENTER_RIGHT" spacing="24">
             <!-- Nút lưu và hủy -->
-            <Button onAction="#handleSave" fx:id="saveButton" layoutX="460.0" layoutY="380.0"
+            <Button onAction="#handleSave" fx:id="saveButton" alignment="CENTER" 
                 mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0"
                 styleClass="save-btn" text="Save" textFill="WHITE" />
 
-            <Button onAction="#handleClear" fx:id="clearButton" layoutX="620.0" layoutY="380.0"
+            <Button onAction="#handleClear" fx:id="clearButton" alignment="CENTER" 
                 mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0"
                 styleClass="clear-btn" text="Clear" textFill="WHITE" />
         </HBox>

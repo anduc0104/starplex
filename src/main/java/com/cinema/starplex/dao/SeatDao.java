@@ -103,8 +103,7 @@ public class SeatDao implements BaseDao<Seat> {
                 "st.id AS seat_type_id, st.name " +
                 "FROM seats s " +
                 "JOIN rooms r ON s.room_id = r.id " +
-                "JOIN seat_types st ON s.seat_type_id = st.id " +
-                "ORDER BY s.id DESC";
+                "JOIN seat_types st ON s.seat_type_id = st.id ";
 
         try (Connection conn = DatabaseConnection.getConn();
              Statement stmt = conn.createStatement();

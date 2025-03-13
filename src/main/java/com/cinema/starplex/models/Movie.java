@@ -31,6 +31,14 @@ public class Movie {
         this.image = image;
     }
 
+    public Movie(StringProperty title, StringProperty duration, StringProperty releaseDate, StringProperty description, StringProperty image) {
+        this.title = title;
+        this.duration = duration;
+        this.releaseDate = releaseDate;
+        this.description = description;
+        this.image = image;
+    }
+
     public int getId() {
         return id.get();
     }
@@ -138,4 +146,6 @@ public class Movie {
     public void setImage(String image) {
         this.image.set(image);
     }
+
+
 }

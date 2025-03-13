@@ -93,9 +93,10 @@
 }
 
 .input-field{
+-fx-pre-width: 100%;
     -fx-border-color: #1e242e;
     -fx-background-color: #fff;
-    -fx-border-radius: 0px 10px 0px 0px;
+    -fx-border-radius: 0px 0px 0px 0px;
 }
 
 .input-field:focused{
@@ -160,3 +161,17 @@
     -fx-font-size: 24px;
 }
 
+.scroll-pane{
+       -fx-background-color: transparent;
+       -fx-border:none;
+       -fx-pre-width:100%;
+       -fx-pref-height: 100%;
+       -fx-padding: 0 24px 0 0px;
+}
+
+.w-100{
+       -fx-pre-width:100%;
+}
+.h-100{
+       -fx-pre-height: 100%;
+}

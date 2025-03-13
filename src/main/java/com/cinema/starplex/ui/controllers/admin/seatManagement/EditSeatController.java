@@ -15,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.util.StringConverter;
+
 import java.sql.Timestamp;
 import java.util.Optional;
 
@@ -132,8 +133,7 @@ public class EditSeatController {
 
     @FXML
     private void handleBack(ActionEvent event) {
-                    returnToSeatView(event);
-
+        returnToSeatView(event);
     }
 
     @FXML
