@@ -138,11 +138,13 @@
 
                 <!-- 📌 Thông tin đơn hàng -->
                 <VBox spacing="5" alignment="CENTER_LEFT">
-                    <Label text="Thông tin đơn hàng" style="-fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;"/>
+                    <Label text="Thông tin đơn hàng"
+                           style="-fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;"/>
 
                     <HBox spacing="160">
                         <Label text="Số tiền thanh toán:" style="-fx-text-fill: white; -fx-font-size: 14;"/>
-                        <Label fx:id="amountLabel" text="170.000đ" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14;"/>
+                        <Label fx:id="amountLabel" text="170.000đ"
+                               style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14;"/>
                     </HBox>
 
                     <HBox spacing="10">

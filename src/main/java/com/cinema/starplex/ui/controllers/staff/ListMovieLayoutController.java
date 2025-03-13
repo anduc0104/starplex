@@ -2,8 +2,6 @@ package com.cinema.starplex.ui.controllers.staff;
 
 import com.cinema.starplex.dao.MovieDao;
 import com.cinema.starplex.models.Movie;
-import com.cinema.starplex.dao.MovieGenreDao;
-import com.cinema.starplex.models.MovieGenre;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
@@ -24,13 +22,9 @@ public class ListMovieLayoutController {
 
     private MovieDao movieDao;
 
-    private MovieGenreDao movieGenreDao;
-
     @FXML
     public void initialize() {
         movieDao = new MovieDao();
-        movieGenreDao = new MovieGenreDao();
-        loadMovieGenres();
         loadMovies();
     }
 
@@ -77,7 +71,7 @@ public class ListMovieLayoutController {
         TextFlow textFlow = new TextFlow();
         textFlow.setPrefWidth(230);// Giới hạn chiều rộng cho TextFlow
 
-        Text genreText = new Text("Thể loại: " + movie.getGenre() + "\n"); //insert từ bảng movie_types & movie_genres(nma chưa có dữ liệu trong Dao nên chưa insert đc)
+        Text genreText = new Text("Thể loại: " + movie.getGenres() + "\n"); //insert từ bảng movie_types & movie_genres(nma chưa có dữ liệu trong Dao nên chưa insert đc)
         Text titleText = new Text(movie.getTitle() + "\n");
         Text durationText = new Text("Thời gian: " + movie.getDuration() + " phút\n");
         Text releaseDateText = new Text("Khởi chiếu: " + movie.getReleaseDate() + "\n");
