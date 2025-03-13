@@ -10,9 +10,6 @@ public interface BaseDao<T> {
     boolean insert(T entity);
     void update(T entity);
     void delete(long id);
-
-    void delete(Genre entity);
-
     T findById(long id);
     List<T> findAll();
 }

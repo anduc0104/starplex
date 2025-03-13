@@ -369,7 +369,7 @@ public class RoomControllerView implements Initializable {
             Optional<ButtonType> result = confirmAlert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 try {
-                    roomDao.delete(selectedRoom);
+                    roomDao.delete(selectedRoom.getId());
                     showAlert(Alert.AlertType.INFORMATION, "Success", "Room deleted successfully");
                     loadRoomData();
                     clearFields();

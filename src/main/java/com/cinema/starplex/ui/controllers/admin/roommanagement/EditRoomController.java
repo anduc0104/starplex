@@ -26,6 +26,12 @@ public class EditRoomController {
         roomDao = new RoomDao();
     }
 
+    public void setRoom(Room room) {
+        this.selectedRoom = room;
+        roomNumberField.setText(String.valueOf(room.getRoomNumber()));
+        totalSeatsField.setText(String.valueOf(room.getTotalSeats()));
+    }
+
     private boolean validateFields() {
         String roomNumberText = roomNumberField.getText();
         String totalSeatsText = totalSeatsField.getText();
@@ -109,10 +115,13 @@ public class EditRoomController {
         }
     }
 
-    public void returnTo
-
     public void handleClear(ActionEvent event) {
         roomNumberField.clear();
         totalSeatsField.clear();
+    }
+
+    public void setRoom(Room room) {
+        this.selectedRoom = room;
+        populateFields(room);
     }
 }

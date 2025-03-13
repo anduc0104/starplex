@@ -1,9 +1,7 @@
 package com.cinema.starplex.ui.controllers.admin.movieManagement;
 
 import com.cinema.starplex.dao.GenreDao;
-import com.cinema.starplex.dao.MovieDao;
 import com.cinema.starplex.models.Genre;
-import com.cinema.starplex.models.Movie;
 import com.cinema.starplex.util.DatabaseConnection;
 import com.cinema.starplex.util.SceneSwitcher;
 import javafx.collections.FXCollections;
@@ -16,6 +14,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -210,5 +210,17 @@ public class GenreViewController {
         genreTable.setItems(filteredMovies);
 
         System.out.println("Search filter applied!");
+    }
+
+    public void handleAdd(ActionEvent event) {
+        FXMLLoader loader = SceneSwitcher.loadView("admin/moviegenremanagement/add-genre.fxml");
+        if (loader != null) {
+            Parent newView = loader.getRoot(); // Lấy Root từ FXMLLoader
+            AnchorPane anchorPane = (AnchorPane) ((Node) event.getSource()).getScene().getRoot();
+            BorderPane mainPane = (BorderPane) anchorPane.lookup("#mainBorderPane");
+            mainPane.setCenter(newView); // Thay đổi nội dung của center
+        } else {
+            System.err.println("Failed to load");
+        }
     }
 }

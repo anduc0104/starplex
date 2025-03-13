@@ -33,14 +33,14 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    public User(String fullName,String username, String email, String password, String phone, String role) {
-        this.fullName = fullName;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.phone = phone;
-        this.role = role;
-    }
+//    public User(String fullName,String username, String email, String password, String phone, String role) {
+//        this.fullName = fullName;
+//        this.username = username;
+//        this.email = email;
+//        this.password = password;
+//        this.phone = phone;
+//        this.role = role;
+//    }
 
     public User(String username, String hashedPassword) {
         this.username = username;
@@ -56,14 +56,14 @@ public class User {
         this.role = role;
     }
 
-    public User(String fullName, String username, String email, String password, String phone, String role) {
-        this.full_name = fullName;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.phone = phone;
-        this.role = role;
-    }
+//    public User(String fullName, String username, String email, String password, String phone, String role) {
+//        this.full_name = fullName;
+//        this.username = username;
+//        this.email = email;
+//        this.password = password;
+//        this.phone = phone;
+//        this.role = role;
+//    }
 
     public User(int id, String fullName, String username, String email, String phone, String role, String password) {
         this.id = id;
@@ -73,6 +73,15 @@ public class User {
         this.phone = phone;
         this.role = role;
         this.password = password;
+    }
+
+    public User(String fullName, String username, String email, String password, String phone, String role) {
+        this.full_name = fullName;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.role = role;
     }
 
 //    public User(IntegerProperty id, StringProperty fullname, StringProperty username, StringProperty email, StringProperty phone, StringProperty role) {

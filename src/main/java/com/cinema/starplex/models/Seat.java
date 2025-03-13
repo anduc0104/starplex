@@ -29,6 +29,14 @@ public class Seat {
         this.isBooked = isBooked;
     }
 
+    public Seat(Integer id, Room selectedRoom, SeatType selectedSeatType, String seatNumber, Timestamp timestamp) {
+        this.id = id;
+        this.room = selectedRoom;
+        this.seatType = selectedSeatType;
+        this.seatNumber = seatNumber;
+        this.createdAt = timestamp;
+    }
+
     // Getters and Setters
 
     public Integer getId() {

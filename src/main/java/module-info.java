@@ -1,5 +1,4 @@
 module com.cinema.starplex {
-    requires javafx.controls;
     requires javafx.fxml;
 
     requires org.kordamp.bootstrapfx.core;
@@ -16,6 +15,10 @@ module com.cinema.starplex {
     opens com.cinema.starplex.ui.controllers.admin.usermanagement to javafx.fxml;
     requires java.sql;
     requires flyway.core;
+    requires spring.security.crypto;
+    requires org.kordamp.ikonli.fontawesome5;
+    requires org.kordamp.ikonli.javafx;
+    requires org.controlsfx.controls;
 
     opens com.cinema.starplex.ui to javafx.fxml;
     exports com.cinema.starplex.ui to javafx.graphics;
@@ -36,4 +39,12 @@ module com.cinema.starplex {
     exports com.cinema.starplex.ui.app;
 
     opens com.cinema.starplex.staff;
+    opens com.cinema.starplex.ui.controllers.admin.roommanagement;
+    exports com.cinema.starplex.ui.controllers.admin.roommanagement;
+    opens com.cinema.starplex.ui.controllers.admin.seatManagement;
+    exports com.cinema.starplex.ui.controllers.admin.seatManagement;
+    opens com.cinema.starplex.ui.controllers.admin.seatTypeManagement;
+    exports com.cinema.starplex.ui.controllers.admin.seatTypeManagement;
+    opens com.cinema.starplex.ui.controllers.admin.showtimemanagement;
+    exports com.cinema.starplex.ui.controllers.admin.showtimemanagement;
 }

@@ -16,14 +16,7 @@ public class DashboardController {
     }
 
     public void viewDashboard(ActionEvent actionEvent) {
-        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(), "/com/cinema/starplex/Dashboard-View.fxml");
-    }
-
-    public void viewTicketSales(ActionEvent actionEvent) {
-    }
-
-    public void viewMovieDetails(ActionEvent actionEvent) {
-
+        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(), "dashboard-view.fxml");
     }
 
     public void viewUserDetails(ActionEvent actionEvent) {
@@ -34,12 +27,12 @@ public class DashboardController {
         SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "admin/moviemanagement/movie-view.fxml");
     }
 
-    public void viewStaffList(ActionEvent actionEvent) {
-        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "StaffView.fxml");
+    public void viewSeatType(ActionEvent actionEvent) {
+        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "admin/seattypemanagement/seat-type-view.fxml");
     }
 
     public void logout(ActionEvent actionEvent) {
-        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "LoginView");
+        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "LoginView.fxml");
     }
 
     public void viewBookings(ActionEvent actionEvent) {
@@ -47,6 +40,6 @@ public class DashboardController {
     }
 
     public void viewRooms(ActionEvent actionEvent) {
-        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "admin/roommanagement/RoomView.fxml");
+        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(),  "admin/roommanagement/list-room.fxml");
     }
 }

@@ -70,3 +70,16 @@
 .w-100{
     -fx-width: 100%;
 }
+
+.headerAdmin{
+    -fx-background-color: -fx-primary-color;
+    -fx-padding:16px;
+}
+.btn-logout{
+       -fx-background-color: -fx-secondary-color;
+       -fx-text-fill: white;
+       -fx-font-size: 16px;
+       -fx-padding: 10px;
+       -fx-border-radius: 4px;
+       -fx-alignment: center;
+}

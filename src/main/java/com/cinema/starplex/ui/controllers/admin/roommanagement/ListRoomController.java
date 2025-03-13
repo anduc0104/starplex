@@ -167,29 +167,29 @@ public class ListRoomController implements Initializable {
             e.printStackTrace();
         }
     }
-//    private void filterRooms(String searchText) {
-//        if (roomList == null) {
-//            return;
-//        }
-//
-//        if (searchText == null || searchText.isEmpty()) {
-//            //neu la empty thi show tat ca room
-//            paginationUtility.setItems(roomList);
-//        } else {
-//            //tim kiem dua vao searchText
-//            List<Room> filteredList = roomList.stream()
-//                    .filter(room ->
-//                            String.valueOf(room.getId()).contains(searchText) || String.valueOf(room.getRoomNumber()).contains(searchText) || String.valueOf(room.getTotalSeats()).contains(searchText)
-//                    ).collect(Collectors.toList());
-//            paginationUtility.setItems(filteredList);
-//        }
-//    }
+    private void filterRooms(String searchText) {
+        if (roomList == null) {
+            return;
+        }
+
+        if (searchText == null || searchText.isEmpty()) {
+            //neu la empty thi show tat ca room
+            paginationUtility.setItems(roomList);
+        } else {
+            //tim kiem dua vao searchText
+            List<Room> filteredList = roomList.stream()
+                    .filter(room ->
+                            String.valueOf(room.getId()).contains(searchText) || String.valueOf(room.getRoomNumber()).contains(searchText) || String.valueOf(room.getTotalSeats()).contains(searchText)
+                    ).collect(Collectors.toList());
+            paginationUtility.setItems(filteredList);
+        }
+    }
     private void initializeTableColumns() {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         roomNumberColumn.setCellValueFactory(new PropertyValueFactory<>("roomNumber"));
         totalSeatsColumn.setCellValueFactory(new PropertyValueFactory<>("totalSeats"));
     }
-    //    private void initializePagination() {
+//        private void initializePagination() {
 //        //tao pagination with 10 rows cho moi page khoi tao
 //        paginationUtility = new TablePaginationUtility<>(roomTableView, 10);
 //

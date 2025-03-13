@@ -112,7 +112,13 @@ public class BookingController implements Initializable {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         userColumn.setCellValueFactory(cellData ->
                 javafx.beans.binding.Bindings.createStringBinding(
-                        () -> cellData.getValue().getUser().getUsername(),
+                        () -> {
+                            if (cellData.getValue().getUser() != null) {
+                                return cellData.getValue().getUser().getUsername();
+                            } else {
+                                return "Unknown";
+                            }
+                        },
                         cellData.getValue().userProperty()));
         showtimeColumn.setCellValueFactory(cellData ->
                 javafx.beans.binding.Bindings.createStringBinding(

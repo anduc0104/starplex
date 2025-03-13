@@ -2,11 +2,9 @@ package com.cinema.starplex.ui.controllers.admin.usermanagement;
 
 import com.cinema.starplex.dao.UserDao;
 import com.cinema.starplex.models.User;
-import com.cinema.starplex.util.SceneSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;

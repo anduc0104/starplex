@@ -77,10 +77,10 @@ public class SeatTypeDao implements BaseDao<SeatType>{
     }
 
     @Override
-    public void delete(SeatType seatType) {
+    public void delete(long id) {
         String query = "DELETE FROM seat_types WHERE id =?";
         try(PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setLong(1, seatType.getId());
+            statement.setLong(1,id);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

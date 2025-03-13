@@ -332,7 +332,7 @@ public class StaffDetailController {
             confirm.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
                     // Delete room from database
-                    roomDao.delete(selectedRoom);
+                    roomDao.delete(selectedRoom.getId());
                     showAlert("Success", "Room deleted successfully.");
                     roomListView.refresh();
                     loadRooms();
@@ -536,7 +536,7 @@ public class StaffDetailController {
                 if (response == ButtonType.OK) {
                     // Delete seat from database
 //                    SeatDao seatDao = new SeatDao();
-                    seatDao.delete(selectedSeat);
+                    seatDao.delete(selectedSeat.getId());
 
                     showAlert("Successful", "Seat deleted.");
                     seatTableView.getItems().remove(selectedSeat);
