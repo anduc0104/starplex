@@ -31,8 +31,8 @@ public class LoginController {
     private Label passwordError;
 
     public void handleLogin(ActionEvent actionEvent) throws SQLException {
-        String username = usernameField.getText();
-        String password = passwordField.getText();
+        String username = usernameField.getText().trim();
+        String password = passwordField.getText().trim();
 
         // Xóa thông báo lỗi cũ
         clearErrors();
