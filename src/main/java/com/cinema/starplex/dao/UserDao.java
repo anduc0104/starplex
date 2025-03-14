@@ -144,13 +144,13 @@ public class UserDao implements BaseDao<User> {
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     String hashedPassword = rs.getString("password");
-
                     if (BCrypt.checkpw(password, hashedPassword)) {
                         user = new User();
                         user.setId(rs.getInt("id"));
                         user.setUsername(rs.getString("username"));
                         user.setPassword(hashedPassword);
                         user.setEmail(rs.getString("email"));
+                        user.setRole(rs.getString("role"));
                         return user;
                     }
                 }

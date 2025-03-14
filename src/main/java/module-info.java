@@ -1,23 +1,27 @@
 module com.cinema.starplex {
+    requires javafx.controls;
+
+    opens com.cinema.starplex.ui.controllers.admin.showtimesManagement to javafx.fxml;
+
+
     requires javafx.fxml;
 
     requires org.kordamp.bootstrapfx.core;
 
     opens com.cinema.starplex to javafx.fxml;
 
-    requires java.naming;
+    requires spring.security.crypto;
+    requires java.sql;
+    requires org.controlsfx.controls;
 
     opens com.cinema.starplex.ui.controllers to javafx.fxml;
     opens com.cinema.starplex.ui.controllers.admin to javafx.fxml;
 
     opens com.cinema.starplex.ui.controllers.admin.movieManagement to javafx.fxml;
     opens com.cinema.starplex.ui.controllers.admin.usermanagement to javafx.fxml;
-    requires java.sql;
     requires flyway.core;
-    requires spring.security.crypto;
     requires org.kordamp.ikonli.fontawesome5;
     requires org.kordamp.ikonli.javafx;
-    requires org.controlsfx.controls;
 
     opens com.cinema.starplex.ui to javafx.fxml;
     exports com.cinema.starplex.ui to javafx.graphics;
@@ -34,6 +38,7 @@ module com.cinema.starplex {
     opens com.cinema.starplex.ui.controllers.staff.staffDetail;
     exports com.cinema.starplex.ui.controllers.staff.staffDetail;
 
+
     opens com.cinema.starplex.ui.app to javafx.graphics, javafx.fxml;
     exports com.cinema.starplex.ui.app;
 
@@ -48,4 +53,6 @@ module com.cinema.starplex {
     exports com.cinema.starplex.ui.controllers.admin.showtimemanagement;
     exports com.cinema.starplex.ui.controllers.admin.movieGenreManagement;
     opens com.cinema.starplex.ui.controllers.admin.movieGenreManagement to javafx.fxml;
+
+    opens com.cinema.starplex.ui.controllers.staff to javafx.fxml;
 }

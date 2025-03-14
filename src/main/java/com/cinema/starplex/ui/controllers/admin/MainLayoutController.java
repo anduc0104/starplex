@@ -55,6 +55,10 @@ public class MainLayoutController {
     }
 
     public void managementShowtime(ActionEvent event) {
+        FXMLLoader loader = SceneSwitcher.loadView("admin/showtimesmanagement/showtime-view.fxml");
+        assert loader != null;
+        Parent newView = loader.getRoot();
+        mainBorderPane.setCenter(newView);
     }
 
     public void managementSeat() {
@@ -77,6 +81,19 @@ public class MainLayoutController {
     }
 
     public void movieGenreScene(ActionEvent event) {
+        FXMLLoader loader = SceneSwitcher.loadView("admin/moviegenremanagement/genre-view.fxml");
+        assert loader != null;
+        Parent newView = loader.getRoot();
+        mainBorderPane.setCenter(newView);
+    }
+
+    public void showtimeScene(ActionEvent actionEvent) {
+        FXMLLoader loader = SceneSwitcher.loadView("admin/showtimesmanagement/showtime-view.fxml");
+        assert loader != null;
+        Parent newView = loader.getRoot();
+        mainBorderPane.setCenter(newView);
+    }
+    public void genreScene(ActionEvent event) {
         FXMLLoader loader = SceneSwitcher.loadView("admin/moviegenremanagement/genre-view.fxml");
         assert loader != null;
         Parent newView = loader.getRoot();
