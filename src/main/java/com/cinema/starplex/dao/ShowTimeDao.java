@@ -15,12 +15,17 @@ public class ShowTimeDao implements BaseDao<Showtime>{
     }
 
     @Override
+    public boolean insert(Showtime entity) {
+        return false;
+    }
+
+    @Override
     public void update(Showtime entity) {
 
     }
 
     @Override
-    public void delete(Showtime entity) {
+    public void delete(long id) {
 
     }
 
@@ -33,8 +38,6 @@ public class ShowTimeDao implements BaseDao<Showtime>{
     public List<Showtime> findAll() {
         return List.of();
     }
-
-
 
 
     private Connection conn;

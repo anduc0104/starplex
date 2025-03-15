@@ -18,7 +18,6 @@ public class MainLayoutController {
     @FXML
     private BorderPane mainBorderPane;
 
-
     public void logout(ActionEvent actionEvent) {
         SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(), "LoginView.fxml");
     }
@@ -75,7 +74,6 @@ public class MainLayoutController {
         mainBorderPane.setCenter(newView);
     }
 
-
     public void managementBooking(ActionEvent event) {
 
     }
@@ -93,15 +91,9 @@ public class MainLayoutController {
         Parent newView = loader.getRoot();
         mainBorderPane.setCenter(newView);
     }
+
     public void genreScene(ActionEvent event) {
         FXMLLoader loader = SceneSwitcher.loadView("admin/moviegenremanagement/genre-view.fxml");
-        assert loader != null;
-        Parent newView = loader.getRoot();
-        mainBorderPane.setCenter(newView);
-    }
-
-    public void showtimeScene(ActionEvent actionEvent) {
-        FXMLLoader loader = SceneSwitcher.loadView("admin/showtimesmanagement/showtime-view.fxml");
         assert loader != null;
         Parent newView = loader.getRoot();
         mainBorderPane.setCenter(newView);

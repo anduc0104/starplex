@@ -2,15 +2,24 @@ package com.cinema.starplex.ui.controllers.admin.showtimesManagement;
 
 import com.cinema.starplex.dao.ShowTimeDao;
 import com.cinema.starplex.models.Movie;
+import com.cinema.starplex.models.SeatType;
 import com.cinema.starplex.models.Showtime;
 import com.cinema.starplex.util.SceneSwitcher;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -23,7 +32,7 @@ public class ShowtimesController {
     @FXML
     private TableColumn<Showtime, Number> idColumn;
     @FXML
-    private TableColumn<Showtime, Timestamp> starttimeColumn;
+    private TableColumn<Showtime, Timestamp> startTimeColumn;
     @FXML
     private TableColumn<Showtime, BigDecimal> priceColumn;
     @FXML
@@ -48,30 +57,27 @@ public class ShowtimesController {
 
     private void setupTableColumns() {
         idColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getId()));
-        starttimeColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getStartTime()));
+        startTimeColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getStartTime()));
         priceColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPrice()));
     }
 
-    private void setupActionColumn(){
-        if (actionColumn == null) {
-            actionColumn = new TableColumn<>("Action"); // Khởi tạo cột nếu chưa có
-        }
+    private void setupActionColumn() {
         actionColumn.setCellFactory(param -> new TableCell<>() {
-            private final Button editButton = new Button("Edit");
-            private final Button deleteButton = new Button("Delete");
-            private final HBox buttonBox = new HBox(10, editButton, deleteButton);
+            private final HBox actionBox = new HBox(10);
+
+            private final FontIcon editIcon = new FontIcon(FontAwesomeSolid.EDIT);
+            private final FontIcon deleteIcon = new FontIcon(FontAwesomeSolid.TRASH_ALT);
 
             {
-                editButton.setOnAction(event -> {
-                    Showtime showtime = getTableView().getItems().get(getIndex());
-                    handleEdit(event,showtime);
-                });
-                deleteButton.setOnAction(event -> {
-                    Showtime showtime = getTableView().getItems().get(getIndex());
-                    handleDelete(showtime);
-                });
-                editButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
-                deleteButton.setStyle("-fx-background-color: #F44336; -fx-text-fill: white;");
+                // Đặt kích thước và màu sắc cho các biểu tượng
+                editIcon.setIconSize(20);
+                editIcon.setIconColor(Paint.valueOf("#4CAF50")); // Màu xanh lá cho "Sửa"
+
+                deleteIcon.setIconSize(20);
+                deleteIcon.setIconColor(Paint.valueOf("#F44336")); // Màu đỏ cho "Xóa"
+
+                actionBox.getChildren().addAll(editIcon, deleteIcon);
+                actionBox.setAlignment(Pos.CENTER); // Căn giữa HBox
             }
 
             @Override
@@ -80,14 +86,20 @@ public class ShowtimesController {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    setGraphic(buttonBox);
+                    Showtime showtime = getTableView().getItems().get(getIndex());
+                    setActionHandlers(actionBox, showtime);
+                    setGraphic(actionBox);
                 }
             }
         });
+    }
 
-        if (!showtimeTable.getColumns().contains(actionColumn)) {
-            showtimeTable.getColumns().add(actionColumn);
-        }
+    private void setActionHandlers(HBox actionBox, Showtime showtime) {
+        FontIcon editIcon = (FontIcon) actionBox.getChildren().get(0);
+        FontIcon trashIcon = (FontIcon) actionBox.getChildren().get(1);
+
+        editIcon.setOnMouseClicked(event -> handleEdit(showtime));
+        trashIcon.setOnMouseClicked(event -> handleDelete(showtime));
     }
 
     private void loadShowtimes() {
@@ -95,13 +107,28 @@ public class ShowtimesController {
         showtimeTable.getItems().setAll(showtimes);
     }
 
-    private void handleEdit(ActionEvent actionEvent, Showtime showtime) {
-        try {
-            EditShowtimeController.setSelectedShowtime(showtime);
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            SceneSwitcher.switchTo(stage, "admin/showtimesmanagement/edit-showtime.fxml");
-        } catch (Exception e) {
-            e.printStackTrace();
+    private void handleEdit(Showtime showtime) {
+        if (showtime == null) {
+            showAlert("Error", "Please select a seat to repair!");
+            return;
+        }
+
+        FXMLLoader loader = SceneSwitcher.loadView("admin/showtimesmanagement/edit-showtime.fxml");
+        if (loader != null) {
+            EditShowtimeController controller = loader.getController();
+            controller.setSelectedShowtime(showtime); // Truyền dữ liệu ghế cần chỉnh sửa
+
+            Parent newView = loader.getRoot();
+            AnchorPane anchorPane = (AnchorPane) showtimeTable.getScene().getRoot();
+            BorderPane mainPane = (BorderPane) anchorPane.lookup("#mainBorderPane");
+
+            if (mainPane != null) {
+                mainPane.setCenter(newView);
+            } else {
+                System.err.println("BorderPane with ID 'mainBorderPane' not found");
+            }
+        } else {
+            System.err.println("Could not load edit-seat.fxml");
         }
     }
 
@@ -116,6 +143,7 @@ public class ShowtimesController {
                 if (showtimeDAO.deleteShowtime(showtime.getId())) {
                     showtimeTable.getItems().remove(showtime);
                     System.out.println("Delete successfully.");
+                    showAlert("Success", "Delete successfully.");
                 } else {
                     System.out.println("Delete failed.");
                 }
@@ -123,13 +151,28 @@ public class ShowtimesController {
         });
     }
 
-    @FXML
-    private void handleSwitchAddNew(ActionEvent actionEvent) {
-        try {
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            SceneSwitcher.switchTo(stage, "admin/showtimesmanagement/add-showtime.fxml");
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void handleAdd(ActionEvent event) {
+        FXMLLoader loader = SceneSwitcher.loadView("admin/showtimesmanagement/add-showtime.fxml");
+        if (loader != null) {
+            Parent newView = loader.getRoot(); // Lấy Root từ FXMLLoader
+            AnchorPane anchorPane = (AnchorPane) ((Node) event.getSource()).getScene().getRoot();
+            BorderPane mainPane = (BorderPane) anchorPane.lookup("#mainBorderPane");
+
+            if (mainPane != null) {
+                mainPane.setCenter(newView); // Thay đổi nội dung của phần trung tâm
+            } else {
+                System.err.println("BorderPane with ID 'mainBorderPane' not found");
+            }
+        } else {
+            System.err.println("Could not load add-seat-type.fxml");
         }
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

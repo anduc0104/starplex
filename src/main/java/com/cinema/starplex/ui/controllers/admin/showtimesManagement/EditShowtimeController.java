@@ -5,10 +5,14 @@ import com.cinema.starplex.models.Showtime;
 import com.cinema.starplex.util.SceneSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.math.BigDecimal;
@@ -104,9 +108,23 @@ public class EditShowtimeController {
 
     @FXML
     private void handleBack(ActionEvent actionEvent) {
+        returnToShowtimeView(actionEvent);
+    }
+
+    private void returnToShowtimeView(ActionEvent event) {
         try {
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            SceneSwitcher.switchTo(stage, "admin/showtimesmanagement/showtime-view.fxml");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cinema/starplex/admin/showtimesmanagement/showtime-view.fxml"));
+            Parent seatTypeView = loader.load();
+
+            // Change the content of BorderPane
+            AnchorPane root = (AnchorPane) ((Button) event.getSource()).getScene().getRoot();
+            BorderPane mainPane = (BorderPane) root.lookup("#mainBorderPane");
+
+            if (mainPane != null) {
+                mainPane.setCenter(seatTypeView);
+            } else {
+                System.err.println("Could not find BorderPane with ID 'mainBorderPane'");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
