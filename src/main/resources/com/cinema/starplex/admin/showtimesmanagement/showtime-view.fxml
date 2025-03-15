@@ -35,6 +35,8 @@
             <columns>
                 <TableColumn fx:id="idColumn" prefWidth="63.0" text="ID"/>
                 <TableColumn fx:id="startTimeColumn" prefWidth="207.0" text="Start time"/>
+                <TableColumn fx:id="colMovieId" prefWidth="200.0" text="Movie"/>
+                <TableColumn fx:id="colRoomId" prefWidth="150.0" text="Room"/>
                 <TableColumn fx:id="priceColumn" minWidth="0.0" prefWidth="164.0" text="Price"/>
                 <TableColumn fx:id="actionColumn" minWidth="0.0" prefWidth="225.0" text="Action"/>
             </columns>

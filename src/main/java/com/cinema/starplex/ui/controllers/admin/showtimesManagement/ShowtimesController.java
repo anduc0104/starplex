@@ -1,11 +1,14 @@
 package com.cinema.starplex.ui.controllers.admin.showtimesManagement;
 
+import com.cinema.starplex.dao.MovieDao;
+import com.cinema.starplex.dao.RoomDao;
 import com.cinema.starplex.dao.ShowTimeDao;
+import com.cinema.starplex.models.Room;
 import com.cinema.starplex.models.Movie;
-import com.cinema.starplex.models.SeatType;
 import com.cinema.starplex.models.Showtime;
 import com.cinema.starplex.util.SceneSwitcher;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,10 +20,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
-import javafx.stage.Stage;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
-
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
@@ -31,6 +32,10 @@ public class ShowtimesController {
     private TableView<Showtime> showtimeTable;
     @FXML
     private TableColumn<Showtime, Number> idColumn;
+    @FXML
+    private TableColumn<Showtime, String> colMovieId;
+    @FXML
+    private TableColumn<Showtime, String> colRoomId;
     @FXML
     private TableColumn<Showtime, Timestamp> startTimeColumn;
     @FXML
@@ -43,6 +48,8 @@ public class ShowtimesController {
     private TableColumn<Showtime, Void> actionColumn;
 
     private ShowTimeDao showtimeDAO;
+    private final RoomDao roomDao = new RoomDao();
+    private final MovieDao movieDao = new MovieDao();
 
     public ShowtimesController() {
         this.showtimeDAO = new ShowTimeDao();
@@ -51,14 +58,23 @@ public class ShowtimesController {
     @FXML
     public void initialize() {
         setupTableColumns();
-        loadShowtimes();
         setupActionColumn();
+        loadShowtimes();
     }
 
     private void setupTableColumns() {
         idColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getId()));
         startTimeColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getStartTime()));
         priceColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPrice()));
+        colRoomId.setCellValueFactory(cellData -> {
+            Room room = cellData.getValue().getRoom();
+            return new SimpleStringProperty(room != null ? String.valueOf(room.getRoomNumber()) : "N/A");
+        });
+
+        colMovieId.setCellValueFactory(cellData -> {
+            Movie movie = cellData.getValue().getMovie();
+            return new SimpleStringProperty(movie != null ? movie.getTitle() : "N/A");
+        });
     }
 
     private void setupActionColumn() {

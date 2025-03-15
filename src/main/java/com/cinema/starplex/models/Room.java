@@ -31,6 +31,11 @@ public class Room {
         this.totalSeats = totalSeats;
     }
 
+    public Room(String roomNumber) {
+        this.roomNumber = Integer.parseInt(roomNumber);
+    }
+
+
     // Getters and Setters
 
     public Integer getId() {
@@ -63,5 +68,10 @@ public class Room {
 
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(roomNumber);
     }
 }

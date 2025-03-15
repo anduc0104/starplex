@@ -36,16 +36,20 @@ public class MovieDao implements BaseDao<Movie> {
                 int movieId = rs.getInt("id");
                 List<Genre> genres = getGenresByMovieId(movieId);
 
-                movies.add(new Movie(
-                        new SimpleIntegerProperty(rs.getInt("id")),
-                        new SimpleStringProperty(rs.getString("title")),
-                        new SimpleStringProperty(rs.getString("directors")),
-                        new SimpleStringProperty(rs.getString("actors")),
-                        new SimpleListProperty<>(FXCollections.observableArrayList(genres)),
-                        new SimpleStringProperty(rs.getString("duration")),
-                        new SimpleStringProperty(rs.getString("release_date")),
-                        new SimpleStringProperty(rs.getString("description")),
-                        new SimpleStringProperty(rs.getString("images"))));
+                // Tạo Movie với các thuộc tính đã được khởi tạo trong constructor
+                Movie movie = new Movie(
+                        movieId, // Truyền trực tiếp id
+                        rs.getString("title"),
+                        rs.getString("directors"),
+                        rs.getString("actors"),
+                        FXCollections.observableArrayList(genres), // Truyền danh sách genre
+                        rs.getString("duration"),
+                        rs.getString("release_date"),
+                        rs.getString("description"),
+                        rs.getString("images")
+                );
+
+                movies.add(movie);
             }
         }
         System.out.println("Movies loaded: " + movies.size()); // Kiểm tra số lượng dữ liệu

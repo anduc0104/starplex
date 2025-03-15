@@ -1,10 +1,7 @@
 package com.cinema.starplex.models;
 
-import java.sql.Date;
-import java.sql.Timestamp;
 import javafx.beans.property.*;
 import javafx.collections.ObservableList;
-
 
 public class Movie {
     private IntegerProperty id;
@@ -17,26 +14,32 @@ public class Movie {
     private StringProperty description;
     private StringProperty image;
 
-    public Movie() {}
-
-    public Movie(IntegerProperty id, StringProperty title, StringProperty director, StringProperty actors, ListProperty<Genre> genres, StringProperty duration, StringProperty releaseDate, StringProperty description, StringProperty image) {
-        this.id = id;
-        this.title = title;
-        this.director = director;
-        this.actors = actors;
-        this.genres = genres;
-        this.duration = duration;
-        this.releaseDate = releaseDate;
-        this.description = description;
-        this.image = image;
+    public Movie() {
+        this.id = new SimpleIntegerProperty();
+        this.title = new SimpleStringProperty();
+        this.director = new SimpleStringProperty();
+        this.actors = new SimpleStringProperty();
+        this.genres = new SimpleListProperty<>();
+        this.duration = new SimpleStringProperty();
+        this.releaseDate = new SimpleStringProperty();
+        this.description = new SimpleStringProperty();
+        this.image = new SimpleStringProperty();
     }
 
-    public Movie(StringProperty title, StringProperty duration, StringProperty releaseDate, StringProperty description, StringProperty image) {
-        this.title = title;
-        this.duration = duration;
-        this.releaseDate = releaseDate;
-        this.description = description;
-        this.image = image;
+    public Movie(int id, String title, String director, String actors, ObservableList<Genre> genres, String duration, String releaseDate, String description, String image) {
+        this.id = new SimpleIntegerProperty(id);
+        this.title = new SimpleStringProperty(title);
+        this.director = new SimpleStringProperty(director);
+        this.actors = new SimpleStringProperty(actors);
+        this.genres = new SimpleListProperty<>(genres);
+        this.duration = new SimpleStringProperty(duration);
+        this.releaseDate = new SimpleStringProperty(releaseDate);
+        this.description = new SimpleStringProperty(description);
+        this.image = new SimpleStringProperty(image);
+    }
+
+    public Movie(String movieTitle) {
+        this.title = new SimpleStringProperty(movieTitle);
     }
 
     public int getId() {
@@ -147,5 +150,8 @@ public class Movie {
         this.image.set(image);
     }
 
-
+    @Override
+    public String toString() {
+        return title.get();
+    }
 }
