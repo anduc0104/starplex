@@ -128,6 +128,24 @@ public class MovieDao implements BaseDao<Movie> {
 
     @Override
     public List<Movie> findAll() {
-        return List.of();
+        List<Movie> movies = new ArrayList<>();
+        String query = "SELECT * FROM movies";
+        try (PreparedStatement statement = conn.prepareStatement(query)) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    movies.add(mapResultSetToMovie(resultSet));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return movies;
+    }
+
+    private Movie mapResultSetToMovie(ResultSet resultSet) throws SQLException {
+        Movie movie = new Movie();
+        movie.setId(resultSet.getInt("id"));
+        movie.setTitle(resultSet.getString("title"));
+        return movie;
     }
 }

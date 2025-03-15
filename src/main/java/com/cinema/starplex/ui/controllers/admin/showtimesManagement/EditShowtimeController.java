@@ -5,10 +5,14 @@ import com.cinema.starplex.models.Showtime;
 import com.cinema.starplex.util.SceneSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.math.BigDecimal;
@@ -48,6 +52,12 @@ public class EditShowtimeController {
         if (selectedShowtime != null) {
             starttimeField.setText(selectedShowtime.getStartTime().toString());
             priceField.setText(selectedShowtime.getPrice().toString());
+
+            if (selectedShowtime.getMovie() == null) {
+                System.out.println("Warning: Movie is null for this showtime.");
+            }
+        } else {
+            System.out.println("Warning: No showtime selected.");
         }
     }
 
@@ -57,17 +67,21 @@ public class EditShowtimeController {
             // Định dạng giờ:phút
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
             LocalTime time = LocalTime.parse(starttimeField.getText(), formatter);
-
             // Lấy ngày hiện tại và kết hợp với giờ nhập vào
             LocalDateTime dateTime = LocalDateTime.of(LocalDate.now(), time);
             Timestamp startTime = Timestamp.valueOf(dateTime);
-
             // Chuyển đổi giá tiền
             BigDecimal price = new BigDecimal(priceField.getText());
-
             // Gán giá trị mới
             selectedShowtime.setStartTime(startTime);
             selectedShowtime.setPrice(price);
+
+            if (selectedShowtime.getMovie() != null) {
+                int movieId = selectedShowtime.getMovie().getId();
+                System.out.println("Movie ID: " + movieId);
+            } else {
+                System.out.println("Movie is null. Skipping movie ID.");
+            }
 
             // Cập nhật vào DB
             if (showtimeDAO.updateShowtime(selectedShowtime)) {
@@ -94,9 +108,23 @@ public class EditShowtimeController {
 
     @FXML
     private void handleBack(ActionEvent actionEvent) {
+        returnToShowtimeView(actionEvent);
+    }
+
+    private void returnToShowtimeView(ActionEvent event) {
         try {
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            SceneSwitcher.switchTo(stage, "admin/showtimesmanagement/showtime-view.fxml");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cinema/starplex/admin/showtimesmanagement/showtime-view.fxml"));
+            Parent seatTypeView = loader.load();
+
+            // Change the content of BorderPane
+            AnchorPane root = (AnchorPane) ((Button) event.getSource()).getScene().getRoot();
+            BorderPane mainPane = (BorderPane) root.lookup("#mainBorderPane");
+
+            if (mainPane != null) {
+                mainPane.setCenter(seatTypeView);
+            } else {
+                System.err.println("Could not find BorderPane with ID 'mainBorderPane'");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

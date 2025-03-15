@@ -29,7 +29,6 @@ public class ShowTimeDao implements BaseDao<Showtime>{
 
     }
 
-
     @Override
     public Showtime findById(long id) {
         return null;
@@ -39,8 +38,6 @@ public class ShowTimeDao implements BaseDao<Showtime>{
     public List<Showtime> findAll() {
         return List.of();
     }
-
-
 
 
     private Connection conn;
