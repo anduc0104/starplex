@@ -15,20 +15,14 @@ public class ShowTimeDao implements BaseDao<Showtime>{
     }
 
     @Override
-    public boolean insert(Showtime entity) {
-        return false;
-    }
-
-    @Override
     public void update(Showtime entity) {
 
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(Showtime entity) {
 
     }
-
 
     @Override
     public Showtime findById(long id) {

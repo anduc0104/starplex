@@ -99,4 +99,11 @@ public class MainLayoutController {
         Parent newView = loader.getRoot();
         mainBorderPane.setCenter(newView);
     }
+
+    public void showtimeScene(ActionEvent actionEvent) {
+        FXMLLoader loader = SceneSwitcher.loadView("admin/showtimesmanagement/showtime-view.fxml");
+        assert loader != null;
+        Parent newView = loader.getRoot();
+        mainBorderPane.setCenter(newView);
+    }
 }
