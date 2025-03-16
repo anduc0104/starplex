@@ -4,16 +4,16 @@ import com.cinema.starplex.dao.MovieDao;
 import com.cinema.starplex.dao.GenreDao;
 import com.cinema.starplex.models.Movie;
 import javafx.animation.ScaleTransition;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import javafx.scene.layout.VBox;
-import javafx.collections.ObservableList;
 import javafx.util.Duration;
 import java.sql.SQLException;
 
@@ -22,6 +22,9 @@ public class ListMovieLayoutController {
     @FXML
     private GridPane movieGrid;
 
+    @FXML
+    private HBox showDateBox; // Thêm HBox để chứa ngày chiếu
+
     private MovieDao movieDao;
     private GenreDao genreDao;
 
@@ -29,12 +32,39 @@ public class ListMovieLayoutController {
     public void initialize() {
         movieDao = new MovieDao();
         genreDao = new GenreDao();
-        loadMovies();
+        loadShowDates(); // Tải danh sách ngày chiếu trước
     }
 
-    private void loadMovies() {
+    private void loadShowDates() {
         try {
-            ObservableList<Movie> movies = movieDao.getMovies();
+            ObservableList<String> showDates = movieDao.getAllShowDates();
+            showDateBox.getChildren().clear();
+
+            if (showDates.isEmpty()) {
+                System.out.println("No show dates found!");
+            }
+
+            for (String date : showDates) {
+                Button btnDate = new Button(date);
+                btnDate.getStyleClass().add("showdate-btn");
+
+                // Kiểm tra xem sự kiện click có được gán đúng không
+                btnDate.setOnAction(event -> {
+                    System.out.println("Clicked on the show date: " + date);
+                    loadMoviesByDate(date);
+                });
+
+                showDateBox.getChildren().add(btnDate);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadMoviesByDate(String selectedDate) {
+        try {
+            ObservableList<Movie> movies = movieDao.getMoviesByDate(selectedDate);
+            movieGrid.getChildren().clear();
             int row = 0;
             int column = 0;
 
@@ -54,11 +84,8 @@ public class ListMovieLayoutController {
     }
 
     private HBox createMovieBox(Movie movie) {
-        HBox movieBox = new HBox(25); // Tăng khoảng cách giữa ảnh và nội dung
+        HBox movieBox = new HBox(25);
         movieBox.getStyleClass().add("movie-box");
-        movieBox.setPrefWidth(533);
-        movieBox.setMinHeight(267);
-        movieBox.setMaxHeight(267);
 
         ImageView imageView = new ImageView();
         imageView.setFitWidth(160);
@@ -69,22 +96,19 @@ public class ListMovieLayoutController {
         TextFlow textFlow = new TextFlow();
         textFlow.setPrefWidth(307);
 
-        // Lấy danh sách thể loại từ bảng movie_movie_genres
         String genreNames = getGenresForMovie(movie.getId());
 
-        Text genreText = new Text("Genre: " + genreNames + "\n");
         Text titleText = new Text(movie.getTitle() + "\n");
+        Text genreText = new Text("Genre: " + genreNames + "\n");
         Text durationText = new Text("Time: " + movie.getDuration() + " minute\n");
-        Text releaseDateText = new Text("Release Date: " + movie.getReleaseDate() + "\n");
         Text descriptionText = new Text(movie.getDescription());
 
-        genreText.getStyleClass().add("movie-info");
         titleText.getStyleClass().add("movie-title");
+        genreText.getStyleClass().add("movie-info");
         durationText.getStyleClass().add("movie-info");
-        releaseDateText.getStyleClass().add("movie-info");
         descriptionText.getStyleClass().add("movie-description");
 
-        textFlow.getChildren().addAll(genreText, titleText, durationText, releaseDateText, descriptionText);
+        textFlow.getChildren().addAll(titleText, genreText, durationText, descriptionText);
         detailsBox.getChildren().add(textFlow);
 
         // Thêm lịch chiếu
@@ -103,15 +127,13 @@ public class ListMovieLayoutController {
             e.printStackTrace();
         }
 
-        detailsBox.getChildren().add(showtimeLabel);
-        detailsBox.getChildren().add(showtimeBox);
+        detailsBox.getChildren().addAll(showtimeLabel, showtimeBox);
         movieBox.getChildren().addAll(imageView, detailsBox);
         addZoomEffect(movieBox);
 
         return movieBox;
     }
 
-    // Phương thức lấy danh sách tên thể loại theo ID phim
     private String getGenresForMovie(int movieId) {
         try {
             ObservableList<String> genres = genreDao.getGenresByMovieId(movieId);

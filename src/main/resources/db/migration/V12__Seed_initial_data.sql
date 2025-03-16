@@ -4,18 +4,28 @@ INSERT INTO users (full_name, username, email, phone, password, role, created_at
 ('Nguyen Van B', 'staff', 'staff@example.com', '0912345672', '$2a$12$Qtiw5reG1xJc.DVdl4kVneibqx2z59o6KZriZGmUWlqJ.daEfd9u2', 'staff', NOW())
 
 -- 2. Insert into movies
-INSERT INTO movies (id, title, duration, release_date, description, created_at) VALUES
-(1, 'Inception', 148, '2010-07-16', 'A mind-bending thriller.', NOW()),
-(2, 'Titanic', 195, '1997-12-19', 'A tragic love story.', NOW()),
-(3, 'Avatar', 162, '2009-12-18', 'A sci-fi epic.', NOW()),
-(4, 'The Dark Knight', 152, '2008-07-18', 'Batman vs Joker.', NOW()),
-(5, 'Forrest Gump', 142, '1994-07-06', 'A man with a unique journey.', NOW()),
-(6, 'Interstellar', 169, '2014-11-07', 'Space exploration.', NOW()),
-(7, 'The Matrix', 136, '1999-03-31', 'Virtual reality revealed.', NOW()),
-(8, 'Joker', 122, '2019-10-04', 'Origin story of Joker.', NOW()),
-(9, 'Avengers: Endgame', 181, '2019-04-26', 'End of an era.', NOW()),
-(10, 'The Godfather', 175, '1972-03-24', 'Mafia crime drama.', NOW());
-
+INSERT INTO movies (title, duration, release_date, description, images, directors, actors, created_at)
+VALUES
+('Inception', 148, '2010-07-16', 'A sci-fi movie about dreams and reality.', '0018386_0.png', 'Christopher Nolan', 'Leonardo DiCaprio', NOW()),
+('Avatar', 162, '2009-12-18', 'The story of Pandora and the fight for survival.', '0018386_0.png', 'James Cameron', 'Sam Worthington', NOW()),
+('The Dark Knight', 152, '2008-07-18', 'Batman faces Joker in a battle for Gotham.', '0018386_0.png', 'Christopher Nolan', 'Christian Bale', NOW()),
+('Interstellar', 169, '2014-11-07', 'Astronauts travel through a wormhole to save humanity.', '0018386_0.png', 'Christopher Nolan', 'Matthew McConaughey', NOW()),
+('Titanic', 195, '1997-12-19', 'A tragic love story set on the legendary ship.', '0018386_0.png', 'James Cameron', 'Leonardo DiCaprio', NOW()),
+('Avengers: Endgame', 181, '2019-04-26', 'The final battle of the Avengers against Thanos.', '0018386_0.png', 'Anthony Russo, Joe Russo', 'Robert Downey Jr.', NOW()),
+('The Matrix', 136, '1999-03-31', 'A hacker discovers the truth about reality.', '0018386_0.png', 'Lana Wachowski, Lilly Wachowski', 'Keanu Reeves', NOW()),
+('Jurassic Park', 127, '1993-06-11', 'Dinosaurs are brought back to life in a theme park.', '0018386_0.png', 'Steven Spielberg', 'Sam Neill', NOW()),
+('The Godfather', 175, '1972-03-24', 'The story of the Corleone mafia family.', '0018386_0.png', 'Francis Ford Coppola', 'Marlon Brando', NOW()),
+('Forrest Gump', 142, '1994-07-06', 'A man with a low IQ changes history through his life journey.', '0018386_0.png', 'Robert Zemeckis', 'Tom Hanks', NOW()),
+('Pulp Fiction', 154, '1994-10-14', 'A nonlinear crime story full of twists.', '0018386_0.png', 'Quentin Tarantino', 'John Travolta', NOW()),
+('Shawshank Redemption', 142, '1994-09-23', 'A man’s journey to freedom from prison.', '0018386_0.png', 'Frank Darabont', 'Tim Robbins', NOW()),
+('Gladiator', 155, '2000-05-05', 'A betrayed general seeks vengeance in the Colosseum.', '0018386_0.png', 'Ridley Scott', 'Russell Crowe', NOW()),
+('The Lion King', 118, '1994-06-15', 'A young lion cub embarks on a journey to reclaim his throne.', '0018386_0.png', 'Roger Allers, Rob Minkoff', 'Matthew Broderick', NOW()),
+('Fight Club', 139, '1999-10-15', 'An underground fight club takes a dark turn.', '0018386_0.png', 'David Fincher', 'Brad Pitt', NOW()),
+('The Lord of the Rings: The Fellowship of the Ring', 178, '2001-12-19', 'A journey to destroy the One Ring.', '0018386_0.png', 'Peter Jackson', 'Elijah Wood', NOW()),
+('The Lord of the Rings: The Two Towers', 179, '2002-12-18', 'The battle for Middle-earth intensifies.', '0018386_0.png', 'Peter Jackson', 'Viggo Mortensen', NOW()),
+('The Lord of the Rings: The Return of the King', 201, '2003-12-17', 'The final showdown for the fate of Middle-earth.', '0018386_0.png', 'Peter Jackson', 'Ian McKellen', NOW()),
+('Harry Potter and the Sorcerer''s Stone', 152, '2001-11-16', 'A young wizard discovers his destiny.', '0018386_0.png', 'Chris Columbus', 'Daniel Radcliffe', NOW()),
+('Harry Potter and the Chamber of Secrets', 161, '2002-11-15', 'Hogwarts is threatened by a hidden chamber.', '0018386_0.png', 'Chris Columbus', 'Rupert Grint', NOW());
 
 -- 3. Insert into movie_types
 INSERT INTO movie_genres (id, name, created_at) VALUES
@@ -40,7 +50,17 @@ INSERT INTO movie_movie_genres (movie_id, genre_id, created_at) VALUES
 (7, 3, NOW()), -- The Matrix (Sci-Fi)
 (8, 8, NOW()), -- Joker (Thriller)
 (9, 1, NOW()), -- Avengers: Endgame (Action)
-(10, 2, NOW()); -- The Godfather (Drama)
+(10, 2, NOW()), -- The Godfather (Drama)
+(11, 8, NOW()), -- Pulp Fiction (Thriller)
+(12, 2, NOW()), -- Shawshank Redemption (Drama)
+(13, 1, NOW()), -- Gladiator (Action)
+(14, 10, NOW()), -- The Lion King (Animation)
+(15, 8, NOW()), -- Fight Club (Thriller)
+(16, 7, NOW()), -- LOTR: The Fellowship of the Ring (Fantasy)
+(17, 7, NOW()), -- LOTR: The Two Towers (Fantasy)
+(18, 7, NOW()), -- LOTR: The Return of the King (Fantasy)
+(19, 7, NOW()), -- Harry Potter and the Sorcerer’s Stone (Fantasy)
+(20, 7, NOW()); -- Harry Potter and the Chamber of Secrets (Fantasy)
 
 
 -- 5. Insert into rooms
@@ -77,26 +97,29 @@ INSERT INTO seats (id, room_id, seat_type_id, seat_number, created_at) VALUES
 
 -- 8. Insert into showtimes
 INSERT INTO showtimes (movie_id, room_id, show_date, show_time, price) VALUES
-(1,  1, '2025-03-20', '09:00:00', 75.00),
-(1,  1, '2025-03-20', '14:00:00', 90.00),
-(1,  2, '2025-03-20', '19:30:00', 120.00),
-(2,  3, '2025-03-21', '10:00:00', 85.00),
-(2,  3, '2025-03-21', '16:00:00', 100.00),
-(3,  4, '2025-03-22', '13:30:00', 95.00),
-(3,  4, '2025-03-22', '18:45:00', 110.00),
-(4,  2, '2025-03-23', '11:00:00', 80.00),
-(4,  5, '2025-03-23', '15:00:00', 95.00),
-(5,  1, '2025-03-24', '20:00:00', 125.00),
-(5,  6, '2025-03-24', '22:30:00', 130.00),
-(6,  3, '2025-03-25', '12:00:00', 88.00),
-(6,  7, '2025-03-25', '17:00:00', 105.00),
-(7,  8, '2025-03-26', '09:45:00', 78.00),
-(7,  2, '2025-03-26', '14:30:00', 98.00),
-(8,  9, '2025-03-27', '19:00:00', 115.00),
-(8, 10, '2025-03-27', '21:45:00', 128.00),
-(9,  5, '2025-03-28', '16:15:00', 99.00),
-(9,  6, '2025-03-28', '20:45:00', 118.00),
-(10, 7, '2025-03-29', '18:00:00', 102.00);
+-- Ngày 2025-03-29
+(11, 1, '2025-03-29', '08:00:00', 70.00),
+(12, 2, '2025-03-29', '09:45:00', 80.00),
+(13, 3, '2025-03-29', '11:30:00', 95.00),
+(14, 4, '2025-03-29', '13:15:00', 100.00),
+(15, 5, '2025-03-29', '15:00:00', 110.00),
+(16, 6, '2025-03-29', '16:45:00', 120.00),
+(17, 7, '2025-03-29', '18:30:00', 125.00),
+(18, 8, '2025-03-29', '20:15:00', 130.00),
+(19, 9, '2025-03-29', '22:00:00', 135.00),
+(20,10, '2025-03-29', '23:45:00', 140.00),
+
+-- Ngày 2025-03-30
+(11, 1, '2025-03-30', '08:30:00', 72.00),
+(12, 2, '2025-03-30', '10:15:00', 82.00),
+(13, 3, '2025-03-30', '12:00:00', 98.00),
+(14, 4, '2025-03-30', '13:45:00', 105.00),
+(15, 5, '2025-03-30', '15:30:00', 112.00),
+(16, 6, '2025-03-30', '17:15:00', 122.00),
+(17, 7, '2025-03-30', '19:00:00', 128.00),
+(18, 8, '2025-03-30', '20:45:00', 133.00),
+(19, 9, '2025-03-30', '22:30:00', 138.00),
+(20,10, '2025-03-30', '23:59:00', 145.00);
 
 -- 9. Insert into bookings
 INSERT INTO bookings (id, user_id, showtime_id, total_price, status, created_at) VALUES

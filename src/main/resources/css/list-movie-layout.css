@@ -69,3 +69,21 @@
     -fx-background-color: white;
     -fx-text-fill: black;
 }
+
+.showdate-label {
+    font-weight: bold;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.showdate-btn {
+    -fx-background-color: #10141b;
+    -fx-text-fill: white;
+    -fx-padding: 5px 10px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.showdate-btn:hover {
+    -fx-background-color: #ff4757;
+}

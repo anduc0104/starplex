@@ -10,24 +10,34 @@
             style="-fx-background-color: #10141b; -fx-padding: 10;"
             stylesheets="@../../../../css/list-movie-layout.css">
 
-    <ScrollPane fitToHeight="true" fitToWidth="true" vbarPolicy="AS_NEEDED" hbarPolicy="NEVER"  style="-fx-background-color: transparent; -fx-background: transparent;"
+    <ScrollPane fitToHeight="true" fitToWidth="true"
+                vbarPolicy="AS_NEEDED" hbarPolicy="NEVER"
+                style="-fx-background-color: transparent; -fx-background: transparent;"
                 AnchorPane.bottomAnchor="0"
                 AnchorPane.leftAnchor="0"
                 AnchorPane.rightAnchor="0"
-                AnchorPane.topAnchor="0"
-    >
-        <content>
+                AnchorPane.topAnchor="0">
+
+        <!-- Bọc tất cả nội dung vào một VBox -->
+        <VBox spacing="20" alignment="CENTER"
+              style="-fx-padding: 10;">
+
+            <!-- Thanh chọn ngày chiếu -->
+            <HBox fx:id="showDateBox"
+                  alignment="CENTER"
+                  spacing="10"
+                  style="-fx-padding: 10; -fx-background-color: #1c1f26;">
+            </HBox>
+
+            <!-- Danh sách phim -->
             <GridPane fx:id="movieGrid"
                       alignment="CENTER"
                       hgap="20" vgap="20"
                       style="-fx-padding: 10;"
-                      AnchorPane.topAnchor="50.0"
-                      AnchorPane.bottomAnchor="50.0"
-                      AnchorPane.leftAnchor="50.0"
-                      AnchorPane.rightAnchor="50.0"
-                      minHeight="1800">
-                <!-- Các bộ phim sẽ được thêm vào đây từ mã điều khiển -->
+                      minHeight="1500">
             </GridPane>
-        </content>
+
+        </VBox>
+
     </ScrollPane>
 </AnchorPane>

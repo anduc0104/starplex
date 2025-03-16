@@ -4,12 +4,9 @@ import com.cinema.starplex.models.Genre;
 import com.cinema.starplex.models.Movie;
 import com.cinema.starplex.util.DatabaseConnection;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -35,13 +32,12 @@ public class MovieDao implements BaseDao<Movie> {
                 int movieId = rs.getInt("id");
                 List<Genre> genres = getGenresByMovieId(movieId);
 
-                // Tạo Movie với các thuộc tính đã được khởi tạo trong constructor
                 Movie movie = new Movie(
-                        movieId, // Truyền trực tiếp id
+                        movieId,
                         rs.getString("title"),
                         rs.getString("directors"),
                         rs.getString("actors"),
-                        FXCollections.observableArrayList(genres), // Truyền danh sách genre
+                        FXCollections.observableArrayList(genres),
                         rs.getString("duration"),
                         rs.getString("release_date"),
                         rs.getString("description"),
@@ -51,7 +47,6 @@ public class MovieDao implements BaseDao<Movie> {
                 movies.add(movie);
             }
         }
-        System.out.println("Movies loaded: " + movies.size()); // Kiểm tra số lượng dữ liệu
         return movies;
     }
 
@@ -65,10 +60,10 @@ public class MovieDao implements BaseDao<Movie> {
             pstmt.setInt(1, movieId);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                // Chuyển đổi int và String sang IntegerProperty và StringProperty
                 genres.add(new Genre(
                         new SimpleIntegerProperty(rs.getInt("id")),
-                        new SimpleStringProperty(rs.getString("name"))));
+                        new SimpleStringProperty(rs.getString("name"))
+                ));
             }
         }
         return genres;
@@ -78,19 +73,63 @@ public class MovieDao implements BaseDao<Movie> {
         ObservableList<String> showtimes = FXCollections.observableArrayList();
         String query = "SELECT show_time FROM showtimes WHERE movie_id = ? ORDER BY show_time";
 
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm"); // Chỉ lấy giờ:phút
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
         try (PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setInt(1, movieId);
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                Time sqlTime = rs.getTime("show_time"); // Lấy dữ liệu kiểu TIME
-                String formattedTime = timeFormat.format(new Date(sqlTime.getTime())); // Chuyển thành HH:mm
+                Time sqlTime = rs.getTime("show_time");
+                String formattedTime = timeFormat.format(new Date(sqlTime.getTime()));
                 showtimes.add(formattedTime);
             }
         }
         return showtimes;
+    }
+
+    public ObservableList<String> getAllShowDates() throws SQLException {
+        ObservableList<String> showDates = FXCollections.observableArrayList();
+        String query = "SELECT DISTINCT show_date FROM showtimes ORDER BY show_date";
+
+        try (PreparedStatement statement = conn.prepareStatement(query);
+             ResultSet rs = statement.executeQuery()) {
+            while (rs.next()) {
+                showDates.add(rs.getString("show_date"));
+            }
+        }
+        return showDates;
+    }
+
+    public ObservableList<Movie> getMoviesByDate(String date) throws SQLException {
+        ObservableList<Movie> movies = FXCollections.observableArrayList();
+        String sql = "SELECT DISTINCT m.* FROM movies m " +
+                "JOIN showtimes s ON m.id = s.movie_id " +
+                "WHERE s.show_date = ?";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, date);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                int movieId = rs.getInt("id");
+                List<Genre> genres = getGenresByMovieId(movieId);
+
+                Movie movie = new Movie(
+                        movieId,
+                        rs.getString("title"),
+                        rs.getString("directors"),
+                        rs.getString("actors"),
+                        FXCollections.observableArrayList(genres),
+                        rs.getString("duration"),
+                        rs.getString("release_date"),
+                        rs.getString("description"),
+                        rs.getString("images")
+                );
+
+                movies.add(movie);
+            }
+        }
+        return movies;
     }
 
     @Override
@@ -99,8 +138,6 @@ public class MovieDao implements BaseDao<Movie> {
         try (Connection conn = DatabaseConnection.getConn();
              PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, entity.getTitle());
-            // stmt.setString(2, director);
-            // stmt.setString(3, actors);
             stmt.setString(2, entity.getDuration());
             stmt.setString(3, entity.getReleaseDate().toString());
             stmt.setString(4, entity.getDescription());
@@ -108,7 +145,7 @@ public class MovieDao implements BaseDao<Movie> {
 
             int affectedRows = stmt.executeUpdate();
             if (affectedRows == 0) {
-                throw new SQLException("Adding seats fails, no lines are affected.");
+                throw new SQLException("Adding movie failed, no rows affected.");
             }
 
             try (ResultSet rs = stmt.getGeneratedKeys()) {
@@ -132,14 +169,13 @@ public class MovieDao implements BaseDao<Movie> {
 
     @Override
     public void delete(long id) {
-        String sql = "DELETE FROM movies WHERE id =?";
+        String sql = "DELETE FROM movies WHERE id = ?";
         try (Connection conn = DatabaseConnection.getConn();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
             stmt.setLong(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("Error when deleting chair: " + e.getMessage());
+            System.err.println("Error deleting movie: " + e.getMessage());
         }
     }
 
@@ -152,11 +188,10 @@ public class MovieDao implements BaseDao<Movie> {
     public List<Movie> findAll() {
         List<Movie> movies = new ArrayList<>();
         String query = "SELECT * FROM movies";
-        try (PreparedStatement statement = conn.prepareStatement(query)) {
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    movies.add(mapResultSetToMovie(resultSet));
-                }
+        try (PreparedStatement statement = conn.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+            while (resultSet.next()) {
+                movies.add(mapResultSetToMovie(resultSet));
             }
         } catch (SQLException e) {
             e.printStackTrace();
