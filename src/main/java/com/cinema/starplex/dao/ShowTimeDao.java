@@ -9,12 +9,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShowTimeDao implements BaseDao<Showtime>{
+public class ShowTimeDao implements BaseDao<Showtime> {
 
     @Override
-    public void save(Showtime entity) {
-
-    }
+    public void save(Showtime entity) {}
 
     @Override
     public boolean insert(Showtime entity) {
@@ -22,14 +20,10 @@ public class ShowTimeDao implements BaseDao<Showtime>{
     }
 
     @Override
-    public void update(Showtime entity) {
-
-    }
+    public void update(Showtime entity) {}
 
     @Override
-    public void delete(long id) {
-
-    }
+    public void delete(long id) {}
 
     @Override
     public Showtime findById(long id) {
@@ -41,16 +35,18 @@ public class ShowTimeDao implements BaseDao<Showtime>{
         return List.of();
     }
 
-
     private Connection conn;
 
     public ShowTimeDao() {
         this.conn = DatabaseConnection.getConn();
     }
 
+    /**
+     * Lấy danh sách tất cả lịch chiếu
+     */
     public List<Showtime> getAllShowtimes() {
         List<Showtime> showtimes = new ArrayList<>();
-        String sql = "SELECT s.id, m.title AS movie_title, r.room_number, s.start_time, s.price, s.created_at " +
+        String sql = "SELECT s.id, m.title AS movie_title, r.room_number, s.show_date, s.show_time, s.price, s.created_at " +
                 "FROM showtimes s " +
                 "LEFT JOIN movies m ON s.movie_id = m.id " +
                 "LEFT JOIN rooms r ON s.room_id = r.id";
@@ -63,9 +59,10 @@ public class ShowTimeDao implements BaseDao<Showtime>{
                         rs.getInt("id"),
                         new Movie(movieTitle),
                         new Room(roomNumber),
-                        rs.getTimestamp("start_time"),
+                        rs.getDate("show_date"),   // Lấy ngày chiếu
+                        rs.getTime("show_time"),   // Lấy giờ chiếu
                         rs.getBigDecimal("price"),
-                        rs.getTimestamp("created_at")
+                        rs.getDate("created_at")
                 ));
             }
         } catch (SQLException e) {
@@ -74,8 +71,11 @@ public class ShowTimeDao implements BaseDao<Showtime>{
         return showtimes;
     }
 
+    /**
+     * Chèn một lịch chiếu mới
+     */
     public boolean insertShowtime(Showtime showtime) {
-        String sql = "INSERT INTO showtimes (movie_id, room_id, start_time, price) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO showtimes (movie_id, room_id, show_date, show_time, price) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             if (showtime.getMovie() != null) {
                 stmt.setInt(1, showtime.getMovie().getId());
@@ -88,8 +88,11 @@ public class ShowTimeDao implements BaseDao<Showtime>{
             } else {
                 stmt.setNull(2, Types.INTEGER);
             }
-            stmt.setTimestamp(3, showtime.getStartTime());
-            stmt.setBigDecimal(4, showtime.getPrice());
+
+            stmt.setDate(3, showtime.getShowDate());   // Lưu ngày chiếu
+            stmt.setTime(4, showtime.getShowTime());   // Lưu giờ chiếu
+            stmt.setBigDecimal(5, showtime.getPrice());
+
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -97,8 +100,11 @@ public class ShowTimeDao implements BaseDao<Showtime>{
         return false;
     }
 
+    /**
+     * Cập nhật lịch chiếu
+     */
     public boolean updateShowtime(Showtime showtime) {
-        String sql = "UPDATE showtimes SET movie_id = ?, room_id = ?, start_time = ?, price = ? WHERE id = ?";
+        String sql = "UPDATE showtimes SET movie_id = ?, room_id = ?, show_date = ?, show_time = ?, price = ? WHERE id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             if (showtime.getMovie() != null) {
                 stmt.setInt(1, showtime.getMovie().getId());
@@ -112,9 +118,11 @@ public class ShowTimeDao implements BaseDao<Showtime>{
                 stmt.setNull(2, Types.INTEGER);
             }
 
-            stmt.setTimestamp(3, showtime.getStartTime());
-            stmt.setBigDecimal(4, showtime.getPrice());
-            stmt.setInt(5, showtime.getId());
+            stmt.setDate(3, showtime.getShowDate());   // Cập nhật ngày chiếu
+            stmt.setTime(4, showtime.getShowTime());   // Cập nhật giờ chiếu
+            stmt.setBigDecimal(5, showtime.getPrice());
+            stmt.setInt(6, showtime.getId());
+
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -122,6 +130,9 @@ public class ShowTimeDao implements BaseDao<Showtime>{
         return false;
     }
 
+    /**
+     * Xóa lịch chiếu
+     */
     public boolean deleteShowtime(int id) {
         String sql = "DELETE FROM showtimes WHERE id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {

@@ -1,6 +1,7 @@
 package com.cinema.starplex.ui.controllers.staff;
 
 import com.cinema.starplex.dao.MovieDao;
+import com.cinema.starplex.dao.GenreDao;
 import com.cinema.starplex.models.Movie;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
@@ -21,10 +22,12 @@ public class ListMovieLayoutController {
     private GridPane movieGrid;
 
     private MovieDao movieDao;
+    private GenreDao genreDao;
 
     @FXML
     public void initialize() {
         movieDao = new MovieDao();
+        genreDao = new GenreDao();
         loadMovies();
     }
 
@@ -49,13 +52,9 @@ public class ListMovieLayoutController {
         }
     }
 
-    private void loadMovieGenres() {
-
-    }
-
     private HBox createMovieBox(Movie movie) {
         HBox movieBox = new HBox(20);
-        movieBox.getStyleClass().add("movie-box"); // Thêm class CSS vào movieBox
+        movieBox.getStyleClass().add("movie-box");
         movieBox.setPrefWidth(400);
         movieBox.setMinHeight(200);
         movieBox.setMaxHeight(200);
@@ -66,25 +65,24 @@ public class ListMovieLayoutController {
         imageView.setImage(new Image("file:./src/main/resources/images/" + movie.getImage()));
 
         VBox detailsBox = new VBox(5);
-
-        // Sử dụng TextFlow để tự động xuống dòng
         TextFlow textFlow = new TextFlow();
-        textFlow.setPrefWidth(230);// Giới hạn chiều rộng cho TextFlow
+        textFlow.setPrefWidth(230);
 
-        Text genreText = new Text("Thể loại: " + movie.getGenres() + "\n"); //insert từ bảng movie_types & movie_genres(nma chưa có dữ liệu trong Dao nên chưa insert đc)
+        // Lấy danh sách thể loại từ bảng movie_movie_genres
+        String genreNames = getGenresForMovie(movie.getId());
+
+        Text genreText = new Text("Genre: " + genreNames + "\n");
         Text titleText = new Text(movie.getTitle() + "\n");
-        Text durationText = new Text("Thời gian: " + movie.getDuration() + " phút\n");
-        Text releaseDateText = new Text("Khởi chiếu: " + movie.getReleaseDate() + "\n");
+        Text durationText = new Text("Time: " + movie.getDuration() + " minute\n");
+        Text releaseDateText = new Text("Premiere: " + movie.getReleaseDate() + "\n");
         Text descriptionText = new Text(movie.getDescription());
 
-        // Thêm class CSS vào các Text
         genreText.getStyleClass().add("movie-info");
         titleText.getStyleClass().add("movie-title");
         durationText.getStyleClass().add("movie-info");
         releaseDateText.getStyleClass().add("movie-info");
         descriptionText.getStyleClass().add("movie-description");
 
-        // Thêm các Text vào TextFlow
         textFlow.getChildren().addAll(genreText, titleText, durationText, releaseDateText, descriptionText);
         detailsBox.getChildren().add(textFlow);
         movieBox.getChildren().addAll(imageView, detailsBox);
@@ -93,13 +91,24 @@ public class ListMovieLayoutController {
         return movieBox;
     }
 
+    // Phương thức lấy danh sách tên thể loại theo ID phim
+    private String getGenresForMovie(int movieId) {
+        try {
+            ObservableList<String> genres = genreDao.getGenresByMovieId(movieId);
+            return genres.isEmpty() ? "Unknown" : String.join(", ", genres);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "Unknown";
+        }
+    }
+
     private void addZoomEffect(HBox movieBox) {
         ScaleTransition zoomIn = new ScaleTransition(Duration.millis(200), movieBox);
-        zoomIn.setToX(1.05);  // Tăng kích thước 5%
+        zoomIn.setToX(1.05);
         zoomIn.setToY(1.05);
 
         ScaleTransition zoomOut = new ScaleTransition(Duration.millis(200), movieBox);
-        zoomOut.setToX(1.0);  // Trở về kích thước ban đầu
+        zoomOut.setToX(1.0);
         zoomOut.setToY(1.0);
 
         movieBox.setOnMouseEntered(event -> zoomIn.playFromStart());

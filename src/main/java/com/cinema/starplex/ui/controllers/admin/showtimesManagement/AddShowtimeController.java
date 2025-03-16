@@ -17,9 +17,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.util.StringConverter;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -30,7 +30,9 @@ public class AddShowtimeController {
     @FXML
     public ComboBox<Room> roomComboBox;
     @FXML
-    private TextField starttimeField;
+    private DatePicker showDatePicker;  // Thêm DatePicker cho ngày chiếu
+    @FXML
+    private TextField showTimePicker;    // Sửa starttimeField thành showTimeField
     @FXML
     private TextField priceField;
     @FXML
@@ -75,11 +77,20 @@ public class AddShowtimeController {
     @FXML
     private void handleAddShowtime(ActionEvent event) {
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-            LocalTime time = LocalTime.parse(starttimeField.getText(), formatter);
-            LocalDateTime dateTime = LocalDateTime.of(LocalDate.now(), time);
-            Timestamp startTime = Timestamp.valueOf(dateTime);
+            // Lấy ngày chiếu từ DatePicker
+            LocalDate showDate = showDatePicker.getValue();
+            if (showDate == null) {
+                showAlert(Alert.AlertType.ERROR, "Input Error", "Please select a show date.");
+                return;
+            }
+            Date sqlShowDate = Date.valueOf(showDate); // Chuyển LocalDate thành java.sql.Date
 
+            // Lấy giờ chiếu từ TextField
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            LocalTime showTime = LocalTime.parse(showTimePicker.getText(), formatter);
+            Time sqlShowTime = Time.valueOf(showTime); // Chuyển LocalTime thành java.sql.Time
+
+            // Lấy giá vé
             BigDecimal price = new BigDecimal(priceField.getText());
 
             // Kiểm tra lựa chọn Movie và Room
@@ -91,7 +102,8 @@ public class AddShowtimeController {
                 return;
             }
 
-            Showtime showtime = new Showtime(null, selectedMovie, selectedRoom, startTime, price, null);
+            // Tạo Showtime mới
+            Showtime showtime = new Showtime(null, selectedMovie, selectedRoom, sqlShowDate, sqlShowTime, price, null);
 
             // Insert Showtime using DAO
             if (showtimeDAO.insertShowtime(showtime)) {
@@ -113,7 +125,8 @@ public class AddShowtimeController {
 
     @FXML
     private void handleClear() {
-        starttimeField.clear();
+        showDatePicker.setValue(null);
+        showTimePicker.clear();
         priceField.clear();
         movieComboBox.setValue(null);
         roomComboBox.setValue(null);

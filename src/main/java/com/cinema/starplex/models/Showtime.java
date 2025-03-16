@@ -1,8 +1,7 @@
 package com.cinema.starplex.models;
 
-
-
-import java.sql.Timestamp;
+import java.sql.Date;
+import java.sql.Time;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 
@@ -10,23 +9,24 @@ public class Showtime {
     private Integer id;
     private Movie movie;
     private Room room;
-    private Timestamp startTime;
+    private Date showDate;
+    private Time showTime;
     private BigDecimal price;
-    private Timestamp createdAt;
+    private Date createdAt;
 
-    public Showtime(Integer id, Movie movie, Room room, Timestamp startTime, BigDecimal price, Timestamp createdAt) {
+    public Showtime(Integer id, Movie movie, Room room, Date showDate, Time showTime, BigDecimal price, Date createdAt) {
         this.id = id;
         this.movie = movie;
         this.room = room;
-        this.startTime = startTime;
+        this.showDate = showDate;
+        this.showTime = showTime;
         this.price = price;
         this.createdAt = createdAt;
     }
 
-    public Showtime(){}
+    public Showtime() {}
 
     // Getters and Setters
-
     public Integer getId() {
         return id;
     }
@@ -51,12 +51,20 @@ public class Showtime {
         this.room = room;
     }
 
-    public Timestamp getStartTime() {
-        return startTime;
+    public Date getShowDate() {
+        return showDate;
     }
 
-    public void setStartTime(Timestamp startTime) {
-        this.startTime = startTime;
+    public void setShowDate(Date showDate) {
+        this.showDate = showDate;
+    }
+
+    public Time getShowTime() {
+        return showTime;
+    }
+
+    public void setShowTime(Time showTime) {
+        this.showTime = showTime;
     }
 
     public BigDecimal getPrice() {
@@ -67,20 +75,23 @@ public class Showtime {
         this.price = price;
     }
 
-    public Timestamp getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
     public String getDisplayName() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
         String movieTitle = (movie != null) ? movie.getTitle() : "Unknown Movie";
-        Integer roomName = (room != null) ? room.getRoomNumber() : 0;
-        String startTimeStr = (startTime != null) ? dateFormat.format(startTime) : "Unknown Time";
-        return movieTitle + " - Room " + roomName + " - " + startTimeStr;
+        Integer roomNumber = (room != null) ? room.getRoomNumber() : 0;
+        String showDateStr = (showDate != null) ? dateFormat.format(showDate) : "Unknown Date";
+        String showTimeStr = (showTime != null) ? timeFormat.format(showTime) : "Unknown Time";
+
+        return movieTitle + " - Room " + roomNumber + " - " + showDateStr + " - " + showTimeStr;
     }
 }

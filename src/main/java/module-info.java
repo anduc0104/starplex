@@ -1,7 +1,7 @@
 module com.cinema.starplex {
     requires javafx.controls;
 
-    opens com.cinema.starplex.ui.controllers.admin.showtimesManagement to javafx.fxml;
+    opens com.cinema.starplex.ui.controllers.admin.showtimesManagement;
 
 
     requires javafx.fxml;
@@ -49,8 +49,7 @@ module com.cinema.starplex {
     exports com.cinema.starplex.ui.controllers.admin.seatManagement;
     opens com.cinema.starplex.ui.controllers.admin.seatTypeManagement;
     exports com.cinema.starplex.ui.controllers.admin.seatTypeManagement;
-    opens com.cinema.starplex.ui.controllers.admin.showtimemanagement;
-    exports com.cinema.starplex.ui.controllers.admin.showtimemanagement;
+    exports com.cinema.starplex.ui.controllers.admin.showtimesManagement;
     exports com.cinema.starplex.ui.controllers.admin.movieGenreManagement;
     opens com.cinema.starplex.ui.controllers.admin.movieGenreManagement to javafx.fxml;
 

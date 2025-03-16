@@ -26,6 +26,10 @@ public class Movie {
         this.image = new SimpleStringProperty();
     }
 
+    public Movie(int id) {
+        this.id = new SimpleIntegerProperty(id);
+    }
+
     public Movie(int id, String title, String director, String actors, ObservableList<Genre> genres, String duration, String releaseDate, String description, String image) {
         this.id = new SimpleIntegerProperty(id);
         this.title = new SimpleStringProperty(title);
