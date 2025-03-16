@@ -215,10 +215,9 @@ public class RoomDao implements BaseDao<Room> {
     // lay dsch phong database
     public List<Room> getRooms() {
         List<Room> rooms = new ArrayList<>();
-        String query = "SELECT id, room_number, total_seats  " +
-                "FROM rooms " +
-                "GROUP BY id, room_number " +
-                "ORDER BY room_number ";
+        String query =  "SELECT r.id, r.room_number, COUNT(s.id) as total_seats " +
+                "FROM rooms r LEFT JOIN seats s ON r.id = s.room_id " +
+                "GROUP BY r.id, r.room_number ORDER BY r.room_number";
 
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {

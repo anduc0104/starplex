@@ -55,7 +55,7 @@ public class MovieDao implements BaseDao<Movie> {
     public List<Genre> getGenresByMovieId(int movieId) throws SQLException {
         List<Genre> genres = new ArrayList<>();
         String sql = "SELECT g.id, g.name FROM movie_genres g " +
-                "JOIN movie_movie_genres mt ON g.id = mt.genre_id " +
+                "JOIN movie_types mt ON g.id = mt.genre_id " +
                 "WHERE mt.movie_id = ?";
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {

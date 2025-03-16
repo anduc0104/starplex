@@ -30,13 +30,6 @@ public class MainLayoutController {
         mainBorderPane.setCenter(newView);
     }
 
-    public void dashBoardScene(ActionEvent actionEvent) {
-        FXMLLoader loader = SceneSwitcher.loadView("admin/dashboard-view.fxml");
-        assert loader != null;
-        Parent newView = loader.getRoot();
-        mainBorderPane.setCenter(newView);
-    }
-
     public void movieScene(ActionEvent actionEvent) {
         FXMLLoader loader = SceneSwitcher.loadView("admin/moviemanagement/movie-view.fxml");
         assert loader != null;
@@ -55,6 +48,10 @@ public class MainLayoutController {
     }
 
     public void managementShowtime(ActionEvent event) {
+        FXMLLoader loader = SceneSwitcher.loadView("admin/showtimemanagement/showtime-list-view.fxml");
+        assert loader != null;
+        Parent newView = loader.getRoot();
+        mainBorderPane.setCenter(newView);
     }
 
     public void managementSeat() {
@@ -73,6 +70,27 @@ public class MainLayoutController {
 
     public void genreScene(ActionEvent event) {
         FXMLLoader loader = SceneSwitcher.loadView("admin/moviegenremanagement/genre-view.fxml");
+        assert loader != null;
+        Parent newView = loader.getRoot();
+        mainBorderPane.setCenter(newView);
+    }
+
+    public void managementBooking(ActionEvent actionEvent) {
+        FXMLLoader loader = SceneSwitcher.loadView("admin/booking-view/Booking-View.fxml");
+        assert loader != null;
+        Parent newView = loader.getRoot();
+        mainBorderPane.setCenter(newView);
+    }
+
+    public void managementPayment(ActionEvent actionEvent) {
+        FXMLLoader loader = SceneSwitcher.loadView("admin/paymentmanagement/payment-view.fxml");
+        assert loader != null;
+        Parent newView = loader.getRoot();
+        mainBorderPane.setCenter(newView);
+    }
+
+    public void mangementDashboard(ActionEvent actionEvent) {
+        FXMLLoader loader = SceneSwitcher.loadView("admin/dashboard-view.fxml");
         assert loader != null;
         Parent newView = loader.getRoot();
         mainBorderPane.setCenter(newView);

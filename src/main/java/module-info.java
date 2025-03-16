@@ -47,4 +47,8 @@ module com.cinema.starplex {
     exports com.cinema.starplex.ui.controllers.admin.seatTypeManagement;
     opens com.cinema.starplex.ui.controllers.admin.showtimemanagement;
     exports com.cinema.starplex.ui.controllers.admin.showtimemanagement;
+    opens com.cinema.starplex.ui.controllers.admin.bookingManagement to javafx.fxml;
+    exports com.cinema.starplex.ui.controllers.admin.bookingManagement;
+    exports com.cinema.starplex.ui.controllers.admin.paymentManagement;
+    opens com.cinema.starplex.ui.controllers.admin.paymentManagement;
 }

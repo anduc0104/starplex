@@ -1,5 +1,6 @@
 package com.cinema.starplex.dao;
 
+import com.cinema.starplex.models.Seat;
 import com.cinema.starplex.models.User;
 import com.cinema.starplex.models.UserFX;
 import com.cinema.starplex.util.DatabaseConnection;
@@ -9,10 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -129,8 +127,26 @@ public class UserDao implements BaseDao<User> {
 
     @Override
     public List<User> findAll() {
+        List<User> users = new ArrayList<>();
+        String query = "SELECT * FROM users";
 
-        return List.of();
+        try(Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(query)) {
+            while (resultSet.next()) {
+                users.add(new User(
+                        resultSet.getInt("id"),
+                        resultSet.getString("full_name"),
+                        resultSet.getString("username"),
+                        resultSet.getString("email"),
+                        resultSet.getString("phone"),
+                        resultSet.getString("role"),
+                        resultSet.getString("password") // Lấy password cu nếu không cập nhật
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
     }
 
     public User login(String username, String password) throws SQLException {

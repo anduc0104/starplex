@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.cinema.starplex.ui.controllers.admin.paymentManagement.PaymentAddnewController">
+    <VBox spacing="24" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0"
+          AnchorPane.rightAnchor="24.0"
+          AnchorPane.topAnchor="24.0">
+        <HBox spacing="500">
+            <!-- Nút quay lại -->
+            <Button onAction="#handleBack" fx:id="backButton" mnemonicParsing="false"
+                    layoutX="14.0" layoutY="14.0"
+                    prefHeight="30.0"
+                    prefWidth="75.0" styleClass="back-btn" text="Back" textFill="WHITE" />
+            <Text text="Add new payment" styleClass="titlePage" />
+        </HBox>
+
+        <VBox>
+            <!-- Nhập số ghế -->
+            <Label layoutX="400.0" layoutY="150.0" text="Amount:" styleClass="label-input" />
+            <TextField fx:id="amountField" prefHeight="30.0"
+                       prefWidth="12000.0" styleClass="input-field" />
+        </VBox>
+
+        <VBox>
+            <!-- Chọn phòng -->
+            <Label text="Booking Info:" styleClass="label-input" />
+            <ComboBox fx:id="bookingComboBox" prefHeight="30.0"
+                      prefWidth="Infinity" styleClass="input-field" />
+        </VBox>
+
+        <VBox>
+            <!-- Chọn book -->
+            <Label styleClass="label-input" text="Payment method:" />
+            <ComboBox fx:id="paymentComboBox" prefHeight="30.0" prefWidth="Infinity"
+                      styleClass="input-field" />
+        </VBox>
+        <VBox>
+            <Label styleClass="label-input" text="Transaction id:" />
+            <TextField fx:id="transactionIdField" prefHeight="30.0" prefWidth="1200"
+                       styleClass="input-field " />
+        </VBox>
+        <VBox>
+            <!-- Chọn book -->
+            <Label styleClass="label-input" text="Status:" />
+            <ComboBox fx:id="statusComboBox" prefHeight="30.0" prefWidth="Infinity"
+                      styleClass="input-field" />
+        </VBox>
+
+        <HBox alignment="CENTER_RIGHT" spacing="24">
+            <!-- Nút lưu và hủy -->
+            <Button onAction="#handleSave" fx:id="saveButton" alignment="CENTER" prefHeight="30.0"
+                    prefWidth="120.0"
+                    styleClass="save-btn" text="Save" textFill="WHITE" />
+
+            <Button onAction="#handleClear" fx:id="clearButton" alignment="CENTER"  prefHeight="30.0" prefWidth="120.0"
+                    styleClass="clear-btn" text="Clear" textFill="WHITE" />
+        </HBox>
+    </VBox>
+</AnchorPane>

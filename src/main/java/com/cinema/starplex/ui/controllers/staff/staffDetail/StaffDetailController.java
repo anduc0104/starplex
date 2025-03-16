@@ -65,7 +65,7 @@ public class StaffDetailController {
         roomSelector = new ComboBox<>();
         roomSelector.setPrefWidth(200);
         roomSelector.setOnAction(e -> {
-            if (roomSelector.getValue() != null) {
+            if (roomSelector.getValue().getRoomNumber() != null) {
                 loadSeatsForRoom(roomSelector.getValue().getId());
                 updateTotalSeatsLabel();
             }
@@ -750,7 +750,7 @@ public class StaffDetailController {
 
     @FXML
     private void onRoomSelected() {
-        if (roomSelector.getValue() != null) {
+        if (roomSelector.getValue().getRoomNumber() != null) {
             Room selectedRoom = roomSelector.getValue();
             loadSeatsForRoom(selectedRoom.getId());
             updateTotalSeatsLabel();

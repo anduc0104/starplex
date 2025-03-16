@@ -119,9 +119,4 @@ public class EditRoomController {
         roomNumberField.clear();
         totalSeatsField.clear();
     }
-
-    public void setRoom(Room room) {
-        this.selectedRoom = room;
-        populateFields(room);
-    }
 }

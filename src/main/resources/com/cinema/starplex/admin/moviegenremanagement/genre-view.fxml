@@ -28,10 +28,10 @@
                 </font>
             </Button>
 
-            <!-- Search Field -->
-            <!--            <TextField fx:id="searchField" layoutX="163.0" layoutY="34.0" prefHeight="30.0"-->
-            <!--                       promptText="Search by Seat Number" styleClass="search"-->
-            <!--                       stylesheets="@../../../../../css/admin.css"/>-->
+            <!--             Search Field -->
+            <TextField fx:id="searchField" layoutX="163.0" layoutY="34.0" prefHeight="30.0"
+                       promptText="Search by geners movie" styleClass="search"
+                       stylesheets="@../../../../../css/admin.css"/>
         </HBox>
         <TableView fx:id="genreTable" layoutX="250.0" layoutY="86.0" prefHeight="460.0" prefWidth="660.0"
                    styleClass="table" stylesheets="@../../../../../css/admin.css">

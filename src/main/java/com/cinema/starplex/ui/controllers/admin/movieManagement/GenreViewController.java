@@ -137,7 +137,7 @@ public class GenreViewController {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            genreDao.delete(genre);
+            genreDao.delete(genre.getId());
             String sql = "DELETE FROM movie_genres WHERE id = ?";
 
             try (Connection conn = DatabaseConnection.getConn();
