@@ -3,5 +3,7 @@ CREATE TABLE booking_details (
     booking_id INTEGER NULL REFERENCES bookings(id) ON DELETE CASCADE,
     seat_id INTEGER NULL REFERENCES seats(id) ON DELETE CASCADE,
     price DECIMAL(10,2) NULL,
-    created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (booking_id) REFERENCES bookings(id),
+    FOREIGN KEY (seat_id) REFERENCES seats(id)
 );

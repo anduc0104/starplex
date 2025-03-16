@@ -27,7 +27,9 @@ public class MovieDao implements BaseDao<Movie> {
 
     public ObservableList<Movie> getMovies() throws SQLException {
         ObservableList<Movie> movies = FXCollections.observableArrayList();
-        String sql = "SELECT * FROM movies";
+        String sql = "SELECT DISTINCT m.* FROM movies m " +
+                "JOIN showtimes s ON m.id = s.movie_id " +
+                "WHERE DATE(s.start_time) = CURDATE()";
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {

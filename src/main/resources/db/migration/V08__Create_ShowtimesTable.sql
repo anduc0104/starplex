@@ -5,5 +5,7 @@ CREATE TABLE showtimes (
     show_date DATE NULL,
     show_time TIME NULL,
     price DECIMAL(10, 2) NULL,
-    created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (movie_id) REFERENCES movies(id),
+    FOREIGN KEY (room_id) REFERENCES rooms(id)
 );

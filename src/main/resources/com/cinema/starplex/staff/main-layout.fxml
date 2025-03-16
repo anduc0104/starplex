@@ -25,11 +25,11 @@
                 <Pane HBox.hgrow="ALWAYS"></Pane>
 
                 <!-- Chuyển trang -->
-                <HBox spacing="20" alignment="CENTER">
-                    <Button text="Movie" onAction="#movieScene" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" />
-                    <Button text="Room" onAction="#managementRoom" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" />
-                    <Button text="Seat" onAction="#managementSeat" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" />
-                </HBox>
+<!--                <HBox spacing="20" alignment="CENTER">-->
+<!--                    <Button text="Movie" onAction="#movieScene" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" />-->
+<!--                    <Button text="Room" onAction="#managementRoom" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" />-->
+<!--                    <Button text="Seat" onAction="#managementSeat" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" />-->
+<!--                </HBox>-->
 
                 <!-- Khoảng trống để đẩy User Info sang phải -->
                 <Pane HBox.hgrow="ALWAYS"></Pane>
@@ -47,7 +47,6 @@
             </HBox>
         </top>
         <center>
-            <Pane/>
         </center>
     </BorderPane>
 </AnchorPane>

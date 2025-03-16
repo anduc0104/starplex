@@ -6,7 +6,7 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.cinema.starplex.ui.controllers.staff.ListMovieLayoutController"
-            prefHeight="900.0" prefWidth="1200.0"
+            prefHeight="600.0" prefWidth="1200.0"
             style="-fx-background-color: #10141b; -fx-padding: 10;"
             stylesheets="@../../../../css/list-movie-layout.css">
 
@@ -20,7 +20,7 @@
             <GridPane fx:id="movieGrid"
                       alignment="CENTER"
                       hgap="20" vgap="20"
-                      style="-fx-padding: 10;"
+                      style="-fx-padding: 10; -fx-margin-top:32px"
                       AnchorPane.topAnchor="50.0"
                       AnchorPane.bottomAnchor="50.0"
                       AnchorPane.leftAnchor="50.0"
