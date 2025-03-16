@@ -54,20 +54,20 @@ public class ListMovieLayoutController {
     }
 
     private HBox createMovieBox(Movie movie) {
-        HBox movieBox = new HBox(20);
+        HBox movieBox = new HBox(25); // Tăng khoảng cách giữa ảnh và nội dung
         movieBox.getStyleClass().add("movie-box");
-        movieBox.setPrefWidth(400);
-        movieBox.setMinHeight(200);
-        movieBox.setMaxHeight(200);
+        movieBox.setPrefWidth(533);
+        movieBox.setMinHeight(267);
+        movieBox.setMaxHeight(267);
 
         ImageView imageView = new ImageView();
-        imageView.setFitWidth(120);
-        imageView.setFitHeight(160);
+        imageView.setFitWidth(160);
+        imageView.setFitHeight(213);
         imageView.setImage(new Image("file:./src/main/resources/images/" + movie.getImage()));
 
-        VBox detailsBox = new VBox(5);
+        VBox detailsBox = new VBox(7);
         TextFlow textFlow = new TextFlow();
-        textFlow.setPrefWidth(230);
+        textFlow.setPrefWidth(307);
 
         // Lấy danh sách thể loại từ bảng movie_movie_genres
         String genreNames = getGenresForMovie(movie.getId());
@@ -75,7 +75,7 @@ public class ListMovieLayoutController {
         Text genreText = new Text("Genre: " + genreNames + "\n");
         Text titleText = new Text(movie.getTitle() + "\n");
         Text durationText = new Text("Time: " + movie.getDuration() + " minute\n");
-        Text releaseDateText = new Text("Premiere: " + movie.getReleaseDate() + "\n");
+        Text releaseDateText = new Text("Release Date: " + movie.getReleaseDate() + "\n");
         Text descriptionText = new Text(movie.getDescription());
 
         genreText.getStyleClass().add("movie-info");
@@ -86,11 +86,12 @@ public class ListMovieLayoutController {
 
         textFlow.getChildren().addAll(genreText, titleText, durationText, releaseDateText, descriptionText);
         detailsBox.getChildren().add(textFlow);
+
         // Thêm lịch chiếu
         Text showtimeLabel = new Text("Showtime");
         showtimeLabel.getStyleClass().add("showtime-label");
 
-        HBox showtimeBox = new HBox(10);
+        HBox showtimeBox = new HBox(12);
         try {
             ObservableList<String> showtimes = movieDao.getShowtimesByMovieId(movie.getId());
             for (String showtime : showtimes) {
@@ -101,6 +102,7 @@ public class ListMovieLayoutController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         detailsBox.getChildren().add(showtimeLabel);
         detailsBox.getChildren().add(showtimeBox);
         movieBox.getChildren().addAll(imageView, detailsBox);
@@ -122,8 +124,8 @@ public class ListMovieLayoutController {
 
     private void addZoomEffect(HBox movieBox) {
         ScaleTransition zoomIn = new ScaleTransition(Duration.millis(200), movieBox);
-        zoomIn.setToX(1.05);
-        zoomIn.setToY(1.05);
+        zoomIn.setToX(1.08);
+        zoomIn.setToY(1.08);
 
         ScaleTransition zoomOut = new ScaleTransition(Duration.millis(200), movieBox);
         zoomOut.setToX(1.0);

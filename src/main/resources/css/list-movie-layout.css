@@ -1,50 +1,50 @@
 /* styles.css */
 .movie-box {
     -fx-background-color: #10141b; /* Màu nền */
-    -fx-padding: 15;
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
+    -fx-padding: 20;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
     -fx-border-color: #334155;
-    -fx-border-width: 1px;
-    -fx-pref-width: 400;
-    -fx-min-width: 400;
-    -fx-max-width: 400;
-    -fx-pref-height: 200;
-    -fx-min-height:200;
-    -fx-max-height: 200;
+    -fx-border-width: 1.5px;
+    -fx-pref-width: 533;
+    -fx-min-width: 533;
+    -fx-max-width: 533;
+    -fx-pref-height: 267;
+    -fx-min-height: 267;
+    -fx-max-height: 267;
 }
 
 .movie-title {
-    -fx-font-size: 14px;
+    -fx-font-size: 19px;
     -fx-font-weight: bold;
     -fx-fill: #FFCC00; /* Màu chữ tiêu đề */
-    -fx-max-width: 230; /* Giới hạn chiều rộng tối đa */
+    -fx-max-width: 307; /* Giới hạn chiều rộng tối đa */
     -fx-wrap-text: true; /* Cho phép text xuống dòng */
     -fx-text-overflow: clip; /* Cắt text nếu vượt quá chiều rộng */
-    -fx-wraping-width: 230;
+    -fx-wraping-width: 307;
 }
 
 .movie-info {
-    -fx-font-size: 10px;
+    -fx-font-size: 13.3px;
     -fx-fill: #FFFFFF; /* Màu chữ thông tin */
-    -fx-max-width: 230; /* Giới hạn chiều rộng tối đa */
+    -fx-max-width: 307; /* Giới hạn chiều rộng tối đa */
     -fx-wrap-text: true; /* Cho phép text xuống dòng */
     -fx-text-overflow: clip; /* Cắt text nếu vượt quá chiều rộng */
 }
 
 .movie-description {
-    -fx-font-size: 10px;
+    -fx-font-size: 13.3px;
     -fx-fill: #FF0000; /* Màu chữ cho description */
-    -fx-max-width: 230; /* Giới hạn chiều rộng tối đa */
+    -fx-max-width: 307; /* Giới hạn chiều rộng tối đa */
     -fx-wrap-text: true; /* Cho phép text xuống dòng */
     -fx-text-overflow: clip; /* Cắt text nếu vượt quá chiều rộng */
 }
 
 .showtime-label {
-    -fx-font-size: 12px;
+    -fx-font-size: 16px;
     -fx-font-weight: bold;
     -fx-fill: #FFFFFF; /* Màu chữ thông tin */
-    -fx-max-width: 230; /* Giới hạn chiều rộng tối đa */
+    -fx-max-width: 307; /* Giới hạn chiều rộng tối đa */
     -fx-wrap-text: true; /* Cho phép text xuống dòng */
     -fx-text-overflow: clip; /* Cắt text nếu vượt quá chiều rộng */
 }
@@ -56,11 +56,11 @@
 .showtime-btn {
     -fx-background-color: transparent;
     -fx-border-color: white;
-    -fx-border-radius: 5px;
+    -fx-border-radius: 7px;
     -fx-text-fill: white;
-    -fx-padding: 5px 10px;
-    -fx-font-size: 14px;
-    -fx-max-width: 230; /* Giới hạn chiều rộng tối đa */
+    -fx-padding: 7px 14px;
+    -fx-font-size: 19px;
+    -fx-max-width: 307; /* Giới hạn chiều rộng tối đa */
     -fx-wrap-text: true; /* Cho phép text xuống dòng */
     -fx-text-overflow: clip; /* Cắt text nếu vượt quá chiều rộng */
 }

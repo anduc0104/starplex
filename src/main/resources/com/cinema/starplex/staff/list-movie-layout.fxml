@@ -6,7 +6,7 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.cinema.starplex.ui.controllers.staff.ListMovieLayoutController"
-            prefHeight="600.0" prefWidth="1200.0"
+            prefHeight="900.0" prefWidth="1200.0"
             style="-fx-background-color: #10141b; -fx-padding: 10;"
             stylesheets="@../../../../css/list-movie-layout.css">
 
@@ -25,7 +25,7 @@
                       AnchorPane.bottomAnchor="50.0"
                       AnchorPane.leftAnchor="50.0"
                       AnchorPane.rightAnchor="50.0"
-                      minHeight="1300">
+                      minHeight="1800">
                 <!-- Các bộ phim sẽ được thêm vào đây từ mã điều khiển -->
             </GridPane>
         </content>
