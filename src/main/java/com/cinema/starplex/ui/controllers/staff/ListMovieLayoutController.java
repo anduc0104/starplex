@@ -5,6 +5,7 @@ import com.cinema.starplex.dao.GenreDao;
 import com.cinema.starplex.models.Movie;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.image.Image;
@@ -85,6 +86,23 @@ public class ListMovieLayoutController {
 
         textFlow.getChildren().addAll(genreText, titleText, durationText, releaseDateText, descriptionText);
         detailsBox.getChildren().add(textFlow);
+        // Thêm lịch chiếu
+        Text showtimeLabel = new Text("Showtime");
+        showtimeLabel.getStyleClass().add("showtime-label");
+
+        HBox showtimeBox = new HBox(10);
+        try {
+            ObservableList<String> showtimes = movieDao.getShowtimesByMovieId(movie.getId());
+            for (String showtime : showtimes) {
+                Button btnShowtime = new Button(showtime);
+                btnShowtime.getStyleClass().add("showtime-btn");
+                showtimeBox.getChildren().add(btnShowtime);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        detailsBox.getChildren().add(showtimeLabel);
+        detailsBox.getChildren().add(showtimeBox);
         movieBox.getChildren().addAll(imageView, detailsBox);
         addZoomEffect(movieBox);
 

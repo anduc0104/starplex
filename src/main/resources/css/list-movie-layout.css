@@ -40,6 +40,32 @@
     -fx-text-overflow: clip; /* Cắt text nếu vượt quá chiều rộng */
 }
 
+.showtime-label {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-fill: #FFFFFF; /* Màu chữ thông tin */
+    -fx-max-width: 230; /* Giới hạn chiều rộng tối đa */
+    -fx-wrap-text: true; /* Cho phép text xuống dòng */
+    -fx-text-overflow: clip; /* Cắt text nếu vượt quá chiều rộng */
+}
+
 .container {
     -fx-background-color: #2C2C2C; /* Màu nền cho toàn bộ */
+}
+
+.showtime-btn {
+    -fx-background-color: transparent;
+    -fx-border-color: white;
+    -fx-border-radius: 5px;
+    -fx-text-fill: white;
+    -fx-padding: 5px 10px;
+    -fx-font-size: 14px;
+    -fx-max-width: 230; /* Giới hạn chiều rộng tối đa */
+    -fx-wrap-text: true; /* Cho phép text xuống dòng */
+    -fx-text-overflow: clip; /* Cắt text nếu vượt quá chiều rộng */
+}
+
+.showtime-btn:hover {
+    -fx-background-color: white;
+    -fx-text-fill: black;
 }

@@ -11,11 +11,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MovieDao implements BaseDao<Movie> {
@@ -73,6 +72,25 @@ public class MovieDao implements BaseDao<Movie> {
             }
         }
         return genres;
+    }
+
+    public ObservableList<String> getShowtimesByMovieId(int movieId) throws SQLException {
+        ObservableList<String> showtimes = FXCollections.observableArrayList();
+        String query = "SELECT show_time FROM showtimes WHERE movie_id = ? ORDER BY show_time";
+
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm"); // Chỉ lấy giờ:phút
+
+        try (PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setInt(1, movieId);
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                Time sqlTime = rs.getTime("show_time"); // Lấy dữ liệu kiểu TIME
+                String formattedTime = timeFormat.format(new Date(sqlTime.getTime())); // Chuyển thành HH:mm
+                showtimes.add(formattedTime);
+            }
+        }
+        return showtimes;
     }
 
     @Override
