@@ -67,9 +67,6 @@
 .p4{
     -fx-padding: 32em;
 }
-.w-100{
-    -fx-width: 100%;
-}
 
 .headerAdmin{
     -fx-background-color: -fx-primary-color;

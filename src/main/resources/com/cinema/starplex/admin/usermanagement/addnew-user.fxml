@@ -9,89 +9,94 @@
 <?import javafx.collections.FXCollections?>
 
 <AnchorPane xmlns="http://javafx.com/javafx"
-    xmlns:fx="http://javafx.com/fxml"
-    fx:controller="com.cinema.starplex.ui.controllers.admin.usermanagement.AddnewUserController"
-    prefHeight="400.0" prefWidth="600.0">
-    <VBox spacing="24" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0"
-        AnchorPane.rightAnchor="24.0"
-        AnchorPane.topAnchor="24.0">
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.cinema.starplex.ui.controllers.admin.usermanagement.AddnewUserController"
+            prefHeight="400.0" prefWidth="600.0">
+    <ScrollPane fitToWidth="true" AnchorPane.bottomAnchor="24.0"
+                AnchorPane.leftAnchor="24.0"
+                AnchorPane.rightAnchor="0"
+                AnchorPane.topAnchor="24.0">
+        <VBox spacing="24" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0"
+              AnchorPane.rightAnchor="24.0"
+              AnchorPane.topAnchor="24.0">
 
-        <HBox spacing="500">
-            <!-- Nút quay lại -->
-            <Button fx:id="backButton" layoutX="14.0" layoutY="14.0"
-                onAction="#goBack"
-                prefHeight="30.0" prefWidth="75.0" styleClass="back-btn" text="Back"
-                textFill="WHITE" />
-            <Text text="Add new user" styleClass="titlePage" />
-        </HBox>
+            <HBox spacing="500">
+                <!-- Nút quay lại -->
+                <Button fx:id="backButton" layoutX="14.0" layoutY="14.0"
+                        onAction="#goBack"
+                        prefHeight="30.0" prefWidth="75.0" styleClass="back-btn" text="Back"
+                        textFill="WHITE"/>
+                <Text text="Add new user" styleClass="titlePage"/>
+            </HBox>
 
-        <VBox spacing="16">
-            <!-- Fullname -->
-            <VBox>
-                <Label text="Full Name:" />
-                <TextField styleClass="input-field" fx:id="fullNameField" />
-                <Label fx:id="fullNameError" textFill="red" style="-fx-font-size: 12px;" />
+            <VBox spacing="16">
+                <!-- Fullname -->
+                <VBox>
+                    <Label text="Full Name:"/>
+                    <TextField styleClass="input-field" fx:id="fullNameField"/>
+                    <Label fx:id="fullNameError" textFill="red" style="-fx-font-size: 12px;"/>
+                </VBox>
+
+                <!-- Username -->
+                <VBox>
+                    <Label text="Username:"/>
+                    <TextField styleClass="input-field" fx:id="usernameField"/>
+                    <Label fx:id="usernameError" textFill="red" style="-fx-font-size: 12px;"/>
+                </VBox>
+
+                <!-- Email -->
+                <VBox>
+                    <Label text="Email:"/>
+                    <TextField styleClass="input-field" fx:id="emailField"/>
+                    <Label fx:id="emailError" textFill="red" style="-fx-font-size: 12px;"/>
+                </VBox>
+
+                <!-- Password -->
+                <VBox>
+                    <Label text="Password:"/>
+                    <PasswordField styleClass="input-field" fx:id="passwordField"/>
+                    <Label fx:id="passwordError" textFill="red" style="-fx-font-size: 12px;"/>
+                </VBox>
+
+                <!-- Password Confirmed -->
+                <VBox>
+                    <Label text="Password Confirmed:"/>
+                    <PasswordField styleClass="input-field" fx:id="passwordConfirmedField"/>
+                    <Label fx:id="passwordConfirmedError" textFill="red" style="-fx-font-size: 12px;"/>
+                </VBox>
+
+                <!-- Phone -->
+                <VBox>
+                    <Label text="Phone:"/>
+                    <TextField styleClass="input-field" fx:id="phoneField"/>
+                    <Label fx:id="phoneError" textFill="red" style="-fx-font-size: 12px;"/>
+                </VBox>
+
+                <!-- Role -->
+                <VBox>
+                    <Label text="Role:"/>
+                    <ComboBox fx:id="roleComboBox" prefWidth="Infinity" styleClass="input-field">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="admin"/>
+                                <String fx:value="staff"/>
+                            </FXCollections>
+                        </items>
+                    </ComboBox>
+                    <Label fx:id="roleError" textFill="red" style="-fx-font-size: 12px;"/>
+                </VBox>
             </VBox>
 
-            <!-- Username -->
-            <VBox>
-                <Label text="Username:" />
-                <TextField styleClass="input-field" fx:id="usernameField" />
-                <Label fx:id="usernameError" textFill="red" style="-fx-font-size: 12px;" />
-            </VBox>
+            <HBox alignment="CENTER_RIGHT" spacing="24">
+                <!-- Nút lưu và hủy -->
+                <Button onAction="#addUser" fx:id="saveButton" alignment="CENTER"
+                        prefHeight="30.0" prefWidth="120.0"
+                        styleClass="save-btn" text="Save" textFill="WHITE"/>
 
-            <!-- Email -->
-            <VBox>
-                <Label text="Email:" />
-                <TextField styleClass="input-field" fx:id="emailField" />
-                <Label fx:id="emailError" textFill="red" style="-fx-font-size: 12px;" />
-            </VBox>
-
-            <!-- Password -->
-            <VBox>
-                <Label text="Password:" />
-                <PasswordField styleClass="input-field" fx:id="passwordField" />
-                <Label fx:id="passwordError" textFill="red" style="-fx-font-size: 12px;" />
-            </VBox>
-
-            <!-- Password Confirmed -->
-            <VBox>
-                <Label text="Password Confirmed:" />
-                <PasswordField styleClass="input-field" fx:id="passwordConfirmedField" />
-                <Label fx:id="passwordConfirmedError" textFill="red" style="-fx-font-size: 12px;" />
-            </VBox>
-
-            <!-- Phone -->
-            <VBox>
-                <Label text="Phone:" />
-                <TextField styleClass="input-field" fx:id="phoneField" />
-                <Label fx:id="phoneError" textFill="red" style="-fx-font-size: 12px;" />
-            </VBox>
-
-            <!-- Role -->
-            <VBox>
-                <Label text="Role:" />
-                <ComboBox fx:id="roleComboBox" prefWidth="Infinity" styleClass="input-field">
-                    <items>
-                        <FXCollections fx:factory="observableArrayList">
-                            <String fx:value="admin" />
-                            <String fx:value="staff" />
-                        </FXCollections>
-                    </items>
-                </ComboBox>
-                <Label fx:id="roleError" textFill="red" style="-fx-font-size: 12px;" />
-            </VBox>
+                <Button onAction="#handleClear" fx:id="clearButton" alignment="CENTER"
+                        prefHeight="30.0" prefWidth="120.0"
+                        styleClass="clear-btn" text="Clear" textFill="WHITE"/>
+            </HBox>
         </VBox>
-
-        <HBox alignment="CENTER_RIGHT" spacing="24">
-            <!-- Nút lưu và hủy -->
-            <Button onAction="#addUser" fx:id="saveButton" alignment="CENTER" 
-                prefHeight="30.0" prefWidth="120.0"
-                styleClass="save-btn" text="Save" textFill="WHITE" />
-
-            <Button onAction="#handleClear" fx:id="clearButton" alignment="CENTER" 
-                prefHeight="30.0" prefWidth="120.0"
-                styleClass="clear-btn" text="Clear" textFill="WHITE" />
-        </HBox>
-    </VBox>
+    </ScrollPane>
 </AnchorPane>
