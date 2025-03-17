@@ -36,23 +36,17 @@ public class StaffDetailController {
     private Label selectedSeatsLabel;
     @FXML
     private List<Seat> selectedSeats = new ArrayList<>();
-    private int totalPrice = 0;
 
     public StaffDetailController() {
     }
 
-    //    private final Map<String, Integer> seatPrices = SeatLoadPrice.loadSeatPrice();
-//    private int totalPrice = 0;
-
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Initialize the seat types map
         if (seatGrid != null) {
             seatGrid.getChildren().clear();
         } else {
             System.out.println("seatGrid is null! Check FXML file.");
         }
         System.out.println("StaffDetailController initialized!");
-        // Load rooms into the combo box
         loadRooms();
     }
 
@@ -136,12 +130,12 @@ public class StaffDetailController {
         return bottomSection;
     }
 
-    //load dsach loai ghe tu db
+    // Load seat types from database
     public void loadSeatTypes() {
         seatTypes = roomDao.getSeatTypes();
     }
 
-    //load dsach hong tu db va cap nhat UI
+    // Load rooms from database and update UI
     public void loadRooms() {
         List<Room> rooms = roomDao.getRooms();
         ObservableList<Room> roomList = FXCollections.observableArrayList(rooms);
@@ -157,20 +151,20 @@ public class StaffDetailController {
     private void loadSeatsForRoom(int roomId) {
         List<Seat> seats = roomDao.getSeatsForRoom(roomId);
 
-        // Xóa grid và danh sách chọn
+        // Clear grid and selected seats list
         seatGrid.getChildren().clear();
         selectedSeats.clear();
 
-        // Xác định bố cục grid (row và column)
+        // Determine grid layout (row and column)
         Map<Character, Integer> rows = new TreeMap<>();
         Map<Integer, Integer> columns = new TreeMap<>();
 
         for (Seat seat : seats) {
             rows.put(seat.getRow(), rows.getOrDefault(seat.getRow(), 0) + 1);
-            columns.put(seat.getColumn(), columns.getOrDefault(seat.getColumn(), 0) + 1);
+            columns.put(seat.getColNumber(), columns.getOrDefault(seat.getColNumber(), 0) + 1);
         }
 
-        // Tạo tiêu đề cột (column numbers)
+        // Create column headers
         for (Integer col : columns.keySet()) {
             Label colLabel = new Label(String.valueOf(col));
             colLabel.setPrefWidth(30);
@@ -178,7 +172,7 @@ public class StaffDetailController {
             seatGrid.add(colLabel, col, 0);
         }
 
-        // Tạo tiêu đề hàng (row letters)
+        // Create row headers
         for (Character row : rows.keySet()) {
             Label rowLabel = new Label(String.valueOf(row));
             rowLabel.setPrefWidth(30);
@@ -186,12 +180,12 @@ public class StaffDetailController {
             seatGrid.add(rowLabel, 0, row - 'A' + 1);
         }
 
-        // Thêm ghế vào grid
+        // Add seats to grid
         for (Seat seat : seats) {
-            Button seatButton = new Button(seat.getSeatNumber());
+            Button seatButton = new Button(seat.getRow() + String.valueOf(seat.getColNumber()));
             seatButton.setPrefSize(30, 30);
 
-            // Áp dụng kiểu dựa vào seat type
+            // Apply style based on seat type
             SeatType type = seatTypes.get(seat.getSeatType());
             if (type != null) {
                 seatButton.getStyleClass().add("seat-" + type.getName().toLowerCase());
@@ -199,41 +193,36 @@ public class StaffDetailController {
                 seatButton.getStyleClass().add("seat-normal");
             }
 
-            // Nếu ghế đã được booking, disable ghế đó
+            // Disable button if seat is booked
             if (seat.isBooked()) {
                 seatButton.setDisable(true);
                 seatButton.getStyleClass().add("seat-booked");
             }
 
-            // Gán sự kiện click vào ghế
+            // Attach click event to seat button
             seatButton.setOnAction(e -> toggleSeatSelection(seat, seatButton));
 
-            // Thêm vào grid
-            seatGrid.add(seatButton, seat.getColumn(), seat.getRow() - 'A' + 1);
+            // Add to grid
+            seatGrid.add(seatButton, seat.getColNumber(), seat.getRow() - 'A' + 1);
         }
     }
 
     private void openRoomManagementDialog() {
-        // Create a dialog for room management
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Room Management");
         dialog.setHeaderText("Manage Rooms and Seats");
 
-        // Set the button types
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 
-        // Create the grid for the dialog content
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(20, 150, 10, 10));
 
-        // Room list view
         ListView<Room> roomListView = new ListView<>();
         roomListView.setPrefHeight(200);
         roomListView.setItems(roomSelector.getItems());
 
-        // Room details
         TextField roomNumberField = new TextField();
         roomNumberField.setPromptText("Room Number");
 
@@ -245,13 +234,10 @@ public class StaffDetailController {
         Button deleteRoomButton = new Button("Delete Room");
         Button manageSeatsButton = new Button("Manage Seats");
 
-        // Add elements to the grid
         grid.add(new Label("Rooms:"), 0, 0);
         grid.add(roomListView, 0, 1, 2, 1);
-
         grid.add(new Label("Room Number:"), 0, 2);
         grid.add(roomNumberField, 1, 2);
-
         grid.add(new Label("Total Seats:"), 0, 3);
         grid.add(totalSeatsField, 1, 3);
 
@@ -259,7 +245,6 @@ public class StaffDetailController {
         buttonBox.getChildren().addAll(addRoomButton, updateRoomButton, deleteRoomButton, manageSeatsButton);
         grid.add(buttonBox, 0, 4, 2, 1);
 
-        // Event handling khi chon 1 phong trong dsach
         roomListView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
                 roomNumberField.setText(String.valueOf(newVal.getRoomNumber()));
@@ -272,7 +257,6 @@ public class StaffDetailController {
                 int roomNumber = Integer.parseInt(roomNumberField.getText());
                 int totalSeats = Integer.parseInt(totalSeatsField.getText().trim());
 
-                // Add room to database
                 Room newRoom = new Room(roomNumber, totalSeats);
                 boolean isOk = roomDao.insert(newRoom);
                 if (isOk) {
@@ -281,7 +265,6 @@ public class StaffDetailController {
                 } else {
                     showAlert("Error", "Failed to add room.");
                 }
-                // Refresh room list
                 loadRooms();
 
             } catch (NumberFormatException ex) {
@@ -297,20 +280,13 @@ public class StaffDetailController {
             }
 
             try {
-                int roomNumber = Integer.parseInt(roomNumberField.getText());
+                selectedRoom.setRoomNumber(Integer.parseInt(roomNumberField.getText().trim()));
+                selectedRoom.setTotalSeats(Integer.parseInt(totalSeatsField.getText().trim()));
 
-                // Update room in database
-                try {
-                    selectedRoom.setRoomNumber(Integer.parseInt(roomNumberField.getText().trim()));
-                    selectedRoom.setTotalSeats(Integer.parseInt(totalSeatsField.getText().trim()));
-
-                    roomDao.update(selectedRoom);
-                    showAlert("Success", "Room updated successfully.");
-                    roomListView.refresh();
-                    loadRooms();
-                } catch (NumberFormatException ex) {
-                    showAlert("Invalid Input", "Please enter valid numeric values.");
-                }
+                roomDao.update(selectedRoom);
+                showAlert("Success", "Room updated successfully.");
+                roomListView.refresh();
+                loadRooms();
             } catch (NumberFormatException ex) {
                 showAlert("Invalid Input", "Please enter valid numeric values.");
             }
@@ -323,7 +299,6 @@ public class StaffDetailController {
                 return;
             }
 
-            // Confirm deletion
             Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
             confirm.setTitle("Confirm Deletion");
             confirm.setHeaderText("Delete Room");
@@ -331,13 +306,10 @@ public class StaffDetailController {
 
             confirm.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
-                    // Delete room from database
                     roomDao.delete(selectedRoom.getId());
                     showAlert("Success", "Room deleted successfully.");
                     roomListView.refresh();
                     loadRooms();
-                } else {
-
                 }
             });
         });
@@ -354,32 +326,27 @@ public class StaffDetailController {
 
         dialog.getDialogPane().setContent(grid);
         dialog.showAndWait();
-
     }
 
     private void openSeatManagementDialog(Room room) {
-        // Create a dialog for seat management
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Seat Management");
         dialog.setHeaderText("Manage Seats for Room " + room.getRoomNumber());
 
-        // Set the button types
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 
-        // Create the grid for the dialog content
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(20, 150, 10, 10));
 
-        // Seat list view with details
         TableView<Seat> seatTableView = new TableView<>();
         seatTableView.setPrefHeight(300);
 
-        TableColumn<Seat, String> seatNumberCol = new TableColumn<>("Seat Number");
-        seatNumberCol.setCellValueFactory(cellData ->
+        TableColumn<Seat, String> seatRowColCol = new TableColumn<>("Seat (Row, Column)");
+        seatRowColCol.setCellValueFactory(cellData ->
                 javafx.beans.binding.Bindings.createStringBinding(
-                        () -> cellData.getValue().getSeatNumber()
+                        () -> cellData.getValue().getRow() + ", " + cellData.getValue().getColNumber()
                 )
         );
 
@@ -398,14 +365,14 @@ public class StaffDetailController {
                 )
         );
 
-        seatTableView.getColumns().addAll(seatNumberCol, seatTypeCol, statusCol);
-
-        // Load seats for the selected room
+        seatTableView.getColumns().addAll(seatRowColCol, seatTypeCol, statusCol);
         loadSeatsForTable(room.getId(), seatTableView);
 
-        // Seat details form
-        TextField seatNumberField = new TextField();
-        seatNumberField.setPromptText("Seat Number (e.g., A1)");
+        TextField rowField = new TextField();
+        rowField.setPromptText("Row (e.g., A)");
+
+        TextField colField = new TextField();
+        colField.setPromptText("Column (e.g., 1)");
 
         ComboBox<SeatType> seatTypeComboBox = new ComboBox<>();
         seatTypeComboBox.setPromptText("Select Seat Type");
@@ -417,24 +384,23 @@ public class StaffDetailController {
         Button deleteSeatButton = new Button("Delete Seat");
         Button addMultipleButton = new Button("Add Multiple Seats");
 
-        // Add elements to the grid
         grid.add(new Label("Seats:"), 0, 0);
         grid.add(seatTableView, 0, 1, 2, 1);
-
-        grid.add(new Label("Seat Number:"), 0, 2);
-        grid.add(seatNumberField, 1, 2);
-
-        grid.add(new Label("Seat Type:"), 0, 3);
-        grid.add(seatTypeComboBox, 1, 3);
+        grid.add(new Label("Row:"), 0, 2);
+        grid.add(rowField, 1, 2);
+        grid.add(new Label("Column:"), 0, 3);
+        grid.add(colField, 1, 3);
+        grid.add(new Label("Seat Type:"), 0, 4);
+        grid.add(seatTypeComboBox, 1, 4);
 
         HBox buttonBox = new HBox(10);
         buttonBox.getChildren().addAll(addSeatButton, updateSeatButton, deleteSeatButton, addMultipleButton);
-        grid.add(buttonBox, 0, 4, 2, 1);
+        grid.add(buttonBox, 0, 5, 2, 1);
 
-        // Event handling
         seatTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
-                seatNumberField.setText(newVal.getSeatNumber());
+                rowField.setText(String.valueOf(newVal.getRow()));
+                colField.setText(String.valueOf(newVal.getColNumber()));
 
                 SeatType type = seatTypes.get(newVal.getSeatType());
                 if (type != null) {
@@ -444,12 +410,18 @@ public class StaffDetailController {
         });
 
         addSeatButton.setOnAction(e -> {
-            String seatNumber = seatNumberField.getText().trim();
+            String rowText = rowField.getText().trim();
+            String colText = colField.getText().trim();
             SeatType selectedType = seatTypeComboBox.getValue();
-            Room selectedRoom = roomSelector.getValue();
+            Room selectedRoom = room;
 
-            if (seatNumber.isEmpty() || !seatNumber.matches("[A-Z]\\d+")) {
-                showAlert("Invalid Input", "Please enter a valid seat number (e.g., A1).");
+            if (rowText.isEmpty() || !rowText.matches("[A-Z]")) {
+                showAlert("Invalid Input", "Please enter a valid row (e.g., A).");
+                return;
+            }
+
+            if (colText.isEmpty() || !colText.matches("\\d+")) {
+                showAlert("Invalid Input", "Please enter a valid column (e.g., 1).");
                 return;
             }
 
@@ -458,24 +430,19 @@ public class StaffDetailController {
                 return;
             }
 
-            if (selectedRoom == null) {
-                showAlert("No Room Selected", "Please select a room to add seats.");
-                return;
-            }
-
             // Add seat to database
             Seat newSeat = new Seat();
-            newSeat.setSeatNumber(seatNumber);
+            newSeat.setRow(rowText.charAt(0)); // Set row
+            newSeat.setColNumber(Integer.parseInt(colText)); // Set column number
             newSeat.setSeatType(selectedType);
             newSeat.setRoom(selectedRoom);
 
-//            SeatDao seatDao = new SeatDao();
             boolean isOk = seatDao.insert(newSeat);
             if (isOk) {
                 showAlert("Success", "Seat added successfully!");
-                seatNumberField.clear();
+                rowField.clear();
+                colField.clear();
                 seatTypeComboBox.getSelectionModel().clearSelection();
-                roomSelector.getSelectionModel().clearSelection();
             } else {
                 showAlert("Error", "Can't insert seat into database.");
             }
@@ -488,12 +455,18 @@ public class StaffDetailController {
                 return;
             }
 
-            String seatNumber = seatNumberField.getText().trim();
+            String rowText = rowField.getText().trim();
+            String colText = colField.getText().trim();
             SeatType selectedType = seatTypeComboBox.getValue();
-            Room selectedRoom = roomSelector.getValue();
+            Room selectedRoom = room;
 
-            if (seatNumber.isEmpty() || !seatNumber.matches("[A-Z]\\d+")) {
-                showAlert("Invalid Input", "Please enter a valid seat number (e.g., A1).");
+            if (rowText.isEmpty() || !rowText.matches("[A-Z]")) {
+                showAlert("Invalid Input", "Please enter a valid row (e.g., A).");
+                return;
+            }
+
+            if (colText.isEmpty() || !colText.matches("\\d+")) {
+                showAlert("Invalid Input", "Please enter a valid column (e.g., 1).");
                 return;
             }
 
@@ -502,17 +475,12 @@ public class StaffDetailController {
                 return;
             }
 
-            if (selectedRoom == null) {
-                showAlert("No Room Selected", "Please select a room to update seat.");
-                return;
-            }
-
             // Update seat in database
-            selectedSeat.setSeatNumber(seatNumber);
+            selectedSeat.setRow(rowText.charAt(0)); // Set row
+            selectedSeat.setColNumber(Integer.parseInt(colText)); // Set column number
             selectedSeat.setSeatType(selectedType);
             selectedSeat.setRoom(selectedRoom);
 
-//            SeatDao seatDao = new SeatDao();
             seatDao.update(selectedSeat);
 
             showAlert("Successful", "Seat updated.");
@@ -530,20 +498,16 @@ public class StaffDetailController {
             Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
             confirm.setTitle("Confirm Deletion");
             confirm.setHeaderText("Delete Seat");
-            confirm.setContentText("Are you sure you want to delete seat " + selectedSeat.getSeatNumber() + "?");
+            confirm.setContentText("Are you sure you want to delete seat " + selectedSeat.getRow() + ", " + selectedSeat.getColNumber() + "?");
 
             confirm.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
-                    // Delete seat from database
-//                    SeatDao seatDao = new SeatDao();
                     seatDao.delete(selectedSeat.getId());
-
                     showAlert("Successful", "Seat deleted.");
                     seatTableView.getItems().remove(selectedSeat);
                 }
             });
         });
-
 
         addMultipleButton.setOnAction(e -> openAddMultipleSeatsDialog(room, seatTableView));
 
@@ -557,21 +521,18 @@ public class StaffDetailController {
             System.out.println("Cannot select booked seat.");
             return;
         }
-        if (selectedSeats.contains(seat)){
-            //bo chon
+        if (selectedSeats.contains(seat)) {
+            // Unselect
             selectedSeats.remove(seat);
             seatButton.getStyleClass().remove("seat-selected");
-            //khoi phuc lai style ban dau
+            // Restore original style
             SeatType type = seatTypes.get(seat.getSeatType());
             if (type != null) {
-                //dam bao chi 1 style dc ap dung
-                seatButton.getStyleClass().removeAll(
-                        "seat-normal", "seat-vip", "seat-double", "seat-booked"
-                );
+                seatButton.getStyleClass().removeAll("seat-normal", "seat-vip", "seat-double", "seat-booked");
                 seatButton.getStyleClass().add("seat-" + type.getName().toLowerCase());
             }
-        }else {
-            //them vao danh sach chon
+        } else {
+            // Select
             selectedSeats.add(seat);
             seatButton.getStyleClass().add("seat-selected");
         }
@@ -581,7 +542,7 @@ public class StaffDetailController {
     private void updateSelectedSeatsInfo() {
         int count = selectedSeats.size();
         BigDecimal totalPrice = BigDecimal.ZERO;
-        for (Seat seat: selectedSeats) {
+        for (Seat seat : selectedSeats) {
             SeatType type = seatTypes.get(seat.getSeatType());
             if (type != null) {
                 totalPrice = totalPrice.add(type.getPrice());
@@ -655,30 +616,27 @@ public class StaffDetailController {
     }
 
     private void openAddMultipleSeatsDialog(Room room, TableView<Seat> tableView) {
-        //tao 1 op thoai de them nhieu ghe
+        // Tạo một hộp thoại để thêm nhiều ghế
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Add Multiple Seats");
         dialog.setHeaderText("Add Multiple Seats to Room " + room.getRoomNumber());
 
-        //cai dat kieu button
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 
-        //tao gridlayout
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(20, 150, 10, 10));
 
-        //form fields
         Label rowStartLabel = new Label("Start Row (letter)");
         TextField rowStartField = new TextField("A");
         Label rowEndLabel = new Label("End Row (letter):");
-        TextField rowEndField = new TextField("Z");
+        TextField rowEndField = new TextField("I");
 
         Label colStartLabel = new Label("Start Column (number):");
         TextField colStartField = new TextField("1");
 
-        Label colEndLabel = new Label("End column (number): ");
+        Label colEndLabel = new Label("End Column (number): ");
         TextField colEndField = new TextField("14");
 
         Label seatTypeLabel = new Label("Seat Type: ");
@@ -687,7 +645,6 @@ public class StaffDetailController {
         ObservableList<SeatType> typeList = FXCollections.observableArrayList(seatTypes.values());
         seatTypeComboBox.setItems(typeList);
 
-        // Add elements to the grid
         grid.add(rowStartLabel, 0, 0);
         grid.add(rowStartField, 1, 0);
         grid.add(rowEndLabel, 0, 1);
@@ -700,51 +657,70 @@ public class StaffDetailController {
         grid.add(seatTypeComboBox, 1, 4);
 
         dialog.getDialogPane().setContent(grid);
-        //convert ket qua thanh mot phong khi dc click
+
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == ButtonType.OK) {
                 try {
-                    char startRow = rowStartField.getText().toUpperCase().charAt(0);
-                    char endRow = rowEndField.getText().toUpperCase().charAt(0);
-                    int startCol = Integer.parseInt(colStartField.getText());
-                    int endCol = Integer.parseInt(colEndField.getText());
-                    SeatType selectedType = seatTypeComboBox.getValue();
+                    // Lấy và xác thực hàng
+                    String rowStartText = rowStartField.getText().toUpperCase();
+                    String rowEndText = rowEndField.getText().toUpperCase();
 
+                    if (rowStartText.isEmpty() || rowEndText.isEmpty() || rowStartText.length() != 1 || rowEndText.length() != 1) {
+                        showAlert("Invalid Input", "Start and End Row must be a single letter.");
+                        return null;
+                    }
+
+                    char startRow = rowStartText.charAt(0);
+                    char endRow = rowEndText.charAt(0);
+
+                    // Lấy và xác thực cột
+                    int startCol;
+                    int endCol;
+                    try {
+                        startCol = Integer.parseInt(colStartField.getText());
+                        endCol = Integer.parseInt(colEndField.getText());
+                    } catch (NumberFormatException e) {
+                        showAlert("Invalid Input", "Start and End Column must be valid integers.");
+                        return null;
+                    }
+
+                    SeatType selectedType = seatTypeComboBox.getValue();
                     if (selectedType == null) {
                         showAlert("Error", "Please select a seat type.");
                         return null;
                     }
-                    //them ghe vao database
-                    int addedCount = 0;
+
+                    // Thêm ghế vào cơ sở dữ liệu
                     List<Seat> seatsToAdd = new ArrayList<>();
                     for (char row = startRow; row <= endRow; row++) {
                         for (int col = startCol; col <= endCol; col++) {
-                            String seatNumber = row + String.valueOf(col);
                             Seat seat = new Seat();
                             seat.setRoom(room);
                             seat.setSeatType(selectedType);
-                            seat.setSeatNumber(seatNumber);
+                            seat.setRow(row);
+                            seat.setColNumber(col);
                             seatsToAdd.add(seat);
                         }
                     }
+
                     boolean success = seatDao.insertBatch(seatsToAdd);
 
                     if (success) {
                         showAlert("Success", seatsToAdd.size() + " seats added successfully!");
                         loadSeatsForTable(room.getId(), tableView);
-                        loadRooms();
                     } else {
                         showAlert("Error", "Failed to add seats.");
                     }
 
                     return ButtonType.OK;
-                }catch (NumberFormatException | StringIndexOutOfBoundsException ex) {
-                    showAlert("Invalid Input", "Please enter valid values.");
+                } catch (Exception ex) {
+                    showAlert("Invalid Input", "An error occurred while processing. Please check your input.");
                     return null;
                 }
             }
             return ButtonType.CANCEL;
         });
+
         dialog.showAndWait();
     }
 
@@ -765,61 +741,61 @@ public class StaffDetailController {
         alert.showAndWait();
     }
 
-//    @FXML
-//    public void initialize() {
-//        String[] rows = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"};
-//        for (int rowIndex = 0; rowIndex < rows.length; rowIndex++) {
-//            for (int colIndex = 1; colIndex <= 24; colIndex++) {
-//                String seatId = rows[rowIndex] + colIndex;
-//                Button seatButton = createSeatButton(seatId);
+    // @FXML
+// public void initialize() {
+// String[] rows = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"};
+// for (int rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+// for (int colIndex = 1; colIndex <= 24; colIndex++) {
+// String seatId = rows[rowIndex] + colIndex;
+// Button seatButton = createSeatButton(seatId);
 //
-//                // Xác định loại ghế và gán giá từ DB
-//                if (rowIndex >= 5 && rowIndex <= 7) {
-//                    seatButton.getStyleClass().add("seat-vip");
-//                } else if (rowIndex >= 10 && rowIndex <= 12 && colIndex % 2 == 0) {
-//                    seatButton.getStyleClass().add("seat-double");
-//                } else {
-//                    seatButton.getStyleClass().add("seat-normal");
-//                }
+// // Xác định loại ghế và gán giá từ DB
+// if (rowIndex >= 5 && rowIndex <= 7) {
+// seatButton.getStyleClass().add("seat-vip");
+// } else if (rowIndex >= 10 && rowIndex <= 12 && colIndex % 2 == 0) {
+// seatButton.getStyleClass().add("seat-double");
+// } else {
+// seatButton.getStyleClass().add("seat-normal");
+// }
 //
-//                // Ghế đã đặt
-//                if (rowIndex == 2 || rowIndex == 6) {
-//                    seatButton.getStyleClass().add("seat-booked");
-//                    seatButton.setDisable(true);
-//                }
+// // Ghế đã đặt
+// if (rowIndex == 2 || rowIndex == 6) {
+// seatButton.getStyleClass().add("seat-booked");
+// seatButton.setDisable(true);
+// }
 //
-//                seatGrid.add(seatButton, colIndex - 1, rowIndex);
-//            }
-//        }
-//    }
+// seatGrid.add(seatButton, colIndex - 1, rowIndex);
+// }
+// }
+// }
 
-//    private Button createSeatButton(String seatLabel) {
-//        Button button = new Button(seatLabel);
-//        button.getStyleClass().add("seat-button");
+// private Button createSeatButton(String seatLabel) {
+// Button button = new Button(seatLabel);
+// button.getStyleClass().add("seat-button");
 //
-//        button.setOnAction(event -> {
-//            if (!button.getStyleClass().contains("seat-booked")) {
-//                if (button.getStyleClass().contains("seat-selected")) {
-//                    button.getStyleClass().remove("seat-selected");
-//                    totalPrice -= seatPrices.get(getSeatType(button));
-//                } else {
-//                    button.getStyleClass().add("seat-selected");
-//                    totalPrice += seatPrices.get(getSeatType(button));
-//                }
-//                updateTotalPrice();
-//            }
-//        });
+// button.setOnAction(event -> {
+// if (!button.getStyleClass().contains("seat-booked")) {
+// if (button.getStyleClass().contains("seat-selected")) {
+// button.getStyleClass().remove("seat-selected");
+// totalPrice -= seatPrices.get(getSeatType(button));
+// } else {
+// button.getStyleClass().add("seat-selected");
+// totalPrice += seatPrices.get(getSeatType(button));
+// }
+// updateTotalPrice();
+// }
+// });
 //
-//        return button;
-//    }
+// return button;
+// }
 //
-//    private String getSeatType(Button button) {
-//        if (button.getStyleClass().contains("seat-vip")) return "seat-vip";
-//        if (button.getStyleClass().contains("seat-double")) return "seat-double";
-//        return "seat-normal";
-//    }
+// private String getSeatType(Button button) {
+// if (button.getStyleClass().contains("seat-vip")) return "seat-vip";
+// if (button.getStyleClass().contains("seat-double")) return "seat-double";
+// return "seat-normal";
+// }
 //
-//    private void updateTotalPrice() {
-//        totalPriceLabel.setText("Total Price: " + totalPrice + " VND");
-//    }
+// private void updateTotalPrice() {
+// totalPriceLabel.setText("Total Price: " + totalPrice + " VND");
+// }
 }

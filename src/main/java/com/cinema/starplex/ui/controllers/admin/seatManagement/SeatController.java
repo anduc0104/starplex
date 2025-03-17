@@ -20,12 +20,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.geometry.Pos;
-import javafx.util.StringConverter;
 import org.kordamp.ikonli.javafx.FontIcon;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,7 +38,9 @@ public class SeatController {
     @FXML
     private TableColumn<Seat, String> colSeatTypeId;
     @FXML
-    private TableColumn<Seat, String> colSeatNumber;
+    private TableColumn<Seat, String> colSeatRow; // Cột hàng
+    @FXML
+    private TableColumn<Seat, String> colSeatCol; // Cột cột
     @FXML
     private TableColumn<Seat, Void> colAction;
 
@@ -59,12 +59,21 @@ public class SeatController {
             SeatType seatType = cellData.getValue().getSeatType();
             return new SimpleStringProperty(seatType != null ? seatType.getName() : "N/A"); // Kiểm tra null
         });
-        colSeatNumber.setCellValueFactory(new PropertyValueFactory<>("seatNumber"));
+
+        // Hiển thị thông tin hàng và cột
+        colSeatRow.setCellValueFactory(cellData -> {
+            Seat seat = cellData.getValue();
+            return new SimpleStringProperty(String.valueOf(seat.getRow())); // Hiển thị hàng
+        });
+
+        colSeatCol.setCellValueFactory(cellData -> {
+            Seat seat = cellData.getValue();
+            return new SimpleStringProperty(String.valueOf(seat.getColNumber())); // Hiển thị cột
+        });
 
         addActionButtons();
         loadSeats();
     }
-
 
     private void addActionButtons() {
         colAction.setCellFactory(param -> new TableCell<>() {
@@ -132,7 +141,7 @@ public class SeatController {
 
     private void handleEdit(Seat seat) {
         if (seat == null) {
-            showAlert("Error", "Please select a seat to repair!");
+            showAlert("Error", "Please select a seat to edit!");
             return;
         }
 
@@ -168,7 +177,6 @@ public class SeatController {
             showAlert("Success", "Delete seat successfully!");
         }
     }
-
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

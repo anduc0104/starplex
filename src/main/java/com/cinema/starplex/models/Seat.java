@@ -1,39 +1,42 @@
 package com.cinema.starplex.models;
 
-
 import java.sql.Timestamp;
 
 public class Seat {
     private Integer id;
     private Room room;
     private SeatType seatType;
-    private String seatNumber;
+    private char row;
+    private int colNumber;
     private Timestamp createdAt;
     private boolean isBooked;
 
     public Seat() {}
 
-    public Seat(Integer id, Room room, SeatType seatType, String seatNumber, Timestamp createdAt, boolean isBooked) {
+    public Seat(Integer id, Room room, SeatType seatType, char row, int colNumber, Timestamp createdAt, boolean isBooked) {
+        setRow(row);
+        setColNumber(colNumber);
         this.id = id;
         this.room = room;
         this.seatType = seatType;
-        this.seatNumber = seatNumber;
         this.createdAt = createdAt;
         this.isBooked = isBooked;
     }
 
     public Seat(Integer id, char rowChar, int colNum, int seatTypeId, boolean isBooked) {
+        setRow(rowChar);
+        setColNumber(colNum);
         this.id = id;
-        this.seatNumber = rowChar + String.valueOf(colNum);
         this.seatType = new SeatType(seatTypeId);
         this.isBooked = isBooked;
     }
 
-    public Seat(Integer id, Room selectedRoom, SeatType selectedSeatType, String seatNumber, Timestamp timestamp) {
+    public Seat(Integer id, Room selectedRoom, SeatType selectedSeatType, char row, int colNumber, Timestamp timestamp) {
+        setRow(row);
+        setColNumber(colNumber);
         this.id = id;
         this.room = selectedRoom;
         this.seatType = selectedSeatType;
-        this.seatNumber = seatNumber;
         this.createdAt = timestamp;
     }
 
@@ -63,12 +66,30 @@ public class Seat {
         this.seatType = seatType;
     }
 
-    public String getSeatNumber() {
-        return seatNumber;
+    public char getRow() {
+        return row; // Trả về row
     }
 
-    public void setSeatNumber(String seatNumber) {
-        this.seatNumber = seatNumber;
+    // Setter cho row với kiểm tra
+    public void setRow(char row) {
+        if (row >= 'A' && row <= 'I') {
+            this.row = row; // Cập nhật row nếu hợp lệ
+        } else {
+            throw new IllegalArgumentException("Row must be between A and I.");
+        }
+    }
+
+    public int getColNumber() {
+        return colNumber; // Trả về colNumber
+    }
+
+    // Setter cho colNumber với kiểm tra
+    public void setColNumber(int colNumber) {
+        if (colNumber >= 1 && colNumber <= 14) {
+            this.colNumber = colNumber; // Cập nhật colNumber nếu hợp lệ
+        } else {
+            throw new IllegalArgumentException("Column number must be between 1 and 14.");
+        }
     }
 
     public Timestamp getCreatedAt() {
@@ -92,7 +113,7 @@ public class Seat {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         Seat seat = (Seat) obj;
-        return id == seat.id;
+        return id.equals(seat.id);
     }
 
     @Override
@@ -100,22 +121,13 @@ public class Seat {
         return id;
     }
 
-    public char getRow() {
-        if (seatNumber != null && seatNumber.length() > 0) {
-            return seatNumber.charAt(0);
-        }
-        return ' ';
+    // Phương thức để lấy seatNumber từ row và colNumber
+    public String getSeatNumber() {
+        return row + String.valueOf(colNumber);
     }
 
-    // Lấy cột (column) của ghế (phần số sau ký tự đầu tiên)
+    // Lấy cột (column) của ghế
     public int getColumn() {
-        if (seatNumber != null && seatNumber.length() > 1) {
-            try {
-                return Integer.parseInt(seatNumber.substring(1));
-            } catch (NumberFormatException e) {
-                return -1; // Trả về -1 nếu xảy ra lỗi khi parse số
-            }
-        }
-        return -1;
+        return colNumber; // Trả về colNumber
     }
 }
