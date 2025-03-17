@@ -3,138 +3,132 @@ INSERT INTO users (full_name, username, email, phone, password, role, created_at
 ('Nguyen Van A', 'admin', 'admin@example.com', '0912345671', '$2a$12$Qtiw5reG1xJc.DVdl4kVneibqx2z59o6KZriZGmUWlqJ.daEfd9u2', 'admin', NOW()),
 ('Nguyen Van B', 'staff', 'staff@example.com', '0912345672', '$2a$12$Qtiw5reG1xJc.DVdl4kVneibqx2z59o6KZriZGmUWlqJ.daEfd9u2', 'staff', NOW())
 
--- 2. Insert into movies
-INSERT INTO movies (title, duration, release_date, description, images, directors, actors, created_at)
-VALUES
-('Inception', 148, '2010-07-16', 'A sci-fi movie about dreams and reality.', '0018386_0.png', 'Christopher Nolan', 'Leonardo DiCaprio', NOW()),
-('Avatar', 162, '2009-12-18', 'The story of Pandora and the fight for survival.', '0018386_0.png', 'James Cameron', 'Sam Worthington', NOW()),
-('The Dark Knight', 152, '2008-07-18', 'Batman faces Joker in a battle for Gotham.', '0018386_0.png', 'Christopher Nolan', 'Christian Bale', NOW()),
-('Interstellar', 169, '2014-11-07', 'Astronauts travel through a wormhole to save humanity.', '0018386_0.png', 'Christopher Nolan', 'Matthew McConaughey', NOW()),
-('Titanic', 195, '1997-12-19', 'A tragic love story set on the legendary ship.', '0018386_0.png', 'James Cameron', 'Leonardo DiCaprio', NOW()),
-('Avengers: Endgame', 181, '2019-04-26', 'The final battle of the Avengers against Thanos.', '0018386_0.png', 'Anthony Russo, Joe Russo', 'Robert Downey Jr.', NOW()),
-('The Matrix', 136, '1999-03-31', 'A hacker discovers the truth about reality.', '0018386_0.png', 'Lana Wachowski, Lilly Wachowski', 'Keanu Reeves', NOW()),
-('Jurassic Park', 127, '1993-06-11', 'Dinosaurs are brought back to life in a theme park.', '0018386_0.png', 'Steven Spielberg', 'Sam Neill', NOW()),
-('The Godfather', 175, '1972-03-24', 'The story of the Corleone mafia family.', '0018386_0.png', 'Francis Ford Coppola', 'Marlon Brando', NOW()),
-('Forrest Gump', 142, '1994-07-06', 'A man with a low IQ changes history through his life journey.', '0018386_0.png', 'Robert Zemeckis', 'Tom Hanks', NOW()),
-('Pulp Fiction', 154, '1994-10-14', 'A nonlinear crime story full of twists.', '0018386_0.png', 'Quentin Tarantino', 'John Travolta', NOW()),
-('Shawshank Redemption', 142, '1994-09-23', 'A man’s journey to freedom from prison.', '0018386_0.png', 'Frank Darabont', 'Tim Robbins', NOW()),
-('Gladiator', 155, '2000-05-05', 'A betrayed general seeks vengeance in the Colosseum.', '0018386_0.png', 'Ridley Scott', 'Russell Crowe', NOW()),
-('The Lion King', 118, '1994-06-15', 'A young lion cub embarks on a journey to reclaim his throne.', '0018386_0.png', 'Roger Allers, Rob Minkoff', 'Matthew Broderick', NOW()),
-('Fight Club', 139, '1999-10-15', 'An underground fight club takes a dark turn.', '0018386_0.png', 'David Fincher', 'Brad Pitt', NOW()),
-('The Lord of the Rings: The Fellowship of the Ring', 178, '2001-12-19', 'A journey to destroy the One Ring.', '0018386_0.png', 'Peter Jackson', 'Elijah Wood', NOW()),
-('The Lord of the Rings: The Two Towers', 179, '2002-12-18', 'The battle for Middle-earth intensifies.', '0018386_0.png', 'Peter Jackson', 'Viggo Mortensen', NOW()),
-('The Lord of the Rings: The Return of the King', 201, '2003-12-17', 'The final showdown for the fate of Middle-earth.', '0018386_0.png', 'Peter Jackson', 'Ian McKellen', NOW()),
-('Harry Potter and the Sorcerer''s Stone', 152, '2001-11-16', 'A young wizard discovers his destiny.', '0018386_0.png', 'Chris Columbus', 'Daniel Radcliffe', NOW()),
-('Harry Potter and the Chamber of Secrets', 161, '2002-11-15', 'Hogwarts is threatened by a hidden chamber.', '0018386_0.png', 'Chris Columbus', 'Rupert Grint', NOW());
-
--- 3. Insert into movie_types
-INSERT INTO movie_genres (id, name, created_at) VALUES
-(1, 'Action', NOW()),
-(2, 'Drama', NOW()),
-(3, 'Sci-Fi', NOW()),
-(4, 'Romance', NOW()),
-(5, 'Comedy', NOW()),
-(6, 'Horror', NOW()),
-(7, 'Fantasy', NOW()),
-(8, 'Thriller', NOW()),
-(9, 'Adventure', NOW()),
-(10, 'Animation', NOW());
-
-INSERT INTO movie_movie_genres (movie_id, genre_id, created_at) VALUES
-(1, 3, NOW()), -- Inception (Sci-Fi)
-(2, 4, NOW()), -- Titanic (Romance)
-(3, 9, NOW()), -- Avatar (Adventure)
-(4, 1, NOW()), -- The Dark Knight (Action)
-(5, 2, NOW()), -- Forrest Gump (Drama)
-(6, 3, NOW()), -- Interstellar (Sci-Fi)
-(7, 3, NOW()), -- The Matrix (Sci-Fi)
-(8, 8, NOW()), -- Joker (Thriller)
-(9, 1, NOW()), -- Avengers: Endgame (Action)
-(10, 2, NOW()), -- The Godfather (Drama)
-(11, 8, NOW()), -- Pulp Fiction (Thriller)
-(12, 2, NOW()), -- Shawshank Redemption (Drama)
-(13, 1, NOW()), -- Gladiator (Action)
-(14, 10, NOW()), -- The Lion King (Animation)
-(15, 8, NOW()), -- Fight Club (Thriller)
-(16, 7, NOW()), -- LOTR: The Fellowship of the Ring (Fantasy)
-(17, 7, NOW()), -- LOTR: The Two Towers (Fantasy)
-(18, 7, NOW()), -- LOTR: The Return of the King (Fantasy)
-(19, 7, NOW()), -- Harry Potter and the Sorcerer’s Stone (Fantasy)
-(20, 7, NOW()); -- Harry Potter and the Chamber of Secrets (Fantasy)
 
 
--- 5. Insert into rooms
-INSERT INTO rooms (id, room_number, total_seats, created_at) VALUES
-(1, 101, 50, NOW()),
-(2, 102, 60, NOW()),
-(3, 103, 70, NOW()),
-(4, 104, 80, NOW()),
-(5, 105, 50, NOW()),
-(6, 106, 60, NOW()),
-(7, 107, 70, NOW()),
-(8, 108, 80, NOW()),
-(9, 109, 50, NOW()),
-(10, 110, 60, NOW());
+-- movies
+INSERT INTO movies (id, title, duration, release_date, description) VALUES
+(1, 'The Hero Returns', 120, '2025-01-01', 'An epic tale of heroism.'),
+(2, 'Laughing Out Loud', 90, '2025-02-10', 'A hilarious comedy.'),
+(3, 'Haunted Nights', 110, '2025-03-15', 'A chilling horror story.');
 
--- 6. Insert into seat_types
-INSERT INTO seat_types (id, name, price, created_at) VALUES
-(1, 'Regular', 5.00, NOW()),
-(2, 'VIP', 10.00, NOW()),
-(3, 'Premium', 15.00, NOW());
 
--- 7. Insert into seats
-INSERT INTO seats (id, room_id, seat_type_id, seat_number, created_at) VALUES
-(1, 1, 1, 'A1', NOW()),
-(2, 1, 1, 'A2', NOW()),
-(3, 1, 2, 'B1', NOW()),
-(4, 2, 1, 'A1', NOW()),
-(5, 2, 3, 'C1', NOW()),
-(6, 3, 2, 'B2', NOW()),
-(7, 4, 3, 'C2', NOW()),
-(8, 5, 1, 'A1', NOW()),
-(9, 6, 2, 'B1', NOW()),
-(10, 7, 3, 'C1', NOW());
 
--- 8. Insert into showtimes
-INSERT INTO showtimes (movie_id, room_id, show_date, show_time, price) VALUES
--- Ngày 2025-03-29
-(11, 1, '2025-03-29', '08:00:00', 70.00),
-(12, 2, '2025-03-29', '09:45:00', 80.00),
-(13, 3, '2025-03-29', '11:30:00', 95.00),
-(14, 4, '2025-03-29', '13:15:00', 100.00),
-(15, 5, '2025-03-29', '15:00:00', 110.00),
-(16, 6, '2025-03-29', '16:45:00', 120.00),
-(17, 7, '2025-03-29', '18:30:00', 125.00),
-(18, 8, '2025-03-29', '20:15:00', 130.00),
-(19, 9, '2025-03-29', '22:00:00', 135.00),
-(20,10, '2025-03-29', '23:45:00', 140.00),
+-- rooms
+INSERT INTO rooms (id, room_number, total_seats) VALUES
+(1, 1, 126),
+(2, 2, 126),
+(3, 3, 126);
 
--- Ngày 2025-03-30
-(11, 1, '2025-03-30', '08:30:00', 72.00),
-(12, 2, '2025-03-30', '10:15:00', 82.00),
-(13, 3, '2025-03-30', '12:00:00', 98.00),
-(14, 4, '2025-03-30', '13:45:00', 105.00),
-(15, 5, '2025-03-30', '15:30:00', 112.00),
-(16, 6, '2025-03-30', '17:15:00', 122.00),
-(17, 7, '2025-03-30', '19:00:00', 128.00),
-(18, 8, '2025-03-30', '20:45:00', 133.00),
-(19, 9, '2025-03-30', '22:30:00', 138.00),
-(20,10, '2025-03-30', '23:59:00', 145.00);
+-- movie genres
+INSERT INTO movie_genres (id, name) VALUES
+(1, 'Action'),
+(2, 'Comedy'),
+(3, 'Drama'),
+(4, 'Horror'),
+(5, 'Romance'),
+(6, 'Sci-Fi'),
+(7, 'Thriller'),
+(8, 'Animation');
 
--- 9. Insert into bookings
-INSERT INTO bookings (id, user_id, showtime_id, total_price, status, created_at) VALUES
-(1, 1, 1, 10.00, 'Confirmed', NOW()),
-(2, 2, 2, 24.00, 'Pending', NOW()),
-(3, 3, 3, 15.00, 'Cancelled', NOW());
 
--- 10. Insert into booking_details
-INSERT INTO booking_details (id, booking_id, seat_id, price, created_at) VALUES
-(1, 1, 1, 10.00, NOW()),
-(2, 2, 2, 12.00, NOW()),
-(3, 3, 3, 15.00, NOW());
 
--- 11. Insert into payments
-INSERT INTO payments (id, booking_id, amount, payment_method, status, created_at) VALUES
-(1, 1, 10.00, 'Credit Card', 'Completed', NOW()),
-(2, 2, 24.00, 'PayPal', 'Pending', NOW()),
-(3, 3, 15.00, 'Cash', 'Failed', NOW());
+-- Movie movie genres
+INSERT INTO movie_movie_genres (movie_id, genre_id) VALUES
+(1, 1), (1, 5),
+(2, 2), (2, 6),
+(3, 4), (3, 7);
+
+
+
+
+-- seat types
+INSERT INTO seat_types (id, name, price) VALUES
+(1, 'Standard', 100000),
+(2, 'Premium', 150000),
+(3, 'VIP', 200000);
+
+
+-- seat
+INSERT INTO seats (id, room_id, seat_type_id, `row`, col_number) VALUES
+(1, 1, 1, 'A', 1), (2, 1, 1, 'A', 2), (3, 1, 1, 'A', 3), (4, 1, 1, 'A', 4),
+(5, 1, 1, 'A', 5), (6, 1, 1, 'A', 6), (7, 1, 1, 'A', 7), (8, 1, 1, 'A', 8),
+(9, 1, 1, 'A', 9), (10, 1, 1, 'A', 10), (11, 1, 1, 'A', 11), (12, 1, 1, 'A', 12),
+(13, 1, 1, 'A', 13), (14, 1, 1, 'A', 14),
+(15, 1, 1, 'B', 1), (16, 1, 1, 'B', 2), (17, 1, 1, 'B', 3), (18, 1, 1, 'B', 4),
+(19, 1, 1, 'B', 5), (20, 1, 1, 'B', 6), (21, 1, 1, 'B', 7), (22, 1, 1, 'B', 8),
+(23, 1, 1, 'B', 9), (24, 1, 1, 'B', 10), (25, 1, 1, 'B', 11), (26, 1, 1, 'B', 12),
+(27, 1, 1, 'B', 13), (28, 1, 1, 'B', 14),
+(29, 1, 1, 'C', 1), (30, 1, 1, 'C', 2), (31, 1, 1, 'C', 3), (32, 1, 1, 'C', 4),
+(33, 1, 1, 'C', 5), (34, 1, 1, 'C', 6), (35, 1, 1, 'C', 7), (36, 1, 1, 'C', 8),
+(37, 1, 1, 'C', 9), (38, 1, 1, 'C', 10), (39, 1, 1, 'C', 11), (40, 1, 1, 'C', 12),
+(41, 1, 1, 'C', 13), (42, 1, 1, 'C', 14),
+(43, 1, 1, 'D', 1), (44, 1, 1, 'D', 2), (45, 1, 1, 'D', 3), (46, 1, 1, 'D', 4),
+(47, 1, 1, 'D', 5), (48, 1, 1, 'D', 6), (49, 1, 1, 'D', 7), (50, 1, 1, 'D', 8),
+(51, 1, 1, 'D', 9), (52, 1, 1, 'D', 10), (53, 1, 1, 'D', 11), (54, 1, 1, 'D', 12),
+(55, 1, 1, 'D', 13), (56, 1, 1, 'D', 14),
+(57, 1, 1, 'E', 1), (58, 1, 1, 'E', 2), (59, 1, 1, 'E', 3), (60, 1, 1, 'E', 4),
+(61, 1, 1, 'E', 5), (62, 1, 1, 'E', 6), (63, 1, 1, 'E', 7), (64, 1, 1, 'E', 8),
+(65, 1, 1, 'E', 9), (66, 1, 1, 'E', 10), (67, 1, 1, 'E', 11), (68, 1, 1, 'E', 12),
+(69, 1, 1, 'E', 13), (70, 1, 1, 'E', 14),
+(71, 1, 1, 'F', 1), (72, 1, 1, 'F', 2), (73, 1, 1, 'F', 3), (74, 1, 1, 'F', 4),
+(75, 1, 1, 'F', 5), (76, 1, 1, 'F', 6), (77, 1, 1, 'F', 7), (78, 1, 1, 'F', 8),
+(79, 1, 1, 'F', 9), (80, 1, 1, 'F', 10), (81, 1, 1, 'F', 11), (82, 1, 1, 'F', 12),
+(83, 1, 1, 'F', 13), (84, 1, 1, 'F', 14),
+(85, 1, 1, 'G', 1), (86, 1, 1, 'G', 2), (87, 1, 1, 'G', 3), (88, 1, 1, 'G', 4),
+(89, 1, 1, 'G', 5), (90, 1, 1, 'G', 6), (91, 1, 1, 'G', 7), (92, 1, 1, 'G', 8),
+(93, 1, 1, 'G', 9), (94, 1, 1, 'G', 10), (95, 1, 1, 'G', 11), (96, 1, 1, 'G', 12),
+(97, 1, 1, 'G', 13), (98, 1, 1, 'G', 14),
+(99, 1, 1, 'H', 1), (100, 1, 1, 'H', 2), (101, 1, 1, 'H', 3), (102, 1, 1, 'H', 4),
+(103, 1, 1, 'H', 5), (104, 1, 1, 'H', 6), (105, 1, 1, 'H', 7), (106, 1, 1, 'H', 8),
+(107, 1, 1, 'H', 9), (108, 1, 1, 'H', 10), (109, 1, 1, 'H', 11), (110, 1, 1, 'H', 12),
+(111, 1, 1, 'H', 13), (112, 1, 1, 'H', 14),
+(113, 1, 1, 'I', 1), (114, 1, 1, 'I', 2), (115, 1, 1, 'I', 3), (116, 1, 1, 'I', 4),
+(117, 1, 1, 'I', 5), (118, 1, 1, 'I', 6), (119, 1, 1, 'I', 7), (120, 1, 1, 'I', 8),
+(121, 1, 1, 'I', 9), (122, 1, 1, 'I', 10), (123, 1, 1, 'I', 11), (124, 1, 1, 'I', 12),
+(125, 1, 1, 'I', 13), (126, 1, 1, 'I', 14);
+
+-- showtimes
+INSERT INTO showtimes (id, movie_id, room_id, show_date, show_time) VALUES
+(1, 1, 1, '2025-03-20', '10:00'), (2, 1, 1, '2025-03-20', '13:00'),
+(3, 1, 1, '2025-03-20', '16:00'), (4, 1, 1, '2025-03-20', '19:00'),
+(5, 1, 1, '2025-03-21', '10:00'), (6, 1, 1, '2025-03-21', '13:00'),
+(7, 1, 1, '2025-03-21', '16:00'), (8, 1, 1, '2025-03-21', '19:00'),
+(9, 2, 2, '2025-03-22', '11:00'), (10, 2, 2, '2025-03-22', '14:00'),
+(11, 2, 2, '2025-03-22', '17:00'), (12, 2, 2, '2025-03-22', '20:00'),
+(13, 3, 3, '2025-03-23', '12:00'), (14, 3, 3, '2025-03-23', '15:00'),
+(15, 3, 3, '2025-03-23', '18:00'), (16, 3, 3, '2025-03-23', '21:00'),
+(17, 1, 2, '2025-03-24', '10:00'), (18, 1, 2, '2025-03-24', '13:00'),
+(19, 1, 2, '2025-03-24', '16:00'), (20, 1, 2, '2025-03-24', '19:00'),
+(21, 2, 3, '2025-03-25', '11:00'), (22, 2, 3, '2025-03-25', '14:00'),
+(23, 2, 3, '2025-03-25', '17:00'), (24, 2, 3, '2025-03-25', '20:00'),
+(25, 3, 1, '2025-03-26', '12:00'), (26, 3, 1, '2025-03-26', '15:00'),
+(27, 3, 1, '2025-03-26', '18:00'), (28, 3, 1, '2025-03-26', '21:00'),
+(29, 1, 3, '2025-03-27', '10:00'), (30, 1, 3, '2025-03-27', '13:00'),
+(31, 1, 3, '2025-03-27', '16:00'), (32, 1, 3, '2025-03-27', '19:00'),
+(33, 2, 1, '2025-03-28', '11:00'), (34, 2, 1, '2025-03-28', '14:00'),
+(35, 2, 1, '2025-03-28', '17:00'), (36, 2, 1, '2025-03-28', '20:00'),
+(37, 3, 2, '2025-03-29', '12:00'), (38, 3, 2, '2025-03-29', '15:00'),
+(39, 3, 2, '2025-03-29', '18:00'), (40, 3, 2, '2025-03-29', '21:00');
+
+
+-- bookings
+INSERT INTO bookings (id, user_id, showtime_id, total_tickets, total_price) VALUES
+(1, 1, 1, 2, 200000),
+(2, 1, 2, 4, 400000),
+(3, 2, 9, 1, 100000),
+(4, 2, 13, 3, 300000);
+
+-- payment
+INSERT INTO payments (id, booking_id, payment_method, status) VALUES
+(1, 1, 'Credit Card', 'Completed'),
+(2, 2, 'PayPal', 'Completed'),
+(3, 3, 'Cash', 'Pending'),
+(4, 4, 'Credit Card', 'Completed');
+
+
+-- booking detail
+INSERT INTO booking_details (id, booking_id, seat_id, price) VALUES
+(1, 1, 1, 100000), (2, 1, 2, 100000),
+(3, 2, 15, 100000), (4, 2, 16, 100000), (5, 2, 17, 100000), (6, 2, 18, 100000),
+(7, 3, 43, 100000),
+(8, 4, 85, 100000), (9, 4, 86, 100000), (10, 4, 87, 100000);
