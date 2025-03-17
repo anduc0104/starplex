@@ -6,6 +6,7 @@ import com.cinema.starplex.models.Movie;
 import javafx.animation.ScaleTransition;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -23,16 +24,17 @@ public class ListMovieLayoutController {
     private GridPane movieGrid;
 
     @FXML
-    private HBox showDateBox; // Thêm HBox để chứa ngày chiếu
+    private HBox showDateBox; // HBox chứa ngày chiếu
 
     private MovieDao movieDao;
     private GenreDao genreDao;
+    private Button selectedDateButton = null; // Lưu button ngày được chọn
 
     @FXML
     public void initialize() {
         movieDao = new MovieDao();
         genreDao = new GenreDao();
-        loadShowDates(); // Tải danh sách ngày chiếu trước
+        loadShowDates(); // Tải danh sách ngày chiếu
     }
 
     private void loadShowDates() {
@@ -42,23 +44,39 @@ public class ListMovieLayoutController {
 
             if (showDates.isEmpty()) {
                 System.out.println("No show dates found!");
+                return;
             }
 
             for (String date : showDates) {
                 Button btnDate = new Button(date);
                 btnDate.getStyleClass().add("showdate-btn");
 
-                // Kiểm tra xem sự kiện click có được gán đúng không
                 btnDate.setOnAction(event -> {
-                    System.out.println("Clicked on the show date: " + date);
                     loadMoviesByDate(date);
+                    updateSelectedDateButton(btnDate);
                 });
 
                 showDateBox.getChildren().add(btnDate);
             }
+
+            // Mặc định chọn ngày đầu tiên
+            if (!showDateBox.getChildren().isEmpty()) {
+                Button firstButton = (Button) showDateBox.getChildren().get(0);
+                loadMoviesByDate(firstButton.getText());
+                updateSelectedDateButton(firstButton);
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private void updateSelectedDateButton(Button newSelectedButton) {
+        if (selectedDateButton != null) {
+            selectedDateButton.getStyleClass().remove("showdate-btn-selected");
+        }
+        newSelectedButton.getStyleClass().add("showdate-btn-selected");
+        selectedDateButton = newSelectedButton;
     }
 
     private void loadMoviesByDate(String selectedDate) {
