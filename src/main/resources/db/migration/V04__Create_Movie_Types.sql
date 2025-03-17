@@ -1,4 +1,4 @@
-CREATE TABLE movie_movie_genres (
+CREATE TABLE movie_types (
     movie_id INT,
     genre_id INT,
     PRIMARY KEY (movie_id, genre_id),

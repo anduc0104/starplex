@@ -18,19 +18,13 @@ public class MainLayoutController {
     @FXML
     private BorderPane mainBorderPane;
 
+
     public void logout(ActionEvent actionEvent) {
         SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(), "LoginView.fxml");
     }
 
     public void managementUser(ActionEvent actionEvent) {
         FXMLLoader loader = SceneSwitcher.loadView("admin/usermanagement/list-user.fxml");
-        assert loader != null;
-        Parent newView = loader.getRoot();
-        mainBorderPane.setCenter(newView);
-    }
-
-    public void dashBoardScene(ActionEvent actionEvent) {
-        FXMLLoader loader = SceneSwitcher.loadView("admin/dashboard-view.fxml");
         assert loader != null;
         Parent newView = loader.getRoot();
         mainBorderPane.setCenter(newView);
@@ -54,7 +48,7 @@ public class MainLayoutController {
     }
 
     public void managementShowtime(ActionEvent event) {
-        FXMLLoader loader = SceneSwitcher.loadView("admin/showtimesmanagement/showtime-view.fxml");
+        FXMLLoader loader = SceneSwitcher.loadView("admin/showtimemanagement/showtime-list-view.fxml");
         assert loader != null;
         Parent newView = loader.getRoot();
         mainBorderPane.setCenter(newView);
@@ -74,26 +68,29 @@ public class MainLayoutController {
         mainBorderPane.setCenter(newView);
     }
 
-    public void managementBooking(ActionEvent event) {
-
-    }
-
-    public void movieGenreScene(ActionEvent event) {
-        FXMLLoader loader = SceneSwitcher.loadView("admin/moviegenremanagement/genre-view.fxml");
-        assert loader != null;
-        Parent newView = loader.getRoot();
-        mainBorderPane.setCenter(newView);
-    }
-
-    public void showtimeScene(ActionEvent actionEvent) {
-        FXMLLoader loader = SceneSwitcher.loadView("admin/showtimesmanagement/showtime-view.fxml");
-        assert loader != null;
-        Parent newView = loader.getRoot();
-        mainBorderPane.setCenter(newView);
-    }
-
     public void genreScene(ActionEvent event) {
         FXMLLoader loader = SceneSwitcher.loadView("admin/moviegenremanagement/genre-view.fxml");
+        assert loader != null;
+        Parent newView = loader.getRoot();
+        mainBorderPane.setCenter(newView);
+    }
+
+    public void managementBooking(ActionEvent actionEvent) {
+        FXMLLoader loader = SceneSwitcher.loadView("admin/booking-view/Booking-View.fxml");
+        assert loader != null;
+        Parent newView = loader.getRoot();
+        mainBorderPane.setCenter(newView);
+    }
+
+    public void managementPayment(ActionEvent actionEvent) {
+        FXMLLoader loader = SceneSwitcher.loadView("admin/paymentmanagement/payment-view.fxml");
+        assert loader != null;
+        Parent newView = loader.getRoot();
+        mainBorderPane.setCenter(newView);
+    }
+
+    public void mangementDashboard(ActionEvent actionEvent) {
+        FXMLLoader loader = SceneSwitcher.loadView("admin/dashboard-view.fxml");
         assert loader != null;
         Parent newView = loader.getRoot();
         mainBorderPane.setCenter(newView);
