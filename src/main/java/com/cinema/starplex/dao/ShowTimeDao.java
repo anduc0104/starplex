@@ -1,9 +1,12 @@
 package com.cinema.starplex.dao;
 
+import com.cinema.starplex.models.Booking;
+import com.cinema.starplex.models.Room;
 import com.cinema.starplex.models.Showtime;
 import com.cinema.starplex.util.DatabaseConnection;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,14 +34,49 @@ public class ShowTimeDao implements BaseDao<Showtime>{
 
     @Override
     public Showtime findById(long id) {
+        String query = "SELECT * FROM showtimes WHERE id = ?";
+        try(PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setLong(1, id);
+
+            try(ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return mapResultSetToShowtime(resultSet);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
+    }
+
+    private Showtime mapResultSetToShowtime(ResultSet resultSet) throws SQLException {
+        Showtime showtime = new Showtime();
+        showtime.setId(resultSet.getInt("id"));
+        showtime.setMovie(new MovieDao().findById(resultSet.getLong("movie_id")));
+        showtime.setRoom(new RoomDao().findById(resultSet.getLong("room_id")));
+        showtime.setStartTime(resultSet.getTimestamp("start_time"));
+        showtime.setPrice(resultSet.getBigDecimal("price"));
+        showtime.setCreatedAt(resultSet.getTimestamp("created_at"));
+        return showtime;
     }
 
     @Override
     public List<Showtime> findAll() {
-        return List.of();
-    }
+        List<Showtime> showtimes = new ArrayList<>();
+        String query = "SELECT * FROM showtimes";
 
+        try (Statement statement = conn.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+            while (resultSet.next()) {
+                showtimes.add(mapResultSetToShowtime(resultSet));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return showtimes;
+    }
 
     private Connection conn;
 
@@ -113,5 +151,28 @@ public class ShowTimeDao implements BaseDao<Showtime>{
             e.printStackTrace();
         }
         return false;
+    }
+
+    public List<Showtime> getShowtimesByMovieAndDate(int id, LocalDate selectedDate) {
+        List<Showtime> showtimes = new ArrayList<>();
+        String sql = "SELECT * FROM showtimes WHERE movie_id =? AND DATE(start_time) =?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            stmt.setDate(2, Date.valueOf(selectedDate));
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                showtimes.add(new Showtime(
+                        rs.getInt("id"),
+                        null,
+                        null,
+                        rs.getTimestamp("start_time"),
+                        rs.getBigDecimal("price"),
+                        rs.getTimestamp("created_at")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return showtimes;
     }
 }

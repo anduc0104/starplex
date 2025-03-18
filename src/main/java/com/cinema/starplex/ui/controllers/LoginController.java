@@ -31,8 +31,8 @@ public class LoginController {
     private Label passwordError;
 
     public void handleLogin(ActionEvent actionEvent) throws SQLException {
-        String username = usernameField.getText();
-        String password = passwordField.getText();
+        String username = usernameField.getText().trim();
+        String password = passwordField.getText().trim();
 
         // Xóa thông báo lỗi cũ
         clearErrors();
@@ -43,10 +43,15 @@ public class LoginController {
         UserDao userDao = new UserDao();
         User user = userDao.login(username, password);
         if (user != null) {
-            System.out.println("login successful");
-            System.out.println(user);
-            Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            SceneSwitcher.switchTo(currentStage, "admin/main-layout.fxml");
+            if (user.getRole().equals("admin")) {
+                System.out.println("login successful");
+                Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                SceneSwitcher.switchTo(currentStage, "admin/main-layout.fxml");
+            } else {
+                System.out.println("login successful");
+                Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                SceneSwitcher.switchTo(currentStage, "staff/main-layout.fxml");
+            }
         } else {
             System.out.println("login failed");
             showError(usernameField, usernameError, "Invalid username or password");

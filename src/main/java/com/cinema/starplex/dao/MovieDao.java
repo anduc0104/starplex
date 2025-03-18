@@ -5,16 +5,15 @@ import com.cinema.starplex.models.Movie;
 import com.cinema.starplex.util.DatabaseConnection;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +35,9 @@ public class MovieDao implements BaseDao<Movie> {
                 int movieId = rs.getInt("id");
                 List<Genre> genres = getGenresByMovieId(movieId);
 
+                Date sqlDate = rs.getDate("release_date");
+                LocalDate releaseDate = (sqlDate != null) ? sqlDate.toLocalDate() : null;
+
                 movies.add(new Movie(
                         new SimpleIntegerProperty(rs.getInt("id")),
                         new SimpleStringProperty(rs.getString("title")),
@@ -43,7 +45,8 @@ public class MovieDao implements BaseDao<Movie> {
                         new SimpleStringProperty(rs.getString("actors")),
                         new SimpleListProperty<>(FXCollections.observableArrayList(genres)),
                         new SimpleStringProperty(rs.getString("duration")),
-                        new SimpleStringProperty(rs.getString("release_date")),
+//                        new SimpleStringProperty(rs.getString("release_date")),
+                        new SimpleObjectProperty<>(releaseDate),
                         new SimpleStringProperty(rs.getString("description")),
                         new SimpleStringProperty(rs.getString("images"))));
             }
@@ -123,11 +126,82 @@ public class MovieDao implements BaseDao<Movie> {
 
     @Override
     public Movie findById(long id) {
+        String query = "SELECT * FROM movies WHERE id = ?";
+        try(PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setLong(1, id);
+
+            try(ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return mapResultSetToMovie(resultSet);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public List<Movie> findAll() {
-        return List.of();
+        List<Movie> movies = new ArrayList<>();
+        String query = "SELECT * FROM movies";
+        try (PreparedStatement statement = conn.prepareStatement(query)) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    movies.add(mapResultSetToMovie(resultSet));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return movies;
+    }
+
+    private Movie mapResultSetToMovie(ResultSet resultSet) throws SQLException {
+        Movie movie = new Movie();
+        movie.setId(resultSet.getInt("id"));
+        movie.setTitle(resultSet.getString("title"));
+        movie.setDuration(resultSet.getString("duration"));
+        movie.setReleaseDate(resultSet.getDate("release_date").toLocalDate());
+        movie.setDescription(resultSet.getString("description"));
+        movie.setImage(resultSet.getString("images"));
+        return movie;
+    }
+
+    public Movie getLatestMovie() {
+        Movie latestMovie = null;
+        String sql = "SELECT * FROM movies ORDER BY release_date DESC LIMIT 1";
+        try (Connection conn = DatabaseConnection.getConn();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                latestMovie = mapResultSetToMovie(rs);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error when getting latest movie: " + e.getMessage());
+        }
+        return latestMovie;
+    }
+
+    public List<Movie> getCurrentMovies() {
+        List<Movie> movies = new ArrayList<>();
+        // Get movies that are currently showing (release date before today)
+        String query = "SELECT * FROM movies WHERE release_date <= ? ORDER BY release_date DESC";
+
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Movie movie = mapResultSetToMovie(rs);
+                    movies.add(movie);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching current movies: " + e.getMessage());
+        }
+
+        return movies;
     }
 }

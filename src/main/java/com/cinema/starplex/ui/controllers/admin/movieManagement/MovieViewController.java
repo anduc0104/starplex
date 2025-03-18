@@ -84,7 +84,7 @@ public class MovieViewController {
                         .collect(Collectors.joining(", "))
         ));
         durationColumn.setCellValueFactory(cellData -> cellData.getValue().durationProperty());
-        releaseDateColumn.setCellValueFactory(cellData -> cellData.getValue().releaseDateProperty());
+        releaseDateColumn.setCellValueFactory(cellData -> cellData.getValue().releaseDateProperty().asString());
         descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
 
         imageColumn.setCellValueFactory(cellData -> {

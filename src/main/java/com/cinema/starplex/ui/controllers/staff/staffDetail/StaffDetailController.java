@@ -5,6 +5,7 @@ import com.cinema.starplex.dao.SeatDao;
 import com.cinema.starplex.models.Room;
 import com.cinema.starplex.models.Seat;
 import com.cinema.starplex.models.SeatType;
+import com.cinema.starplex.models.Showtime;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.StringConverter;
 
 import java.math.BigDecimal;
 import java.net.URL;
@@ -152,6 +154,21 @@ public class StaffDetailController {
             loadSeatsForRoom(roomList.get(0).getId());
             updateTotalSeatsLabel();
         }
+        roomSelector.setConverter(new StringConverter<Room>() {
+            @Override
+            public String toString(Room room) {
+                return (room != null) ? String.valueOf(room.getRoomNumber()) : "";
+            }
+
+            @Override
+            public Room fromString(String string) {
+                return roomSelector.getItems().stream()
+                        .filter(room -> String.valueOf(room.getRoomNumber()).equals(string))
+                        .findFirst()
+                        .orElse(null);
+            }
+        });
+
     }
 
     private void loadSeatsForRoom(int roomId) {
@@ -763,6 +780,9 @@ public class StaffDetailController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public void setShowtime(Showtime showtime) {
     }
 
 //    @FXML

@@ -81,6 +81,7 @@ public class Showtime {
         String movieTitle = (movie != null) ? movie.getTitle() : "Unknown Movie";
         Integer roomName = (room != null) ? room.getRoomNumber() : 0;
         String startTimeStr = (startTime != null) ? dateFormat.format(startTime) : "Unknown Time";
+        System.out.println("Movie: " + movieTitle + ", Room: " + roomName + ", Start Time: " + startTimeStr);
         return movieTitle + " - Room " + roomName + " - " + startTimeStr;
     }
 }

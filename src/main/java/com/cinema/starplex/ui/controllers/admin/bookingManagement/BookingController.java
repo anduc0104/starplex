@@ -17,21 +17,14 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.util.StringConverter;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
-
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
@@ -64,26 +57,13 @@ public class BookingController implements Initializable {
     private TableColumn<Booking, Timestamp> createdAtColumn;
 
     @FXML
-    private Button createButton;
-
-    @FXML
-    private Button updateButton;
-
-    @FXML
-    private Button deleteButton;
-
-    @FXML
-    private Button clearButton;
-
-    @FXML
     private TableColumn<Booking, Void> colAction;
 
     private BookingDao bookingDao;
     private UserDao userDao;
     private ShowTimeDao showtimeDao;
     private ObservableList<Booking> bookingList;
-    private Booking currentBooking;
-    private final String[] STATUSES = {"PENDING", "CONFIRMED", "CANCELLED", "COMPLETED"};
+//    private final String[] STATUSES = {"PENDING", "CONFIRMED", "CANCELLED", "COMPLETED"};
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -93,30 +73,6 @@ public class BookingController implements Initializable {
 
         // Khởi tạo cột trong bảng
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        userColumn.setCellValueFactory(cellData ->
-                javafx.beans.binding.Bindings.createStringBinding(
-                        () -> {
-                            if (cellData.getValue().getUser() != null) {
-                                return cellData.getValue().getUser().getUsername();
-                            } else {
-                                return "Unknown";
-                            }
-                        },
-                        cellData.getValue().userProperty()));
-
-        showtimeColumn.setCellValueFactory(cellData ->
-                javafx.beans.binding.Bindings.createStringBinding(
-                        () -> {
-                            Showtime showtime = cellData.getValue().getShowtime();
-                            if (showtime == null) {
-                                System.out.println("Showtime is NULL for booking ID: " + cellData.getValue().getId());
-                            } else {
-                                System.out.println("Showtime found: " + showtime.getDisplayName());
-                            }
-                            return showtime != null ? showtime.getDisplayName() : "N/A";
-                        },
-                        cellData.getValue().showtimeProperty()));
-
         totalPriceColumn.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         createdAtColumn.setCellValueFactory(new PropertyValueFactory<>("createdAt"));
@@ -125,18 +81,14 @@ public class BookingController implements Initializable {
         loadUsers();
         loadShowtimes();
         loadBookingData(); // Load danh sách booking cho bảng
-    }
+        for (Booking booking : bookingList) {
+            System.out.println("Booking ID: " + booking.getId() +
+                    ", Showtime: " + (booking.getShowtime() != null ? booking.getShowtime().getId() : "NULL"));
+        }
 
-    private void clearForm() {
-        totalPriceColumn.setText("");
-        userColumn.setText("");
-        showtimeColumn.setText("");
-        statusColumn.setText("");
     }
 
     private void loadUsers() {
-        List<User> users = userDao.findAll();
-
         // Gán dữ liệu cho cột userColumn trong bảng
         userColumn.setCellValueFactory(cellData ->
                 javafx.beans.binding.Bindings.createStringBinding(
@@ -148,14 +100,14 @@ public class BookingController implements Initializable {
     }
 
     private void loadShowtimes() {
-        List<Showtime> showtimes = showtimeDao.findAll();
-
         // Gán dữ liệu cho cột showtimeColumn trong bảng
         showtimeColumn.setCellValueFactory(cellData ->
                 javafx.beans.binding.Bindings.createStringBinding(
                         () -> {
                             Showtime showtime = cellData.getValue().getShowtime();
-                            return (showtime != null) ? showtime.getDisplayName() : "N/A";
+                            System.out.println("Booking ID: " + cellData.getValue().getId() +
+                                    ", Showtime: " + cellData.getValue().getShowtime());
+                            return (showtime != null) ? showtime.getDisplayName() : "No/A";
                         },
                         cellData.getValue().showtimeProperty()));
     }
@@ -228,7 +180,6 @@ public class BookingController implements Initializable {
             System.err.println("Could not load add-booking.fxml");
         }
     }
-
 
     private void addActionButtons() {
         colAction.setCellFactory(param -> new TableCell<>() {

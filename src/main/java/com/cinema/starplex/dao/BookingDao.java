@@ -105,7 +105,7 @@ public class BookingDao implements BaseDao<Booking>{
     @Override
     public List<Booking> findAll() {
         List<Booking> bookings = new ArrayList<>();
-        String query = "SELECT * FROM bookings";
+        String query = "SELECT * FROM bookings b";
 
         try(Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(query)) {

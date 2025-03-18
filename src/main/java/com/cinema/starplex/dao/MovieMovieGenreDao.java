@@ -5,6 +5,7 @@ import com.cinema.starplex.util.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -47,5 +48,28 @@ public class MovieMovieGenreDao implements BaseDao<MovieGenre> {
     @Override
     public List<MovieGenre> findAll() {
         return List.of();
+    }
+
+    public List<MovieGenre> getGenresByMovieId(int id) {
+        List<MovieGenre> genres = List.of();
+        String sql = "SELECT mg.*" +
+                "                FROM movies m" +
+                "                JOIN movie_types mt ON mt.movie_id = m.id " +
+                "                JOIN movie_genres mg ON mt.genre_id = mg.id " +
+                "                 WHERE mt.movie_id = ?;";
+
+        try (Connection conn = DatabaseConnection.getConn();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                genres.add(new MovieGenre(rs.getInt("id"), rs.getString("name")));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error when getting genres for movie: " + e.getMessage());
+        }
+
+        return genres;
     }
 }

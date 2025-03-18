@@ -48,7 +48,7 @@ public class MainLayoutController {
     }
 
     public void managementShowtime(ActionEvent event) {
-        FXMLLoader loader = SceneSwitcher.loadView("admin/showtimemanagement/showtime-list-view.fxml");
+        FXMLLoader loader = SceneSwitcher.loadView("admin/showtimesmanagement/showtime-view.fxml");
         assert loader != null;
         Parent newView = loader.getRoot();
         mainBorderPane.setCenter(newView);

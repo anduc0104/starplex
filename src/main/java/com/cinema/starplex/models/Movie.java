@@ -2,24 +2,30 @@ package com.cinema.starplex.models;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 
 public class Movie {
-    private IntegerProperty id;
-    private StringProperty title;
-    private StringProperty director;
-    private StringProperty actors;
-    private ListProperty<Genre> genres;
-    private StringProperty duration;
-    private StringProperty releaseDate;
-    private StringProperty description;
-    private StringProperty image;
+    private IntegerProperty id = new SimpleIntegerProperty();
+    private StringProperty title = new SimpleStringProperty();
+    private StringProperty director = new SimpleStringProperty();
+    private StringProperty actors = new SimpleStringProperty();
+    private ListProperty<Genre> genres = new SimpleListProperty<>(FXCollections.observableArrayList());
+    private StringProperty duration = new SimpleStringProperty();
+    private ObjectProperty<LocalDate> releaseDate = new SimpleObjectProperty<>();
+    private StringProperty description = new SimpleStringProperty();
+    private StringProperty image = new SimpleStringProperty();
 
     public Movie() {}
 
-    public Movie(IntegerProperty id, StringProperty title, StringProperty director, StringProperty actors, ListProperty<Genre> genres, StringProperty duration, StringProperty releaseDate, StringProperty description, StringProperty image) {
+    public Movie(IntegerProperty id, StringProperty title, StringProperty director,
+                 StringProperty actors, ListProperty<Genre> genres, StringProperty duration,
+                 ObjectProperty<LocalDate> releaseDate,
+                 StringProperty description, StringProperty image) {
         this.id = id;
         this.title = title;
         this.director = director;
@@ -31,7 +37,8 @@ public class Movie {
         this.image = image;
     }
 
-    public Movie(StringProperty title, StringProperty duration, StringProperty releaseDate, StringProperty description, StringProperty image) {
+
+    public Movie(StringProperty title, StringProperty duration, ObjectProperty<LocalDate> releaseDate, StringProperty description, StringProperty image) {
         this.title = title;
         this.duration = duration;
         this.releaseDate = releaseDate;
@@ -111,15 +118,15 @@ public class Movie {
         this.duration.set(duration);
     }
 
-    public String getReleaseDate() {
-        return releaseDate.get();
-    }
-
-    public StringProperty releaseDateProperty() {
+    public ObjectProperty<LocalDate> releaseDateProperty() {
         return releaseDate;
     }
 
-    public void setReleaseDate(String releaseDate) {
+    public LocalDate getReleaseDate() {
+        return releaseDate.get();
+    }
+
+    public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate.set(releaseDate);
     }
 
@@ -146,6 +153,5 @@ public class Movie {
     public void setImage(String image) {
         this.image.set(image);
     }
-
 
 }

@@ -16,6 +16,11 @@ public class MovieGenre {
     public MovieGenre() {
     }
 
+    public MovieGenre(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     // Getters and Setters
 
     public Integer getId() {

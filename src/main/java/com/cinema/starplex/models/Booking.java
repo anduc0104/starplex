@@ -1,4 +1,5 @@
 package com.cinema.starplex.models;
+
 import javafx.beans.property.*;
 
 import java.math.BigDecimal;
@@ -26,32 +27,88 @@ public class Booking {
     }
 
     // Getter & Setter cho id
-    public Integer getId() { return id.get(); }
-    public void setId(int id) { this.id.set(id); }
-    public IntegerProperty idProperty() { return id; }
+    public Integer getId() {
+        return id.get();
+    }
+
+    public void setId(int id) {
+        this.id.set(id);
+    }
+
+    public IntegerProperty idProperty() {
+        return id;
+    }
 
     // Getter & Setter cho user
-    public User getUser() { return user.get(); }
-    public void setUser(User user) { this.user.set(user); }
-    public ObjectProperty<User> userProperty() { return user; }
+    public User getUser() {
+        return user.get();
+    }
+
+    public void setUser(User user) {
+        this.user.set(user);
+    }
+
+    public ObjectProperty<User> userProperty() {
+        return user;
+    }
 
     // Getter & Setter cho showtime
-    public Showtime getShowtime() { return showtime.get(); }
-    public void setShowtime(Showtime showtime) { this.showtime.set(showtime); }
-    public ObjectProperty<Showtime> showtimeProperty() { return showtime; }
+    public Showtime getShowtime() {
+        if (showtime.get() == null) {
+            System.out.println("⚠ Lỗi: getShowtime() trả về NULL cho Booking ID " + this.getId());
+        }
+        return showtime.get();
+    }
+
+    public void setShowtime(Showtime showtime) {
+        if (showtime == null) {
+            System.out.println("NO " + this.getId());
+        } else {
+            System.out.println("Showtime set: " + showtime.getId());
+        }
+        this.showtime.set(showtime);
+    }
+
+    public ObjectProperty<Showtime> showtimeProperty() {
+        return showtime;
+    }
 
     // Getter & Setter cho totalPrice
-    public BigDecimal getTotalPrice() { return totalPrice.get(); }
-    public void setTotalPrice(BigDecimal totalPrice) { this.totalPrice.set(totalPrice); }
-    public ObjectProperty<BigDecimal> totalPriceProperty() { return totalPrice; }
+    public BigDecimal getTotalPrice() {
+        return totalPrice.get();
+    }
+
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice.set(totalPrice);
+    }
+
+    public ObjectProperty<BigDecimal> totalPriceProperty() {
+        return totalPrice;
+    }
 
     // Getter & Setter cho status
-    public String getStatus() { return status.get(); }
-    public void setStatus(String status) { this.status.set(status); }
-    public StringProperty statusProperty() { return status; }
+    public String getStatus() {
+        return status.get();
+    }
+
+    public void setStatus(String status) {
+        this.status.set(status);
+    }
+
+    public StringProperty statusProperty() {
+        return status;
+    }
 
     // Getter & Setter cho createdAt
-    public Timestamp getCreatedAt() { return createdAt.get(); }
-    public void setCreatedAt(Timestamp createdAt) { this.createdAt.set(createdAt); }
-    public ObjectProperty<Timestamp> createdAtProperty() { return createdAt; }
+    public Timestamp getCreatedAt() {
+        return createdAt.get();
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt.set(createdAt);
+    }
+
+    public ObjectProperty<Timestamp> createdAtProperty() {
+        return createdAt;
+    }
 }

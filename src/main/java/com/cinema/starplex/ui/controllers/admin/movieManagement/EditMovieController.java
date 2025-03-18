@@ -90,7 +90,12 @@ public class EditMovieController {
             genreCheckComboBox.getCheckModel().check(genre.getName()); // Giả sử Genre có phương thức getName()
         }
         durationField.setText(String.valueOf(movie.getDuration()));
-        releaseDatePicker.setValue(LocalDate.parse(movie.getReleaseDate()));
+        if (movie.getReleaseDate() != null) {
+            releaseDatePicker.setValue(LocalDate.parse(movie.getReleaseDate().toString()));
+        } else {
+            releaseDatePicker.setValue(null); // Hoặc giá trị mặc định
+        }
+
         descriptionField.setText(movie.getDescription());
 
         if (movie.getImage() != null && !movie.getImage().isEmpty()) {
@@ -158,7 +163,8 @@ public class EditMovieController {
 //                movie.setActors(actorsField.getText());
                 movie.setGenres(selectedGenres);
                 movie.setDuration(String.valueOf(Float.parseFloat(durationField.getText())));
-                movie.setReleaseDate(releaseDatePicker.getValue().toString());
+                movie.setReleaseDate(releaseDatePicker.getValue());
+
                 movie.setDescription(descriptionField.getText());
                 movie.setImage(imagePath);
 
