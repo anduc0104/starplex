@@ -33,10 +33,6 @@ public class AddMovieController {
     @FXML
     private TextField titleField;
     @FXML
-    private TextField directorField;
-    @FXML
-    private TextField actorsField;
-    @FXML
     private CheckComboBox<String> genreCheckComboBox;
     @FXML
     private TextField durationField;
@@ -48,6 +44,8 @@ public class AddMovieController {
     private Button saveButton;
     @FXML
     private Button clearButton;
+    @FXML
+    private Button handleBack;
     @FXML
     private ImageView movieImageView;
     @FXML
@@ -70,6 +68,9 @@ public class AddMovieController {
             while (rs.next()) {
                 genreCheckComboBox.getItems().add(rs.getString("name"));
             }
+            if (genreCheckComboBox.getItems().isEmpty()) {
+                showAlert(Alert.AlertType.WARNING, "Warning", "No genres found in the database.");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -78,8 +79,6 @@ public class AddMovieController {
     @FXML
     private void handleSave(ActionEvent event) {
         String title = titleField.getText();
-//        String director = directorField.getText();
-//        String actors = actorsField.getText();
         List<String> selectedGenres = new ArrayList<>(genreCheckComboBox.getCheckModel().getCheckedItems());
         String duration = durationField.getText();
         LocalDate releaseDate = releaseDatePicker.getValue();
@@ -95,8 +94,6 @@ public class AddMovieController {
         try (Connection conn = DatabaseConnection.getConn();
              PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, title);
-//            stmt.setString(2, director);
-//            stmt.setString(3, actors);
             stmt.setString(2, duration);
             stmt.setString(3, releaseDate.toString());
             stmt.setString(4, description);
@@ -104,7 +101,7 @@ public class AddMovieController {
 
             int affectedRows = stmt.executeUpdate();
             if (affectedRows == 0) {
-                showAlert(Alert.AlertType.ERROR, "Error", "Movies cannot be added\n.");
+                showAlert(Alert.AlertType.ERROR, "Error", "Movies cannot be added.");
                 return;
             }
 
@@ -113,52 +110,26 @@ public class AddMovieController {
                 if (rs.next()) {
                     movieId = rs.getInt(1);
                 } else {
-                    showAlert(Alert.AlertType.ERROR, "Error", "Unable to get movie ID\n.");
+                    showAlert(Alert.AlertType.ERROR, "Error", "Unable to get movie ID.");
                     return;
                 }
             }
 
             insertMovieGenres(conn, movieId, selectedGenres);
-
-            showAlert(Alert.AlertType.INFORMATION, "Success", "Movie added!\n");
+            showAlert(Alert.AlertType.INFORMATION, "Success", "Movie added!");
             handleClear();
             returnToMovieView(event);
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to add movie.");
+            showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to add movie: " + e.getMessage());
         }
     }
-//    @FXML
-//    private void handleSave(ActionEvent event) {
-//        String title = titleField.getText();
-////        String director = directorField.getText();
-////        String actors = actorsField.getText();
-//        List<String> selectedGenres = new ArrayList<>(genreCheckComboBox.getCheckModel().getCheckedItems());
-//        String duration = durationField.getText();
-//        LocalDate releaseDate = releaseDatePicker.getValue();
-//        String description = descriptionField.getText();
-//
-//        if (title.isEmpty() || duration.isEmpty() || releaseDate == null || selectedGenres.isEmpty()) {
-//            showAlert(Alert.AlertType.ERROR, "Error", "Please fill in all required fields.");
-//            return;
-//        }
-//
-//        String sql = "INSERT INTO movies (title, duration, release_date, description, images) VALUES (?, ?, ?, ?, ?)";
-//
-//        try {
-//            movieDao.save(new Movie(title, duration, releaseDate, description, imagePath));
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to add movie.");
-//        }
-//    }
 
     private void insertMovieGenres(Connection conn, int movieId, List<String> genres) throws SQLException {
-        String sqlInsertMovieType = "INSERT INTO movie_movie_genres (movie_id, genre_id) VALUES (?, ?)";
+        String sqlInsertMovieGenre = "INSERT INTO movie_movie_genres (movie_id, genre_id) VALUES (?, ?)";
         for (String genre : genres) {
             int genreId = getGenreId(conn, genre);
-            try (PreparedStatement stmt = conn.prepareStatement(sqlInsertMovieType)) {
+            try (PreparedStatement stmt = conn.prepareStatement(sqlInsertMovieGenre)) {
                 stmt.setInt(1, movieId);
                 stmt.setInt(2, genreId);
                 stmt.executeUpdate();
@@ -189,9 +160,8 @@ public class AddMovieController {
                 }
             }
         }
-        throw new SQLException("Unable to get genre ID.\n");
+        throw new SQLException("Unable to get genre ID.");
     }
-
 
     private void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
@@ -203,8 +173,6 @@ public class AddMovieController {
     @FXML
     private void handleClear() {
         titleField.clear();
-//        directorField.clear();
-//        actorsField.clear();
         durationField.clear();
         releaseDatePicker.setValue(null);
         descriptionField.clear();

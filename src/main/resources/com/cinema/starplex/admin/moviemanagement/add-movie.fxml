@@ -27,7 +27,7 @@
               AnchorPane.rightAnchor="24"
               AnchorPane.topAnchor="24.0">
             <HBox spacing="500">
-                <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBack"
+                <Button fx:id="handleBack" mnemonicParsing="false" onAction="#handleBack"
                         prefHeight="30.0" prefWidth="75.0" styleClass="back-btn" text="Back" textFill="WHITE"/>
                 <Text text="Add new movie" styleClass="titlePage"/>
             </HBox>

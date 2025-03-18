@@ -24,9 +24,7 @@ public class MovieDao implements BaseDao<Movie> {
 
     public ObservableList<Movie> getMovies() throws SQLException {
         ObservableList<Movie> movies = FXCollections.observableArrayList();
-        String sql = "SELECT DISTINCT m.* FROM movies m " +
-                "JOIN showtimes s ON m.id = s.movie_id " +
-                "WHERE DATE(s.start_time) = CURDATE()";
+        String sql = "SELECT id, title, duration, release_date, description, images FROM movies";
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
@@ -37,8 +35,6 @@ public class MovieDao implements BaseDao<Movie> {
                 Movie movie = new Movie(
                         movieId,
                         rs.getString("title"),
-                        rs.getString("directors"),
-                        rs.getString("actors"),
                         FXCollections.observableArrayList(genres),
                         rs.getString("duration"),
                         rs.getString("release_date"),
@@ -105,9 +101,8 @@ public class MovieDao implements BaseDao<Movie> {
 
     public ObservableList<Movie> getMoviesByDate(String date) throws SQLException {
         ObservableList<Movie> movies = FXCollections.observableArrayList();
-        String sql = "SELECT DISTINCT m.* FROM movies m " +
-                "JOIN showtimes s ON m.id = s.movie_id " +
-                "WHERE s.show_date = ?";
+        String sql = "SELECT DISTINCT m.id, m.title, m.duration, m.release_date, m.description, m.images " +
+                "FROM movies m JOIN showtimes s ON m.id = s.movie_id WHERE s.show_date = ?";
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, date);
@@ -119,8 +114,6 @@ public class MovieDao implements BaseDao<Movie> {
                 Movie movie = new Movie(
                         movieId,
                         rs.getString("title"),
-                        rs.getString("directors"),
-                        rs.getString("actors"),
                         FXCollections.observableArrayList(genres),
                         rs.getString("duration"),
                         rs.getString("release_date"),
@@ -137,11 +130,10 @@ public class MovieDao implements BaseDao<Movie> {
     @Override
     public void save(Movie entity) {
         String sql = "INSERT INTO movies (title, duration, release_date, description, images) VALUES (?, ?, ?, ?, ?)";
-        try (Connection conn = DatabaseConnection.getConn();
-             PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, entity.getTitle());
             stmt.setString(2, entity.getDuration());
-            stmt.setString(3, entity.getReleaseDate().toString());
+            stmt.setString(3, entity.getReleaseDate());
             stmt.setString(4, entity.getDescription());
             stmt.setString(5, entity.getImage());
 
@@ -167,10 +159,37 @@ public class MovieDao implements BaseDao<Movie> {
 
     @Override
     public void update(Movie entity) {
+        String sql = "UPDATE movies SET title = ?, duration = ?, release_date = ?, description = ?, images = ? WHERE id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, entity.getTitle());
+            stmt.setString(2, entity.getDuration());
+            stmt.setString(3, entity.getReleaseDate());
+            stmt.setString(4, entity.getDescription());
+            stmt.setString(5, entity.getImage());
+            stmt.setLong(6, entity.getId());
+
+            int affectedRows = stmt.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Updating movie failed, no rows affected.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void delete(long id) {
+        // Bước 1: Xóa các bản ghi liên quan trong bảng movie_movie_genres
+        String deleteGenresSql = "DELETE FROM movie_movie_genres WHERE movie_id = ?";
+        try (Connection conn = DatabaseConnection.getConn();
+             PreparedStatement stmt = conn.prepareStatement(deleteGenresSql)) {
+            stmt.setLong(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error when deleting related movie genres: " + e.getMessage());
+        }
+
+        // Bước 2: Xóa bản ghi trong bảng movies
         String sql = "DELETE FROM movies WHERE id = ?";
         try (Connection conn = DatabaseConnection.getConn();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -183,13 +202,23 @@ public class MovieDao implements BaseDao<Movie> {
 
     @Override
     public Movie findById(long id) {
-        return null;
+        String sql = "SELECT * FROM movies WHERE id = ?";
+        try (PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return mapResultSetToMovie(resultSet);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // Nếu không tìm thấy
     }
 
     @Override
     public List<Movie> findAll() {
         List<Movie> movies = new ArrayList<>();
-        String query = "SELECT * FROM movies";
+        String query = "SELECT id, title, duration, release_date, description, images FROM movies";
         try (PreparedStatement statement = conn.prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
@@ -205,6 +234,10 @@ public class MovieDao implements BaseDao<Movie> {
         Movie movie = new Movie();
         movie.setId(resultSet.getInt("id"));
         movie.setTitle(resultSet.getString("title"));
+        movie.setDuration(resultSet.getString("duration"));
+        movie.setReleaseDate(resultSet.getString("release_date"));
+        movie.setDescription(resultSet.getString("description"));
+        movie.setImage(resultSet.getString("images"));
         return movie;
     }
 }

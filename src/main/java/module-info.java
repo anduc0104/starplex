@@ -7,6 +7,7 @@ module com.cinema.starplex {
 
     requires java.naming;
     requires jbcrypt;
+    requires javafx.controls;
 
     opens com.cinema.starplex.ui.controllers to javafx.fxml;
     opens com.cinema.starplex.ui.controllers.admin to javafx.fxml;
@@ -25,6 +26,8 @@ module com.cinema.starplex {
 
     opens com.cinema.starplex.models to javafx.base;
     exports com.cinema.starplex.ui.controllers.admin;
+    exports com.cinema.starplex.ui.controllers.staff;
+    opens com.cinema.starplex.ui.controllers.staff to javafx.fxml;
 
     exports com.cinema.starplex.ui.controllers.admin.movieManagement;
     exports com.cinema.starplex.ui.controllers.admin.usermanagement;
@@ -45,10 +48,12 @@ module com.cinema.starplex {
     exports com.cinema.starplex.ui.controllers.admin.seatManagement;
     opens com.cinema.starplex.ui.controllers.admin.seatTypeManagement;
     exports com.cinema.starplex.ui.controllers.admin.seatTypeManagement;
-    opens com.cinema.starplex.ui.controllers.admin.showtimemanagement;
-    exports com.cinema.starplex.ui.controllers.admin.showtimemanagement;
+    opens com.cinema.starplex.ui.controllers.admin.showtimesManagement;
+    exports com.cinema.starplex.ui.controllers.admin.showtimesManagement;
     opens com.cinema.starplex.ui.controllers.admin.bookingManagement to javafx.fxml;
     exports com.cinema.starplex.ui.controllers.admin.bookingManagement;
     exports com.cinema.starplex.ui.controllers.admin.paymentManagement;
     opens com.cinema.starplex.ui.controllers.admin.paymentManagement;
+    exports com.cinema.starplex.ui.controllers.admin.movieGenreManagement;
+    opens com.cinema.starplex.ui.controllers.admin.movieGenreManagement to javafx.fxml;
 }
