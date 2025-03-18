@@ -7,15 +7,31 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class MainLayoutController {
 
+    @FXML
+    private BorderPane mainBorderPane;
     private Stage stage;
     private Scene scene;
     private Parent root;
+
+
+    public void initialize() {
+        // TODO: Implement initialization logic
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cinema/starplex/staff/list-movie-layout.fxml"));
+            Parent listMovie = loader.load();
+            mainBorderPane.setCenter(listMovie);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
     // Xử lý sự kiện khi nhấn nút "Movie"
     @FXML

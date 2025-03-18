@@ -5,46 +5,71 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
-<?import org.controlsfx.control.CheckComboBox?>
 <?import javafx.scene.text.Font?>
-
 <?import javafx.scene.text.Text?>
-<AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23.0.1"
+
+<AnchorPane prefHeight="600.0" prefWidth="1200.0"
+            xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.cinema.starplex.ui.controllers.admin.showtimesManagement.EditShowtimeController">
+
     <VBox spacing="24" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0"
-          AnchorPane.rightAnchor="24.0"
-          AnchorPane.topAnchor="24.0">
+          AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="24.0">
+
+        <!-- Header: Nút Back + Tiêu đề -->
         <HBox spacing="500">
-            <!-- Nút quay lại -->
             <Button onAction="#handleBack" fx:id="backButton" mnemonicParsing="false"
-                    layoutX="14.0" layoutY="14.0"
-                    prefHeight="30.0"
-                    prefWidth="75.0" styleClass="back-btn" text="Back" textFill="WHITE"/>
-
-            <Text text="Add new showtime"/>
+                    prefHeight="30.0" prefWidth="75.0" styleClass="back-btn" text="Back" textFill="WHITE"/>
+            <Text text="Edit Showtime" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
         </HBox>
-        <VBox>
-            <Label styleClass="label-input" stylesheets="@../../../../../css/admin.css"
-                   text="Start time :"/>
-            <TextField fx:id="starttimeField" layoutX="238.0" layoutY="162.0" prefHeight="27.0" prefWidth="220.0"
-                       styleClass="input-field" stylesheets="@../../../../../css/admin.css"/>
-        </VBox>
-        <VBox>
-            <Label styleClass="label-input" stylesheets="@../../../../../css/admin.css"
-                   text="Price :"/>
-            <TextField fx:id="priceField" layoutX="220.0" layoutY="130.0" prefHeight="27.0" prefWidth="220.0"
-                       styleClass="input-field" stylesheets="@../../../../../css/admin.css"/>
+
+        <VBox spacing="16">
+            <VBox>
+                <!-- Chọn ngày chiếu -->
+                <Label styleClass="label-input" text="Show Date:" />
+                <DatePicker fx:id="showDatePicker" prefHeight="30.0" prefWidth="Infinity"
+                            styleClass="input-field"/>
+            </VBox>
+
+            <VBox>
+                <!-- Nhập giờ chiếu -->
+                <Label styleClass="label-input" text="Show Time:" />
+                <TextField fx:id="showTimePicker" prefHeight="27.0" prefWidth="220.0"
+                           styleClass="input-field">
+                    <tooltip>
+                        <Tooltip text="Enter time in HH:mm format"/>
+                    </tooltip>
+                </TextField>
+            </VBox>
+
+            <VBox>
+                <!-- Chọn phim -->
+                <Label styleClass="label-input" text="Movie:" />
+                <ComboBox fx:id="movieComboBox" prefHeight="30.0" prefWidth="Infinity"
+                          styleClass="input-field"/>
+            </VBox>
+
+            <VBox>
+                <!-- Chọn phòng -->
+                <Label styleClass="label-input" text="Room:" />
+                <ComboBox fx:id="roomComboBox" prefHeight="30.0" prefWidth="Infinity"
+                          styleClass="input-field"/>
+            </VBox>
+
+            <VBox>
+                <!-- Nhập giá vé -->
+                <Label styleClass="label-input" text="Price:"/>
+                <TextField fx:id="priceField" prefHeight="27.0" prefWidth="220.0"
+                           styleClass="input-field"/>
+            </VBox>
         </VBox>
 
+        <!-- Nút Save + Clear -->
         <HBox alignment="CENTER_RIGHT" spacing="24">
-            <!-- Nút lưu và hủy -->
             <Button onAction="#handleEditShowtime" fx:id="saveButton" alignment="CENTER"
                     mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0"
                     styleClass="save-btn" text="Save" textFill="WHITE"/>
-
-            <Button onAction="#handleEditClear" fx:id="clearButton" alignment="CENTER"
+            <Button onAction="#handleClear" fx:id="clearButton" alignment="CENTER"
                     mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0"
                     styleClass="clear-btn" text="Clear" textFill="WHITE"/>
         </HBox>

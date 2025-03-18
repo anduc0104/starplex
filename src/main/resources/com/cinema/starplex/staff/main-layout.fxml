@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Text?>
 
 <?import javafx.scene.control.Button?>
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1"
+<AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             style="-fx-background-color: #10141b"
             fx:controller="com.cinema.starplex.ui.controllers.staff.MainLayoutController">
@@ -21,8 +21,18 @@
                         <Image url="@../../../../images/logo-text-new.png"/>
                     </image>
                 </ImageView>
-                <!-- Thêm khoảng trống -->
-                <Region HBox.hgrow="ALWAYS"/>
+                <!-- Khoảng trống để đẩy menu vào giữa -->
+                <Pane HBox.hgrow="ALWAYS"></Pane>
+
+                <!-- Chuyển trang -->
+<!--                <HBox spacing="20" alignment="CENTER">-->
+<!--                    <Button text="Movie" onAction="#movieScene" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" />-->
+<!--                    <Button text="Room" onAction="#managementRoom" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" />-->
+<!--                    <Button text="Seat" onAction="#managementSeat" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: white; -fx-font-size: 14px;" />-->
+<!--                </HBox>-->
+
+                <!-- Khoảng trống để đẩy User Info sang phải -->
+                <Pane HBox.hgrow="ALWAYS"></Pane>
                 <!--                <HBox alignment="CENTER_RIGHT" spacing="10">-->
                 <!--                    <Text fill="WHITE" text="UserName"/>-->
                 <!--                    <ImageView fitHeight="35.0" fitWidth="35.0">-->
@@ -37,7 +47,6 @@
             </HBox>
         </top>
         <center>
-            <Pane/>
         </center>
     </BorderPane>
 </AnchorPane>

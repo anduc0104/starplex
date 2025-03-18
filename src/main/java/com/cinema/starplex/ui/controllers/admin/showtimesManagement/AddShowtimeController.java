@@ -3,6 +3,7 @@ package com.cinema.starplex.ui.controllers.admin.showtimesManagement;
 import com.cinema.starplex.dao.MovieDao;
 import com.cinema.starplex.dao.RoomDao;
 import com.cinema.starplex.dao.ShowTimeDao;
+import com.cinema.starplex.models.Movie;
 import com.cinema.starplex.models.Room;
 import com.cinema.starplex.models.Showtime;
 import javafx.event.ActionEvent;
@@ -16,20 +17,22 @@ import javafx.scene.layout.BorderPane;
 import javafx.util.StringConverter;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class AddShowtimeController {
     @FXML
-    public ComboBox movieComboBox;
+    public ComboBox<Movie> movieComboBox;
     @FXML
-    public ComboBox roomComboBox;
+    public ComboBox<Room> roomComboBox;
     @FXML
-    private TextField starttimeField;
+    private DatePicker showDatePicker;  // Thêm DatePicker cho ngày chiếu
+    @FXML
+    private TextField showTimePicker;    // Sửa starttimeField thành showTimeField
     @FXML
     private TextField priceField;
     @FXML
@@ -39,7 +42,7 @@ public class AddShowtimeController {
     @FXML
     private Button backButton;
 
-    private ShowTimeDao showtimeDAO;
+    private ShowTimeDao showtimeDAO = new ShowTimeDao();
     private final RoomDao roomDao = new RoomDao();
     private final MovieDao movieDao = new MovieDao();
 
@@ -48,26 +51,59 @@ public class AddShowtimeController {
         roomComboBox.getItems().addAll(roomDao.findAll());
         movieComboBox.getItems().addAll(movieDao.findAll());
 
-    }
+        movieComboBox.setConverter(new StringConverter<Movie>() {
+            @Override
+            public String toString(Movie movie) {
+                return movie != null ? movie.getTitle() : "";
+            }
+            @Override
+            public Movie fromString(String string) {
+                return null;
+            }
+        });
 
-    public AddShowtimeController() {
-        this.showtimeDAO = new ShowTimeDao();
+        roomComboBox.setConverter(new StringConverter<Room>() {
+            @Override
+            public String toString(Room room) {
+                return room != null ? String.valueOf(room.getRoomNumber()) : "";
+            }
+            @Override
+            public Room fromString(String string) {
+                return null;
+            }
+        });
     }
 
     @FXML
     private void handleAddShowtime(ActionEvent event) {
         try {
-            // Format time
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-            LocalTime time = LocalTime.parse(starttimeField.getText(), formatter);
-            LocalDateTime dateTime = LocalDateTime.of(LocalDate.now(), time);
-            Timestamp startTime = Timestamp.valueOf(dateTime);
+            // Lấy ngày chiếu từ DatePicker
+            LocalDate showDate = showDatePicker.getValue();
+            if (showDate == null) {
+                showAlert(Alert.AlertType.ERROR, "Input Error", "Please select a show date.");
+                return;
+            }
+            Date sqlShowDate = Date.valueOf(showDate); // Chuyển LocalDate thành java.sql.Date
 
-            // Get ticket price
+            // Lấy giờ chiếu từ TextField
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            LocalTime showTime = LocalTime.parse(showTimePicker.getText(), formatter);
+            Time sqlShowTime = Time.valueOf(showTime); // Chuyển LocalTime thành java.sql.Time
+
+            // Lấy giá vé
             BigDecimal price = new BigDecimal(priceField.getText());
 
-            // Create Showtime object (Movie and Room set to null for now)
-            Showtime showtime = new Showtime(null, null, null, startTime, price, null);
+            // Kiểm tra lựa chọn Movie và Room
+            Movie selectedMovie = movieComboBox.getValue();
+            Room selectedRoom = roomComboBox.getValue();
+
+            if (selectedMovie == null || selectedRoom == null) {
+                showAlert(Alert.AlertType.ERROR, "Input Error", "Please select both a movie and a room.");
+                return;
+            }
+
+            // Tạo Showtime mới
+            Showtime showtime = new Showtime(null, selectedMovie, selectedRoom, sqlShowDate, sqlShowTime, price, null);
 
             // Insert Showtime using DAO
             if (showtimeDAO.insertShowtime(showtime)) {
@@ -89,8 +125,11 @@ public class AddShowtimeController {
 
     @FXML
     private void handleClear() {
-        starttimeField.clear();
+        showDatePicker.setValue(null);
+        showTimePicker.clear();
         priceField.clear();
+        movieComboBox.setValue(null);
+        roomComboBox.setValue(null);
     }
 
     @FXML
@@ -103,7 +142,6 @@ public class AddShowtimeController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cinema/starplex/admin/showtimesmanagement/showtime-view.fxml"));
             Parent seatTypeView = loader.load();
 
-            // Change the content of BorderPane
             AnchorPane root = (AnchorPane) ((Button) event.getSource()).getScene().getRoot();
             BorderPane mainPane = (BorderPane) root.lookup("#mainBorderPane");
 
@@ -123,5 +161,4 @@ public class AddShowtimeController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
 }

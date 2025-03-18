@@ -38,6 +38,27 @@ public class GenreDao implements BaseDao<Genre> {
         return genres;
     }
 
+    public ObservableList<String> getGenresByMovieId(int movieId) throws SQLException {
+        ObservableList<String> genreNames = FXCollections.observableArrayList();
+        String sql = """
+        SELECT g.name 
+        FROM movie_genres g
+        JOIN movie_movie_genres mg ON g.id = mg.genre_id
+        WHERE mg.movie_id = ?
+    """;
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, movieId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    genreNames.add(rs.getString("name"));
+                }
+            }
+        }
+        return genreNames;
+    }
+
+
 
     @Override
     public void save(Genre entity) {

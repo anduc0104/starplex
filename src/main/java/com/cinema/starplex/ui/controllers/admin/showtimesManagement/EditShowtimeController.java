@@ -1,34 +1,42 @@
 package com.cinema.starplex.ui.controllers.admin.showtimesManagement;
 
+import com.cinema.starplex.dao.MovieDao;
+import com.cinema.starplex.dao.RoomDao;
 import com.cinema.starplex.dao.ShowTimeDao;
+import com.cinema.starplex.models.Movie;
+import com.cinema.starplex.models.Room;
 import com.cinema.starplex.models.Showtime;
-import com.cinema.starplex.util.SceneSwitcher;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 
 public class EditShowtimeController {
 
     @FXML
-    private TextField starttimeField;
+    private DatePicker showDatePicker;
+    @FXML
+    private TextField showTimePicker;
     @FXML
     private TextField priceField;
+    @FXML
+    private ComboBox<Movie> movieComboBox;
+    @FXML
+    private ComboBox<Room> roomComboBox;
     @FXML
     private Button saveButton;
     @FXML
@@ -36,12 +44,10 @@ public class EditShowtimeController {
     @FXML
     private Button backButton;
 
-    private ShowTimeDao showtimeDAO;
+    private final ShowTimeDao showtimeDAO = new ShowTimeDao();
+    private final MovieDao movieDAO = new MovieDao();
+    private final RoomDao roomDAO = new RoomDao();
     private static Showtime selectedShowtime;
-
-    public EditShowtimeController() {
-        this.showtimeDAO = new ShowTimeDao();
-    }
 
     public static void setSelectedShowtime(Showtime showtime) {
         selectedShowtime = showtime;
@@ -49,61 +55,126 @@ public class EditShowtimeController {
 
     @FXML
     public void initialize() {
+        loadMovies();
+        loadRooms();
+
         if (selectedShowtime != null) {
-            starttimeField.setText(selectedShowtime.getStartTime().toString());
+            showDatePicker.setValue(selectedShowtime.getShowDate().toLocalDate());
+            showTimePicker.setText(selectedShowtime.getShowTime().toLocalTime().toString());
             priceField.setText(selectedShowtime.getPrice().toString());
 
-            if (selectedShowtime.getMovie() == null) {
-                System.out.println("Warning: Movie is null for this showtime.");
+            if (selectedShowtime.getMovie() != null) {
+                movieComboBox.setValue(selectedShowtime.getMovie());
+            }
+            if (selectedShowtime.getRoom() != null) {
+                roomComboBox.setValue(selectedShowtime.getRoom());
             }
         } else {
             System.out.println("Warning: No showtime selected.");
         }
     }
 
-    @FXML
-    private void handleEditShowtime() {
-        try {
-            // Định dạng giờ:phút
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-            LocalTime time = LocalTime.parse(starttimeField.getText(), formatter);
-            // Lấy ngày hiện tại và kết hợp với giờ nhập vào
-            LocalDateTime dateTime = LocalDateTime.of(LocalDate.now(), time);
-            Timestamp startTime = Timestamp.valueOf(dateTime);
-            // Chuyển đổi giá tiền
-            BigDecimal price = new BigDecimal(priceField.getText());
-            // Gán giá trị mới
-            selectedShowtime.setStartTime(startTime);
-            selectedShowtime.setPrice(price);
+    private void loadMovies() {
+        List<Movie> movies = movieDAO.findAll();
+        ObservableList<Movie> movieList = FXCollections.observableArrayList(movies);
+        movieComboBox.setItems(movieList);
+    }
 
-            if (selectedShowtime.getMovie() != null) {
-                int movieId = selectedShowtime.getMovie().getId();
-                System.out.println("Movie ID: " + movieId);
-            } else {
-                System.out.println("Movie is null. Skipping movie ID.");
+    private void loadRooms() {
+        List<Room> rooms = roomDAO.findAll();
+        ObservableList<Room> roomList = FXCollections.observableArrayList(rooms);
+        roomComboBox.setItems(roomList);
+    }
+
+    @FXML
+    private void handleEditShowtime(ActionEvent event) {
+        try {
+            if (selectedShowtime == null) {
+                showAlert(Alert.AlertType.ERROR, "Error", "No showtime selected.");
+                return;
             }
 
-            // Cập nhật vào DB
-            if (showtimeDAO.updateShowtime(selectedShowtime)) {
-                showAlert(Alert.AlertType.INFORMATION, "Success", "Showtime updated successfully.");
+            // Lấy ngày chiếu từ DatePicker
+            LocalDate showDate = showDatePicker.getValue();
+            if (showDate == null) {
+                showAlert(Alert.AlertType.ERROR, "Input Error", "Please select a show date.");
+                return;
+            }
+            Date sqlShowDate = Date.valueOf(showDate);
+
+            // Lấy giờ chiếu từ TextField
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            LocalTime showTime = LocalTime.parse(showTimePicker.getText(), formatter);
+            Time sqlShowTime = Time.valueOf(showTime);
+
+            // Lấy giá vé
+            BigDecimal price = new BigDecimal(priceField.getText());
+
+            // Lấy Movie và Room được chọn
+            Movie selectedMovie = movieComboBox.getValue();
+            Room selectedRoom = roomComboBox.getValue();
+
+            if (selectedMovie == null || selectedRoom == null) {
+                showAlert(Alert.AlertType.ERROR, "Input Error", "Please select both a movie and a room.");
+                return;
+            }
+
+            // Kiểm tra sự thay đổi
+            boolean updated = false;
+
+            if (!selectedShowtime.getShowDate().equals(sqlShowDate)) {
+                selectedShowtime.setShowDate(sqlShowDate);
+                updated = true;
+            }
+
+            if (!selectedShowtime.getShowTime().toLocalTime().equals(showTime)) {
+                selectedShowtime.setShowTime(sqlShowTime);
+                updated = true;
+            }
+
+            if (selectedShowtime.getPrice().compareTo(price) != 0) {
+                selectedShowtime.setPrice(price);
+                updated = true;
+            }
+
+            if (!selectedShowtime.getMovie().equals(selectedMovie)) {
+                selectedShowtime.setMovie(selectedMovie);
+                updated = true;
+            }
+
+            if (!selectedShowtime.getRoom().equals(selectedRoom)) {
+                selectedShowtime.setRoom(selectedRoom);
+                updated = true;
+            }
+
+            // Chỉ cập nhật nếu có thay đổi
+            if (updated) {
+                if (showtimeDAO.updateShowtime(selectedShowtime)) {
+                    showAlert(Alert.AlertType.INFORMATION, "Success", "Showtime updated successfully.");
+                    returnToShowtimeView(event);
+                } else {
+                    showAlert(Alert.AlertType.ERROR, "Error", "Failed to update showtime.");
+                }
             } else {
-                showAlert(Alert.AlertType.ERROR, "Error", "Failed to update showtime.");
+                showAlert(Alert.AlertType.INFORMATION, "Info", "No changes detected.");
             }
         } catch (DateTimeParseException e) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Invalid time format. Please use 'HH:mm'.");
-            System.out.println("Input time: " + starttimeField.getText());
+            showAlert(Alert.AlertType.ERROR, "Input Error", "Invalid time format. Please use HH:mm.");
         } catch (NumberFormatException e) {
-            System.out.println("Invalid price format.");
-            showAlert(Alert.AlertType.ERROR, "Error", "Invalid price format. Please use a number.");
+            showAlert(Alert.AlertType.ERROR, "Input Error", "Invalid price value.");
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "An unexpected error occurred.");
         }
     }
 
     @FXML
-    private void handleEditClear() {
-        starttimeField.clear();
+    private void handleClear() {
+        showDatePicker.setValue(null);
+        showTimePicker.clear();
         priceField.clear();
+        movieComboBox.setValue(null);
+        roomComboBox.setValue(null);
     }
 
     @FXML
@@ -114,14 +185,13 @@ public class EditShowtimeController {
     private void returnToShowtimeView(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cinema/starplex/admin/showtimesmanagement/showtime-view.fxml"));
-            Parent seatTypeView = loader.load();
+            Parent showtimeView = loader.load();
 
-            // Change the content of BorderPane
             AnchorPane root = (AnchorPane) ((Button) event.getSource()).getScene().getRoot();
             BorderPane mainPane = (BorderPane) root.lookup("#mainBorderPane");
 
             if (mainPane != null) {
-                mainPane.setCenter(seatTypeView);
+                mainPane.setCenter(showtimeView);
             } else {
                 System.err.println("Could not find BorderPane with ID 'mainBorderPane'");
             }
