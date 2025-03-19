@@ -11,54 +11,61 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="600.0" prefWidth="1200.0" style="-fx-min-width: 100%;"
-    xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="com.cinema.starplex.ui.controllers.admin.seatManagement.EditSeatController">
+            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.cinema.starplex.ui.controllers.admin.seatManagement.EditSeatController">
     <VBox spacing="24" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0"
-        AnchorPane.rightAnchor="24.0"
-        AnchorPane.topAnchor="24.0">
+          AnchorPane.rightAnchor="24.0"
+          AnchorPane.topAnchor="24.0">
         <HBox spacing="500">
             <!-- Nút quay lại -->
             <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false"
-                onAction="#handleBack"
-                prefHeight="30.0" prefWidth="75.0" styleClass="back-btn" text="Back"
-                textFill="WHITE" />
+                    onAction="#handleBack"
+                    prefHeight="30.0" prefWidth="75.0" styleClass="back-btn" text="Back"
+                    textFill="WHITE" />
 
             <Text text="Edit Seat" styleClass="titlePage" />
         </HBox>
 
         <VBox spacing="24">
 
-            <!-- Nhập số ghế -->
+            <!-- Nhập hàng ghế -->
             <VBox>
-                <Label styleClass="label-input" text="Seat Number:" />
-                <TextField fx:id="seatNumberField" prefHeight="30.0" prefWidth="1200"
-                    styleClass="input-field " />
+                <Label styleClass="label-input" text="Row:" />
+                <TextField fx:id="rowField" prefHeight="30.0" prefWidth="1200"
+                           styleClass="input-field" />
+            </VBox>
+
+            <!-- Nhập cột ghế -->
+            <VBox>
+                <Label styleClass="label-input" text="Column:" />
+                <TextField fx:id="colField" prefHeight="30.0" prefWidth="1200"
+                           styleClass="input-field" />
             </VBox>
 
             <VBox>
                 <!-- Chọn phòng -->
                 <Label styleClass="label-input" text="Room:" />
                 <ComboBox fx:id="roomComboBox" prefHeight="30.0" prefWidth="Infinity"
-                    styleClass="input-field" />
+                          styleClass="input-field" />
             </VBox>
 
             <VBox>
                 <!-- Chọn loại ghế -->
                 <Label styleClass="label-input" text="Seat Type:" />
                 <ComboBox fx:id="seatTypeComboBox" prefHeight="30.0" prefWidth="Infinity"
-                    styleClass="input-field" />
+                          styleClass="input-field" />
             </VBox>
 
             <HBox alignment="CENTER_RIGHT" spacing="24">
                 <Button fx:id="saveButton" alignment="CENTER"
-                    onAction="#handleSave" prefHeight="30.0" prefWidth="120.0" styleClass="save-btn"
-                    text="Edit"
-                    textFill="WHITE" />
+                        onAction="#handleSave" prefHeight="30.0" prefWidth="120.0" styleClass="save-btn"
+                        text="Edit"
+                        textFill="WHITE" />
 
                 <Button fx:id="clearButton" alignment="CENTER"
-                    onAction="#handleClear"
-                    prefHeight="30.0" prefWidth="120.0" styleClass="clear-btn" text="Clear"
-                    textFill="WHITE" />
+                        onAction="#handleClear"
+                        prefHeight="30.0" prefWidth="120.0" styleClass="clear-btn" text="Clear"
+                        textFill="WHITE" />
             </HBox>
         </VBox>
     </VBox>
