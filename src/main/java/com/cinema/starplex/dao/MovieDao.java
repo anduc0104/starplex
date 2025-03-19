@@ -2,6 +2,7 @@ package com.cinema.starplex.dao;
 
 import com.cinema.starplex.models.Genre;
 import com.cinema.starplex.models.Movie;
+import com.cinema.starplex.models.Showtime;
 import com.cinema.starplex.util.DatabaseConnection;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -27,9 +28,7 @@ public class MovieDao implements BaseDao<Movie> {
 
     public ObservableList<Movie> getMovies() throws SQLException {
         ObservableList<Movie> movies = FXCollections.observableArrayList();
-        String sql = "SELECT DISTINCT m.* FROM movies m " +
-                "JOIN showtimes s ON m.id = s.movie_id " +
-                "WHERE DATE(s.start_time) = CURDATE()";
+        String sql = "SELECT DISTINCT m.* FROM movies m JOIN showtimes s ON m.id = s.movie_id WHERE DATE(s.show_date) = CURDATE()";
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
@@ -41,8 +40,6 @@ public class MovieDao implements BaseDao<Movie> {
                 Movie movie = new Movie(
                         movieId, // Truyền trực tiếp id
                         rs.getString("title"),
-                        rs.getString("directors"),
-                        rs.getString("actors"),
                         FXCollections.observableArrayList(genres), // Truyền danh sách genre
                         rs.getString("duration"),
                         rs.getString("release_date"),
@@ -53,7 +50,6 @@ public class MovieDao implements BaseDao<Movie> {
                 movies.add(movie);
             }
         }
-        System.out.println("Movies loaded: " + movies.size()); // Kiểm tra số lượng dữ liệu
         return movies;
     }
 
@@ -76,9 +72,9 @@ public class MovieDao implements BaseDao<Movie> {
         return genres;
     }
 
-    public ObservableList<String> getShowtimesByMovieId(int movieId) throws SQLException {
-        ObservableList<String> showtimes = FXCollections.observableArrayList();
-        String query = "SELECT show_time FROM showtimes WHERE movie_id = ? ORDER BY show_time";
+    public ObservableList<Showtime> getShowtimesByMovieId(int movieId) throws SQLException {
+        ObservableList<Showtime> showtimes = FXCollections.observableArrayList();
+        String query = "SELECT * FROM showtimes WHERE movie_id = ?  AND show_date = CURDATE() ORDER BY show_time";
 
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm"); // Chỉ lấy giờ:phút
 
@@ -87,9 +83,12 @@ public class MovieDao implements BaseDao<Movie> {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
+                Integer id = rs.getInt("id");
+                Integer movie_id = rs.getInt("movie_id");
+                Integer roomId = rs.getInt("room_id");
                 Time sqlTime = rs.getTime("show_time"); // Lấy dữ liệu kiểu TIME
-                String formattedTime = timeFormat.format(new Date(sqlTime.getTime())); // Chuyển thành HH:mm
-                showtimes.add(formattedTime);
+//                String formattedTime = timeFormat.format(new Date(sqlTime.getTime())); // Chuyển thành HH:mm
+                showtimes.add(new Showtime(id, movie_id, roomId, sqlTime));
             }
         }
         return showtimes;

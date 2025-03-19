@@ -103,7 +103,7 @@ public class RoomDao implements BaseDao<Room> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-      return null;
+        return null;
     }
 
     @Override
@@ -158,7 +158,7 @@ public class RoomDao implements BaseDao<Room> {
                 while (resultSet.next()) {
                     Seat seat = new Seat();
                     seat.setId(resultSet.getInt("s.id"));
-                    seat.setSeatNumber(resultSet.getString("s.seat_number"));
+                    seat.setSeatNumber(resultSet.getString("s.col_number"));
                     seat.setCreatedAt(resultSet.getTimestamp("s.created_at"));
 
                     // Create and set the room
@@ -192,8 +192,9 @@ public class RoomDao implements BaseDao<Room> {
 
     //staff
     // lay dsach ghe database
-    public Map<Integer, SeatType> getSeatTypes() {
-        Map<Integer, SeatType> seatTypes = new HashMap<>();
+    public List<SeatType> getSeatTypes() {
+//        Map<Integer, SeatType> seatTypes = new HashMap<>();
+        List<SeatType> seatTypes = new ArrayList<>();
         String query = "SELECT * FROM seat_types";
 
         try (Statement statement = connection.createStatement();
@@ -203,8 +204,7 @@ public class RoomDao implements BaseDao<Room> {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 BigDecimal price = resultSet.getBigDecimal("price");
-                System.out.printf("Seat Type ID: %d, Name: %s, Price: %.2f%n", id, name, price);
-                seatTypes.put(id, new SeatType(id, name, price));
+                seatTypes.add(new SeatType(id, name, price));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -239,26 +239,31 @@ public class RoomDao implements BaseDao<Room> {
     public List<Seat> getSeatsForRoom(int roomId) {
         List<Seat> seats = new ArrayList<>();
         try {
-            String query = "SELECT s.id, s.seat_number, s.seat_type_id, b.id as booking_id " +
+            String query = "SELECT s.*, b.id as booking_id " +  // Thêm khoảng trắng trước "FROM"
                     "FROM seats s " +
                     "LEFT JOIN booking_details bd ON bd.seat_id = s.id " +
                     "LEFT JOIN bookings b ON bd.booking_id = b.id " +
-                    "WHERE s.room_id = ? ORDER BY s.seat_number ";
+                    "WHERE s.room_id = ? ORDER BY s.row ASC, s.col_number ASC";
+
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, roomId);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
-                String seatNumber = resultSet.getString("seat_number");
+                String rowString = resultSet.getString("row");
+                String row = resultSet.getString("row");
+                Integer col_number = resultSet.getObject("col_number") != null ? resultSet.getInt("col_number") : null;
+                if (col_number == null || col_number < 0) {
+                    continue; // Bỏ qua nếu cột không hợp lệ
+                }
+
                 int seatTypeId = resultSet.getInt("seat_type_id");
                 boolean isBooked = resultSet.getObject("booking_id") != null;
 
-                char rowChar = seatNumber.charAt(0);
-                int colNum = Integer.parseInt(seatNumber.substring(1));
-
-                seats.add(new Seat(id, rowChar, colNum, seatTypeId, isBooked));
+                seats.add(new Seat(id, row, col_number, seatTypeId, isBooked));
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -18,10 +18,10 @@
     >
         <content>
             <GridPane fx:id="movieGrid"
-                      alignment="CENTER"
+                      alignment="TOP_CENTER"
                       hgap="20" vgap="20"
-                      style="-fx-padding: 10; -fx-margin-top:32px"
-                      AnchorPane.topAnchor="50.0"
+                      style="-fx-padding: 10;"
+                      AnchorPane.topAnchor="10.0"
                       AnchorPane.bottomAnchor="50.0"
                       AnchorPane.leftAnchor="50.0"
                       AnchorPane.rightAnchor="50.0"

@@ -135,4 +135,37 @@ public class SeatTypeDao implements BaseDao<SeatType>{
         seatType.setCreatedAt(resultSet.getTimestamp("created_at"));
         return seatType;
     }
+
+    public String getNameById(int id) throws SQLException {
+        String seatTypeName;
+        String sql = "SELECT * FROM seat_types as st WHERE st.id = ?";
+        // Execute the query and get the result
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setInt(1, id);
+        try {
+            // Get the result set
+            ResultSet rs = stmt.executeQuery();
+            // Process the result set
+            if (rs.next()) {
+                seatTypeName = rs.getString("name");
+            }
+            else {
+                seatTypeName = "Seat Type not found";
+            }
+            return seatTypeName;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public double getPriceById(int seatTypeId) throws SQLException {
+        String query = "SELECT price FROM seat_types WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, seatTypeId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getDouble("price");
+            }
+        }
+        return 0;
+    }
 }

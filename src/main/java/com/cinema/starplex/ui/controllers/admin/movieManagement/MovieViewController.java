@@ -76,13 +76,6 @@ public class MovieViewController {
     public void initialize() throws SQLException {
         idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
         titleColumn.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
-//        directorColumn.setCellValueFactory(cellData -> cellData.getValue().directorProperty());
-//        actorsColumn.setCellValueFactory(cellData -> cellData.getValue().actorsProperty());
-        genreColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(
-                cellData.getValue().getGenres().stream()
-                        .map(genre -> genre.getName())
-                        .collect(Collectors.joining(", "))
-        ));
         durationColumn.setCellValueFactory(cellData -> cellData.getValue().durationProperty());
         releaseDateColumn.setCellValueFactory(cellData -> cellData.getValue().releaseDateProperty());
         descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
@@ -213,7 +206,6 @@ public class MovieViewController {
 
         if (movies != null) {
             movieList.addAll(movies);
-            System.out.println("Movies loaded: " + movieList.size());
         } else {
             System.out.println("Failed to load movies!");
         }

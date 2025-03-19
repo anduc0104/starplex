@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.text.Text?>
+<?import javafx.geometry.Insets?>
+<VBox spacing="24"
+      alignment="TOP_CENTER"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      style="-fx-padding:32;"
+      fx:controller="com.cinema.starplex.ui.controllers.staff.MovieDetail">
+    <!--    showtime text-->
+    <HBox spacing="16" alignment="TOP_CENTER">
+        <Text text="Showtime: " style="-fx-fill:white; -fx-font-weight: bold;"/>
+        <Text fx:id="showtime" style="-fx-fill:white;  -fx-font-weight: bold;"/>
+    </HBox>
+    <!--    ảnh mô phỏng màn hình chiếu phim-->
+    <ImageView>
+        <image>
+            <Image url="@../../../../images/screen.png"/>
+        </image>
+    </ImageView>
+    <!--    room number text-->
+    <HBox spacing="16" alignment="CENTER">
+        <Text text="Room number: " style="-fx-fill:white; -fx-font-weight: bold;"/>
+        <Text fx:id="roomNumber" style="-fx-fill:white; -fx-font-weight: bold;"/>
+    </HBox>
+    <!--    seat-->
+    <VBox alignment="CENTER">
+        <GridPane fx:id="seatGrid" alignment="CENTER" hgap="5"
+                  vgap="5"
+                  style="-fx-padding: 10"
+        >
+            <columnConstraints>
+            </columnConstraints>
+            <rowConstraints>
+            </rowConstraints>
+            <VBox.margin>
+                <Insets/>
+            </VBox.margin>
+            <padding>
+                <Insets left="94.0"/>
+            </padding>
+        </GridPane>
+    </VBox>
+
+    <!--    Seat Type-->
+    <HBox fx:id="listBtnSeatType" spacing="32" alignment="TOP_CENTER">
+        <HBox alignment="CENTER_LEFT" spacing="8">
+            <Button text="X" focusTraversable="false" disable="true" prefWidth="40" prefHeight="40"
+                    styleClass="seat-booked"/>
+            <Label text="Booked" textFill="white" alignment="CENTER"/>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" spacing="8">
+            <Button focusTraversable="false" prefWidth="40" prefHeight="40" styleClass="seat-type-selected"/>
+            <Label text="Selected" textFill="white" alignment="CENTER"/>
+        </HBox>
+    </HBox>
+    <HBox alignment="CENTER">
+        <VBox spacing="8" alignment="CENTER_LEFT">
+            <HBox alignment="CENTER_LEFT" spacing="8">
+                <Text text="Seat selected: " style="-fx-fill:white"/>
+                <Text fx:id="listSelectedSeat" style="-fx-fill:white"/>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="8">
+                <Text text="Total: " style="-fx-fill:white"/>
+                <Text fx:id="totalPrice" style="-fx-fill:white"/>
+            </HBox>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button disable="true" fx:id="btnPayment" onAction="#handlePayment" text="Booking" styleClass="btn-bookingTicket"/>
+    </HBox>
+</VBox>

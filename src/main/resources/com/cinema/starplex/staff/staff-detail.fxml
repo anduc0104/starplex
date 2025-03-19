@@ -12,93 +12,64 @@
 
 <?import javafx.scene.control.ComboBox?>
 <VBox alignment="CENTER_RIGHT" prefHeight="686.0" prefWidth="1064.0" spacing="10"
-      xmlns="http://javafx.com/javafx/23.0.1"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.cinema.starplex.ui.controllers.staff.staffDetail.StaffDetailController">
+    xmlns="http://javafx.com/javafx/23.0.1"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.cinema.starplex.ui.controllers.staff.staffDetail.StaffDetailController">
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="40.0"/>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="40.0" />
     </padding>
 
-    <Label contentDisplay="CENTER" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Room number 1">
+    <Label contentDisplay="CENTER" style="-fx-font-size: 20px; -fx-font-weight: bold;"
+        text="Room number 1">
         <padding>
-            <Insets bottom="0" left="-20" right="0" top="0"/>
+            <Insets bottom="0" left="-20" right="0" top="0" />
         </padding>
         <VBox.margin>
-            <Insets bottom="0" left="0" right="510.0" top="0"/>
+            <Insets bottom="0" left="0" right="510.0" top="0" />
         </VBox.margin>
     </Label>
     <VBox alignment="CENTER" spacing="10">
-        <ComboBox fx:id="roomSelector"/>
+        <ComboBox fx:id="roomSelector" />
     </VBox>
 
-    <GridPane fx:id="seatGrid" alignment="CENTER" hgap="5" prefHeight="467.0" prefWidth="986.0" vgap="5">
+    <GridPane fx:id="seatGrid" alignment="CENTER" hgap="5" prefHeight="467.0" prefWidth="986.0"
+        vgap="5">
         <columnConstraints>
         </columnConstraints>
         <rowConstraints>
         </rowConstraints>
         <VBox.margin>
-            <Insets/>
+            <Insets />
         </VBox.margin>
         <padding>
-            <Insets left="94.0" bottom="0" top="0" right="0"/>
+            <Insets left="94.0" bottom="0" top="0" right="0" />
         </padding>
     </GridPane>
-
-<!--    <HBox alignment="CENTER" spacing="10">-->
-<!--        <VBox alignment="CENTER" spacing="5">-->
-<!--            <Label styleClass="legend-label" text="Seat Normal"/>-->
-<!--            <Button styleClass="seat-normal"/>-->
-<!--        </VBox>-->
-
-<!--        <VBox alignment="CENTER" spacing="5">-->
-<!--            <Label styleClass="legend-label" text="Seat VIP"/>-->
-<!--            <Button styleClass="seat-vip"/>-->
-<!--        </VBox>-->
-
-<!--        <VBox alignment="CENTER" spacing="5">-->
-<!--            <Label styleClass="legend-label" text="Seat Booked"/>-->
-<!--            <Button contentDisplay="CENTER" disable="true" styleClass="seat-booked"/>-->
-<!--        </VBox>-->
-
-<!--        <VBox alignment="CENTER" spacing="5">-->
-<!--            <Label styleClass="legend-label" text="Seat Double"/>-->
-<!--            <Button styleClass="seat-double"/>-->
-<!--        </VBox>-->
-
-<!--        <VBox alignment="CENTER" spacing="5">-->
-<!--            <Label styleClass="legend-label" text="Seat Selected"/>-->
-<!--            <Button styleClass="seat-selected"/>-->
-<!--        </VBox>-->
-
-<!--        <VBox alignment="CENTER" spacing="5"/>-->
-<!--        <VBox.margin>-->
-<!--            <Insets right="140.0" left="0" bottom="0" top="0"/>-->
-<!--        </VBox.margin>-->
-<!--    </HBox>-->
+    
     <Label fx:id="selectedSeatsLabel" prefHeight="26.0" prefWidth="186.0">
         <VBox.margin>
-            <Insets right="629.0" left="0" bottom="0" top="0"/>
+            <Insets right="629.0" left="0" bottom="0" top="0" />
         </VBox.margin>
         <padding>
-            <Insets top="11.0" left="0" bottom="0" right="0"/>
+            <Insets top="11.0" left="0" bottom="0" right="0" />
         </padding>
     </Label>
-    <Label fx:id="totalPriceLabel" prefHeight="30.0" prefWidth="117.0" >
+    <Label fx:id="totalPriceLabel" prefHeight="30.0" prefWidth="117.0">
         <VBox.margin>
-            <Insets right="700.0" top="15.0" left="0" bottom="0"/>
+            <Insets right="700.0" top="15.0" left="0" bottom="0" />
         </VBox.margin>
     </Label>
     <Label fx:id="totalSeatsLabel" prefHeight="30.0" prefWidth="117.0">
         <VBox.margin>
-            <Insets right="700.0" top="15.0" left="0" bottom="0"/>
+            <Insets right="700.0" top="15.0" left="0" bottom="0" />
         </VBox.margin>
     </Label>
     <Button styleClass="seat-button">
         <VBox.margin>
-            <Insets right="400.0" top="-58.0" left="0" bottom="0"/>
+            <Insets right="400.0" top="-58.0" left="0" bottom="0" />
         </VBox.margin>
         <font>
-            <Font size="14.0"/>
+            <Font size="14.0" />
         </font>
     </Button>
 </VBox>

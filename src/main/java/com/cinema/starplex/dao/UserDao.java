@@ -134,8 +134,6 @@ public class UserDao implements BaseDao<User> {
     }
 
     public User login(String username, String password) throws SQLException {
-        System.out.println(username);
-        System.out.println(password);
         User user = null;
         String sql = "Select * from users where username = ?";
         Connection conn = DatabaseConnection.getConn();

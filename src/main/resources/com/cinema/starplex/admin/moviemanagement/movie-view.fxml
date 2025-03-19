@@ -40,9 +40,6 @@
                 <TableColumn fx:id="idColumn" prefWidth="35.0" text="ID"/>
                 <TableColumn fx:id="imageColumn" prefWidth="115.0" text="Image"/>
                 <TableColumn fx:id="titleColumn" prefWidth="117.0" text="Movie title"/>
-                <TableColumn fx:id="directorColumn" prefWidth="95.0" text="Director"/>
-                <TableColumn fx:id="actorsColumn" prefWidth="95.0" text="Actors"/>
-                <TableColumn fx:id="genreColumn" prefWidth="105.0" text="Genre"/>
                 <TableColumn fx:id="durationColumn" prefWidth="93.0" text="Duration"/>
                 <TableColumn fx:id="releaseDateColumn" prefWidth="125.0" text="Release Date"/>
                 <TableColumn fx:id="descriptionColumn" prefWidth="187.0" text="Description"/>

@@ -143,4 +143,18 @@ public class ShowTimeDao implements BaseDao<Showtime> {
         }
         return false;
     }
+
+    public int getRoomNumber(int roomId){
+        String sql = "SELECT room_number FROM rooms WHERE id =?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, roomId);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                return rs.getInt("room_number");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
 }

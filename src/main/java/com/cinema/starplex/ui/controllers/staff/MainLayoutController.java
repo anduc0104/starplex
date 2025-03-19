@@ -1,5 +1,6 @@
 package com.cinema.starplex.ui.controllers.staff;
 
+import com.cinema.starplex.session.SessionManager;
 import com.cinema.starplex.util.SceneSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,13 +8,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class MainLayoutController {
-
+    @FXML
+    public ImageView logo;
     @FXML
     private BorderPane mainBorderPane;
     private Stage stage;
@@ -31,6 +34,15 @@ public class MainLayoutController {
             throw new RuntimeException(e);
         }
 
+        logo.setOnMouseClicked(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cinema/starplex/staff/list-movie-layout.fxml"));
+                Parent listMovie = loader.load();
+                mainBorderPane.setCenter(listMovie);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     // Xử lý sự kiện khi nhấn nút "Movie"
@@ -61,6 +73,11 @@ public class MainLayoutController {
     }
 
     public void logout(ActionEvent actionEvent) {
-        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(), "LoginView.fxml");
+//        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(), "LoginView.fxml");
+        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        currentStage.close();
+        SceneSwitcher.switchTo(new Stage(), "LoginView.fxml");
+
+        SessionManager.getInstance().clearSession();
     }
 }

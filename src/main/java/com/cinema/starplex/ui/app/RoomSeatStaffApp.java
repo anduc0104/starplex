@@ -35,7 +35,6 @@ public class RoomSeatStaffApp extends Application {
 
 
         // Top section: Room selection
-        HBox topSection = staffDetailController.createTopSection();
         // Center section: Seats grid
         seatsGrid = new GridPane();
         seatsGrid.setAlignment(Pos.CENTER);
@@ -48,13 +47,8 @@ public class RoomSeatStaffApp extends Application {
         scrollPane.setFitToHeight(true);
 
         // Bottom section: Legend and totals
-        VBox bottomSection = staffDetailController.createBottomSection();
 //        root.setBottom(bottomSection);
 
-        // Add all sections to the VBox in order (top to bottom)
-        root.getChildren().addAll(topSection, bottomSection);
-
-        // Load data from database
         staffDetailController.loadSeatTypes();
         staffDetailController.loadRooms();
         root.setSpacing(10);

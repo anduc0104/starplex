@@ -13,6 +13,8 @@ public class Showtime {
     private Time showTime;
     private BigDecimal price;
     private Date createdAt;
+    private Integer movieId;
+    private Integer roomId;
 
     public Showtime(Integer id, Movie movie, Room room, Date showDate, Time showTime, BigDecimal price, Date createdAt) {
         this.id = id;
@@ -24,7 +26,15 @@ public class Showtime {
         this.createdAt = createdAt;
     }
 
-    public Showtime() {}
+    public Showtime() {
+    }
+
+    public Showtime(Integer id, Integer movieId, Integer roomId, Time showtime) {
+        this.id = id;
+        this.movieId = movieId;
+        this.roomId = roomId;
+        this.showTime = showtime;
+    }
 
     // Getters and Setters
     public Integer getId() {
@@ -83,6 +93,22 @@ public class Showtime {
         this.createdAt = createdAt;
     }
 
+    public Integer getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(Integer movieId) {
+        this.movieId = movieId;
+    }
+
+    public Integer getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(Integer roomId) {
+        this.roomId = roomId;
+    }
+
     public String getDisplayName() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
@@ -93,5 +119,20 @@ public class Showtime {
         String showTimeStr = (showTime != null) ? timeFormat.format(showTime) : "Unknown Time";
 
         return movieTitle + " - Room " + roomNumber + " - " + showDateStr + " - " + showTimeStr;
+    }
+
+    @Override
+    public String toString() {
+        return "Showtime{" +
+                "id=" + id +
+                ", movie=" + movie +
+                ", room=" + room +
+                ", showDate=" + showDate +
+                ", showTime=" + showTime +
+                ", price=" + price +
+                ", createdAt=" + createdAt +
+                ", movieId=" + movieId +
+                ", roomId=" + roomId +
+                '}';
     }
 }

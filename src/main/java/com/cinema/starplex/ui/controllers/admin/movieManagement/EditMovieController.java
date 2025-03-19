@@ -119,7 +119,7 @@ public class EditMovieController {
 
     @FXML
     private void handleEditMovie(ActionEvent event) {
-        String sql = "UPDATE movies SET title = ?, genres = ?, duration = ?, release_date = ?, description = ?, images = ? WHERE id = ?";
+        String sql = "UPDATE movies SET title = ?, duration = ?, release_date = ?, description = ?, images = ? WHERE id = ?";
 
         try (Connection conn = DatabaseConnection.getConn();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -135,11 +135,11 @@ public class EditMovieController {
             }
 
 
-            pstmt.setString(2, selectedGenresString); // Lưu vào database
+//            pstmt.setString(2, selectedGenresString); // Lưu vào database
             movie.setGenres(selectedGenres); // Cập nhật Movie object
-            pstmt.setFloat(3, Float.parseFloat(durationField.getText()));
-            pstmt.setDate(4, Date.valueOf(releaseDatePicker.getValue()));
-            pstmt.setString(5, descriptionField.getText());
+            pstmt.setFloat(2, Float.parseFloat(durationField.getText()));
+            pstmt.setDate(3, Date.valueOf(releaseDatePicker.getValue()));
+            pstmt.setString(4, descriptionField.getText());
 
             String imagePath = movie.getImage();
             if (selectedFile != null) {
@@ -148,8 +148,8 @@ public class EditMovieController {
                 imagePath = destFile.toURI().toString();
             }
 
-            pstmt.setString(6, imagePath);
-            pstmt.setInt(7, movie.getId());
+            pstmt.setString(5, imagePath);
+            pstmt.setInt(6, movie.getId());
 
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {

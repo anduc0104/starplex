@@ -2,6 +2,8 @@ package com.cinema.starplex.models;
 
 
 import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 public class SeatType {
@@ -69,4 +71,6 @@ public class SeatType {
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
+
+
 }

@@ -1,5 +1,6 @@
 package com.cinema.starplex.ui.controllers.admin;
 
+import com.cinema.starplex.session.SessionManager;
 import com.cinema.starplex.util.SceneSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,7 +20,16 @@ public class MainLayoutController {
     private BorderPane mainBorderPane;
 
     public void logout(ActionEvent actionEvent) {
-        SceneSwitcher.switchTo((Stage) ((Node) actionEvent.getSource()).getScene().getWindow(), "LoginView.fxml");
+//        FXMLLoader loader = SceneSwitcher.loadView("LoginView.fxml");
+//        assert loader != null;
+//        Parent newView = loader.getRoot();
+//        mainBorderPane.setCenter(newView);
+
+        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        currentStage.close();
+        SceneSwitcher.switchTo(new Stage(), "LoginView.fxml");
+
+        SessionManager.getInstance().clearSession();
     }
 
     public void managementUser(ActionEvent actionEvent) {

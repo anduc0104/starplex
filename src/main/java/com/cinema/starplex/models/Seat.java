@@ -10,6 +10,9 @@ public class Seat {
     private String seatNumber;
     private Timestamp createdAt;
     private boolean isBooked;
+    private String row;
+    private Integer col_number;
+    private Integer seat_type_id;
 
     public Seat() {}
 
@@ -22,10 +25,11 @@ public class Seat {
         this.isBooked = isBooked;
     }
 
-    public Seat(Integer id, char rowChar, int colNum, int seatTypeId, boolean isBooked) {
+    public Seat(Integer id, String rowChar, Integer colNum, int seatTypeId, boolean isBooked) {
         this.id = id;
-        this.seatNumber = rowChar + String.valueOf(colNum);
-        this.seatType = new SeatType(seatTypeId);
+        this.row = rowChar;
+        this.col_number = colNum;
+        this.seat_type_id = seatTypeId;
         this.isBooked = isBooked;
     }
 
@@ -87,6 +91,30 @@ public class Seat {
         isBooked = booked;
     }
 
+    public void setRow(String row) {
+        this.row = row;
+    }
+
+    public Integer getCol_number() {
+        return col_number;
+    }
+
+    public String getRow() {
+        return row;
+    }
+
+    public void setCol_number(Integer col_number) {
+        this.col_number = col_number;
+    }
+
+    public Integer getSeat_type_id() {
+        return seat_type_id;
+    }
+
+    public void setSeat_type_id(Integer seat_type_id) {
+        this.seat_type_id = seat_type_id;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -100,12 +128,7 @@ public class Seat {
         return id;
     }
 
-    public char getRow() {
-        if (seatNumber != null && seatNumber.length() > 0) {
-            return seatNumber.charAt(0);
-        }
-        return ' ';
-    }
+
 
     // Lấy cột (column) của ghế (phần số sau ký tự đầu tiên)
     public int getColumn() {
@@ -117,5 +140,19 @@ public class Seat {
             }
         }
         return -1;
+    }
+
+    @Override
+    public String toString() {
+        return "Seat{" +
+                "id=" + id +
+                ", room=" + room +
+                ", seatType=" + seatType +
+                ", seatNumber='" + seatNumber + '\'' +
+                ", createdAt=" + createdAt +
+                ", isBooked=" + isBooked +
+                ", row=" + row +
+                ", col_number=" + col_number +
+                '}';
     }
 }

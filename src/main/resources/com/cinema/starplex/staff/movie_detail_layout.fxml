@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.text.Text?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.cinema.starplex.ui.controllers.staff.MovieDetailLayout"
+            style="-fx-background-color: #10141b;"
+            stylesheets="@../../../../css/list-movie-layout.css">
+    <ScrollPane fitToWidth="true"
+                AnchorPane.bottomAnchor="50"
+                AnchorPane.leftAnchor="0"
+                AnchorPane.rightAnchor="0"
+                AnchorPane.topAnchor="0"
+                style="-fx-background-color: transparent; -fx-background: transparent;"
+    >
+        <BorderPane fx:id="movieLayoutBorderPane"
+                    AnchorPane.bottomAnchor="50"
+                    AnchorPane.leftAnchor="200"
+                    AnchorPane.rightAnchor="200"
+                    AnchorPane.topAnchor="0">
+            <top>
+                <HBox spacing="16" alignment="TOP_CENTER">
+                    <ImageView fx:id="image" fitWidth="250" fitHeight="350"/>
+                    <VBox spacing="8">
+                        <Text fx:id="title" text="CAPTAIN AMERICA: THẾ GIỚI MỚI"
+                              style="-fx-font-size: 18px; -fx-fill: white; -fx-font-weight: bold;"/>
+                        <HBox spacing="4">
+                            <Text fx:id="genre" text="Phiêu lưu"
+                                  style="-fx-fill: white;"/>
+                            <Text text="|" style="-fx-fill: white;"/>
+                            <HBox spacing="4">
+                                <Text fx:id="duration" text="118"
+                                      style="-fx-fill: white;"/>
+                                <Text text="minutes"
+                                      style="-fx-fill: white;"/>
+                            </HBox>
+                        </HBox>
+                        <HBox>
+                            <Text text="Release Day: " style="-fx-fill: white;"/>
+                            <Text fx:id="releaseDate" text="14/02/2025"
+                                  style="-fx-fill: white; -fx-font-weight: bold;"/>
+                        </HBox>
+
+                        <Text fx:id="description" wrappingWidth="600"
+                              text="Sau cuộc gặp gỡ với Tổng thống Thaddeus Ross, Sam Wilson vô tình bị cuốn vào cuộc xung đột tại một sự kiện quốc tế."
+                              style="-fx-fill: white;"/>
+                    </VBox>
+                </HBox>
+            </top>
+
+            <center>
+
+            </center>
+        </BorderPane>
+    </ScrollPane>
+</AnchorPane>

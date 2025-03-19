@@ -177,15 +177,13 @@ public class SeatDao implements BaseDao<Seat> {
 
             while (rs.next()) {
                 int id = rs.getInt("id");
-                String seatNumber = rs.getString("seat_number");
+                String row = rs.getString("row");
                 int seatTypeId = rs.getInt("seat_type_id");
                 boolean isBooked = rs.getObject("booking_id") != null;
 
-                // Phân tích số ghế (e.g., "A1", "B2", v.v.)
-                char rowChar = seatNumber.charAt(0);
-                int colNum = Integer.parseInt(seatNumber.substring(1));
+                int colNum = rs.getInt("col_number");
 
-                seats.add(new Seat(id, rowChar, colNum, seatTypeId, isBooked));
+                seats.add(new Seat(id, row, colNum, seatTypeId, isBooked));
             }
         } catch (SQLException e) {
             e.printStackTrace();
