@@ -108,7 +108,7 @@ public class BookingDao implements BaseDao<Booking> {
         String query = "SELECT * FROM bookings";
 
         try (Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(query)) {
+             ResultSet resultSet = statement.executeQuery(query)) {
             while (resultSet.next()) {
                 bookings.add(mapResultSetToBooking(resultSet));
             }

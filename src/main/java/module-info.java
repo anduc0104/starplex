@@ -54,4 +54,9 @@ module com.cinema.starplex {
     opens com.cinema.starplex.ui.controllers.admin.movieGenreManagement to javafx.fxml;
 
     opens com.cinema.starplex.ui.controllers.staff to javafx.fxml;
+
+    exports com.cinema.starplex.ui.controllers.admin.bookingManagement;
+
+    // Mở (opens) package cho JavaFX FXML để có thể truy cập được
+    opens com.cinema.starplex.ui.controllers.admin.bookingManagement to javafx.fxml;
 }
