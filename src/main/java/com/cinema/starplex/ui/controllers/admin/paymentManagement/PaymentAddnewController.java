@@ -13,11 +13,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.util.StringConverter;
-
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.List;
-import java.util.Optional;
 
 public class PaymentAddnewController {
     @FXML

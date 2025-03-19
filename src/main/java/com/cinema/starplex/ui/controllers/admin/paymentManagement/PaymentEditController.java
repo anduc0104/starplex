@@ -13,10 +13,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.util.StringConverter;
-
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 public class PaymentEditController {
     @FXML
@@ -175,12 +173,4 @@ public class PaymentEditController {
             e.printStackTrace();
         }
     }
-//
-//    private void showAlert(String title, String message) {
-//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//        alert.setTitle(title);
-//        alert.setHeaderText(null);
-//        alert.setContentText(message);
-//        alert.showAndWait();
-//    }
 }

@@ -3,8 +3,6 @@ package com.cinema.starplex.ui.controllers.admin.paymentManagement;
 import com.cinema.starplex.dao.PaymentDao;
 import com.cinema.starplex.models.Booking;
 import com.cinema.starplex.models.Payment;
-import com.cinema.starplex.models.Seat;
-import com.cinema.starplex.ui.controllers.admin.seatManagement.EditSeatController;
 import com.cinema.starplex.util.SceneSwitcher;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -22,7 +20,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
-
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
