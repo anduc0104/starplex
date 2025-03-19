@@ -1,4 +1,4 @@
-package com.cinema.starplex.ui.controllers;
+package com.cinema.starplex.ui.controllers.admin.bookingManagement;
 
 import java.math.BigDecimal;
 import java.net.URL;
@@ -17,7 +17,6 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 
 public class BookingReportController implements Initializable {
-
     @FXML
     private Label totalBookingsLabel;
 
@@ -37,15 +36,30 @@ public class BookingReportController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Initialization code will run when FXML is loaded
+        // Initialize with empty data
+        totalBookingsLabel.setText("0");
+        totalRevenueLabel.setText("$0.00");
+        avgBookingPriceLabel.setText("$0.00");
+
+        // Initialize charts with empty data
+        statusPieChart.setData(FXCollections.observableArrayList());
+
+        // No need to call updateReportData() here since bookings is still null
     }
 
     public void setBookings(ObservableList<Booking> bookings) {
         this.bookings = bookings;
-        updateReportData();
+        if (bookings != null) {
+            updateReportData();
+        }
     }
 
     private void updateReportData() {
+        // Null check before proceeding
+        if (bookings == null) {
+            return;
+        }
+
         // Calculate statistics
         int totalBookings = bookings.size();
         BigDecimal totalRevenue = BigDecimal.ZERO;

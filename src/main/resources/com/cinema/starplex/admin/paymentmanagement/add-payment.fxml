@@ -2,13 +2,11 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1200.0"
-            xmlns="http://javafx.com/javafx/8"
+<?import javafx.scene.text.Text?>
+<AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.cinema.starplex.ui.controllers.admin.seatManagement.AddSeatController">
+            fx:controller="com.cinema.starplex.ui.controllers.admin.paymentManagement.PaymentAddnewController">
     <VBox spacing="24" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0"
           AnchorPane.rightAnchor="24.0"
           AnchorPane.topAnchor="24.0">
@@ -18,35 +16,39 @@
                     layoutX="14.0" layoutY="14.0"
                     prefHeight="30.0"
                     prefWidth="75.0" styleClass="back-btn" text="Back" textFill="WHITE" />
-            <Text text="Add new seat" styleClass="titlePage" />
+            <Text text="Add new payment" styleClass="titlePage" />
         </HBox>
 
         <VBox>
-            <!-- Nhập hàng ghế -->
-            <Label text="Row:" styleClass="label-input" />
-            <TextField fx:id="rowField" prefHeight="30.0"
-                       prefWidth="12000.0" styleClass="input-field" />
-        </VBox>
-
-        <VBox>
-            <!-- Nhập cột ghế -->
-            <Label text="Column:" styleClass="label-input" />
-            <TextField fx:id="colField" prefHeight="30.0"
+            <!-- Nhập số ghế -->
+            <Label layoutX="400.0" layoutY="150.0" text="Amount:" styleClass="label-input" />
+            <TextField fx:id="amountField" prefHeight="30.0"
                        prefWidth="12000.0" styleClass="input-field" />
         </VBox>
 
         <VBox>
             <!-- Chọn phòng -->
-            <Label text="Room:" styleClass="label-input" />
-            <ComboBox fx:id="roomComboBox" prefHeight="30.0"
+            <Label text="Booking Info:" styleClass="label-input" />
+            <ComboBox fx:id="bookingComboBox" prefHeight="30.0"
                       prefWidth="Infinity" styleClass="input-field" />
         </VBox>
 
         <VBox>
-            <!-- Chọn loại ghế -->
-            <Label text="Seat Type:" styleClass="label-input" />
-            <ComboBox fx:id="seatTypeComboBox" prefHeight="30.0"
-                      prefWidth="Infinity" styleClass="input-field" />
+            <!-- Chọn book -->
+            <Label styleClass="label-input" text="Payment method:" />
+            <ComboBox fx:id="paymentComboBox" prefHeight="30.0" prefWidth="Infinity"
+                      styleClass="input-field" />
+        </VBox>
+        <VBox>
+            <Label styleClass="label-input" text="Transaction id:" />
+            <TextField fx:id="transactionIdField" prefHeight="30.0" prefWidth="1200"
+                       styleClass="input-field " />
+        </VBox>
+        <VBox>
+            <!-- Chọn book -->
+            <Label styleClass="label-input" text="Status:" />
+            <ComboBox fx:id="statusComboBox" prefHeight="30.0" prefWidth="Infinity"
+                      styleClass="input-field" />
         </VBox>
 
         <HBox alignment="CENTER_RIGHT" spacing="24">

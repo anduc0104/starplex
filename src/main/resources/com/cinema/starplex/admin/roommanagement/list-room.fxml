@@ -27,9 +27,9 @@
                 </font>
             </Button>
             <!-- Search Field -->
-            <!--            <TextField fx:id="searchField" layoutX="163.0" layoutY="34.0" prefHeight="30.0"-->
-            <!--                       promptText="Search by Seat Number" styleClass="search"-->
-            <!--                       stylesheets="@../../../../../css/admin.css"/>-->
+                        <TextField fx:id="searchField" layoutX="163.0" layoutY="34.0" prefHeight="30.0"
+                                   promptText="Search by room" styleClass="search"
+                                   stylesheets="@../../../../../css/admin.css"/>
         </HBox>
 
         <TableView fx:id="roomTableView" layoutX="20.0" layoutY="86.0" prefHeight="546.0"

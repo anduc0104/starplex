@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GenreDao implements BaseDao<Genre> {
@@ -27,7 +28,7 @@ public class GenreDao implements BaseDao<Genre> {
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
-            while (rs.next()){
+            while (rs.next()) {
                 genres.add(new Genre(
                         new SimpleIntegerProperty(rs.getInt("id")),
                         new SimpleStringProperty(rs.getString("name"))
@@ -59,34 +60,84 @@ public class GenreDao implements BaseDao<Genre> {
     }
 
 
-
     @Override
     public void save(Genre entity) {
-
+        if (entity.getId() == 0) {
+            insert(entity);
+        } else {
+            update(entity);
+        }
     }
 
     @Override
     public boolean insert(Genre entity) {
-        return false;
+        String sql = "INSERT INTO movie_genres (name) VALUES (?)";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, entity.getName());
+            return pstmt.executeUpdate() > 0; // Trả về true nếu chèn thành công
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
     public void update(Genre entity) {
-
+        String sql = "UPDATE movie_genres SET name = ? WHERE id = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, entity.getName());
+            pstmt.setInt(2, entity.getId());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void delete(long id) {
-
+        String sql = "DELETE FROM movie_genres WHERE id = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setLong(1, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public Genre findById(long id) {
-        return null;
+        String sql = "SELECT * FROM movie_genres WHERE id = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setLong(1, id);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return new Genre(
+                            new SimpleIntegerProperty(rs.getInt("id")),
+                            new SimpleStringProperty(rs.getString("name"))
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // Nếu không tìm thấy
     }
 
     @Override
     public List<Genre> findAll() {
-        return List.of();
+        List<Genre> genres = new ArrayList<>();
+        String sql = "SELECT * FROM movie_genres";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                genres.add(new Genre(
+                        new SimpleIntegerProperty(rs.getInt("id")),
+                        new SimpleStringProperty(rs.getString("name"))
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return genres;
     }
 }

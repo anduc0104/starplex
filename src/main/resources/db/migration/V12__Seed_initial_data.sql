@@ -6,18 +6,43 @@ INSERT INTO users (full_name, username, email, phone, password, role, created_at
 
 
 -- movies
-INSERT INTO movies (id, title, duration, release_date, description) VALUES
-(1, 'The Hero Returns', 120, '2025-01-01', 'An epic tale of heroism.'),
-(2, 'Laughing Out Loud', 90, '2025-02-10', 'A hilarious comedy.'),
-(3, 'Haunted Nights', 110, '2025-03-15', 'A chilling horror story.');
+INSERT INTO movies (title, duration, release_date, description, created_at) VALUES
+('Inception', 148, '2010-07-16', 'A sci-fi movie about dreams and reality.', NOW()),
+('Avatar', 162, '2009-12-18', 'The story of Pandora and the fight for survival.', NOW()),
+('The Dark Knight', 152, '2008-07-18', 'Batman faces Joker in a battle for Gotham.', NOW()),
+('Interstellar', 169, '2014-11-07', 'Astronauts travel through a wormhole to save humanity.', NOW()),
+('Titanic', 195, '1997-12-19', 'A tragic love story set on the legendary ship.', NOW()),
+('Avengers: Endgame', 181, '2019-04-26', 'The final battle of the Avengers against Thanos.', NOW()),
+('The Matrix', 136, '1999-03-31', 'A hacker discovers the truth about reality.', NOW()),
+('Jurassic Park', 127, '1993-06-11', 'Dinosaurs are brought back to life in a theme park.', NOW()),
+('The Godfather', 175, '1972-03-24', 'The story of the Corleone mafia family.', NOW()),
+('Forrest Gump', 142, '1994-07-06', 'A man with a low IQ changes history through his life journey.', NOW()),
+('Pulp Fiction', 154, '1994-10-14', 'A nonlinear crime story full of twists.', NOW()),
+('Shawshank Redemption', 142, '1994-09-23', 'A man’s journey to freedom from prison.', NOW()),
+('Gladiator', 155, '2000-05-05', 'A betrayed general seeks vengeance in the Colosseum.', NOW()),
+('The Lion King', 118, '1994-06-15', 'A young lion cub embarks on a journey to reclaim his throne.', NOW()),
+('Fight Club', 139, '1999-10-15', 'An underground fight club takes a dark turn.', NOW()),
+('The Lord of the Rings: The Fellowship of the Ring', 178, '2001-12-19', 'A journey to destroy the One Ring.', NOW()),
+('The Lord of the Rings: The Two Towers', 179, '2002-12-18', 'The battle for Middle-earth intensifies.', NOW()),
+('The Lord of the Rings: The Return of the King', 201, '2003-12-17', 'The final showdown for the fate of Middle-earth.', NOW()),
+('Harry Potter and the Sorcerer''s Stone', 152, '2001-11-16', 'A young wizard discovers his destiny.', NOW()),
+('Harry Potter and the Chamber of Secrets', 161, '2002-11-15', 'Hogwarts is threatened by a hidden chamber.', NOW());
 
 
 
 -- rooms
-INSERT INTO rooms (id, room_number, total_seats) VALUES
-(1, 1, 126),
-(2, 2, 126),
-(3, 3, 126);
+INSERT INTO rooms (id, room_number, total_seats, created_at) VALUES
+(1, 101, 50, NOW()),
+(2, 102, 60, NOW()),
+(3, 103, 70, NOW()),
+(4, 104, 80, NOW()),
+(5, 105, 50, NOW()),
+(6, 106, 60, NOW()),
+(7, 107, 70, NOW()),
+(8, 108, 80, NOW()),
+(9, 109, 50, NOW()),
+(10, 110, 60, NOW());
+
 
 -- movie genres
 INSERT INTO movie_genres (id, name) VALUES
@@ -33,12 +58,27 @@ INSERT INTO movie_genres (id, name) VALUES
 
 
 -- Movie movie genres
-INSERT INTO movie_movie_genres (movie_id, genre_id) VALUES
-(1, 1), (1, 5),
-(2, 2), (2, 6),
-(3, 4), (3, 7);
-
-
+INSERT INTO movie_movie_genres (movie_id, genre_id, created_at) VALUES
+(1, 3, NOW()), -- Inception (Sci-Fi)
+(2, 4, NOW()), -- Titanic (Romance)
+(3, 9, NOW()), -- Avatar (Adventure)
+(4, 1, NOW()), -- The Dark Knight (Action)
+(5, 2, NOW()), -- Forrest Gump (Drama)
+(6, 3, NOW()), -- Interstellar (Sci-Fi)
+(7, 3, NOW()), -- The Matrix (Sci-Fi)
+(8, 8, NOW()), -- Joker (Thriller)
+(9, 1, NOW()), -- Avengers: Endgame (Action)
+(10, 2, NOW()), -- The Godfather (Drama)
+(11, 8, NOW()), -- Pulp Fiction (Thriller)
+(12, 2, NOW()), -- Shawshank Redemption (Drama)
+(13, 1, NOW()), -- Gladiator (Action)
+(14, 10, NOW()), -- The Lion King (Animation)
+(15, 8, NOW()), -- Fight Club (Thriller)
+(16, 7, NOW()), -- LOTR: The Fellowship of the Ring (Fantasy)
+(17, 7, NOW()), -- LOTR: The Two Towers (Fantasy)
+(18, 7, NOW()), -- LOTR: The Return of the King (Fantasy)
+(19, 7, NOW()), -- Harry Potter and the Sorcerer’s Stone (Fantasy)
+(20, 7, NOW()); -- Harry Potter and the Chamber of Secrets (Fantasy)
 
 
 -- seat types
@@ -88,28 +128,30 @@ INSERT INTO seats (id, room_id, seat_type_id, `row`, col_number) VALUES
 (125, 1, 1, 'I', 13), (126, 1, 1, 'I', 14);
 
 -- showtimes
-INSERT INTO showtimes (id, movie_id, room_id, show_date, show_time) VALUES
-(1, 1, 1, '2025-03-20', '10:00'), (2, 1, 1, '2025-03-20', '13:00'),
-(3, 1, 1, '2025-03-20', '16:00'), (4, 1, 1, '2025-03-20', '19:00'),
-(5, 1, 1, '2025-03-21', '10:00'), (6, 1, 1, '2025-03-21', '13:00'),
-(7, 1, 1, '2025-03-21', '16:00'), (8, 1, 1, '2025-03-21', '19:00'),
-(9, 2, 2, '2025-03-22', '11:00'), (10, 2, 2, '2025-03-22', '14:00'),
-(11, 2, 2, '2025-03-22', '17:00'), (12, 2, 2, '2025-03-22', '20:00'),
-(13, 3, 3, '2025-03-23', '12:00'), (14, 3, 3, '2025-03-23', '15:00'),
-(15, 3, 3, '2025-03-23', '18:00'), (16, 3, 3, '2025-03-23', '21:00'),
-(17, 1, 2, '2025-03-24', '10:00'), (18, 1, 2, '2025-03-24', '13:00'),
-(19, 1, 2, '2025-03-24', '16:00'), (20, 1, 2, '2025-03-24', '19:00'),
-(21, 2, 3, '2025-03-25', '11:00'), (22, 2, 3, '2025-03-25', '14:00'),
-(23, 2, 3, '2025-03-25', '17:00'), (24, 2, 3, '2025-03-25', '20:00'),
-(25, 3, 1, '2025-03-26', '12:00'), (26, 3, 1, '2025-03-26', '15:00'),
-(27, 3, 1, '2025-03-26', '18:00'), (28, 3, 1, '2025-03-26', '21:00'),
-(29, 1, 3, '2025-03-27', '10:00'), (30, 1, 3, '2025-03-27', '13:00'),
-(31, 1, 3, '2025-03-27', '16:00'), (32, 1, 3, '2025-03-27', '19:00'),
-(33, 2, 1, '2025-03-28', '11:00'), (34, 2, 1, '2025-03-28', '14:00'),
-(35, 2, 1, '2025-03-28', '17:00'), (36, 2, 1, '2025-03-28', '20:00'),
-(37, 3, 2, '2025-03-29', '12:00'), (38, 3, 2, '2025-03-29', '15:00'),
-(39, 3, 2, '2025-03-29', '18:00'), (40, 3, 2, '2025-03-29', '21:00');
+INSERT INTO showtimes (movie_id, room_id, show_date, show_time, price) VALUES
+-- Ngày 2025-03-29
+(1,  1, '2025-03-29', '08:00:00', 75.00),
+(2,  2, '2025-03-29', '09:45:00', 85.00),
+(3,  3, '2025-03-29', '11:30:00', 95.00),
+(4,  4, '2025-03-29', '13:15:00', 100.00),
+(5,  5, '2025-03-29', '15:00:00', 110.00),
+(6,  6, '2025-03-29', '16:45:00', 120.00),
+(7,  7, '2025-03-29', '18:30:00', 125.00),
+(8,  8, '2025-03-29', '20:15:00', 130.00),
+(9,  9, '2025-03-29', '22:00:00', 135.00),
+(10,10, '2025-03-29', '23:45:00', 140.00),
 
+-- Ngày 2025-03-30
+(11, 1, '2025-03-30', '08:30:00', 72.00),
+(12, 2, '2025-03-30', '10:15:00', 82.00),
+(13, 3, '2025-03-30', '12:00:00', 98.00),
+(14, 4, '2025-03-30', '13:45:00', 105.00),
+(15, 5, '2025-03-30', '15:30:00', 112.00),
+(16, 6, '2025-03-30', '17:15:00', 122.00),
+(17, 7, '2025-03-30', '19:00:00', 128.00),
+(18, 8, '2025-03-30', '20:45:00', 133.00),
+(19, 9, '2025-03-30', '22:30:00', 138.00),
+(20,10, '2025-03-30', '23:59:00', 145.00);
 
 -- bookings
 INSERT INTO bookings (id, user_id, showtime_id, total_tickets, total_price) VALUES
@@ -119,11 +161,11 @@ INSERT INTO bookings (id, user_id, showtime_id, total_tickets, total_price) VALU
 (4, 2, 13, 3, 300000);
 
 -- payment
-INSERT INTO payments (id, booking_id, payment_method, status) VALUES
-(1, 1, 'Credit Card', 'Completed'),
-(2, 2, 'PayPal', 'Completed'),
-(3, 3, 'Cash', 'Pending'),
-(4, 4, 'Credit Card', 'Completed');
+INSERT INTO payments (id, booking_id, payment_method, status, transaction_id) VALUES
+(1, 1, 'Credit Card', 'Completed', 'TXN123456'),
+(2, 2, 'PayPal', 'Completed', 'TXN123457'),
+(3, 3, 'Cash', 'Pending', 'TXN123458'),
+(4, 4, 'Credit Card', 'Completed', 'TXN123459'),;
 
 
 -- booking detail

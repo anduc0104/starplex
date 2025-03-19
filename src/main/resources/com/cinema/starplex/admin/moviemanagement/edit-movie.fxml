@@ -8,12 +8,12 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-
 <?import org.controlsfx.control.CheckComboBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.control.ScrollPane?>
+
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             prefHeight="400.0" prefWidth="600.0"
@@ -25,60 +25,37 @@
         <VBox spacing="24">
             <HBox spacing="500">
                 <!-- Nút quay lại -->
-                <Button fx:id="backButton" layoutX="14.0" layoutY="14.0"
-                        mnemonicParsing="false" onAction="#goBack"
-                        prefHeight="30.0" prefWidth="75.0" styleClass="back-btn" text="Back"
-                        textFill="WHITE"/>
+                <Button fx:id="handleBack" mnemonicParsing="false" onAction="#handleBack"
+                        prefHeight="30.0" prefWidth="75.0" styleClass="back-btn" text="Back" textFill="WHITE"/>
                 <Text text="Edit movie" styleClass="titlePage"/>
             </HBox>
             <VBox spacing="16">
                 <VBox spacing="8">
                     <Button onAction="#handleEditImage" fx:id="addImageButton"
                             mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" styleClass="add-image-btn"
-                            stylesheets="@../../../../../css/admin.css" text="Add image" textFill="WHITE"/>
+                            text="Add image" textFill="WHITE"/>
                     <ImageView fx:id="movieImageView" fitHeight="150.0" fitWidth="200.0"
                                pickOnBounds="true" preserveRatio="true"/>
                 </VBox>
-                <VBox>
-                    <Label layoutX="115.0" layoutY="100.0" styleClass="label-input"
-                           stylesheets="@../../../../../css/admin.css" text="Movie title :"/>
-                    <TextField fx:id="titleField"
-                               styleClass="input-field" stylesheets="@../../../../../css/admin.css"/>
+                <VBox spacing="8">
+                    <Label styleClass="label-input" text="Movie title :"/>
+                    <TextField fx:id="titleField" styleClass="input-field"/>
                 </VBox>
-<!--                <VBox>-->
-<!--                    <Label layoutX="134.0" layoutY="170.0" styleClass="label-input"-->
-<!--                           stylesheets="@../../../../../css/admin.css" text="Director :"/>-->
-<!--                    <TextField fx:id="directorField"-->
-<!--                               styleClass="input-field" stylesheets="@../../../../../css/admin.css"/>-->
-<!--                </VBox>-->
-<!--                <VBox>-->
-<!--                    <Label layoutX="144.0" layoutY="240.0" styleClass="label-input"-->
-<!--                           stylesheets="@../../../../../css/admin.css" text="Actors :"/>-->
-<!--                    <TextField fx:id="actorsField"-->
-<!--                               styleClass="input-field" stylesheets="@../../../../../css/admin.css"/>-->
-<!--                </VBox>-->
-                <VBox>
-                    <Label styleClass="label-input"
-                           stylesheets="@../../../../../css/admin.css" text="Genre :"/>
+                <VBox spacing="8">
+                    <Label styleClass="label-input" text="Genre :"/>
                     <CheckComboBox fx:id="genreCheckComboBox"/>
                 </VBox>
-                <VBox>
-                    <Label layoutX="126.0" layoutY="380.0" styleClass="label-input"
-                           stylesheets="@../../../../../css/admin.css" text="Duration :"/>
-                    <TextField fx:id="durationField"
-                               styleClass="input-field" stylesheets="@../../../../../css/admin.css"/>
+                <VBox spacing="8">
+                    <Label styleClass="label-input" text="Duration :"/>
+                    <TextField fx:id="durationField" styleClass="input-field"/>
                 </VBox>
-                <VBox>
-                    <Label layoutX="100.0" layoutY="450.0" styleClass="label-input"
-                           stylesheets="@../../../../../css/admin.css" text="Release Date :"/>
+                <VBox spacing="8">
+                    <Label styleClass="label-input" text="Release Date :"/>
                     <DatePicker fx:id="releaseDatePicker"/>
                 </VBox>
-                <VBox>
-                    <Label layoutX="624.0" layoutY="380.0" styleClass="label-input"
-                           stylesheets="@../../../../../css/admin.css" text="Description :"/>
-                    <TextArea fx:id="descriptionField" prefHeight="182.0"
-                              styleClass="description-field" stylesheets="@../../../../../css/admin.css"/>
-
+                <VBox spacing="8">
+                    <Label styleClass="label-input" text="Description :"/>
+                    <TextArea fx:id="descriptionField" prefHeight="182.0" styleClass="description-field"/>
                 </VBox>
                 <HBox alignment="CENTER_RIGHT" spacing="24">
                     <Button onAction="#handleEditMovie" fx:id="saveButton"

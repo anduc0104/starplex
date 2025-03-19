@@ -27,7 +27,7 @@
               AnchorPane.rightAnchor="24"
               AnchorPane.topAnchor="24.0">
             <HBox spacing="500">
-                <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBack"
+                <Button fx:id="handleBack" mnemonicParsing="false" onAction="#handleBack"
                         prefHeight="30.0" prefWidth="75.0" styleClass="back-btn" text="Back" textFill="WHITE"/>
                 <Text text="Add new movie" styleClass="titlePage"/>
             </HBox>
@@ -45,16 +45,6 @@
                     <Label text="Movie title :" styleClass="label-input"/>
                     <TextField fx:id="titleField" styleClass="input-field"/>
                 </VBox>
-
-<!--                <VBox spacing="8">-->
-<!--                    <Label text="Director :" styleClass="label-input"/>-->
-<!--                    <TextField fx:id="directorField" styleClass="input-field"/>-->
-<!--                </VBox>-->
-
-<!--                <VBox spacing="8">-->
-<!--                    <Label text="Actors :" styleClass="label-input"/>-->
-<!--                    <TextField fx:id="actorsField" styleClass="input-field"/>-->
-<!--                </VBox>-->
 
                 <VBox spacing="8">
                     <Label text="Genre :" styleClass="label-input"/>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            prefHeight="400.0" prefWidth="600.0"
+            fx:controller="com.cinema.starplex.ui.controllers.admin.bookingManagement.BookingAddnewController">
+    <VBox spacing="24" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="24.0"
+          AnchorPane.rightAnchor="24.0"
+          AnchorPane.topAnchor="24.0">
+        <HBox spacing="500">
+            <!-- Nút quay lại -->
+            <Button onAction="#handleBack" fx:id="backButton" mnemonicParsing="false"
+                    layoutX="14.0" layoutY="14.0"
+                    prefHeight="30.0"
+                    prefWidth="75.0" styleClass="back-btn" text="Back" textFill="WHITE" />
+            <Text text="Add new booking" styleClass="titlePage" />
+        </HBox>
+
+        <VBox>
+            <!-- Chọn phòng -->
+            <Label text="User:" styleClass="label-input" />
+            <ComboBox fx:id="userComboBox" prefHeight="30.0"
+                      prefWidth="Infinity" styleClass="input-field" />
+        </VBox>
+        <VBox>
+            <!-- Chọn phòng -->
+            <Label text="Showtime:" styleClass="label-input" />
+            <ComboBox fx:id="showtimeComboBox" prefHeight="30.0"
+                      prefWidth="Infinity" styleClass="input-field" />
+        </VBox>
+        <VBox>
+            <Label styleClass="label-input" text="Total Price:" />
+            <TextField fx:id="priceField" prefHeight="30.0" prefWidth="1200"
+                       styleClass="input-field " />
+        </VBox>
+        <VBox>
+            <!-- Chọn book -->
+            <Label styleClass="label-input" text="Status:" />
+            <ComboBox fx:id="statusComboBox" prefHeight="30.0" prefWidth="Infinity"
+                      styleClass="input-field" />
+        </VBox>
+
+        <HBox alignment="CENTER_RIGHT" spacing="24">
+            <!-- Nút lưu và hủy -->
+            <Button onAction="#handleCreateAction" fx:id="createButton" alignment="CENTER" prefHeight="30.0"
+                    prefWidth="120.0"
+                    styleClass="save-btn" text="Save" textFill="WHITE" />
+
+            <Button onAction="#clearForm" fx:id="clearButton" alignment="CENTER"  prefHeight="30.0" prefWidth="120.0"
+                    styleClass="clear-btn" text="Clear" textFill="WHITE" />
+        </HBox>
+    </VBox>
+</AnchorPane>

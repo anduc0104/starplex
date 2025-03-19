@@ -34,10 +34,6 @@ public class EditMovieController {
     @FXML
     private TextField titleField;
     @FXML
-    private TextField directorField;
-    @FXML
-    private TextField actorsField;
-    @FXML
     private CheckComboBox<String> genreCheckComboBox;
     @FXML
     private TextField durationField;
@@ -50,14 +46,16 @@ public class EditMovieController {
     @FXML
     private Button clearButton;
     @FXML
+    private Button handleBack;
+    @FXML
     private ImageView movieImageView;
     @FXML
     private Button addImageButton;
 
     private Movie movie;
     private String imagePath = null;
-    private File selectedFile = null;
-    private static final String IMAGE_DIR = "src/main/resources/images/"; // Thư mục lưu ảnh
+    private File selectedImageFile = null;
+    private static final String IMAGE_DIR = "src/main/resources/images/";
 
     @FXML
     private void initialize() {
@@ -75,19 +73,22 @@ public class EditMovieController {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to load genres.");
         }
     }
 
     public void setMovie(Movie movie) {
+        if (movie == null) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Movie cannot be null.");
+            return;
+        }
         this.movie = movie;
         titleField.setText(movie.getTitle());
-//        directorField.setText(movie.getDirector());
-//        actorsField.setText(movie.getActors());
         if (genreCheckComboBox.getItems().isEmpty()) {
             loadGenres();
         }
         for (Genre genre : movie.getGenres()) {
-            genreCheckComboBox.getCheckModel().check(genre.getName()); // Giả sử Genre có phương thức getName()
+            genreCheckComboBox.getCheckModel().check(genre.getName());
         }
         durationField.setText(String.valueOf(movie.getDuration()));
         releaseDatePicker.setValue(LocalDate.parse(movie.getReleaseDate()));
@@ -101,7 +102,7 @@ public class EditMovieController {
                 }
                 movieImageView.setImage(new Image(imagePath));
             } catch (Exception e) {
-                System.out.println("Lỗi khi load ảnh: " + e.getMessage());
+                showAlert(Alert.AlertType.ERROR, "Image Load Error", "Error loading image: " + e.getMessage());
             }
         }
     }
@@ -110,92 +111,118 @@ public class EditMovieController {
     private void handleEditImage(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
-        selectedFile = fileChooser.showOpenDialog(null);
-        if (selectedFile != null) {
-            imagePath = selectedFile.toURI().toString();
+        selectedImageFile = fileChooser.showOpenDialog(null);
+        if (selectedImageFile != null) {
+            imagePath = selectedImageFile.toURI().toString();
             movieImageView.setImage(new Image(imagePath));
         }
     }
 
     @FXML
     private void handleEditMovie(ActionEvent event) {
+        if (titleField.getText().isEmpty() || durationField.getText().isEmpty() ||
+                releaseDatePicker.getValue() == null || descriptionField.getText().isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Please fill in all required fields.");
+            return;
+        }
+
         String sql = "UPDATE movies SET title = ?, duration = ?, release_date = ?, description = ?, images = ? WHERE id = ?";
 
         try (Connection conn = DatabaseConnection.getConn();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, titleField.getText());
-//            pstmt.setString(2, directorField.getText());
-//            pstmt.setString(3, actorsField.getText());
-            String selectedGenresString = genreCheckComboBox.getCheckModel().getCheckedItems()
-                    .stream().collect(Collectors.joining(", "));
-            ObservableList<Genre> selectedGenres = FXCollections.observableArrayList();
-            for (String genreName : genreCheckComboBox.getCheckModel().getCheckedItems()) {
-                selectedGenres.add(new Genre(new SimpleIntegerProperty(0), new SimpleStringProperty(genreName)));
-            }
-
-
-//            pstmt.setString(2, selectedGenresString); // Lưu vào database
-            movie.setGenres(selectedGenres); // Cập nhật Movie object
             pstmt.setFloat(2, Float.parseFloat(durationField.getText()));
             pstmt.setDate(3, Date.valueOf(releaseDatePicker.getValue()));
             pstmt.setString(4, descriptionField.getText());
 
-            String imagePath = movie.getImage();
-            if (selectedFile != null) {
-                File destFile = new File(IMAGE_DIR, selectedFile.getName());
-                Files.copy(selectedFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                imagePath = destFile.toURI().toString();
+            // Kiểm tra hình ảnh
+            String imagePath = movie.getImage(); // Lưu đường dẫn hình ảnh cũ
+            if (selectedImageFile != null) {
+                File destFile = new File(IMAGE_DIR, selectedImageFile.getName());
+                Files.copy(selectedImageFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                imagePath = destFile.toURI().toString(); // Cập nhật đường dẫn hình ảnh mới
             }
-
-            pstmt.setString(5, imagePath);
+            pstmt.setString(5, imagePath); // Cập nhật đường dẫn hình ảnh mới
             pstmt.setInt(6, movie.getId());
 
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {
+                // Cập nhật thông tin phim
                 movie.setTitle(titleField.getText());
-//                movie.setDirector(directorField.getText());
-//                movie.setActors(actorsField.getText());
-                movie.setGenres(selectedGenres);
                 movie.setDuration(String.valueOf(Float.parseFloat(durationField.getText())));
                 movie.setReleaseDate(releaseDatePicker.getValue().toString());
                 movie.setDescription(descriptionField.getText());
-                movie.setImage(imagePath);
+                movie.setImage(imagePath); // Cập nhật hình ảnh mới
 
-                showAlert(Alert.AlertType.INFORMATION, "Success", "Movie edited!\n");
+                // Cập nhật thể loại
+                String deleteGenresSql = "DELETE FROM movie_movie_genres WHERE movie_id = ?";
+                try (PreparedStatement deleteStmt = conn.prepareStatement(deleteGenresSql)) {
+                    deleteStmt.setInt(1, movie.getId());
+                    deleteStmt.executeUpdate();
+                }
+
+                String insertGenresSql = "INSERT INTO movie_movie_genres (movie_id, genre_id) VALUES (?, ?)";
+                for (String genreName : genreCheckComboBox.getCheckModel().getCheckedItems()) {
+                    try {
+                        // Lấy ID thể loại từ tên thể loại
+                        int genreId = getGenreId(conn, genreName); // Gọi phương thức để lấy ID thể loại
+                        // Chèn thể loại vào bảng movie_movie_genres
+                        try (PreparedStatement insertStmt = conn.prepareStatement(insertGenresSql)) {
+                            insertStmt.setInt(1, movie.getId());
+                            insertStmt.setInt(2, genreId);
+                            insertStmt.executeUpdate();
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to insert genre: " + genreName);
+                    }
+                }
+
+                showAlert(Alert.AlertType.INFORMATION, "Success", "Movie edited!");
                 handleEditClear();
                 returnToMovieView(event);
+            } else {
+                showAlert(Alert.AlertType.WARNING, "No Changes", "No changes were made to the movie.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to edit movie.");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "File Error", "Failed to save image.");
+        }
+    }
+
+    private int getGenreId(Connection conn, String genreName) throws SQLException {
+        String sql = "SELECT id FROM movie_genres WHERE name =?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, genreName);
+            ResultSet resultSet = pstmt.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("id");
+            } else {
+                throw new SQLException("Genre not found: " + genreName);
+            }
+        } catch (SQLException e) {
+            throw e;
         }
     }
 
     @FXML
     private void handleEditClear() {
         titleField.clear();
-//        directorField.clear();
-//        actorsField.clear();
         genreCheckComboBox.getCheckModel().clearChecks();
         durationField.clear();
         releaseDatePicker.setValue(null);
         descriptionField.clear();
+        movieImageView.setImage(null);
+        selectedImageFile = null;
     }
 
     @FXML
     public void handleBack(ActionEvent actionEvent) {
-        try {
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            SceneSwitcher.switchTo(stage, "admin/moviemanagement/movie-view.fxml");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void goBack(ActionEvent event) {
-        returnToMovieView(event);
+        returnToMovieView(actionEvent);
     }
 
     private void returnToMovieView(ActionEvent event) {
@@ -203,7 +230,7 @@ public class EditMovieController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cinema/starplex/admin/moviemanagement/movie-view.fxml"));
             Parent seatView = loader.load();
 
-            AnchorPane root = (AnchorPane) ((Button) event.getSource()).getScene().getRoot();
+            AnchorPane root = (AnchorPane) ((Node) event.getSource()).getScene().getRoot();
             BorderPane mainPane = (BorderPane) root.lookup("#mainBorderPane");
 
             if (mainPane != null) {

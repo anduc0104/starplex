@@ -6,35 +6,78 @@
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.PieChart?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+<?import java.net.URL?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.cinema.starplex.ui.controllers.BookingReportController"
+            fx:controller="com.cinema.starplex.ui.controllers.admin.bookingManagement.BookingReportController"
             prefHeight="400.0" prefWidth="600.0">
-    <children>
-        <VBox prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <Label text="Booking Statistics" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20" />
+    </padding>
 
-            <HBox spacing="20">
-                <!-- PieChart: Trạng thái đặt chỗ -->
-                <VBox>
-                    <Label text="Booking Status Distribution"/>
-                    <PieChart fx:id="statusPieChart" prefWidth="350" prefHeight="300"/>
+        <VBox spacing="10" alignment="CENTER">
+            <Label text="Booking Reports" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+
+            <HBox spacing="30" alignment="CENTER">
+                <VBox alignment="CENTER" styleClass="stat-box">
+                    <Label text="Total Bookings" styleClass="stat-label" />
+                    <Label fx:id="totalBookingsLabel" text="0" styleClass="stat-value">
+                        <font>
+                            <Font size="24.0" />
+                        </font>
+                    </Label>
                 </VBox>
 
-                <!-- BarChart: Doanh thu theo trạng thái -->
-                <VBox>
-                    <Label text="Revenue by Status"/>
-                    <BarChart fx:id="revenueByStatusChart" prefWidth="350" prefHeight="300">
-                        <xAxis>
-                            <CategoryAxis label="Status"/>
-                        </xAxis>
-                        <yAxis>
-                            <NumberAxis label="Revenue"/>
-                        </yAxis>
-                    </BarChart>
+                <VBox alignment="CENTER" styleClass="stat-box">
+                    <Label text="Total Revenue" styleClass="stat-label" />
+                    <Label fx:id="totalRevenueLabel" text="0.0" styleClass="stat-value">
+                        <font>
+                            <Font size="24.0" />
+                        </font>
+                    </Label>
+                </VBox>
+
+                <VBox alignment="CENTER" styleClass="stat-box">
+                    <Label text="Average Booking Price" styleClass="stat-label" />
+                    <Label fx:id="avgBookingPriceLabel" text="0.00" styleClass="stat-value">
+                        <font>
+                            <Font size="24.0" />
+                        </font>
+                    </Label>
                 </VBox>
             </HBox>
         </VBox>
-    </children>
+
+        <HBox spacing="20">
+            <VBox spacing="10" HBox.hgrow="ALWAYS">
+                <Label text="Bookings by Status" style="-fx-font-weight: bold;" />
+                <PieChart fx:id="statusPieChart" title="Booking Status Distribution" VBox.vgrow="ALWAYS" />
+            </VBox>
+
+            <VBox spacing="10" HBox.hgrow="ALWAYS">
+                <Label text="Revenue by Status" style="-fx-font-weight: bold;" />
+                <BarChart fx:id="revenueByStatusChart" title="Revenue Distribution by Status" VBox.vgrow="ALWAYS">
+                    <xAxis>
+                        <CategoryAxis label="Status" />
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis label="Revenue ($)" />
+                    </yAxis>
+                </BarChart>
+            </VBox>
+        </HBox>
+
+        <HBox alignment="CENTER_RIGHT" spacing="10">
+            <padding>
+                <Insets top="20" />
+            </padding>
+            <Label text="Generated on " />
+            <Label text="{java.time.LocalDate.now()}" />
+        </HBox>
+
+    <stylesheets>
+        <URL value="@../../../../../css/chart.css" />
+    </stylesheets>
 </AnchorPane>

@@ -29,9 +29,9 @@
             </Button>
 
             <!-- Search Field -->
-            <!--            <TextField fx:id="searchField" layoutX="163.0" layoutY="34.0" prefHeight="30.0"-->
-            <!--                       promptText="Search by Seat Number" styleClass="search"-->
-            <!--                       stylesheets="@../../../../../css/admin.css"/>-->
+                        <TextField fx:id="searchField" layoutX="163.0" layoutY="34.0" prefHeight="30.0"
+                                   promptText="Search by movie" styleClass="search"
+                                   stylesheets="@../../../../../css/admin.css"/>
         </HBox>
 
         <TableView fx:id="movieTable" layoutX="20.0" layoutY="86.0" prefHeight="546.0" prefWidth="1260.0"
@@ -40,6 +40,7 @@
                 <TableColumn fx:id="idColumn" prefWidth="35.0" text="ID"/>
                 <TableColumn fx:id="imageColumn" prefWidth="115.0" text="Image"/>
                 <TableColumn fx:id="titleColumn" prefWidth="117.0" text="Movie title"/>
+                <TableColumn fx:id="genreColumn" prefWidth="105.0" text="Genre"/>
                 <TableColumn fx:id="durationColumn" prefWidth="93.0" text="Duration"/>
                 <TableColumn fx:id="releaseDateColumn" prefWidth="125.0" text="Release Date"/>
                 <TableColumn fx:id="descriptionColumn" prefWidth="187.0" text="Description"/>

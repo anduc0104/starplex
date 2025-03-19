@@ -24,7 +24,9 @@ public class AddSeatController {
     @FXML
     private ComboBox<SeatType> seatTypeComboBox;
     @FXML
-    private TextField seatNumberField;
+    private TextField rowField; // Thay thế seatNumberField bằng rowField
+    @FXML
+    private TextField colField; // Thêm colField để nhập số cột
     @FXML
     private Button saveButton;
     @FXML
@@ -89,9 +91,10 @@ public class AddSeatController {
     private void handleSave(ActionEvent event) {
         Room selectedRoom = roomComboBox.getValue();
         SeatType selectedSeatType = seatTypeComboBox.getValue();
-        String seatNumber = seatNumberField.getText().trim();
+        String row = rowField.getText().trim();
+        String col = colField.getText().trim();
 
-        if (selectedRoom == null || selectedSeatType == null || seatNumber.isEmpty()) {
+        if (selectedRoom == null || selectedSeatType == null || row.isEmpty() || col.isEmpty()) {
             showAlert("Error", "Please enter complete information!");
             return;
         }
@@ -102,9 +105,9 @@ public class AddSeatController {
         Optional<ButtonType> result = confirm.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            Seat newSeat = new Seat(null, selectedRoom, selectedSeatType, seatNumber, new Timestamp(System.currentTimeMillis()));
+            Seat newSeat = new Seat(null, selectedRoom, selectedSeatType, row.charAt(0), Integer.parseInt(col), new Timestamp(System.currentTimeMillis()));
             seatDao.save(newSeat);
-            showAlert("Success", "Chairs have been added!");
+            showAlert("Success", "Seat has been added!");
             returnToSeatView(event);
         }
     }
@@ -116,7 +119,8 @@ public class AddSeatController {
 
     @FXML
     private void handleClear(ActionEvent event) {
-        seatNumberField.clear();
+        rowField.clear();
+        colField.clear();
         roomComboBox.getSelectionModel().clearSelection();
         seatTypeComboBox.getSelectionModel().clearSelection();
     }

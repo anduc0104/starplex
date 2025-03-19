@@ -24,6 +24,14 @@ public class Payment {
         this.createdAt = createdAt;
     }
 
+    public Payment(Object o, Booking booking, BigDecimal amount, String paymentMethod, String transactionId, String status) {
+        this.booking = booking;
+        this.amount = amount;
+        this.paymentMethod = paymentMethod;
+        this.transactionId = transactionId;
+        this.status = status;
+    }
+
     // Getters and Setters
 
     public Integer getId() {

@@ -31,11 +31,33 @@ public class MovieMovieGenre {
         this.movie = movie;
     }
 
-    public MovieGenre getMovieType() {
+    public MovieGenre getMovieGenre() { // Đổi tên phương thức
         return movieGenre;
     }
 
-    public void setMovieType(MovieGenre movieGenre) {
+    public void setMovieGenre(MovieGenre movieGenre) { // Đổi tên phương thức
         this.movieGenre = movieGenre;
+    }
+
+    @Override
+    public String toString() {
+        return "MovieMovieGenre{" +
+                "id=" + id +
+                ", movie=" + movie.getTitle() + // Hoặc bất kỳ thuộc tính nào của Movie bạn muốn hiển thị
+                ", movieGenre=" + movieGenre.getName() + // Hoặc bất kỳ thuộc tính nào của MovieGenre bạn muốn hiển thị
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MovieMovieGenre)) return false;
+        MovieMovieGenre that = (MovieMovieGenre) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 }

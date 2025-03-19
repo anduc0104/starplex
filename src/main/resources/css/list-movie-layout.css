@@ -1,4 +1,4 @@
-/* styles.css */
+/* ================== MOVIE BOX ================== */
 .movie-box {
     -fx-background-color: #10141b; /* Màu nền */
     -fx-padding: 20;
@@ -12,8 +12,10 @@
     -fx-pref-height: 267;
     -fx-min-height: 267;
     -fx-max-height: 267;
+    -fx-cursor: hand;
 }
 
+/* ================== TEXT STYLES ================== */
 .movie-title {
     -fx-font-size: 19px;
     -fx-font-weight: bold;
@@ -21,38 +23,39 @@
     -fx-max-width: 307; /* Giới hạn chiều rộng tối đa */
     -fx-wrap-text: true; /* Cho phép text xuống dòng */
     -fx-text-overflow: clip; /* Cắt text nếu vượt quá chiều rộng */
-    -fx-wraping-width: 307;
 }
 
 .movie-info {
     -fx-font-size: 13.3px;
     -fx-fill: #FFFFFF; /* Màu chữ thông tin */
-    -fx-max-width: 307; /* Giới hạn chiều rộng tối đa */
-    -fx-wrap-text: true; /* Cho phép text xuống dòng */
-    -fx-text-overflow: clip; /* Cắt text nếu vượt quá chiều rộng */
+    -fx-max-width: 307;
+    -fx-wrap-text: true;
+    -fx-text-overflow: clip;
 }
 
 .movie-description {
     -fx-font-size: 13.3px;
-    -fx-fill: #FF0000; /* Màu chữ cho description */
-    -fx-max-width: 307; /* Giới hạn chiều rộng tối đa */
-    -fx-wrap-text: true; /* Cho phép text xuống dòng */
-    -fx-text-overflow: clip; /* Cắt text nếu vượt quá chiều rộng */
+    -fx-fill: #FF0000; /* Màu chữ đỏ cho mô tả */
+    -fx-max-width: 307;
+    -fx-wrap-text: true;
+    -fx-text-overflow: clip;
 }
 
 .showtime-label {
     -fx-font-size: 16px;
     -fx-font-weight: bold;
-    -fx-fill: #FFFFFF; /* Màu chữ thông tin */
-    -fx-max-width: 307; /* Giới hạn chiều rộng tối đa */
-    -fx-wrap-text: true; /* Cho phép text xuống dòng */
-    -fx-text-overflow: clip; /* Cắt text nếu vượt quá chiều rộng */
+    -fx-fill: #FFFFFF;
+    -fx-max-width: 307;
+    -fx-wrap-text: true;
+    -fx-text-overflow: clip;
 }
 
+/* ================== CONTAINER ================== */
 .container {
-    -fx-background-color: #2C2C2C; /* Màu nền cho toàn bộ */
+    -fx-background-color: #2C2C2C; /* Màu nền toàn bộ */
 }
 
+/* ================== SHOWTIME BUTTON ================== */
 .showtime-btn {
     -fx-background-color: transparent;
     -fx-border-color: white;
@@ -60,12 +63,40 @@
     -fx-text-fill: white;
     -fx-padding: 7px 14px;
     -fx-font-size: 19px;
-    -fx-max-width: 307; /* Giới hạn chiều rộng tối đa */
-    -fx-wrap-text: true; /* Cho phép text xuống dòng */
-    -fx-text-overflow: clip; /* Cắt text nếu vượt quá chiều rộng */
+    -fx-max-width: 307;
+    -fx-wrap-text: true;
+    -fx-text-overflow: clip;
+    -fx-cursor: hand;
 }
 
 .showtime-btn:hover {
     -fx-background-color: white;
     -fx-text-fill: black;
+}
+
+/* ================== SHOW DATE BUTTON ================== */
+.showdate-label {
+    font-weight: bold;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.showdate-btn {
+    -fx-background-color: #10141b; /* Màu nền mặc định */
+    -fx-text-fill: white;
+    -fx-padding: 5px 10px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.showdate-btn:hover {
+    -fx-background-color: #1F2937FF; /* Màu khi di chuột */
+}
+
+/* =============== NÚT NGÀY ĐƯỢC CHỌN =============== */
+.showdate-btn-selected {
+    -fx-background-color: red; /* Màu đỏ khi chọn */
+    -fx-text-fill: white;
+    -fx-padding: 5px 10px;
+    -fx-border-radius: 5px;
 }

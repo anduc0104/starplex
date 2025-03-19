@@ -25,7 +25,9 @@ public class EditSeatController {
     @FXML
     private ComboBox<SeatType> seatTypeComboBox;
     @FXML
-    private TextField seatNumberField;
+    private TextField rowField; // Thay thế seatNumberField bằng rowField
+    @FXML
+    private TextField colField; // Thêm colField để nhập số cột
     @FXML
     private Button saveButton;
     @FXML
@@ -49,7 +51,8 @@ public class EditSeatController {
         if (seat != null) {
             roomComboBox.setValue(seat.getRoom());
             seatTypeComboBox.setValue(seat.getSeatType());
-            seatNumberField.setText(seat.getSeatNumber());
+            rowField.setText(String.valueOf(seat.getRow())); // Cập nhật hàng
+            colField.setText(String.valueOf(seat.getColNumber())); // Cập nhật cột
         }
     }
 
@@ -106,9 +109,10 @@ public class EditSeatController {
 
         Room selectedRoom = roomComboBox.getValue();
         SeatType selectedSeatType = seatTypeComboBox.getValue();
-        String seatNumber = seatNumberField.getText().trim();
+        String row = rowField.getText().trim();
+        String col = colField.getText().trim();
 
-        if (selectedRoom == null || selectedSeatType == null || seatNumber.isEmpty()) {
+        if (selectedRoom == null || selectedSeatType == null || row.isEmpty() || col.isEmpty()) {
             showAlert("Error", "Please enter complete information!");
             return;
         }
@@ -116,13 +120,14 @@ public class EditSeatController {
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
         confirm.setTitle("Confirm");
         confirm.setHeaderText("Are you sure you want to update this seat information?");
-        confirm.setContentText("Room: " + selectedRoom.getRoomNumber() + "\nSeat Type: " + selectedSeatType.getName() + "\nSeat Number: " + seatNumber);
+        confirm.setContentText("Room: " + selectedRoom.getRoomNumber() + "\nSeat Type: " + selectedSeatType.getName() + "\nRow: " + row + "\nColumn: " + col);
         Optional<ButtonType> result = confirm.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
             selectedSeat.setRoom(selectedRoom);
             selectedSeat.setSeatType(selectedSeatType);
-            selectedSeat.setSeatNumber(seatNumber);
+            selectedSeat.setRow(row.charAt(0)); // Cập nhật hàng
+            selectedSeat.setColNumber(Integer.parseInt(col)); // Cập nhật cột
             selectedSeat.setCreatedAt(new Timestamp(System.currentTimeMillis()));
 
             seatDao.update(selectedSeat);
@@ -138,7 +143,8 @@ public class EditSeatController {
 
     @FXML
     private void handleClear(ActionEvent event) {
-        seatNumberField.clear();
+        rowField.clear();
+        colField.clear();
         roomComboBox.getSelectionModel().clearSelection();
         seatTypeComboBox.getSelectionModel().clearSelection();
     }

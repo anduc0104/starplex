@@ -1,13 +1,13 @@
 package com.cinema.starplex.models;
 
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ListChangeListener;
 
 public class Movie {
     private IntegerProperty id;
     private StringProperty title;
-    private StringProperty director;
-    private StringProperty actors;
     private ListProperty<Genre> genres;
     private StringProperty duration;
     private StringProperty releaseDate;
@@ -17,9 +17,7 @@ public class Movie {
     public Movie() {
         this.id = new SimpleIntegerProperty();
         this.title = new SimpleStringProperty();
-        this.director = new SimpleStringProperty();
-        this.actors = new SimpleStringProperty();
-        this.genres = new SimpleListProperty<>();
+        this.genres = new SimpleListProperty<>(FXCollections.observableArrayList()); // Khởi tạo với danh sách rỗng
         this.duration = new SimpleStringProperty();
         this.releaseDate = new SimpleStringProperty();
         this.description = new SimpleStringProperty();
@@ -30,11 +28,9 @@ public class Movie {
         this.id = new SimpleIntegerProperty(id);
     }
 
-    public Movie(int id, String title, String director, String actors, ObservableList<Genre> genres, String duration, String releaseDate, String description, String image) {
+    public Movie(int id, String title, ObservableList<Genre> genres, String duration, String releaseDate, String description, String image) {
         this.id = new SimpleIntegerProperty(id);
         this.title = new SimpleStringProperty(title);
-        this.director = new SimpleStringProperty(director);
-        this.actors = new SimpleStringProperty(actors);
         this.genres = new SimpleListProperty<>(genres);
         this.duration = new SimpleStringProperty(duration);
         this.releaseDate = new SimpleStringProperty(releaseDate);
@@ -80,32 +76,8 @@ public class Movie {
         this.title.set(title);
     }
 
-    public String getDirector() {
-        return director.get();
-    }
-
-    public StringProperty directorProperty() {
-        return director;
-    }
-
-    public void setDirector(String director) {
-        this.director.set(director);
-    }
-
-    public String getActors() {
-        return actors.get();
-    }
-
-    public StringProperty actorsProperty() {
-        return actors;
-    }
-
-    public void setActors(String actors) {
-        this.actors.set(actors);
-    }
-
     public ObservableList<Genre> getGenres() {
-        return genres.get();
+        return FXCollections.observableArrayList(genres.get()); // Trả về bản sao
     }
 
     public ListProperty<Genre> genresProperty() {
@@ -166,6 +138,6 @@ public class Movie {
 
     @Override
     public String toString() {
-        return title.get();
+        return title.get(); // Hoặc có thể thêm thông tin khác
     }
 }
