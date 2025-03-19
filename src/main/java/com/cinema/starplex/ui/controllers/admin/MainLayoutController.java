@@ -111,4 +111,11 @@ public class MainLayoutController {
         Parent newView = loader.getRoot();
         mainBorderPane.setCenter(newView);
     }
+
+    public void managementPayment(ActionEvent event) {
+        FXMLLoader loader = SceneSwitcher.loadView("admin/paymentmanagement/payment-view.fxml");
+        assert loader != null;
+        Parent newView = loader.getRoot();
+        mainBorderPane.setCenter(newView);
+    }
 }
