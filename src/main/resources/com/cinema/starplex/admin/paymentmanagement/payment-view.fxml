@@ -26,10 +26,10 @@
                 </font>
             </Button>
 
-<!--             Search Field -->
-                        <TextField fx:id="searchField" layoutX="163.0" layoutY="34.0" prefHeight="30.0"
-                                   promptText="Search by Payment" styleClass="search"
-                                   stylesheets="@../../../../../css/admin.css"/>
+            <!--             Search Field -->
+            <TextField fx:id="searchField" layoutX="163.0" layoutY="34.0" prefHeight="30.0"
+                       promptText="Search by Payment" styleClass="search"
+                       stylesheets="@../../../../../css/admin.css"/>
         </HBox>
 
         <!-- Table -->

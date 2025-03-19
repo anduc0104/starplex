@@ -26,6 +26,11 @@
                     <Font name="System Bold Italic" size="12.0"/>
                 </font>
             </Button>
+
+            <!-- Search Field -->
+            <TextField fx:id="searchField" layoutX="163.0" layoutY="34.0" prefHeight="30.0"
+                       promptText="Search by User" styleClass="search"
+                       stylesheets="@../../../../../css/admin.css"/>
         </HBox>
         <TableView fx:id="tableView" styleClass="table" stylesheets="@../../../../../css/admin.css">
             <columns>

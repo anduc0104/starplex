@@ -6,18 +6,43 @@ INSERT INTO users (full_name, username, email, phone, password, role, created_at
 
 
 -- movies
-INSERT INTO movies (id, title, duration, release_date, description) VALUES
-(1, 'The Hero Returns', 120, '2025-01-01', 'An epic tale of heroism.'),
-(2, 'Laughing Out Loud', 90, '2025-02-10', 'A hilarious comedy.'),
-(3, 'Haunted Nights', 110, '2025-03-15', 'A chilling horror story.');
+INSERT INTO movies (title, duration, release_date, description, created_at) VALUES
+('Inception', 148, '2010-07-16', 'A sci-fi movie about dreams and reality.', NOW()),
+('Avatar', 162, '2009-12-18', 'The story of Pandora and the fight for survival.', NOW()),
+('The Dark Knight', 152, '2008-07-18', 'Batman faces Joker in a battle for Gotham.', NOW()),
+('Interstellar', 169, '2014-11-07', 'Astronauts travel through a wormhole to save humanity.', NOW()),
+('Titanic', 195, '1997-12-19', 'A tragic love story set on the legendary ship.', NOW()),
+('Avengers: Endgame', 181, '2019-04-26', 'The final battle of the Avengers against Thanos.', NOW()),
+('The Matrix', 136, '1999-03-31', 'A hacker discovers the truth about reality.', NOW()),
+('Jurassic Park', 127, '1993-06-11', 'Dinosaurs are brought back to life in a theme park.', NOW()),
+('The Godfather', 175, '1972-03-24', 'The story of the Corleone mafia family.', NOW()),
+('Forrest Gump', 142, '1994-07-06', 'A man with a low IQ changes history through his life journey.', NOW()),
+('Pulp Fiction', 154, '1994-10-14', 'A nonlinear crime story full of twists.', NOW()),
+('Shawshank Redemption', 142, '1994-09-23', 'A man’s journey to freedom from prison.', NOW()),
+('Gladiator', 155, '2000-05-05', 'A betrayed general seeks vengeance in the Colosseum.', NOW()),
+('The Lion King', 118, '1994-06-15', 'A young lion cub embarks on a journey to reclaim his throne.', NOW()),
+('Fight Club', 139, '1999-10-15', 'An underground fight club takes a dark turn.', NOW()),
+('The Lord of the Rings: The Fellowship of the Ring', 178, '2001-12-19', 'A journey to destroy the One Ring.', NOW()),
+('The Lord of the Rings: The Two Towers', 179, '2002-12-18', 'The battle for Middle-earth intensifies.', NOW()),
+('The Lord of the Rings: The Return of the King', 201, '2003-12-17', 'The final showdown for the fate of Middle-earth.', NOW()),
+('Harry Potter and the Sorcerer''s Stone', 152, '2001-11-16', 'A young wizard discovers his destiny.', NOW()),
+('Harry Potter and the Chamber of Secrets', 161, '2002-11-15', 'Hogwarts is threatened by a hidden chamber.', NOW());
 
 
 
 -- rooms
-INSERT INTO rooms (id, room_number, total_seats) VALUES
-(1, 1, 126),
-(2, 2, 126),
-(3, 3, 126);
+INSERT INTO rooms (id, room_number, total_seats, created_at) VALUES
+(1, 101, 50, NOW()),
+(2, 102, 60, NOW()),
+(3, 103, 70, NOW()),
+(4, 104, 80, NOW()),
+(5, 105, 50, NOW()),
+(6, 106, 60, NOW()),
+(7, 107, 70, NOW()),
+(8, 108, 80, NOW()),
+(9, 109, 50, NOW()),
+(10, 110, 60, NOW());
+
 
 -- movie genres
 INSERT INTO movie_genres (id, name) VALUES
@@ -33,12 +58,27 @@ INSERT INTO movie_genres (id, name) VALUES
 
 
 -- Movie movie genres
-INSERT INTO movie_movie_genres (movie_id, genre_id) VALUES
-(1, 1), (1, 5),
-(2, 2), (2, 6),
-(3, 4), (3, 7);
-
-
+INSERT INTO movie_movie_genres (movie_id, genre_id, created_at) VALUES
+(1, 3, NOW()), -- Inception (Sci-Fi)
+(2, 4, NOW()), -- Titanic (Romance)
+(3, 9, NOW()), -- Avatar (Adventure)
+(4, 1, NOW()), -- The Dark Knight (Action)
+(5, 2, NOW()), -- Forrest Gump (Drama)
+(6, 3, NOW()), -- Interstellar (Sci-Fi)
+(7, 3, NOW()), -- The Matrix (Sci-Fi)
+(8, 8, NOW()), -- Joker (Thriller)
+(9, 1, NOW()), -- Avengers: Endgame (Action)
+(10, 2, NOW()), -- The Godfather (Drama)
+(11, 8, NOW()), -- Pulp Fiction (Thriller)
+(12, 2, NOW()), -- Shawshank Redemption (Drama)
+(13, 1, NOW()), -- Gladiator (Action)
+(14, 10, NOW()), -- The Lion King (Animation)
+(15, 8, NOW()), -- Fight Club (Thriller)
+(16, 7, NOW()), -- LOTR: The Fellowship of the Ring (Fantasy)
+(17, 7, NOW()), -- LOTR: The Two Towers (Fantasy)
+(18, 7, NOW()), -- LOTR: The Return of the King (Fantasy)
+(19, 7, NOW()), -- Harry Potter and the Sorcerer’s Stone (Fantasy)
+(20, 7, NOW()); -- Harry Potter and the Chamber of Secrets (Fantasy)
 
 
 -- seat types
