@@ -2,7 +2,6 @@ package com.cinema.starplex.ui.controllers.admin.roommanagement;
 
 import com.cinema.starplex.dao.RoomDao;
 import com.cinema.starplex.models.Room;
-import com.cinema.starplex.ui.functions.TablePaginationUtility;
 import com.cinema.starplex.util.SceneSwitcher;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -58,7 +57,6 @@ public class ListRoomController implements Initializable {
     private RoomDao roomDao;
     private ObservableList<Room> roomList;
     private Room selectedRoom;
-    private TablePaginationUtility<Room> paginationUtility;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -167,23 +165,7 @@ public class ListRoomController implements Initializable {
             e.printStackTrace();
         }
     }
-    private void filterRooms(String searchText) {
-        if (roomList == null) {
-            return;
-        }
 
-        if (searchText == null || searchText.isEmpty()) {
-            //neu la empty thi show tat ca room
-            paginationUtility.setItems(roomList);
-        } else {
-            //tim kiem dua vao searchText
-            List<Room> filteredList = roomList.stream()
-                    .filter(room ->
-                            String.valueOf(room.getId()).contains(searchText) || String.valueOf(room.getRoomNumber()).contains(searchText) || String.valueOf(room.getTotalSeats()).contains(searchText)
-                    ).collect(Collectors.toList());
-            paginationUtility.setItems(filteredList);
-        }
-    }
     private void initializeTableColumns() {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         roomNumberColumn.setCellValueFactory(new PropertyValueFactory<>("roomNumber"));

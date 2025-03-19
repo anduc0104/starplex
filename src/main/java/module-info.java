@@ -32,15 +32,7 @@ module com.cinema.starplex {
     exports com.cinema.starplex.ui.controllers.admin.movieManagement;
     exports com.cinema.starplex.ui.controllers.admin.usermanagement;
 
-
     exports com.cinema.starplex.models;
-
-    opens com.cinema.starplex.ui.controllers.staff.staffDetail;
-    exports com.cinema.starplex.ui.controllers.staff.staffDetail;
-
-
-    opens com.cinema.starplex.ui.app to javafx.graphics, javafx.fxml;
-    exports com.cinema.starplex.ui.app;
 
     opens com.cinema.starplex.staff;
     opens com.cinema.starplex.ui.controllers.admin.roommanagement;
