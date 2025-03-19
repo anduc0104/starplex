@@ -7,7 +7,7 @@ import com.cinema.starplex.util.DatabaseConnection;
 import java.sql.*;
 import java.util.List;
 
-public class PaymentDao implements BaseDao<Payment>{
+public class PaymentDao implements BaseDao<Payment> {
     private Connection connection;
 
     public PaymentDao() {
@@ -34,7 +34,7 @@ public class PaymentDao implements BaseDao<Payment>{
     @Override
     public boolean insert(Payment payment) {
         String query = "INSERT INTO payments (booking_id, amount, payment_method, status, transaction_id, created_at) VALUES (?, ?, ?, ?, ?, NOW())";
-        try(PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, payment.getBooking().getId());
             statement.setBigDecimal(3, payment.getAmount());
             statement.setString(2, payment.getPaymentMethod());
@@ -46,7 +46,7 @@ public class PaymentDao implements BaseDao<Payment>{
                 return false;
             }
 
-            try(ResultSet generateKeys = statement.getGeneratedKeys()) {
+            try (ResultSet generateKeys = statement.getGeneratedKeys()) {
                 if (generateKeys.next()) {
                     payment.setId(generateKeys.getInt(1));
                     return true;
@@ -88,5 +88,21 @@ public class PaymentDao implements BaseDao<Payment>{
         payment.setTransactionId(resultSet.getString("transaction_id"));
         payment.setCreatedAt(resultSet.getTimestamp("created_at"));
         return payment;
+    }
+
+    public void creaetePaymentDetails(int bookingId, double amount) {
+        String query = "INSERT INTO payments (booking_id, amount, payment_method, status) VALUES (?,?,'Cash','Completed')";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, bookingId);
+            statement.setDouble(2, amount);
+
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Creating payment failed, no rows affected.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 }

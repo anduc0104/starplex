@@ -1,9 +1,14 @@
 package com.cinema.starplex.ui.controllers.staff;
 
+import com.cinema.starplex.dao.BookingDao;
+import com.cinema.starplex.dao.BookingDetailDao;
+import com.cinema.starplex.dao.PaymentDao;
 import com.cinema.starplex.dao.ShowTimeDao;
+import com.cinema.starplex.models.Booking;
 import com.cinema.starplex.models.Movie;
 import com.cinema.starplex.models.Seat;
 import com.cinema.starplex.models.Showtime;
+import com.cinema.starplex.session.SessionManager;
 import com.cinema.starplex.util.SceneSwitcher;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -17,6 +22,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -53,11 +59,16 @@ public class SelectPaymentMethod {
     public String paymentMethod;
 
     public ShowTimeDao showTimeDao;
+    public BookingDao bookingDao;
+    public BookingDetailDao bookingDetailDao;
+    public PaymentDao paymentDao;
 
 
     public void initialize() {
         showTimeDao = new ShowTimeDao();
-
+        bookingDao = new BookingDao();
+        bookingDetailDao = new BookingDetailDao();
+        paymentDao = new PaymentDao();
     }
 
     public void setInfo(Movie selectedMovie, Showtime selectedShowtime, List<Seat> selectedSeats, double totalPriceToPayment) {
@@ -124,7 +135,8 @@ public class SelectPaymentMethod {
         }
     }
 
-    public void handlePayment(ActionEvent event) {
+
+    public void handlePayment(ActionEvent event) throws SQLException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Payment Confirmation");
         alert.setHeaderText("Are you sure you want to proceed with the payment?");
@@ -135,14 +147,37 @@ public class SelectPaymentMethod {
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
             // User clicked OK -> Process the payment
-            processPayment();
+            processPayment(event);
         } else {
             // User clicked Cancel or closed the alert
             System.out.println("Payment was canceled.");
         }
     }
 
-    private void processPayment() {
-        
+    private void processPayment(ActionEvent event) throws SQLException {
+//        System.out.println(SessionManager.getInstance().getUserId());
+        try {
+            int bookingId = bookingDao.createBookingPayment(new Booking(SessionManager.getInstance().getUserId(), selectedShowtime.getId(), selectedSeats.size(), totalPriceToPayment));
+//        System.out.println(bookingId);
+            if (bookingId == -1) {
+                throw new SQLException("Failed to create booking");
+            }
+            bookingDetailDao.createBookingDetail(bookingId, selectedSeats);
+
+            paymentDao.creaetePaymentDetails(bookingId, totalPriceToPayment);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Payment Successful");
+            alert.setHeaderText("Payment has been successful.");
+            alert.setContentText("Your booking ID: " + bookingId);
+            alert.showAndWait();
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            SceneSwitcher.switchTo(new Stage(), "staff/main-layout.fxml");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
+
+
 }

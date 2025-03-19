@@ -47,7 +47,7 @@ public class MovieDetail {
 
     private static final int ROWS = 9;
     private static final int COLS = 14;
-    public static double totalPriceToPayment = 0;
+    public double totalPriceToPayment = 0;
 
     @FXML
     public void initialize() {
@@ -81,7 +81,6 @@ public class MovieDetail {
     }
 
     public void setShowtime(Showtime showtime, Movie movie) throws SQLException {
-
         this.selectedShowtime = showtime;
         this.selectedMovie = movie;
         //text showtime
@@ -93,6 +92,7 @@ public class MovieDetail {
         this.roomNumber.setText(String.valueOf(showTimeDao.getRoomNumber(showtime.getRoomId())));
 
         loadSeatsForRoom(showtime.getRoomId());
+
     }
 
     private void loadSeatsForRoom(int roomId) throws SQLException {
@@ -160,7 +160,7 @@ public class MovieDetail {
     private void updateSelectedSeats() {
         // Hiển thị danh sách ghế đã chọn (row + col_number)
         StringBuilder seatText = new StringBuilder();
-        // double total = 0;
+         double newTotalPrice  = 0;
 
         for (Seat seat : selectedSeats) {
             seatText.append(seat.getRow()).append(seat.getCol_number()).append(", ");
@@ -168,11 +168,13 @@ public class MovieDetail {
             // Lấy giá của ghế từ SeatTypeDao
             try {
                 double seatPrice = seatTypeDao.getPriceById(seat.getSeat_type_id());
-                totalPriceToPayment += seatPrice;
+                newTotalPrice += seatPrice;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
+
+        totalPriceToPayment = newTotalPrice;
 
         // Xóa dấu phẩy cuối cùng nếu có ghế
         if (!selectedSeats.isEmpty()) {
