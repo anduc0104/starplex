@@ -4,6 +4,7 @@ CREATE TABLE payments (
     amount DECIMAL(10,2) NULL,
     payment_method VARCHAR(50) NULL CHECK (payment_method IN ('Credit Card', 'PayPal', 'Cash')),
     status VARCHAR(50) NULL CHECK (status IN ('Pending', 'Completed', 'Failed')),
+    transaction_id VARCHAR(255) NULL CHECK (transaction)
     created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (booking_id) REFERENCES bookings(id) ON DELETE CASCADE
 );

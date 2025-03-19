@@ -161,11 +161,11 @@ INSERT INTO bookings (id, user_id, showtime_id, total_tickets, total_price) VALU
 (4, 2, 13, 3, 300000);
 
 -- payment
-INSERT INTO payments (id, booking_id, payment_method, status) VALUES
-(1, 1, 'Credit Card', 'Completed'),
-(2, 2, 'PayPal', 'Completed'),
-(3, 3, 'Cash', 'Pending'),
-(4, 4, 'Credit Card', 'Completed');
+INSERT INTO payments (id, booking_id, payment_method, status, transaction_id) VALUES
+(1, 1, 'Credit Card', 'Completed', 'TXN123456'),
+(2, 2, 'PayPal', 'Completed', 'TXN123457'),
+(3, 3, 'Cash', 'Pending', 'TXN123458'),
+(4, 4, 'Credit Card', 'Completed', 'TXN123459'),;
 
 
 -- booking detail
