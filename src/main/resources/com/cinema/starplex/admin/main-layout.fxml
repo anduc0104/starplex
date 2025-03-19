@@ -55,6 +55,9 @@
                     <!-- Booking-->
                     <Button mnemonicParsing="false" onAction="#managementBooking" styleClass="nav-btn"
                             stylesheets="@../../../../css/admin.css" text="Booking" textFill="WHITE"/>
+                    <!-- Payment-->
+                    <Button mnemonicParsing="false" onAction="#managementPayment" styleClass="nav-btn"
+                            stylesheets="@../../../../css/admin.css" text="Payment" textFill="WHITE"/>
                 </VBox>
             </AnchorPane>
         </left>

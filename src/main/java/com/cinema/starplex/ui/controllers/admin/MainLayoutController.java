@@ -85,7 +85,10 @@ public class MainLayoutController {
     }
 
     public void managementBooking(ActionEvent event) {
-
+        FXMLLoader loader = SceneSwitcher.loadView("admin/booking-view/Booking-View.fxml");
+        assert loader != null;
+        Parent newView = loader.getRoot();
+        mainBorderPane.setCenter(newView);
     }
 
     public void movieGenreScene(ActionEvent event) {
@@ -104,6 +107,13 @@ public class MainLayoutController {
 
     public void genreScene(ActionEvent event) {
         FXMLLoader loader = SceneSwitcher.loadView("admin/moviegenremanagement/genre-view.fxml");
+        assert loader != null;
+        Parent newView = loader.getRoot();
+        mainBorderPane.setCenter(newView);
+    }
+
+    public void managementPayment(ActionEvent event) {
+        FXMLLoader loader = SceneSwitcher.loadView("admin/paymentmanagement/payment-view.fxml");
         assert loader != null;
         Parent newView = loader.getRoot();
         mainBorderPane.setCenter(newView);

@@ -41,6 +41,13 @@ public class Seat {
         this.createdAt = timestamp;
     }
 
+    public Seat(Room selectedRoom, SeatType selectedSeatType, String row, Integer col_number) {
+        this.room = selectedRoom;
+        this.seatType = selectedSeatType;
+        this.row = row;
+        this.col_number = col_number;
+    }
+
     // Getters and Setters
 
     public Integer getId() {

@@ -1,78 +1,63 @@
-package com.cinema.starplex.ui.controllers.admin.seatManagement;
+package com.cinema.starplex.ui.controllers.admin.paymentManagement;
 
-import com.cinema.starplex.dao.RoomDao;
-import com.cinema.starplex.dao.SeatTypeDao;
-import com.cinema.starplex.dao.SeatDao;
-import com.cinema.starplex.models.Seat;
-import com.cinema.starplex.models.Room;
-import com.cinema.starplex.models.SeatType;
+import com.cinema.starplex.dao.PaymentDao;
+import com.cinema.starplex.models.Booking;
+import com.cinema.starplex.models.Payment;
 import com.cinema.starplex.util.SceneSwitcher;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
-import javafx.geometry.Pos;
-import org.kordamp.ikonli.javafx.FontIcon;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
-
+import org.kordamp.ikonli.javafx.FontIcon;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-public class SeatController {
+public class PaymentController {
     public TextField searchField;
     @FXML
-    private TableView<Seat> seatTable;
+    private TableView<Payment> paymentTable;
     @FXML
-    private TableColumn<Seat, Integer> colId;
+    private TableColumn<Payment, Integer> colId;
     @FXML
-    private TableColumn<Seat, String> colRoomId;
+    private TableColumn<Payment, String> colBookingId;
     @FXML
-    private TableColumn<Seat, String> colSeatTypeId;
+    private TableColumn<Payment, BigDecimal> colAmount;
     @FXML
-    private TableColumn<Seat, String> colSeatRow; // Cột hàng
+    private TableColumn<Payment, String> colPaymentMethod;
     @FXML
-    private TableColumn<Seat, String> colSeatCol; // Cột cột
+    private TableColumn<Payment, String> colStatus;
     @FXML
-    private TableColumn<Seat, Void> colAction;
+    private TableColumn<Payment, String> colTransactionId;
+    @FXML
+    private TableColumn<Payment, Void> colAction;
 
-    private final SeatDao seatDao = new SeatDao();
-    private final RoomDao roomDao = new RoomDao(); // Khởi tạo RoomDao
+    private final PaymentDao paymentDao = new PaymentDao();
 
-    @FXML
     public void initialize() {
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colRoomId.setCellValueFactory(cellData -> {
-            Room room = cellData.getValue().getRoom();
-            return new SimpleStringProperty(room != null ? String.valueOf(room.getRoomNumber()) : "N/A"); // Kiểm tra null
+        colBookingId.setCellValueFactory(celData -> {
+            Booking booking = celData.getValue().getBooking();
+            return new SimpleStringProperty(booking != null ? String.valueOf(booking.getUser().getUsername()) : "N/A");
         });
-
-        colSeatTypeId.setCellValueFactory(cellData -> {
-            SeatType seatType = cellData.getValue().getSeatType();
-            return new SimpleStringProperty(seatType != null ? seatType.getName() : "N/A"); // Kiểm tra null
-        });
-
-        // Hiển thị thông tin hàng và cột
-        colSeatRow.setCellValueFactory(cellData -> {
-            Seat seat = cellData.getValue();
-            return new SimpleStringProperty(String.valueOf(seat.getRow())); // Hiển thị hàng
-        });
-
-        colSeatCol.setCellValueFactory(cellData -> {
-            Seat seat = cellData.getValue();
-            return new SimpleStringProperty(String.valueOf(seat.getCol_number())); // Hiển thị cột
-        });
-
+        colAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        colPaymentMethod.setCellValueFactory(new PropertyValueFactory<>("paymentMethod"));
+        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        colTransactionId.setCellValueFactory(new PropertyValueFactory<>("transactionId"));
         addActionButtons();
-        loadSeats();
+        loadsPayment();
     }
 
     private void addActionButtons() {
@@ -100,30 +85,30 @@ public class SeatController {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    Seat seat = getTableView().getItems().get(getIndex());
-                    setActionHandlers(actionBox, seat);
+                    Payment payment = getTableView().getItems().get(getIndex());
+                    setActionHandlers(actionBox, payment);
                     setGraphic(actionBox);
                 }
             }
         });
     }
 
-    private void setActionHandlers(HBox actionBox, Seat seat) {
+    private void setActionHandlers(HBox actionBox,Payment payment) {
         FontIcon editIcon = (FontIcon) actionBox.getChildren().get(0);
         FontIcon deleteIcon = (FontIcon) actionBox.getChildren().get(1);
 
-        editIcon.setOnMouseClicked(event -> handleEdit(seat));
-        deleteIcon.setOnMouseClicked(event -> handleDelete(seat));
+        editIcon.setOnMouseClicked(event -> handleEdit(payment));
+        deleteIcon.setOnMouseClicked(event -> handleDelete(payment));
     }
 
-    private void loadSeats() {
-        List<Seat> seats = seatDao.findAll();
-        seatTable.setItems(FXCollections.observableArrayList(seats));
+    private void loadsPayment() {
+        List<Payment> payments = paymentDao.findAll();
+        paymentTable.setItems(FXCollections.observableArrayList(payments));
     }
 
     @FXML
     private void handleAdd(ActionEvent event) throws IOException {
-        FXMLLoader loader = SceneSwitcher.loadView("admin/seatmanagement/add-seat.fxml");
+        FXMLLoader loader = SceneSwitcher.loadView("admin/paymentmanagement/add-payment.fxml");
         if (loader != null) {
             Parent newView = loader.getRoot();
             AnchorPane anchorPane = (AnchorPane) ((Node) event.getSource()).getScene().getRoot();
@@ -135,23 +120,23 @@ public class SeatController {
                 System.err.println("BorderPane with ID 'mainBorderPane' not found");
             }
         } else {
-            System.err.println("Could not load add-seat.fxml");
+            System.err.println("Could not load add-payment.fxml");
         }
     }
 
-    private void handleEdit(Seat seat) {
-        if (seat == null) {
-            showAlert("Error", "Please select a seat to edit!");
+    private void handleEdit(Payment payment) {
+        if (payment == null) {
+            showAlert("Error", "Please select a payment to repair!");
             return;
         }
 
-        FXMLLoader loader = SceneSwitcher.loadView("admin/seatmanagement/edit-seat.fxml");
+        FXMLLoader loader = SceneSwitcher.loadView("admin/paymentmanagement/edit-payment.fxml");
         if (loader != null) {
-            EditSeatController controller = loader.getController();
-            controller.setSeat(seat); // Truyền dữ liệu ghế cần chỉnh sửa
+            PaymentEditController controller = loader.getController();
+            controller.setPayment(payment); // Truyền dữ liệu ghế cần chỉnh sửa
 
             Parent newView = loader.getRoot();
-            AnchorPane anchorPane = (AnchorPane) seatTable.getScene().getRoot();
+            AnchorPane anchorPane = (AnchorPane) paymentTable.getScene().getRoot();
             BorderPane mainPane = (BorderPane) anchorPane.lookup("#mainBorderPane");
 
             if (mainPane != null) {
@@ -160,23 +145,24 @@ public class SeatController {
                 System.err.println("BorderPane with ID 'mainBorderPane' not found");
             }
         } else {
-            System.err.println("Could not load edit-seat.fxml");
+            System.err.println("Could not load edit-payment.fxml");
         }
     }
 
-    private void handleDelete(Seat seat) {
-        if (seat == null) {
-            showAlert("Error", "Please select a seat to delete!");
+    private void handleDelete(Payment payment) {
+        if (payment == null) {
+            showAlert("Error", "Please select a payment to delete!");
             return;
         }
-        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this seat?", ButtonType.YES, ButtonType.NO);
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this payment?", ButtonType.YES, ButtonType.NO);
         Optional<ButtonType> result = confirm.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.YES) {
-            seatDao.delete(seat.getId());
-            loadSeats();
-            showAlert("Success", "Delete seat successfully!");
+            paymentDao.delete(payment.getId());
+            loadsPayment();
+            showAlert("Success", "Delete payment successfully!");
         }
     }
+
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
