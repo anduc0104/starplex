@@ -60,7 +60,6 @@ public class BookingDetailDao implements BaseDao<BookingDetail> {
                 stmt.addBatch();
             }
             stmt.executeBatch();
-            System.out.println("booking detail added successfully");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

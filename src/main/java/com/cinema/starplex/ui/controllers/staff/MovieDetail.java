@@ -96,7 +96,7 @@ public class MovieDetail {
     }
 
     private void loadSeatsForRoom(int roomId) throws SQLException {
-        List<Seat> seats = roomDao.getSeatsForRoom(roomId);
+        List<Seat> seats = roomDao.getSeatsForRoom(roomId, selectedShowtime.getId());
 
         // Xóa grid và danh sách chọn
 //        seatGrid.getChildren().clear();

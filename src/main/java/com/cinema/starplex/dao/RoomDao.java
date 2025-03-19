@@ -236,17 +236,19 @@ public class RoomDao implements BaseDao<Room> {
         return rooms;
     }
 
-    public List<Seat> getSeatsForRoom(int roomId) {
+    public List<Seat> getSeatsForRoom(int roomId, Integer showTimeId) {
         List<Seat> seats = new ArrayList<>();
         try {
-            String query = "SELECT s.*, b.id as booking_id " +  // Thêm khoảng trắng trước "FROM"
+            String query = "SELECT s.*, b.id as booking_id " +
                     "FROM seats s " +
                     "LEFT JOIN booking_details bd ON bd.seat_id = s.id " +
-                    "LEFT JOIN bookings b ON bd.booking_id = b.id " +
-                    "WHERE s.room_id = ? ORDER BY s.row ASC, s.col_number ASC";
+                    "LEFT JOIN bookings b ON bd.booking_id = b.id AND b.showtime_id = ? " +
+                    "WHERE s.room_id = ? " +
+                    "ORDER BY s.row ASC, s.col_number ASC";
 
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, roomId);
+            statement.setInt(1, showTimeId);
+            statement.setInt(2, roomId);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {

@@ -54,7 +54,6 @@ public class MovieDetailLayout {
 
     public void setMovie(Movie movie) {
         this.selectedMovie = movie;
-        System.out.println("movie selected layout main"+movie);
         title.setText(selectedMovie.getTitle());
         genre.setText(getGenresForMovie(movie.getId()));
         duration.setText(selectedMovie.getDuration());
