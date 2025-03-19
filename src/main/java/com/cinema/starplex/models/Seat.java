@@ -130,4 +130,8 @@ public class Seat {
     public int getColumn() {
         return colNumber; // Trả về colNumber
     }
+
+    public int getSeat_type_id() {
+        return seatType.getId(); // Trả về seatTypeId
+    }
 }

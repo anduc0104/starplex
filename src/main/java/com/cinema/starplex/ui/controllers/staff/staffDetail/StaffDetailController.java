@@ -132,7 +132,7 @@ public class StaffDetailController {
 
     // Load seat types from database
     public void loadSeatTypes() {
-        seatTypes = roomDao.getSeatTypes();
+        seatTypes = (Map<Integer, SeatType>) roomDao.getSeatTypes();
     }
 
     // Load rooms from database and update UI

@@ -4,10 +4,6 @@ import com.cinema.starplex.models.Room;
 import com.cinema.starplex.models.Seat;
 import com.cinema.starplex.models.SeatType;
 import com.cinema.starplex.util.DatabaseConnection;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -40,9 +36,6 @@ public class RoomDao implements BaseDao<Room> {
     @Override
     public boolean insert(Room room) {
         String query = "INSERT INTO rooms (room_number, total_seats, created_at) VALUES (?, ?, NOW())";
-        System.out.println(room.getRoomNumber());
-        System.out.println(room.getTotalSeats());
-
         try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, room.getRoomNumber());
             statement.setInt(2, room.getTotalSeats());
@@ -94,7 +87,6 @@ public class RoomDao implements BaseDao<Room> {
         String query = "SELECT * FROM rooms WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
-
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     return mapResultSetToRoom(resultSet);
@@ -113,7 +105,6 @@ public class RoomDao implements BaseDao<Room> {
 
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
-
             while (resultSet.next()) {
                 rooms.add(mapResultSetToRoom(resultSet));
             }
@@ -158,7 +149,14 @@ public class RoomDao implements BaseDao<Room> {
                 while (resultSet.next()) {
                     Seat seat = new Seat();
                     seat.setId(resultSet.getInt("s.id"));
-                    seat.setSeatNumber(resultSet.getString("s.col_number"));
+
+                    // Lấy ký tự đầu tiên từ giá trị row
+                    String rowString = resultSet.getString("s.row");
+                    if (rowString != null && !rowString.isEmpty()) {
+                        seat.setRow(rowString.charAt(0)); // Chuyển đổi từ String sang char
+                    }
+
+                    seat.setColNumber(resultSet.getInt("s.col_number")); // Cột ghế
                     seat.setCreatedAt(resultSet.getTimestamp("s.created_at"));
 
                     // Create and set the room
@@ -168,7 +166,6 @@ public class RoomDao implements BaseDao<Room> {
                     // Create and set the seat type
                     SeatType seatType = new SeatType();
                     seatType.setId(resultSet.getInt("st.id"));
-                    // Set other seat type properties as needed
                     seat.setSeatType(seatType);
 
                     seats.add(seat);
@@ -190,21 +187,18 @@ public class RoomDao implements BaseDao<Room> {
         return room;
     }
 
-    //staff
-    // lay dsach ghe database
-    public List<SeatType> getSeatTypes() {
-//        Map<Integer, SeatType> seatTypes = new HashMap<>();
-        List<SeatType> seatTypes = new ArrayList<>();
+    // Lấy danh sách ghế từ database
+    public Map<Integer, SeatType> getSeatTypes() {
+        Map<Integer, SeatType> seatTypes = new HashMap<>();
         String query = "SELECT * FROM seat_types";
 
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
-
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 BigDecimal price = resultSet.getBigDecimal("price");
-                seatTypes.add(new SeatType(id, name, price));
+                seatTypes.put(id, new SeatType(id, name, price));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -212,22 +206,20 @@ public class RoomDao implements BaseDao<Room> {
         return seatTypes;
     }
 
-    // lay dsch phong database
+    // Lấy danh sách phòng từ database
     public List<Room> getRooms() {
         List<Room> rooms = new ArrayList<>();
-        String query = "SELECT id, room_number, total_seats  " +
+        String query = "SELECT id, room_number, total_seats " +
                 "FROM rooms " +
                 "GROUP BY id, room_number " +
                 "ORDER BY room_number ";
 
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
-
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 int roomNumber = resultSet.getInt("room_number");
                 int totalSeats = resultSet.getInt("total_seats");
-                System.out.printf("Room ID: %d, Room Number: %d, Total Seats: %d%n", id, roomNumber, totalSeats);
                 rooms.add(new Room(id, roomNumber, totalSeats));
             }
         } catch (SQLException e) {
@@ -239,31 +231,24 @@ public class RoomDao implements BaseDao<Room> {
     public List<Seat> getSeatsForRoom(int roomId) {
         List<Seat> seats = new ArrayList<>();
         try {
-            String query = "SELECT s.*, b.id as booking_id " +  // Thêm khoảng trắng trước "FROM"
+            String query = "SELECT s.id, s.row, s.col_number, s.seat_type_id, b.id as booking_id " +
                     "FROM seats s " +
                     "LEFT JOIN booking_details bd ON bd.seat_id = s.id " +
                     "LEFT JOIN bookings b ON bd.booking_id = b.id " +
-                    "WHERE s.room_id = ? ORDER BY s.row ASC, s.col_number ASC";
-
+                    "WHERE s.room_id = ? ORDER BY s.row, s.col_number";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, roomId);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
-                String rowString = resultSet.getString("row");
                 String row = resultSet.getString("row");
-                Integer col_number = resultSet.getObject("col_number") != null ? resultSet.getInt("col_number") : null;
-                if (col_number == null || col_number < 0) {
-                    continue; // Bỏ qua nếu cột không hợp lệ
-                }
-
+                int colNumber = resultSet.getInt("col_number");
                 int seatTypeId = resultSet.getInt("seat_type_id");
                 boolean isBooked = resultSet.getObject("booking_id") != null;
 
-                seats.add(new Seat(id, row, col_number, seatTypeId, isBooked));
+                seats.add(new Seat(id, row.charAt(0), colNumber, seatTypeId, isBooked));
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -274,17 +259,16 @@ public class RoomDao implements BaseDao<Room> {
         try {
             if (connection != null && !connection.isClosed()) {
                 connection.close();
-                System.out.println("Database connection closed.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public Room findByNumber(int i) {
+    public Room findByNumber(int roomNumber) {
         String query = "SELECT * FROM rooms WHERE room_number =?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, i);
+            statement.setInt(1, roomNumber);
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {

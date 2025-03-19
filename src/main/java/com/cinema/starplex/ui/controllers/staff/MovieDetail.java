@@ -58,7 +58,7 @@ public class MovieDetail {
     }
 
     public void loadSeatTypes() {
-        List<SeatType> seatTypes = roomDao.getSeatTypes();
+        List<SeatType> seatTypes = (List<SeatType>) roomDao.getSeatTypes();
         for (SeatType seatType : seatTypes) {
 //            System.out.println(seatType);
             HBox seatBox = new HBox(8); // Tạo nhóm gồm Button + Label
@@ -103,7 +103,7 @@ public class MovieDetail {
 //        selectedSeats.clear();
 
         for (Seat seat : seats) {
-            Button seatButton = new Button(seat.getRow() + String.valueOf(seat.getCol_number()));
+            Button seatButton = new Button(seat.getRow() + String.valueOf(seat.getColumn()));
             seatButton.setPrefSize(55, 55);
 
 
@@ -116,7 +116,7 @@ public class MovieDetail {
             } else {
                 seatButton.getStyleClass().add("btn-" + seatTypeDao.getNameById(seat.getSeat_type_id())); // Ghế trống
             }
-            String rowString = seat.getRow(); // Lấy giá trị hàng từ seat
+            String rowString = String.valueOf(seat.getRow()); // Lấy giá trị hàng từ seat
             if (rowString == null || rowString.trim().isEmpty()) {
                 System.err.println("Lỗi: row null hoặc rỗng!");
                 continue; // Bỏ qua ghế bị lỗi
@@ -129,7 +129,7 @@ public class MovieDetail {
                 System.err.println("Lỗi: rowIndex ngoài phạm vi! row=" + rowChar);
                 continue;
             }
-            int colIndex = seat.getCol_number() - 1;
+            int colIndex = seat.getColumn() - 1;
 //            System.out.println(rowIndex + " - " + colIndex);
 //            System.out.println("Row: " + seat.getRow() + " -> Row Index: " + rowIndex);
 
@@ -163,7 +163,7 @@ public class MovieDetail {
         // double total = 0;
 
         for (Seat seat : selectedSeats) {
-            seatText.append(seat.getRow()).append(seat.getCol_number()).append(", ");
+            seatText.append(seat.getRow()).append(seat.getColumn()).append(", ");
 
             // Lấy giá của ghế từ SeatTypeDao
             try {

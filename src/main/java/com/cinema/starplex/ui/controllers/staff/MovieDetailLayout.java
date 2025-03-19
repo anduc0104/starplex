@@ -107,37 +107,33 @@ public class MovieDetailLayout {
         showtimeBox.getChildren().add(showtimePane);
 
 // Lấy danh sách lịch chiếu từ database
-        try {
-            ObservableList<Showtime> showtimes = movieDao.getShowtimesByMovieId(selectedMovie.getId());
-            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-            for (Showtime showtime : showtimes) {
-                Time show_time = showtime.getShowTime();
-                String formattedTime = timeFormat.format(new Date(show_time.getTime())); // Chuyển thành HH:mm
+        ObservableList<Showtime> showtimes = movieDao.getShowtimesByMovieId(selectedMovie.getId());
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        for (Showtime showtime : showtimes) {
+            Time show_time = showtime.getShowTime();
+            String formattedTime = timeFormat.format(new Date(show_time.getTime())); // Chuyển thành HH:mm
 
-                Button btnShowtime = new Button(formattedTime);
-                btnShowtime.getStyleClass().add("showtime-btn");
+            Button btnShowtime = new Button(formattedTime);
+            btnShowtime.getStyleClass().add("showtime-btn");
 
-                showtimePane.getChildren().add(btnShowtime);
+            showtimePane.getChildren().add(btnShowtime);
 
-                btnShowtime.setOnAction(event -> {
-                    FXMLLoader loader = SceneSwitcher.loadView("staff/movie_detail.fxml");
-                    if (loader != null) {
-                        MovieDetail controller = loader.getController();
-                        try {
-                            controller.setShowtime(showtime, selectedMovie);
-                        } catch (SQLException e) {
-                            throw new RuntimeException(e);
-                        }
-
-                        Parent newView = loader.getRoot();
-                        movieLayoutBorderPane.setCenter(newView);
-                    } else {
-                        System.err.println("Could not load add-seat.fxml");
+            btnShowtime.setOnAction(event -> {
+                FXMLLoader loader = SceneSwitcher.loadView("staff/movie_detail.fxml");
+                if (loader != null) {
+                    MovieDetail controller = loader.getController();
+                    try {
+                        controller.setShowtime(showtime, selectedMovie);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
                     }
-                });
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+                    Parent newView = loader.getRoot();
+                    movieLayoutBorderPane.setCenter(newView);
+                } else {
+                    System.err.println("Could not load add-seat.fxml");
+                }
+            });
         }
         movieLayoutBorderPane.setCenter(showtimeBox);
     }

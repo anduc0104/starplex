@@ -103,42 +103,38 @@ public class ListMovieLayoutController {
         showtimePane.setVgap(12); // Khoảng cách dọc giữa các hàng
         showtimePane.setPrefWrapLength(4 * 80);
         // HBox showtimeBox = new HBox(12);
-        try {
-            ObservableList<Showtime> showtimes = movieDao.getShowtimesByMovieId(movie.getId());
-            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-            for (Showtime showtime : showtimes) {
-                Time show_time = showtime.getShowTime();
-                String formattedTime = timeFormat.format(new Date(show_time.getTime())); // Chuyển thành HH:mm
-                Button btnShowtime = new Button(formattedTime);
-                btnShowtime.getStyleClass().add("showtime-btn");
-                showtimePane.getChildren().add(btnShowtime);
-                btnShowtime.setOnAction(event -> {
-                    // TODO: Hiển thị lịch chiếu khi click vào lịch chiếu
-                    FXMLLoader loader = SceneSwitcher.loadView("staff/movie_detail_layout.fxml");
-                    if (loader != null) {
-                        MovieDetailLayout controller = loader.getController();
-                        try {
-                            controller.setCenterBorderPane(showtime, movie);
-                        } catch (SQLException e) {
-                            throw new RuntimeException(e);
-                        }
-
-                        Parent newView = loader.getRoot();
-                        AnchorPane anchorPane = (AnchorPane) ((Node) event.getSource()).getScene().getRoot();
-                        BorderPane mainPane = (BorderPane) anchorPane.lookup("#mainBorderPane");
-
-                        if (mainPane != null) {
-                            mainPane.setCenter(newView);
-                        } else {
-                            System.err.println("BorderPane with ID'mainBorderPane' not found");
-                        }
-                    } else {
-                        System.err.println("Could not load add-seat.fxml");
+        ObservableList<Showtime> showtimes = movieDao.getShowtimesByMovieId(movie.getId());
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        for (Showtime showtime : showtimes) {
+            Time show_time = showtime.getShowTime();
+            String formattedTime = timeFormat.format(new Date(show_time.getTime())); // Chuyển thành HH:mm
+            Button btnShowtime = new Button(formattedTime);
+            btnShowtime.getStyleClass().add("showtime-btn");
+            showtimePane.getChildren().add(btnShowtime);
+            btnShowtime.setOnAction(event -> {
+                // TODO: Hiển thị lịch chiếu khi click vào lịch chiếu
+                FXMLLoader loader = SceneSwitcher.loadView("staff/movie_detail_layout.fxml");
+                if (loader != null) {
+                    MovieDetailLayout controller = loader.getController();
+                    try {
+                        controller.setCenterBorderPane(showtime, movie);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
                     }
-                });
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+                    Parent newView = loader.getRoot();
+                    AnchorPane anchorPane = (AnchorPane) ((Node) event.getSource()).getScene().getRoot();
+                    BorderPane mainPane = (BorderPane) anchorPane.lookup("#mainBorderPane");
+
+                    if (mainPane != null) {
+                        mainPane.setCenter(newView);
+                    } else {
+                        System.err.println("BorderPane with ID'mainBorderPane' not found");
+                    }
+                } else {
+                    System.err.println("Could not load add-seat.fxml");
+                }
+            });
         }
 
         detailsBox.getChildren().add(showtimeLabel);

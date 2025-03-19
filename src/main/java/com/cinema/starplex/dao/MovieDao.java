@@ -2,6 +2,7 @@ package com.cinema.starplex.dao;
 
 import com.cinema.starplex.models.Genre;
 import com.cinema.starplex.models.Movie;
+import com.cinema.starplex.models.Showtime;
 import com.cinema.starplex.util.DatabaseConnection;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -67,24 +68,22 @@ public class MovieDao implements BaseDao<Movie> {
         return genres;
     }
 
-    public ObservableList<String> getShowtimesByMovieId(int movieId) throws SQLException {
-        ObservableList<String> showtimes = FXCollections.observableArrayList();
-        String query = "SELECT show_time FROM showtimes WHERE movie_id = ? ORDER BY show_time";
-
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-
-        try (PreparedStatement statement = conn.prepareStatement(query)) {
-            statement.setInt(1, movieId);
-            ResultSet rs = statement.executeQuery();
-
+    public ObservableList<Showtime> getShowtimesByMovieId(int movieId) {
+        ObservableList<Showtime> showtimes = FXCollections.observableArrayList();
+        // Truy vấn CSDL lấy danh sách Showtime thay vì String
+        String query = "SELECT * FROM showtimes WHERE movie_id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, movieId);
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                Time sqlTime = rs.getTime("show_time");
-                String formattedTime = timeFormat.format(new Date(sqlTime.getTime()));
-                showtimes.add(formattedTime);
+                showtimes.add(new Showtime(rs.getInt("id"), rs.getTime("show_time")));
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return showtimes;
     }
+
 
     public ObservableList<String> getAllShowDates() throws SQLException {
         ObservableList<String> showDates = FXCollections.observableArrayList();

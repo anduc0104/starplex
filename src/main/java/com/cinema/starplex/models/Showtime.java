@@ -36,6 +36,11 @@ public class Showtime {
         this.showTime = showtime;
     }
 
+    public Showtime(int id, Time showTime) {
+        this.id = id;
+        this.showTime = showTime;
+    }
+
     // Getters and Setters
     public Integer getId() {
         return id;

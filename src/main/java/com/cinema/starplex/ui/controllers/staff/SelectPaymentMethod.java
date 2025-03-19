@@ -79,7 +79,7 @@ public class SelectPaymentMethod {
 //    set list seat selected
         StringBuilder seatNumbers = new StringBuilder();
         for (Seat seat : selectedSeats) {
-            String seatName = seat.getRow() + String.valueOf(seat.getCol_number());
+            String seatName = seat.getRow() + String.valueOf(seat.getColumn());
             seatNumbers.append(seatName).append(", ");
 
         }
