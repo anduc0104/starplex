@@ -204,4 +204,21 @@ public class MovieDao implements BaseDao<Movie> {
 
         return movies;
     }
+
+    public ObservableList<String> getShowtimesByMovieId(int id) {
+        ObservableList<String> showtimes = FXCollections.observableArrayList();
+        String sql = "SELECT show_time FROM showtimes WHERE movie_id =? ORDER BY show_time";
+        try (Connection conn = DatabaseConnection.getConn();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                showtimes.add(rs.getString("show_time"));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching showtimes for movie: " + e.getMessage());
+        }
+        return showtimes;
+    }
 }

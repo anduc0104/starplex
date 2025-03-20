@@ -29,6 +29,9 @@ module com.cinema.starplex {
     exports com.cinema.starplex.ui.controllers.admin.movieManagement;
     exports com.cinema.starplex.ui.controllers.admin.usermanagement;
 
+    exports com.cinema.starplex.util;
+    opens com.cinema.starplex.util;
+
 
     exports com.cinema.starplex.models;
 
@@ -47,10 +50,8 @@ module com.cinema.starplex {
     exports com.cinema.starplex.ui.controllers.admin.seatManagement;
     opens com.cinema.starplex.ui.controllers.admin.seatTypeManagement;
     exports com.cinema.starplex.ui.controllers.admin.seatTypeManagement;
-    opens com.cinema.starplex.ui.controllers.admin.showtimemanagement;
-    exports com.cinema.starplex.ui.controllers.admin.showtimemanagement;
-    opens com.cinema.starplex.ui.controllers.admin.showtimesManagement to javafx.fxml;
     exports com.cinema.starplex.ui.controllers.admin.showtimesManagement;
+    opens com.cinema.starplex.ui.controllers.admin.showtimesManagement to javafx.fxml;
     opens com.cinema.starplex.ui.controllers.admin.bookingManagement to javafx.fxml;
     exports com.cinema.starplex.ui.controllers.admin.bookingManagement;
     exports com.cinema.starplex.ui.controllers.admin.paymentManagement;

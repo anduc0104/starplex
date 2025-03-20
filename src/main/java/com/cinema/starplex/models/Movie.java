@@ -46,6 +46,10 @@ public class Movie {
         this.image = image;
     }
 
+    public Movie(String movieTitle) {
+        this.title = new SimpleStringProperty(movieTitle);
+    }
+
     public int getId() {
         return id.get();
     }

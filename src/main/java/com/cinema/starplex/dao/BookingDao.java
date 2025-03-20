@@ -2,7 +2,6 @@ package com.cinema.starplex.dao;
 
 import com.cinema.starplex.models.Booking;
 import com.cinema.starplex.util.DatabaseConnection;
-
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;

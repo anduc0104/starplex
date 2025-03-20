@@ -1,8 +1,5 @@
 package com.cinema.starplex.dao;
 
-import com.cinema.starplex.models.Booking;
-import com.cinema.starplex.models.Genre;
-
 import java.util.List;
 
 public interface BaseDao<T> {

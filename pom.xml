@@ -125,6 +125,8 @@
                     <url>jdbc:mysql://localhost:3306/starplex</url>
                     <user>root</user>
                     <password></password>
+                    <schemas>starplex</schemas>
+                    <baselineOnMigrate>true</baselineOnMigrate>
                     <cleanDisabled>false</cleanDisabled>
                 </configuration>
             </plugin>
