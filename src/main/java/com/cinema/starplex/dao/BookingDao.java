@@ -1,6 +1,6 @@
 package com.cinema.starplex.dao;
 
-import com.cinema.starplex.models.Booking;
+import com.cinema.starplex.models.*;
 import com.cinema.starplex.util.DatabaseConnection;
 
 import java.math.BigDecimal;
@@ -105,18 +105,68 @@ public class BookingDao implements BaseDao<Booking>{
     @Override
     public List<Booking> findAll() {
         List<Booking> bookings = new ArrayList<>();
-        String query = "SELECT * FROM bookings";
+        String sql = """
+        SELECT b.*, 
+               u.username, 
+               s.id AS showtime_id, s.show_time, s.show_date, 
+               m.id AS movie_id, m.title AS movie_title, 
+               r.id AS room_id, r.room_number 
+        FROM bookings b
+        LEFT JOIN users u ON b.user_id = u.id
+        LEFT JOIN showtimes s ON b.showtime_id = s.id
+        LEFT JOIN movies m ON s.movie_id = m.id
+        LEFT JOIN rooms r ON s.room_id = r.id
+    """;
 
-        try(Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(query)) {
-            while (resultSet.next()) {
-                bookings.add(mapResultSetToBooking(resultSet));
+        try (PreparedStatement stmt = this.connection.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Booking booking = new Booking();
+                booking.setId(rs.getInt("id"));
+                booking.setTotalPrice(rs.getBigDecimal("total_price"));
+                booking.setStatus(rs.getString("status"));
+                booking.setCreatedAt(rs.getTimestamp("created_at"));
+
+                // Lấy dữ liệu User
+                User user = new User();
+                user.setUsername(rs.getString("username"));
+                booking.setUser(user);
+
+                // Kiểm tra nếu có dữ liệu showtime
+                if (rs.getObject("showtime_id") != null) {
+                    Showtime showtime = new Showtime();
+                    showtime.setId(rs.getInt("showtime_id"));
+                    showtime.setShowTime(rs.getTime("show_time"));
+                    showtime.setShowDate(rs.getDate("show_date"));
+
+                    // Lấy thông tin Movie
+                    if (rs.getObject("movie_id") != null) {
+                        Movie movie = new Movie();
+                        movie.setId(rs.getInt("movie_id"));
+                        movie.setTitle(rs.getString("movie_title"));
+                        showtime.setMovie(movie);
+                    }
+
+                    // Lấy thông tin Room
+                    if (rs.getObject("room_id") != null) {
+                        Room room = new Room();
+                        room.setId(rs.getInt("room_id"));
+                        room.setRoomNumber(rs.getInt("room_number"));
+                        showtime.setRoom(room);
+                    }
+
+                    booking.setShowtime(showtime);
+                }
+
+                bookings.add(booking);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return bookings;
     }
+
 
     public List<Booking> findBookingsByTotalPrice(BigDecimal total_price) {
         List<Booking> bookings = new ArrayList<>();
@@ -170,16 +220,30 @@ public class BookingDao implements BaseDao<Booking>{
     }
     public List<Booking> findBookingsByShowtimeId(long showtimeId) {
         List<Booking> bookings = new ArrayList<>();
-        String query = "SELECT b.* FROM bookings b " +
-                "JOINS showtimes s ON s.id = b.showtime_id" +
-                "WHERE s.id =?";
-        try(PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setLong(1, showtimeId);
+        String sql = "SELECT b.*, s.id as showtime_id, s.movie_id, s.show_time, s.show_date "
+                + "FROM bookings b "
+                + "LEFT JOIN showtimes s ON b.showtime_id = s.id";
 
-            try(ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    bookings.add(mapResultSetToBooking(resultSet));
-                }
+        try (Connection conn = DatabaseConnection.getConn();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Booking booking = new Booking();
+                booking.setId(rs.getInt("id"));
+                booking.setTotalPrice(rs.getBigDecimal("total_price"));
+                booking.setStatus(rs.getString("status"));
+                booking.setCreatedAt(rs.getTimestamp("created_at"));
+
+                // Lấy dữ liệu Showtime
+                Showtime showtime = new Showtime();
+                showtime.setId(rs.getInt("showtime_id"));
+                showtime.setMovieId(rs.getInt("movie_id"));
+                showtime.setShowTime(rs.getTime("show_time"));
+                showtime.setShowDate(rs.getDate("show_date"));
+
+                booking.setShowtime(showtime);
+                bookings.add(booking);
             }
         } catch (SQLException e) {
             e.printStackTrace();

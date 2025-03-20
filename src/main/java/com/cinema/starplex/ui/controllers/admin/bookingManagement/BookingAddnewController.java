@@ -29,31 +29,22 @@ public class BookingAddnewController {
     private Button backButton, saveButton, clearButton;
     @FXML
     private ComboBox<User> userComboBox;
-
     @FXML
     private ComboBox<Showtime> showtimeComboBox;
-
     @FXML
     private ComboBox<String> statusComboBox;
-
     @FXML
     private TableColumn<Booking, Timestamp> createdAtColumn;
-
     @FXML
     private TextField priceField;
 
-    private ObservableList<Booking> bookingList;
     private final BookingDao bookingDao = new BookingDao();
     private final UserDao userDao = new UserDao();
     private final ShowTimeDao showtimeDao = new ShowTimeDao();
     private final PaymentDao paymentDao = new PaymentDao();
 
     public void initialize() {
-        // Lấy dữ liệu từ CSDL
-        userComboBox.getItems().addAll(userDao.findAll());
-        showtimeComboBox.getItems().addAll(showtimeDao.findAll());
-        // Hiển thị roomNumber trong ComboBox
-        // Gọi loadBookings() để lấy dữ liệu từ DB
+        // Gọi một lần duy nhất để tránh truy vấn thừa
         loadUsers();
         loadShowtimes();
         loadStatusOptions();
@@ -61,42 +52,28 @@ public class BookingAddnewController {
 
     private void loadUsers() {
         List<User> users = userDao.findAll();
-        System.out.println("Users loaded: " + users.size());
-        for (User user : users) {
-            System.out.println("ID: " + user.getId() + ", Username: " + user.getUsername() + ", Email: " + user.getEmail());
-        }
         userComboBox.setItems(FXCollections.observableArrayList(users));
-        // Set a cell factory to display username in ComboBox
-        userComboBox.setCellFactory(param -> new javafx.scene.control.ListCell<User>() {
+
+        userComboBox.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(User item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                } else {
-                    setText("ID: " + item.getId() + " | " +
-                            "User: " + item.getUsername() + " | " +
-                            "Email: " + item.getEmail() + " | ");
-                }
+                setText(empty || item == null ? null : "ID: " + item.getId() + " | " + item.getUsername() + " | " + item.getEmail());
             }
         });
-        userComboBox.setButtonCell(new javafx.scene.control.ListCell<User>() {
+
+        userComboBox.setButtonCell(new ListCell<>() {
             @Override
             protected void updateItem(User item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                } else {
-                    setText("ID: " + item.getId() + " | " +
-                            "User: " + item.getUsername() + " | " +
-                            "Email: " + item.getEmail() + " | ");
-                }
+                setText(empty || item == null ? null : "ID: " + item.getId() + " | " + item.getUsername() + " | " + item.getEmail());
             }
         });
-        userComboBox.setConverter(new StringConverter<User>() {
+
+        userComboBox.setConverter(new StringConverter<>() {
             @Override
             public String toString(User user) {
-                return (user != null) ? user.getId() + "-" + user.getUsername() + " - " + user.getEmail() : "";
+                return user != null ? user.getId() + "-" + user.getUsername() + " - " + user.getEmail() : "";
             }
 
             @Override
@@ -107,32 +84,26 @@ public class BookingAddnewController {
     }
 
     private void loadShowtimes() {
-        List<Showtime> showtimes = showtimeDao.findAll();
-        showtimeComboBox.setItems(FXCollections.observableArrayList(showtimes));
-        // Set a cell factory to display showtime details in ComboBox
-        showtimeComboBox.setCellFactory(param -> new javafx.scene.control.ListCell<Showtime>() {
+        ObservableList<Showtime> showtimeList = FXCollections.observableArrayList(showtimeDao.findAll());
+        showtimeComboBox.setItems(showtimeList);
+
+        showtimeComboBox.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(Showtime item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                } else {
-                    setText(item.getDisplayName());
-                }
+                setText((empty || item == null) ? null : item.getDisplayName());
             }
         });
-        showtimeComboBox.setButtonCell(new javafx.scene.control.ListCell<Showtime>() {
+
+        showtimeComboBox.setButtonCell(new ListCell<>() {
             @Override
             protected void updateItem(Showtime item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                } else {
-                    setText(item.getDisplayName());
-                }
+                setText((empty || item == null) ? null : item.getDisplayName());
             }
         });
-        showtimeComboBox.setConverter(new StringConverter<Showtime>() {
+
+        showtimeComboBox.setConverter(new StringConverter<>() {
             @Override
             public String toString(Showtime showtime) {
                 return (showtime != null) ? showtime.getDisplayName() : "";
@@ -145,47 +116,46 @@ public class BookingAddnewController {
         });
     }
 
+
     @FXML
     private void handleCreateAction(ActionEvent event) {
-        if (validateInput()) {
-            try {
-                User user = userComboBox.getValue();
-                Showtime showtime = showtimeComboBox.getValue();
-                BigDecimal totalPrice = new BigDecimal(priceField.getText());
-                String status = statusComboBox.getValue();
+        if (!validateInput()) return;
 
-                Booking booking = new Booking();
-                booking.setUser(user);
-                booking.setShowtime(showtime);
-                booking.setTotalPrice(totalPrice);
-                booking.setStatus(status);
+        try {
+            User user = userComboBox.getValue();
+            Showtime showtime = showtimeComboBox.getValue();
+            BigDecimal totalPrice = new BigDecimal(priceField.getText());
+            String status = statusComboBox.getValue();
 
-                boolean success = bookingDao.insert(booking);
+            Booking booking = new Booking();
+            booking.setUser(user);
+            booking.setShowtime(showtime);
+            booking.setTotalPrice(totalPrice);
+            booking.setStatus(status);
 
-                if (success) {
-                    Payment payment = new Payment();
-                    payment.setBooking(booking);
-                    payment.setAmount(totalPrice);
-                    payment.setPaymentMethod("Credit Card");
-                    payment.setStatus("Pending"); // Đợi xác nhận thanh toán
-
-                    boolean paymentSuccess = paymentDao.insert(payment);
-
-                    if (paymentSuccess) {
-                        AlertUtils.showInfo("Success", "Booking and Payment added successfully!");
-                        returnToBookingView(event);
-                    } else {
-                        AlertUtils.showError("Error", "Booking created but failed to add payment!");
-                    }
-//                    updateStatistics();
-                    returnToBookingView(event);
-                } else {
-                    AlertUtils.showError("Error", "Failed to add booking!");
-                }
-            } catch (Exception e) {
-                AlertUtils.showInfo("Error", "An error occurred: " + e.getMessage());
-                e.printStackTrace();
+            boolean success = bookingDao.insert(booking);
+            if (!success) {
+                AlertUtils.showError("Error", "Failed to add booking!");
+                return;
             }
+
+            // Tạo payment ngay sau khi booking thành công
+            Payment payment = new Payment();
+            payment.setBooking(booking);
+            payment.setAmount(totalPrice);
+            payment.setPaymentMethod("Credit Card");
+            payment.setStatus("Pending"); // Chờ xác nhận thanh toán
+
+            boolean paymentSuccess = paymentDao.insert(payment);
+            if (!paymentSuccess) {
+                AlertUtils.showWarning("Warning", "Booking created, but payment was not added!");
+            }
+
+            AlertUtils.showInfo("Success", "Booking and Payment added successfully!");
+            returnToBookingView(event);
+        } catch (Exception e) {
+            AlertUtils.showError("Error", "An error occurred: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -199,12 +169,9 @@ public class BookingAddnewController {
 
     private boolean validateInput() {
         StringBuilder errors = new StringBuilder();
-        if (userComboBox.getValue() == null) {
-            errors.append("Please select a user.\n");
-        }
-        if (showtimeComboBox.getValue() == null) {
-            errors.append("Please select a showtime.\n");
-        }
+
+        if (userComboBox.getValue() == null) errors.append("Please select a user.\n");
+        if (showtimeComboBox.getValue() == null) errors.append("Please select a showtime.\n");
         if (priceField.getText().isEmpty()) {
             errors.append("Please enter a price.\n");
         } else {
@@ -214,14 +181,12 @@ public class BookingAddnewController {
                 errors.append("Price must be a valid number.\n");
             }
         }
-
         if (statusComboBox.getValue() == null || statusComboBox.getValue().isEmpty()) {
             errors.append("Please select a status.\n");
         }
 
-
         if (errors.length() > 0) {
-            AlertUtils.showWarning("Warning", "Validation Error");
+            AlertUtils.showWarning("Validation Error", errors.toString());
             return false;
         }
 
@@ -249,11 +214,11 @@ public class BookingAddnewController {
             if (mainPane != null) {
                 mainPane.setCenter(seatView);
             } else {
-                System.err.println("BorderPane with ID 'mainBorderPane' not found");
+                AlertUtils.showError("Error", "Main border pane not found!");
             }
         } catch (Exception e) {
+            AlertUtils.showError("Error", "Cannot load Booking View: " + e.getMessage());
             e.printStackTrace();
         }
     }
-
 }

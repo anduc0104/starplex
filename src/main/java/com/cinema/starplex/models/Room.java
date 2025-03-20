@@ -35,6 +35,11 @@ public class Room {
         this.roomNumber = Integer.parseInt(roomNumber);
     }
 
+    public Room(int roomId, String roomNumber) {
+        this.id = roomId;
+        this.roomNumber = Integer.parseInt(roomNumber);
+    }
+
 
     // Getters and Setters
 

@@ -42,6 +42,11 @@ public class Movie {
         this.title = new SimpleStringProperty(movieTitle);
     }
 
+    public Movie(int movieId, String movieTitle) {
+        this.id = new SimpleIntegerProperty(movieId);
+        this.title = new SimpleStringProperty(movieTitle);
+    }
+
     public int getId() {
         return id.get();
     }

@@ -2,6 +2,8 @@ package com.cinema.starplex.models;
 
 import java.sql.Date;
 import java.sql.Time;
+import com.cinema.starplex.models.Room;
+import com.cinema.starplex.models.Movie;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 
@@ -34,6 +36,18 @@ public class Showtime {
         this.movieId = movieId;
         this.roomId = roomId;
         this.showTime = showtime;
+    }
+
+    public Showtime(Integer id, String movieTitle, int roomNumber, Date showDate, Time showTime) {
+        this.id = id;
+        this.movie = new Movie();
+        this.movie.setTitle(movieTitle);
+
+        this.room = new Room();
+        this.room.setRoomNumber(roomNumber);
+
+        this.showDate = showDate;
+        this.showTime = showTime;
     }
 
     public Showtime(int id, Time showTime) {
@@ -119,7 +133,7 @@ public class Showtime {
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
         String movieTitle = (movie != null) ? movie.getTitle() : "Unknown Movie";
-        Integer roomNumber = (room != null) ? room.getRoomNumber() : 0;
+            int roomNumber = (room != null) ? room.getRoomNumber() : 0;
         String showDateStr = (showDate != null) ? dateFormat.format(showDate) : "Unknown Date";
         String showTimeStr = (showTime != null) ? timeFormat.format(showTime) : "Unknown Time";
 
