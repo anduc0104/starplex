@@ -113,45 +113,6 @@ public class MovieViewController {
 //        setupSearchFilter();
     }
 
-//    private void setupActionColumn() {
-//        if (actionColumn == null) {
-//            actionColumn = new TableColumn<>("Action"); // Khởi tạo cột nếu chưa có
-//        }
-//        actionColumn.setCellFactory(param -> new TableCell<>() {
-//            private final Button editButton = new Button("Edit");
-//            private final Button deleteButton = new Button("Delete");
-//            private final HBox buttonBox = new HBox(10, editButton, deleteButton);
-//
-//            {
-//                editButton.setOnAction(event -> {
-//                    Movie movie = getTableView().getItems().get(getIndex());
-//                    handleEdit(movie);
-//                });
-//                deleteButton.setOnAction(event -> {
-//                    Movie movie = getTableView().getItems().get(getIndex());
-//                    handleDelete(movie);
-//                });
-//                editButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
-//                deleteButton.setStyle("-fx-background-color: #F44336; -fx-text-fill: white;");
-//            }
-//
-//            @Override
-//            protected void updateItem(Void item, boolean empty) {
-//                super.updateItem(item, empty);
-//                if (empty) {
-//                    setGraphic(null);
-//                } else {
-//                    setGraphic(buttonBox);
-//                }
-//            }
-//        });
-//
-//        if (!movieTable.getColumns().contains(actionColumn)) {
-//            movieTable.getColumns().add(actionColumn);
-//        }
-//
-//    }
-
     private void setupActionColumn() {
         actionColumn.setCellFactory(param -> new TableCell<>() {
             private final HBox actionBox = new HBox(10);
@@ -201,7 +162,7 @@ public class MovieViewController {
 
     private void loadMovies() throws SQLException {
         movieList.clear();
-        ObservableList<Movie> movies = movieDao.getMovies();
+        ObservableList<Movie> movies = (ObservableList<Movie>) movieDao.findAll();
         movieTable.setItems(movies);
 
         if (movies != null) {

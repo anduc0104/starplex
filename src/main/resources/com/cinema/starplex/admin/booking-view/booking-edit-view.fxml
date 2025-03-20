@@ -19,47 +19,53 @@
             <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false"
                     onAction="#handleBack"
                     prefHeight="30.0" prefWidth="75.0" styleClass="back-btn" text="Back"
-                    textFill="WHITE" />
+                    textFill="WHITE"/>
 
-            <Text text="Edit Booking" styleClass="titlePage" />
+            <Text text="Edit Booking" styleClass="titlePage"/>
         </HBox>
 
         <VBox spacing="24">
 
             <VBox>
                 <!-- Chọn phòng -->
-                <Label text="User:" styleClass="label-input" />
+                <Label text="User:" styleClass="label-input"/>
                 <ComboBox fx:id="userComboBox" prefHeight="30.0"
-                          prefWidth="Infinity" styleClass="input-field" />
+                          prefWidth="Infinity" styleClass="input-field"/>
             </VBox>
+            <!-- showtime -->
             <VBox>
-                <!-- Chọn phòng -->
-                <Label text="Showtime:" styleClass="label-input" />
+                <Label text="Showtime:" styleClass="label-input"/>
                 <ComboBox fx:id="showtimeComboBox" prefHeight="30.0"
-                          prefWidth="Infinity" styleClass="input-field" />
+                          prefWidth="Infinity" styleClass="input-field"/>
             </VBox>
             <VBox>
-                <Label styleClass="label-input" text="Total Price:" />
+                <!-- showtime -->
+                <Label text="Total Tickets:" styleClass="label-input"/>
+                <TextField fx:id="totalTicketFields" styleClass="input-field"/>
+            </VBox>
+            <!--            total price-->
+            <VBox>
+                <Label styleClass="label-input" text="Total Price:"/>
                 <TextField fx:id="priceField" prefHeight="30.0" prefWidth="1200"
-                           styleClass="input-field " />
+                           styleClass="input-field "/>
             </VBox>
             <VBox>
-                <!-- Chọn book -->
-                <Label styleClass="label-input" text="Status:" />
+                <!-- Chọn status -->
+                <Label styleClass="label-input" text="Status:"/>
                 <ComboBox fx:id="statusComboBox" prefHeight="30.0" prefWidth="Infinity"
-                          styleClass="input-field" />
+                          styleClass="input-field"/>
             </VBox>
 
             <HBox alignment="CENTER_RIGHT" spacing="24">
                 <Button fx:id="updateButton" alignment="CENTER"
                         onAction="#handleUpdateAction" prefHeight="30.0" prefWidth="120.0" styleClass="save-btn"
                         text="Edit"
-                        textFill="WHITE" />
+                        textFill="WHITE"/>
 
                 <Button fx:id="clearButton" alignment="CENTER"
                         onAction="#clearForm"
                         prefHeight="30.0" prefWidth="120.0" styleClass="clear-btn" text="Clear"
-                        textFill="WHITE" />
+                        textFill="WHITE"/>
             </HBox>
         </VBox>
     </VBox>

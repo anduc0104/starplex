@@ -56,12 +56,12 @@
                           styleClass="input-field"/>
             </VBox>
 
-            <VBox>
-                <!-- Nhập giá vé -->
-                <Label styleClass="label-input" text="Price:"/>
-                <TextField fx:id="priceField" prefHeight="27.0" prefWidth="220.0"
-                           styleClass="input-field"/>
-            </VBox>
+<!--            <VBox>-->
+<!--                &lt;!&ndash; Nhập giá vé &ndash;&gt;-->
+<!--                <Label styleClass="label-input" text="Price:"/>-->
+<!--                <TextField fx:id="priceField" prefHeight="27.0" prefWidth="220.0"-->
+<!--                           styleClass="input-field"/>-->
+<!--            </VBox>-->
         </VBox>
 
         <!-- Nút Save + Clear -->

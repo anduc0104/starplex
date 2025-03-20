@@ -60,13 +60,14 @@ public class BookingDao implements BaseDao<Booking> {
 
     @Override
     public void update(Booking booking) {
-        String query = "UPDATE bookings SET user_id=?, showtime_id=?, total_price=?, status=? WHERE id=?";
+        String query = "UPDATE bookings SET user_id=?, showtime_id=?, total_price=?, status=?, total_tickets = ? WHERE id=?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, booking.getUser().getId());
             statement.setInt(2, booking.getShowtime().getId());
             statement.setBigDecimal(3, booking.getTotalPrice());
             statement.setString(4, booking.getStatus());
-            statement.setInt(5, booking.getId());
+            statement.setInt(5, booking.getTotalTicket());
+            statement.setInt(6, booking.getId());
 
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -76,11 +77,26 @@ public class BookingDao implements BaseDao<Booking> {
 
     @Override
     public void delete(long id) {
-        String query = "DELETE FROM bookings WHERE id=?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setLong(1, id);
-            statement.executeUpdate();
-        } catch (SQLException e) {
+        String deletePaymentQuery = "DELETE FROM payments WHERE booking_id = ?";
+        String deleteBookingDetailQuery = "DELETE FROM booking_details WHERE booking_id = ?";
+        String deleteBookingQuery = "DELETE FROM bookings WHERE id=?";
+        try {
+            PreparedStatement stmt1 = connection.prepareStatement(deletePaymentQuery);
+            PreparedStatement stmt2 = connection.prepareStatement(deleteBookingDetailQuery);
+            PreparedStatement stmt3 = connection.prepareStatement(deleteBookingQuery);
+
+            //Xóa payment
+            stmt1.setLong(1, id);
+            stmt1.executeUpdate();
+            // Xóa booking_detail trước
+            stmt2.setLong(1, id);
+            stmt2.executeUpdate();
+            //xóa booking
+            stmt3.setLong(1, id);
+            stmt3.executeUpdate();
+
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -196,6 +212,7 @@ public class BookingDao implements BaseDao<Booking> {
         booking.setUser(new UserDao().findById(resultSet.getInt("user_id")));
         booking.setShowtime(new ShowTimeDao().findById(resultSet.getInt("showtime_id")));
         booking.setTotalPrice(resultSet.getBigDecimal("total_price"));
+        booking.setTotalTicket(resultSet.getInt("total_tickets"));
         booking.setStatus(resultSet.getString("status"));
         booking.setCreatedAt(resultSet.getTimestamp("created_at"));
         return booking;

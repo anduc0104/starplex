@@ -150,13 +150,24 @@ public class MovieDao implements BaseDao<Movie> {
     }
 
     @Override
-    public List<Movie> findAll() {
-        List<Movie> movies = new ArrayList<>();
+    public ObservableList<Movie> findAll() {
+        ObservableList<Movie> movies = FXCollections.observableArrayList();
         String query = "SELECT * FROM movies";
         try (PreparedStatement statement = conn.prepareStatement(query)) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    movies.add(mapResultSetToMovie(resultSet));
+                    int movieId = resultSet.getInt("id");
+                    List<Genre> genres = getGenresByMovieId(movieId);
+                    Movie movie = new Movie(
+                            movieId, // Truyền trực tiếp id
+                            resultSet.getString("title"),
+                            FXCollections.observableArrayList(genres), // Truyền danh sách genre
+                            resultSet.getString("duration"),
+                            resultSet.getString("release_date"),
+                            resultSet.getString("description"),
+                            resultSet.getString("images")
+                    );
+                    movies.add(movie);
                 }
             }
         } catch (SQLException e) {
@@ -167,8 +178,12 @@ public class MovieDao implements BaseDao<Movie> {
 
     private Movie mapResultSetToMovie(ResultSet resultSet) throws SQLException {
         Movie movie = new Movie();
+        List<Genre> genres = getGenresByMovieId(resultSet.getInt("id"));
         movie.setId(resultSet.getInt("id"));
         movie.setTitle(resultSet.getString("title"));
+        movie.setDuration(resultSet.getString("duration"));
+        movie.setReleaseDate(resultSet.getString("release_date"));
+        movie.setDescription(resultSet.getString("description"));
         return movie;
     }
 }

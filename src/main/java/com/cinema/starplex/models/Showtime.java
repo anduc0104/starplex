@@ -36,6 +36,14 @@ public class Showtime {
         this.showTime = showtime;
     }
 
+    public Showtime(Integer id, Date showDate, Time showTime, Integer movieId, Integer roomId) {
+        this.id = id;
+        this.showDate = showDate;
+        this.showTime = showTime;
+        this.movieId = movieId;
+        this.roomId = roomId;
+    }
+
     // Getters and Setters
     public Integer getId() {
         return id;
@@ -118,7 +126,7 @@ public class Showtime {
         String showDateStr = (showDate != null) ? dateFormat.format(showDate) : "Unknown Date";
         String showTimeStr = (showTime != null) ? timeFormat.format(showTime) : "Unknown Time";
 
-        return movieTitle + " - Room " + roomNumber + " - " + showDateStr + " - " + showTimeStr;
+        return showDateStr + " - " + showTimeStr;
     }
 
     @Override

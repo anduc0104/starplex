@@ -35,7 +35,11 @@ import org.kordamp.ikonli.javafx.FontIcon;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -43,23 +47,18 @@ public class BookingController implements Initializable {
 
     @FXML
     private TableView<Booking> bookingTableView;
-
     @FXML
     private TableColumn<Booking, Integer> idColumn;
-
-
     @FXML
     private TableColumn<Booking, String> userColumn;
-
     @FXML
     private TableColumn<Booking, String> showtimeColumn;
-
+    @FXML
+    public TableColumn<Booking, Integer> totalTicket;
     @FXML
     private TableColumn<Booking, BigDecimal> totalPriceColumn;
-
     @FXML
     private TableColumn<Booking, String> statusColumn;
-
     @FXML
     private TableColumn<Booking, Timestamp> createdAtColumn;
 
@@ -108,22 +107,27 @@ public class BookingController implements Initializable {
                 javafx.beans.binding.Bindings.createStringBinding(
                         () -> {
                             Showtime showtime = cellData.getValue().getShowtime();
-                            if (showtime == null) {
-                                System.out.println("Showtime is NULL for booking ID: " + cellData.getValue().getId());
-                            } else {
-                                System.out.println("Showtime found: " + showtime.getDisplayName());
-                            }
-                            return showtime != null ? showtime.getDisplayName() : "N/A";
+//                            if (showtime == null) {
+//                                System.out.println("Showtime is NULL for booking ID: " + cellData.getValue().getId());
+//                            } else {
+//                                System.out.println("Showtime found: " + showtime.getDisplayName());
+//                            }
+                            SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
+                            SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
+                            Time show_time = showtime.getShowTime();
+                            Date show_date = showtime.getShowDate();
+                            String formattedDate = dateFormatter.format(new Date(show_date.getTime()));
+                            String formattedTime = timeFormatter.format(new Date(show_time.getTime()));
+                            return showtime != null ? formattedDate + "-" + formattedTime : "N/A";
                         },
                         cellData.getValue().showtimeProperty()));
 
+        totalTicket.setCellValueFactory(new PropertyValueFactory<>("totalTicket"));
         totalPriceColumn.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         createdAtColumn.setCellValueFactory(new PropertyValueFactory<>("createdAt"));
 
         addActionButtons();
-        loadUsers();
-        loadShowtimes();
         loadBookingData(); // Load danh sách booking cho bảng
     }
 
@@ -132,33 +136,10 @@ public class BookingController implements Initializable {
         userColumn.setText("");
         showtimeColumn.setText("");
         statusColumn.setText("");
+        createdAtColumn.setText("");
+        totalTicket.setText("");
     }
 
-    private void loadUsers() {
-        List<User> users = userDao.findAll();
-
-        // Gán dữ liệu cho cột userColumn trong bảng
-        userColumn.setCellValueFactory(cellData ->
-                javafx.beans.binding.Bindings.createStringBinding(
-                        () -> {
-                            User user = cellData.getValue().getUser();
-                            return (user != null) ? user.getUsername() : "Unknown";
-                        },
-                        cellData.getValue().userProperty()));
-    }
-
-    private void loadShowtimes() {
-        List<Showtime> showtimes = showtimeDao.findAll();
-
-        // Gán dữ liệu cho cột showtimeColumn trong bảng
-        showtimeColumn.setCellValueFactory(cellData ->
-                javafx.beans.binding.Bindings.createStringBinding(
-                        () -> {
-                            Showtime showtime = cellData.getValue().getShowtime();
-                            return (showtime != null) ? showtime.getDisplayName() : "N/A";
-                        },
-                        cellData.getValue().showtimeProperty()));
-    }
 
     private void loadBookingData() {
         List<Booking> bookings = bookingDao.findAll();
@@ -177,7 +158,7 @@ public class BookingController implements Initializable {
             if (AlertUtils.getResult()) {
                 bookingDao.delete(booking.getId());
                 bookingList.remove(booking);
-            }else {
+            } else {
                 // Do nothing if the user cancels the deletion
             }
         } catch (Exception e) {
@@ -188,7 +169,7 @@ public class BookingController implements Initializable {
 
     private void handleEdit(Booking booking) {
         if (booking == null) {
-            AlertUtils.showError( "Error", "Please select a booking to repair!");
+            AlertUtils.showError("Error", "Please select a booking to repair!");
             return;
         }
 
@@ -210,25 +191,6 @@ public class BookingController implements Initializable {
             System.err.println("Could not load edit-booking.fxml");
         }
     }
-
-    @FXML
-    private void handleAdd(ActionEvent event) throws IOException {
-        FXMLLoader loader = SceneSwitcher.loadView("admin/booking-view/booking-add-view.fxml");
-        if (loader != null) {
-            Parent newView = loader.getRoot();
-            AnchorPane anchorPane = (AnchorPane) ((Node) event.getSource()).getScene().getRoot();
-            BorderPane mainPane = (BorderPane) anchorPane.lookup("#mainBorderPane");
-
-            if (mainPane != null) {
-                mainPane.setCenter(newView);
-            } else {
-                System.err.println("BorderPane with ID 'mainBorderPane' not found");
-            }
-        } else {
-            System.err.println("Could not load add-booking.fxml");
-        }
-    }
-
 
     private void addActionButtons() {
         colAction.setCellFactory(param -> new TableCell<>() {

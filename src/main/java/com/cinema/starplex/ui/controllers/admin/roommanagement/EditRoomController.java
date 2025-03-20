@@ -93,6 +93,7 @@ public class EditRoomController {
         alert.showAndWait();
     }
 
+    @FXML
     private void handleBack(ActionEvent event) {
         returnToMovieView(event);
     }

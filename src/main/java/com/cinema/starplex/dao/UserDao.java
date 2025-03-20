@@ -129,8 +129,25 @@ public class UserDao implements BaseDao<User> {
 
     @Override
     public List<User> findAll() {
-
-        return List.of();
+        String sql = "SELECT * FROM users";
+        List<User> users = new ArrayList<>();
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                users.add(new User(
+                        rs.getInt("id"),
+                        rs.getString("full_name"),
+                        rs.getString("username"),
+                        rs.getString("email"),
+                        rs.getString("phone"),
+                        rs.getString("role"),
+                        rs.getString("password") // Lấy password c�� nếu không cập nhật
+                ));
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return users;
     }
 
     public User login(String username, String password) throws SQLException {

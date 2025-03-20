@@ -65,7 +65,7 @@
             <HBox styleClass="headerAdmin">
                 <ImageView fitHeight="28.0" fitWidth="80">
                     <image>
-                        <Image url="@../../../../images/logo-text-new.png"/>
+                        <Image url="@../../../../images/logo-phim.png"/>
                     </image>
                 </ImageView>
                 <Region HBox.hgrow="ALWAYS"/>

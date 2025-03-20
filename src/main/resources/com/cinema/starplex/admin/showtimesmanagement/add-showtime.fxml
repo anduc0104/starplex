@@ -63,11 +63,11 @@
         </VBox>
 
         <!-- Giá vé -->
-        <VBox>
-            <Label text="Price :" styleClass="label-input"/>
-            <TextField fx:id="priceField" prefHeight="27.0" prefWidth="220.0"
-                       styleClass="input-field"/>
-        </VBox>
+<!--        <VBox>-->
+<!--            <Label text="Price :" styleClass="label-input"/>-->
+<!--            <TextField fx:id="priceField" prefHeight="27.0" prefWidth="220.0"-->
+<!--                       styleClass="input-field"/>-->
+<!--        </VBox>-->
 
         <!-- Buttons -->
         <HBox alignment="CENTER_RIGHT" spacing="24">

@@ -47,10 +47,20 @@ public class EditShowtimeController {
     private final ShowTimeDao showtimeDAO = new ShowTimeDao();
     private final MovieDao movieDAO = new MovieDao();
     private final RoomDao roomDAO = new RoomDao();
-    private static Showtime selectedShowtime;
+    private Showtime selectedShowtime;
 
-    public static void setSelectedShowtime(Showtime showtime) {
-        selectedShowtime = showtime;
+    public void setSelectedShowtime(Showtime showtime) {
+        this.selectedShowtime = showtime;
+        showDatePicker.setValue(selectedShowtime.getShowDate().toLocalDate());
+        showTimePicker.setText(selectedShowtime.getShowTime().toLocalTime().toString());
+//        priceField.setText(String.valueOf(selectedShowtime.getPrice()));
+
+        if (selectedShowtime.getMovie() != null) {
+            movieComboBox.setValue(selectedShowtime.getMovie());
+        }
+        if (selectedShowtime.getRoom() != null) {
+            roomComboBox.setValue(selectedShowtime.getRoom());
+        }
     }
 
     @FXML
@@ -108,7 +118,7 @@ public class EditShowtimeController {
             Time sqlShowTime = Time.valueOf(showTime);
 
             // Lấy giá vé
-            BigDecimal price = new BigDecimal(priceField.getText());
+//            BigDecimal price = new BigDecimal(priceField.getText());
 
             // Lấy Movie và Room được chọn
             Movie selectedMovie = movieComboBox.getValue();
@@ -132,10 +142,7 @@ public class EditShowtimeController {
                 updated = true;
             }
 
-            if (selectedShowtime.getPrice().compareTo(price) != 0) {
-                selectedShowtime.setPrice(price);
-                updated = true;
-            }
+//
 
             if (!selectedShowtime.getMovie().equals(selectedMovie)) {
                 selectedShowtime.setMovie(selectedMovie);

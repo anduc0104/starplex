@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 
 import java.math.BigDecimal;
@@ -23,6 +24,8 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public class BookingEditController {
+    @FXML
+    public TextField totalTicketFields;
     @FXML
     private Button backButton, saveButton, clearButton;
     @FXML
@@ -59,6 +62,7 @@ public class BookingEditController {
             currentBoooking = booking;
             priceField.setText(String.valueOf(booking.getTotalPrice()));
             statusComboBox.setValue(booking.getStatus());
+            totalTicketFields.setText(String.valueOf(booking.getTotalTicket()));
         }
     }
 
@@ -76,9 +80,7 @@ public class BookingEditController {
                 if (empty || item == null) {
                     setText(null);
                 } else {
-                    setText("ID: " + item.getId() + " | " +
-                            "User: " + item.getUsername() + " | " +
-                            "Email: " + item.getEmail() + " | ");
+                    setText(item.getUsername());
                 }
             }
         });
@@ -89,16 +91,14 @@ public class BookingEditController {
                 if (empty || item == null) {
                     setText(null);
                 } else {
-                    setText("ID: " + item.getId() + " | " +
-                            "User: " + item.getUsername() + " | " +
-                            "Email: " + item.getEmail() + " | ");
+                    setText(item.getUsername());
                 }
             }
         });
         userComboBox.setConverter(new StringConverter<User>() {
             @Override
             public String toString(User user) {
-                return (user != null) ? user.getId() + "-" + user.getUsername() + " - " + user.getEmail() : "";
+                return (user != null) ? user.getUsername() : "";
             }
 
             @Override
@@ -148,7 +148,7 @@ public class BookingEditController {
     }
 
     private void loadStatusOptions() {
-        List<String> statuses = List.of("PENDING", "CONFIRMED", "CANCELLED", "COMPLETED");
+        List<String> statuses = List.of("Pending", "Confirmed", "Cancelled");
         statusComboBox.setItems(FXCollections.observableArrayList(statuses));
     }
 
@@ -164,6 +164,7 @@ public class BookingEditController {
                 Showtime showtime = showtimeComboBox.getValue();
                 BigDecimal totalPrice = new BigDecimal(priceField.getText());
                 String status = statusComboBox.getValue();
+                Integer totalTickets = Integer.parseInt(totalTicketFields.getText());
 
                 if (user == null || showtime == null || totalPrice == null || status == null) {
                     AlertUtils.showError("Error", "All fields are required.");
@@ -176,6 +177,7 @@ public class BookingEditController {
                 currentBoooking.setShowtime(showtime);
                 currentBoooking.setTotalPrice(totalPrice);
                 currentBoooking.setStatus(status);
+                currentBoooking.setTotalTicket(totalTickets);
 
                 bookingDao.update(currentBoooking);
                 AlertUtils.showInfo("Success", "Booking updated successfully.");
@@ -193,6 +195,7 @@ public class BookingEditController {
         userComboBox.getSelectionModel().clearSelection();
         showtimeComboBox.getSelectionModel().clearSelection();
         statusComboBox.getSelectionModel().clearSelection();
+        totalTicketFields.clear();
     }
 
     private boolean validateInput() {

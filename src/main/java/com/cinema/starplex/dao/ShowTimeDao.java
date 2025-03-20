@@ -10,9 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShowTimeDao implements BaseDao<Showtime> {
+    public Connection conn;
+
+    public ShowTimeDao() {
+        this.conn = DatabaseConnection.getConn();
+    }
 
     @Override
-    public void save(Showtime entity) {}
+    public void save(Showtime entity) {
+    }
 
     @Override
     public boolean insert(Showtime entity) {
@@ -20,26 +26,56 @@ public class ShowTimeDao implements BaseDao<Showtime> {
     }
 
     @Override
-    public void update(Showtime entity) {}
+    public void update(Showtime entity) {
+    }
 
     @Override
-    public void delete(long id) {}
+    public void delete(long id) {
+    }
 
     @Override
     public Showtime findById(long id) {
+        String sql = "SELECT * FROM showtimes where id = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setLong(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return new Showtime(
+                        rs.getInt("id"),
+                        rs.getDate("show_date"),
+                        rs.getTime("show_time"),
+                        rs.getInt("movie_id"),
+                        rs.getInt("room_id")
+                );
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         return null;
     }
 
     @Override
     public List<Showtime> findAll() {
-        return List.of();
+        String sql = "SELECT * FROM showtimes";
+        List<Showtime> showtimes = new ArrayList<>();
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Showtime showtime = new Showtime(
+                        rs.getInt("id"),
+                        rs.getDate("show_date"),
+                        rs.getTime("show_time"),
+                        rs.getInt("movie_id"),
+                        rs.getInt("room_id")
+                );
+                showtimes.add(showtime);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return showtimes;
     }
 
-    private Connection conn;
-
-    public ShowTimeDao() {
-        this.conn = DatabaseConnection.getConn();
-    }
 
     /**
      * Lấy danh sách tất cả lịch chiếu
@@ -144,12 +180,12 @@ public class ShowTimeDao implements BaseDao<Showtime> {
         return false;
     }
 
-    public int getRoomNumber(int roomId){
+    public int getRoomNumber(int roomId) {
         String sql = "SELECT room_number FROM rooms WHERE id =?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, roomId);
             ResultSet rs = stmt.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 return rs.getInt("room_number");
             }
         } catch (SQLException e) {

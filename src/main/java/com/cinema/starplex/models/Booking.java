@@ -147,5 +147,21 @@ public class Booking {
     public void setTotalPriceToPayment(double totalPriceToPayment) {
         this.totalPriceToPayment = totalPriceToPayment;
     }
+
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "id=" + id +
+                ", user=" + user +
+                ", showtime=" + showtime +
+                ", totalPrice=" + totalPrice +
+                ", status=" + status +
+                ", createdAt=" + createdAt +
+                ", userId=" + userId +
+                ", showtime_id=" + showtime_id +
+                ", totalTicket=" + totalTicket +
+                ", totalPriceToPayment=" + totalPriceToPayment +
+                '}';
+    }
 }
 

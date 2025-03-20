@@ -79,7 +79,7 @@ public class ShowtimesController {
             LocalTime localTime = sqlTime.toLocalTime(); // Chuyển đổi trực tiếp
             return new SimpleObjectProperty<>(localTime);
         });
-        priceColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPrice()));
+//        priceColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPrice()));
 
         colRoomId.setCellValueFactory(cellData -> {
             Room room = cellData.getValue().getRoom();

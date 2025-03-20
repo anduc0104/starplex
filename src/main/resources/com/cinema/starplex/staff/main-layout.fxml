@@ -18,7 +18,7 @@
                 <!-- Logo bên trái -->
                 <ImageView fitHeight="28.0" fitWidth="80" fx:id="logo">
                     <image>
-                        <Image url="@../../../../images/logo-text-new.png"/>
+                        <Image url="@../../../../images/logo-phim.png"/>
                     </image>
                 </ImageView>
                 <!-- Khoảng trống để đẩy menu vào giữa -->
