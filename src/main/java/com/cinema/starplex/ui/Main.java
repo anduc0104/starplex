@@ -10,11 +10,13 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/cinema/starplex/LoginView.fxml"));
+//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/cinema/starplex/staff/select-payment-method.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
         //css
         scene.getStylesheets().add(getClass().getResource("/css/main.css").toExternalForm());
         scene.getStylesheets().add(getClass().getResource("/css/admin.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/css/staff-detail.css").toExternalForm());
 
         //font
         Font font = Font.loadFont(getClass().getResourceAsStream("/font/Montserrat-ExtraLight.ttf"), 16);

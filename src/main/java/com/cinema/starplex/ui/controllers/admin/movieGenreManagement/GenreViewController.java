@@ -147,7 +147,6 @@ public class GenreViewController {
 
         if (genres != null) {
             genreList.addAll(genres);
-            System.out.println("Genres loaded: " + genreList.size());
         } else {
             System.out.println("Failed to load genres!");
         }

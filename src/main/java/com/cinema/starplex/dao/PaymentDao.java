@@ -34,13 +34,12 @@ public class PaymentDao implements BaseDao<Payment>{
 
     @Override
     public boolean insert(Payment payment) {
-        String query = "INSERT INTO payments (booking_id, amount, payment_method, status, transaction_id, created_at) VALUES (?, ?, ?, ?, ?, NOW())";
+        String query = "INSERT INTO payments (booking_id, amount, payment_method, status, created_at) VALUES (?, ?, ?, ?, NOW())";
         try(PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, payment.getBooking().getId());
             statement.setBigDecimal(2, payment.getAmount());
             statement.setString(3, payment.getPaymentMethod());
             statement.setString(4, payment.getStatus());
-            statement.setString(5, payment.getTransactionId());
 
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
@@ -61,14 +60,13 @@ public class PaymentDao implements BaseDao<Payment>{
 
     @Override
     public void update(Payment payment) {
-        String query = "UPDATE payments SET booking_id=?, amount=?, payment_method=?, status=?, transaction_id=? WHERE id=?";
+        String query = "UPDATE payments SET booking_id=?, amount=?, payment_method=?, status=? WHERE id=?";
         try(PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, payment.getBooking().getId());
             statement.setBigDecimal(2, payment.getAmount());
             statement.setString(3, payment.getPaymentMethod());
             statement.setString(4, payment.getStatus());
-            statement.setString(5, payment.getTransactionId());
-            statement.setInt(6, payment.getId());
+            statement.setInt(5, payment.getId());
 
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -127,7 +125,6 @@ public class PaymentDao implements BaseDao<Payment>{
         payment.setAmount(resultSet.getBigDecimal("amount"));
         payment.setPaymentMethod(resultSet.getString("payment_method"));
         payment.setStatus(resultSet.getString("status"));
-        payment.setTransactionId(resultSet.getString("transaction_id"));
         payment.setCreatedAt(resultSet.getTimestamp("created_at"));
         return payment;
     }
@@ -146,5 +143,20 @@ public class PaymentDao implements BaseDao<Payment>{
             e.printStackTrace();
         }
         return bookings;
+    }
+    public void creaetePaymentDetails(int bookingId, double amount) {
+        String query = "INSERT INTO payments (booking_id, amount, payment_method, status) VALUES (?,?,'Cash','Completed')";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, bookingId);
+            statement.setDouble(2, amount);
+
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Creating payment failed, no rows affected.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 }

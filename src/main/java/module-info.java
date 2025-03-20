@@ -1,24 +1,27 @@
 module com.cinema.starplex {
+    requires javafx.controls;
+
+    opens com.cinema.starplex.ui.controllers.admin.showtimesManagement;
+
+
     requires javafx.fxml;
 
     requires org.kordamp.bootstrapfx.core;
 
     opens com.cinema.starplex to javafx.fxml;
 
-    requires java.naming;
-    requires jbcrypt;
+    requires spring.security.crypto;
+    requires java.sql;
+    requires org.controlsfx.controls;
 
     opens com.cinema.starplex.ui.controllers to javafx.fxml;
     opens com.cinema.starplex.ui.controllers.admin to javafx.fxml;
 
     opens com.cinema.starplex.ui.controllers.admin.movieManagement to javafx.fxml;
     opens com.cinema.starplex.ui.controllers.admin.usermanagement to javafx.fxml;
-    requires java.sql;
     requires flyway.core;
-    requires spring.security.crypto;
     requires org.kordamp.ikonli.fontawesome5;
     requires org.kordamp.ikonli.javafx;
-    requires org.controlsfx.controls;
 
     opens com.cinema.starplex.ui to javafx.fxml;
     exports com.cinema.starplex.ui to javafx.graphics;
@@ -29,19 +32,7 @@ module com.cinema.starplex {
     exports com.cinema.starplex.ui.controllers.admin.movieManagement;
     exports com.cinema.starplex.ui.controllers.admin.usermanagement;
 
-    exports com.cinema.starplex.util;
-    opens com.cinema.starplex.util;
-
-
     exports com.cinema.starplex.models;
-
-    opens com.cinema.starplex.ui.controllers.staff.staffDetail;
-    exports com.cinema.starplex.ui.controllers.staff.staffDetail;
-    opens com.cinema.starplex.ui.controllers.staff;
-    exports com.cinema.starplex.ui.controllers.staff;
-
-    opens com.cinema.starplex.ui.app to javafx.graphics, javafx.fxml;
-    exports com.cinema.starplex.ui.app;
 
     opens com.cinema.starplex.staff;
     opens com.cinema.starplex.ui.controllers.admin.roommanagement;
@@ -51,11 +42,18 @@ module com.cinema.starplex {
     opens com.cinema.starplex.ui.controllers.admin.seatTypeManagement;
     exports com.cinema.starplex.ui.controllers.admin.seatTypeManagement;
     exports com.cinema.starplex.ui.controllers.admin.showtimesManagement;
-    opens com.cinema.starplex.ui.controllers.admin.showtimesManagement to javafx.fxml;
-    opens com.cinema.starplex.ui.controllers.admin.bookingManagement to javafx.fxml;
-    exports com.cinema.starplex.ui.controllers.admin.bookingManagement;
-    exports com.cinema.starplex.ui.controllers.admin.paymentManagement;
-    opens com.cinema.starplex.ui.controllers.admin.paymentManagement;
     exports com.cinema.starplex.ui.controllers.admin.movieGenreManagement;
-    opens com.cinema.starplex.ui.controllers.admin.movieGenreManagement;
+    opens com.cinema.starplex.ui.controllers.admin.movieGenreManagement to javafx.fxml;
+
+    opens com.cinema.starplex.ui.controllers.staff to javafx.fxml;
+
+    exports com.cinema.starplex.ui.controllers.admin.bookingManagement;
+
+    // Mở (opens) package cho JavaFX FXML để có thể truy cập được
+    opens com.cinema.starplex.ui.controllers.admin.bookingManagement to javafx.fxml;
+
+    exports com.cinema.starplex.ui.controllers.admin.paymentManagement;
+
+    // Mở (opens) package cho JavaFX FXML để có thể truy cập được
+    opens com.cinema.starplex.ui.controllers.admin.paymentManagement to javafx.fxml;
 }

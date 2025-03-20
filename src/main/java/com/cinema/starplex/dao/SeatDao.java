@@ -35,12 +35,13 @@ public class SeatDao implements BaseDao<Seat> {
 
     @Override
     public boolean insert(Seat seat) {
-        String query = "INSERT INTO seats (room_id, seat_type_id, seat_number, created_at) VALUES (?, ?, ?, NOW())";
+        String query = "INSERT INTO seats (room_id, seat_type_id, `row`, col_number, created_at) VALUES (?, ?, ?, ?, NOW())";
 
         try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, seat.getRoom().getId());
             statement.setInt(2, seat.getSeatType().getId());
-            statement.setString(3, seat.getSeatNumber());
+            statement.setString(3, String.valueOf(seat.getRow())); // Cập nhật row
+            statement.setInt(4, seat.getCol_number()); // Cập nhật colNumber
 
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
@@ -59,7 +60,8 @@ public class SeatDao implements BaseDao<Seat> {
         return false;
     }
 
-//    Dùng batch insert (insertBatch) để thêm nhiều ghế một lúc, tránh gọi insert(Seat seat) nhiều lần.
+
+    //    Dùng batch insert (insertBatch) để thêm nhiều ghế một lúc, tránh gọi insert(Seat seat) nhiều lần.
 //    Dùng transaction (conn.setAutoCommit(false)) để đảm bảo tất cả các ghế được thêm vào hoặc không có cái nào được thêm nếu xảy ra lỗi.
     public boolean insertBatch(List<Seat> seats) {
         String query = "INSERT INTO seats (room_id, seat_type_id, seat_number, created_at) VALUES (?, ?, ?, NOW())";
@@ -124,7 +126,7 @@ public class SeatDao implements BaseDao<Seat> {
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    return mapResultSetToBooking(resultSet);
+                    return mapResultSetToSeat(resultSet);
                 }
             }
         } catch(
@@ -145,7 +147,7 @@ public class SeatDao implements BaseDao<Seat> {
         try(Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query)) {
             while (resultSet.next()) {
-                seats.add(mapResultSetToBooking(resultSet));
+                seats.add(mapResultSetToSeat(resultSet));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -153,12 +155,13 @@ public class SeatDao implements BaseDao<Seat> {
         return seats;
     }
 
-    private Seat mapResultSetToBooking(ResultSet resultSet) throws SQLException{
+    private Seat mapResultSetToSeat(ResultSet resultSet) throws SQLException {
         Seat seat = new Seat();
         seat.setId(resultSet.getInt("id"));
         seat.setRoom(new RoomDao().findById(resultSet.getInt("room_id")));
         seat.setSeatType(new SeatTypeDao().findById(resultSet.getInt("seat_type_id")));
-        seat.setSeatNumber(resultSet.getString("seat_number"));
+        seat.setRow(resultSet.getString("row")); // Cập nhật row
+        seat.setCol_number(resultSet.getInt("col_number")); // Cập nhật colNumber
         return seat;
     }
 
@@ -177,15 +180,13 @@ public class SeatDao implements BaseDao<Seat> {
 
             while (rs.next()) {
                 int id = rs.getInt("id");
-                String seatNumber = rs.getString("seat_number");
+                String row = rs.getString("row");
                 int seatTypeId = rs.getInt("seat_type_id");
                 boolean isBooked = rs.getObject("booking_id") != null;
 
-                // Phân tích số ghế (e.g., "A1", "B2", v.v.)
-                char rowChar = seatNumber.charAt(0);
-                int colNum = Integer.parseInt(seatNumber.substring(1));
+                int colNum = rs.getInt("col_number");
 
-                seats.add(new Seat(id, rowChar, colNum, seatTypeId, isBooked));
+                seats.add(new Seat(id, row, colNum, seatTypeId, isBooked));
             }
         } catch (SQLException e) {
             e.printStackTrace();

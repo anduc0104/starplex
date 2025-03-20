@@ -50,6 +50,16 @@ public class Movie {
         this.title = new SimpleStringProperty(movieTitle);
     }
 
+    public <E> Movie(int movieId, String title, ObservableList<Genre> es, String duration, String releaseDate, String description, String images) {
+        this.id = new SimpleIntegerProperty(movieId);
+        this.title = new SimpleStringProperty(title);
+        this.genres = new SimpleListProperty<>(es);
+        this.duration = new SimpleStringProperty(duration);
+        this.releaseDate = new SimpleStringProperty(releaseDate);
+        this.description = new SimpleStringProperty(description);
+        this.image = new SimpleStringProperty(images);
+    }
+
     public int getId() {
         return id.get();
     }

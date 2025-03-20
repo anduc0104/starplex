@@ -13,17 +13,15 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.util.StringConverter;
-
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 public class PaymentEditController {
     @FXML
     private Button backButton, saveButton, clearButton;
 
     @FXML
-    private TextField amountField, transactionIdField;
+    private TextField amountField;
 
     @FXML
     private ComboBox<Booking> bookingComboBox;
@@ -49,7 +47,6 @@ public class PaymentEditController {
         if (payment != null) {
             currentPayment = payment;
             amountField.setText(String.valueOf(payment.getAmount()));
-            transactionIdField.setText(payment.getTransactionId());
             bookingComboBox.setValue(payment.getBooking());
             paymentComboBox.setValue(payment.getPaymentMethod());
             statusComboBox.setValue(payment.getStatus());
@@ -117,12 +114,11 @@ public class PaymentEditController {
 
         try {
             BigDecimal amount = new BigDecimal(amountField.getText());
-            String transactionId = transactionIdField.getText().trim();
             Booking booking = bookingComboBox.getValue();
             String paymentMethod = paymentComboBox.getValue();
             String status = statusComboBox.getValue();
 
-            if (booking == null || paymentMethod == null || status == null || transactionId.isEmpty()) {
+            if (booking == null || paymentMethod == null || status == null ) {
                 AlertUtils.showError("Validation Error", "All fields must be filled.");
                 return;
             }
@@ -130,7 +126,6 @@ public class PaymentEditController {
             AlertUtils.showWarning("Warning", "Are you sure you want to update this payment information?");
 
             currentPayment.setAmount(amount);
-            currentPayment.setTransactionId(transactionId);
             currentPayment.setBooking(booking);
             currentPayment.setPaymentMethod(paymentMethod);
             currentPayment.setStatus(status);
@@ -146,7 +141,6 @@ public class PaymentEditController {
     @FXML
     private void handleClear() {
         amountField.clear();
-        transactionIdField.clear();
         bookingComboBox.getSelectionModel().clearSelection();
         paymentComboBox.getSelectionModel().clearSelection();
         statusComboBox.getSelectionModel().clearSelection();
@@ -175,12 +169,4 @@ public class PaymentEditController {
             e.printStackTrace();
         }
     }
-//
-//    private void showAlert(String title, String message) {
-//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//        alert.setTitle(title);
-//        alert.setHeaderText(null);
-//        alert.setContentText(message);
-//        alert.showAndWait();
-//    }
 }

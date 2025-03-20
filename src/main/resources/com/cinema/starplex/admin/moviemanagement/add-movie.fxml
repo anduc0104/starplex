@@ -46,6 +46,16 @@
                     <TextField fx:id="titleField" styleClass="input-field"/>
                 </VBox>
 
+<!--                <VBox spacing="8">-->
+<!--                    <Label text="Director :" styleClass="label-input"/>-->
+<!--                    <TextField fx:id="directorField" styleClass="input-field"/>-->
+<!--                </VBox>-->
+
+<!--                <VBox spacing="8">-->
+<!--                    <Label text="Actors :" styleClass="label-input"/>-->
+<!--                    <TextField fx:id="actorsField" styleClass="input-field"/>-->
+<!--                </VBox>-->
+
                 <VBox spacing="8">
                     <Label text="Genre :" styleClass="label-input"/>
                     <CheckComboBox fx:id="genreCheckComboBox" styleClass="input-field"/>

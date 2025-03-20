@@ -27,11 +27,13 @@ public class SceneSwitcher {
             Scene scene = new Scene(fxmlLoader.load());
             scene.getStylesheets().add(SceneSwitcher.class.getResource("/css/main.css").toExternalForm());
             scene.getStylesheets().add(SceneSwitcher.class.getResource("/css/admin.css").toExternalForm());
+            scene.getStylesheets().add(SceneSwitcher.class.getResource("/css/staff-detail.css").toExternalForm());
 
             stage.setScene(scene);
             stage.setFullScreenExitHint("");
 
-            if (fxmlFile == "LoginView.fxml") {
+            if (fxmlFile.equals("LoginView.fxml")) {
+                stage.setMaximized(false);
                 stage.setFullScreen(false);
             } else {
                 stage.setMaximized(true);

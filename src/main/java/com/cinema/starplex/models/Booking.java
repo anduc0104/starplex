@@ -13,6 +13,10 @@ public class Booking {
     private final StringProperty status = new SimpleStringProperty();
     private final ObjectProperty<Timestamp> createdAt = new SimpleObjectProperty<>();
 
+    private int userId;
+    private int showtime_id;
+    private int totalTicket;
+    private double totalPriceToPayment;
     public Booking(Integer id, User user, Showtime showtime, BigDecimal totalPrice, String status, Timestamp createdAt) {
         this.id.set(id);
         this.user.set(user);
@@ -24,6 +28,14 @@ public class Booking {
 
     public Booking() {
 
+    }
+
+
+    public Booking(int userId, Integer showtime_id, int totalTicket, double totalPriceToPayment) {
+        this.userId = userId;
+        this.showtime_id = showtime_id;
+        this.totalTicket = totalTicket;
+        this.totalPriceToPayment = totalPriceToPayment;
     }
 
     // Getter & Setter cho id
@@ -54,18 +66,10 @@ public class Booking {
 
     // Getter & Setter cho showtime
     public Showtime getShowtime() {
-        if (showtime.get() == null) {
-            System.out.println("⚠ Lỗi: getShowtime() trả về NULL cho Booking ID " + this.getId());
-        }
         return showtime.get();
     }
 
     public void setShowtime(Showtime showtime) {
-        if (showtime == null) {
-            System.out.println("NO " + this.getId());
-        } else {
-            System.out.println("Showtime set: " + showtime.getId());
-        }
         this.showtime.set(showtime);
     }
 
@@ -111,4 +115,37 @@ public class Booking {
     public ObjectProperty<Timestamp> createdAtProperty() {
         return createdAt;
     }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getShowtime_id() {
+        return showtime_id;
+    }
+
+    public void setShowtime_id(int showtime_id) {
+        this.showtime_id = showtime_id;
+    }
+
+    public int getTotalTicket() {
+        return totalTicket;
+    }
+
+    public void setTotalTicket(int totalTicket) {
+        this.totalTicket = totalTicket;
+    }
+
+    public double getTotalPriceToPayment() {
+        return totalPriceToPayment;
+    }
+
+    public void setTotalPriceToPayment(double totalPriceToPayment) {
+        this.totalPriceToPayment = totalPriceToPayment;
+    }
 }
+

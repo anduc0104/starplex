@@ -27,7 +27,7 @@ public class MovieMovieGenreDao implements BaseDao<MovieGenre> {
 
     @Override
     public void delete(long id) {
-        String sql = "DELETE FROM movie_types WHERE movie_id = ?";
+        String sql = "DELETE FROM movie_movie_genres WHERE movie_id = ?";
         // execute the SQL query
         try (Connection conn = DatabaseConnection.getConn();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

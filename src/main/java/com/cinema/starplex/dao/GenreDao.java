@@ -34,7 +34,6 @@ public class GenreDao implements BaseDao<Genre> {
                 ));
             }
         }
-        System.out.println("Genres loaded: " + genres.size());
         return genres;
     }
 

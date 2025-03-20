@@ -3,6 +3,7 @@ package com.cinema.starplex.ui.controllers;
 import com.cinema.starplex.dao.UserDao;
 
 import com.cinema.starplex.models.User;
+import com.cinema.starplex.session.SessionManager;
 import com.cinema.starplex.util.SceneSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,6 +31,7 @@ public class LoginController {
     @FXML
     private Label passwordError;
 
+
     public void handleLogin(ActionEvent actionEvent) throws SQLException {
         String username = usernameField.getText().trim();
         String password = passwordField.getText().trim();
@@ -52,6 +54,7 @@ public class LoginController {
                 Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                 SceneSwitcher.switchTo(currentStage, "staff/main-layout.fxml");
             }
+            SessionManager.getInstance().setUser(username, user.getId());
         } else {
             System.out.println("login failed");
             showError(usernameField, usernameError, "Invalid username or password");
