@@ -14,12 +14,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class GenreDao implements BaseDao<Genre> {
-
-    private final Connection conn;
-
-    public GenreDao() {
-        conn = DatabaseConnection.getConn();
-    }
+    static Connection conn = new DatabaseConnection().getConn();
 
     public ObservableList<Genre> getGenres() throws SQLException {
         ObservableList<Genre> genres = FXCollections.observableArrayList();

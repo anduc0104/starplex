@@ -11,7 +11,6 @@ module com.cinema.starplex {
     opens com.cinema.starplex to javafx.fxml;
 
     requires spring.security.crypto;
-    requires java.sql;
     requires org.controlsfx.controls;
 
     opens com.cinema.starplex.ui.controllers to javafx.fxml;
@@ -22,6 +21,8 @@ module com.cinema.starplex {
     requires flyway.core;
     requires org.kordamp.ikonli.fontawesome5;
     requires org.kordamp.ikonli.javafx;
+    requires com.zaxxer.hikari;
+    requires java.sql;
 
     opens com.cinema.starplex.ui to javafx.fxml;
     exports com.cinema.starplex.ui to javafx.graphics;

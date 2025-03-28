@@ -18,12 +18,7 @@ import java.util.List;
 
 public class UserDao implements BaseDao<User> {
     private User user;
-    private Connection conn;
-
-    public UserDao() {
-        user = new User();
-        conn = DatabaseConnection.getConn();
-    }
+    static Connection conn = new DatabaseConnection().getConn();
 
     @Override
     public void save(User user) {
@@ -36,7 +31,7 @@ public class UserDao implements BaseDao<User> {
             pstmt.setString(5, user.getPhone());
             pstmt.setString(6, user.getRole());
             pstmt.executeUpdate();
-
+            
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -50,6 +45,7 @@ public class UserDao implements BaseDao<User> {
             if (rs.next()) {
                 return rs.getInt(1) > 0; // Nếu COUNT(*) > 0 thì username đã tồn tại
             }
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -86,6 +82,7 @@ public class UserDao implements BaseDao<User> {
             }
 
             pstmt.executeUpdate();
+            
         } catch (SQLException e) {
             throw new RuntimeException("Error updating user: " + e.getMessage());
         }
@@ -98,6 +95,7 @@ public class UserDao implements BaseDao<User> {
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setLong(1, id);
             pstmt.executeUpdate();
+            
         } catch (SQLException e) {
             throw new RuntimeException("Error deleting user: " + e.getMessage());
         }
@@ -121,6 +119,7 @@ public class UserDao implements BaseDao<User> {
                         rs.getString("password") // Lấy password cũ nếu không cập nhật
                 );
             }
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -144,6 +143,7 @@ public class UserDao implements BaseDao<User> {
                         rs.getString("password") // Lấy password c�� nếu không cập nhật
                 ));
             }
+            
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -153,7 +153,6 @@ public class UserDao implements BaseDao<User> {
     public User login(String username, String password) throws SQLException {
         User user = null;
         String sql = "Select * from users where username = ?";
-        Connection conn = DatabaseConnection.getConn();
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, username);
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -169,6 +168,7 @@ public class UserDao implements BaseDao<User> {
                         return user;
                     }
                 }
+                conn.close();
                 return null;
             }
         }
@@ -190,6 +190,7 @@ public class UserDao implements BaseDao<User> {
 
                     ));
                 }
+                
                 return users;
             }
         } catch (SQLException e) {

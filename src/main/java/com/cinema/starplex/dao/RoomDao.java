@@ -14,19 +14,7 @@ import java.sql.*;
 import java.util.*;
 
 public class RoomDao implements BaseDao<Room> {
-    private Connection connection;
-
-    public RoomDao() {
-        this.connection = DatabaseConnection.getConn();
-    }
-
-    public RoomDao(Connection connection) {
-        this.connection = connection;
-    }
-
-    public Connection getConnection() {
-        return connection;
-    }
+    static Connection connection = new DatabaseConnection().getConn();
 
     @Override
     public void save(Room room) {
@@ -73,6 +61,7 @@ public class RoomDao implements BaseDao<Room> {
             statement.setInt(3, room.getId());
 
             statement.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -275,7 +264,6 @@ public class RoomDao implements BaseDao<Room> {
     public void closeConnection() {
         try {
             if (connection != null && !connection.isClosed()) {
-                connection.close();
                 System.out.println("Database connection closed.");
             }
         } catch (SQLException e) {

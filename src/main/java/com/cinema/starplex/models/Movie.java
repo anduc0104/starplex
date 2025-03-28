@@ -56,6 +56,11 @@ public class Movie {
         this.image = new SimpleStringProperty(images);
     }
 
+    public Movie(Integer movieId, String movieTitle) {
+        this.id = new SimpleIntegerProperty(movieId);
+        this.title = new SimpleStringProperty(movieTitle);
+    }
+
     public int getId() {
         return id.get();
     }
@@ -166,6 +171,6 @@ public class Movie {
 
     @Override
     public String toString() {
-        return title.get();
+        return getTitle(); // Chỉ trả về title, không in toàn bộ object
     }
 }

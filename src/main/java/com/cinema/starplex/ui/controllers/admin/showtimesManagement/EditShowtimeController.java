@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.util.StringConverter;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -74,6 +75,17 @@ public class EditShowtimeController {
             priceField.setText(selectedShowtime.getPrice().toString());
 
             if (selectedShowtime.getMovie() != null) {
+                movieComboBox.setConverter(new StringConverter<Movie>() {
+                    @Override
+                    public String toString(Movie movie) {
+                        return movie != null ? movie.getTitle() : "";
+                    }
+
+                    @Override
+                    public Movie fromString(String string) {
+                        return null; // Không cần thiết nếu chỉ hiển thị dữ liệu
+                    }
+                });
                 movieComboBox.setValue(selectedShowtime.getMovie());
             }
             if (selectedShowtime.getRoom() != null) {
@@ -142,14 +154,12 @@ public class EditShowtimeController {
                 updated = true;
             }
 
-//
-
-            if (!selectedShowtime.getMovie().equals(selectedMovie)) {
+            if (!selectedShowtime.getMovie().getTitle().equals(selectedMovie)) {
                 selectedShowtime.setMovie(selectedMovie);
                 updated = true;
             }
 
-            if (!selectedShowtime.getRoom().equals(selectedRoom)) {
+            if (!selectedShowtime.getRoom().getRoomNumber().equals(selectedRoom)) {
                 selectedShowtime.setRoom(selectedRoom);
                 updated = true;
             }

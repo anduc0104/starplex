@@ -33,7 +33,7 @@ public class EditGenreController {
     @FXML
     public void handleSave(ActionEvent actionEvent) throws SQLException {
         String sql = "UPDATE movie_genres SET name = ? WHERE id = ?";
-        try (Connection conn = DatabaseConnection.getConn();
+        try (Connection conn =new DatabaseConnection().getConn();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, nameField.getText());
             pstmt.setInt(2, genre.getId());

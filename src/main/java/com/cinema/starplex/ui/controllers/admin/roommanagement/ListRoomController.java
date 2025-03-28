@@ -171,33 +171,6 @@ public class ListRoomController implements Initializable {
         roomNumberColumn.setCellValueFactory(new PropertyValueFactory<>("roomNumber"));
         totalSeatsColumn.setCellValueFactory(new PropertyValueFactory<>("totalSeats"));
     }
-//        private void initializePagination() {
-//        //tao pagination with 10 rows cho moi page khoi tao
-//        paginationUtility = new TablePaginationUtility<>(roomTableView, 10);
-//
-//        //thay the table view trong container voi pagination container
-//        tableContainer.getChildren().clear();
-//        tableContainer.getChildren().add(paginationUtility.getContainer());
-//
-//        //hoi tao page voi size options
-//        ObservableList<Integer> pageSizeOptions = FXCollections.observableArrayList(5, 10, 20, 50, 100);
-//        pageSizeComboBox.setItems(pageSizeOptions);
-//        pageSizeComboBox.setValue(10);
-//        pageSizeComboBox.setOnAction(event -> {
-//            //tao mot pagination utility with 10 rows cho moi page khoi tao
-//            int selectedPageSize = pageSizeComboBox.getValue();
-//            paginationUtility = new TablePaginationUtility<>(roomTableView, selectedPageSize);
-//
-//            //thayy the container
-//            tableContainer.getChildren().clear();
-//            tableContainer.getChildren().add(paginationUtility.getContainer());
-//
-//            //update voi du lieu hien tai
-//            if (roomList != null) {
-//                paginationUtility.setItems(roomList);
-//            }
-//        });
-//    }
     @FXML
     private void handleDelete(Room room) {
         if (room == null) {

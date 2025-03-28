@@ -39,7 +39,7 @@ public class AddGenreController {
             return;
         }
 
-        try (Connection conn = DatabaseConnection.getConn();
+        try (Connection conn = new DatabaseConnection().getConn();
              PreparedStatement stmt = conn.prepareStatement("INSERT INTO movie_genres (name) VALUES (?)")) {
 
             stmt.setString(1, genreName);

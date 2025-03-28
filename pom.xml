@@ -48,6 +48,12 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>5.0.1</version> <!-- Kiểm tra phiên bản đang dùng -->
+        </dependency>
+
 
         <dependency>
             <groupId>mysql</groupId>
@@ -91,6 +97,7 @@
             <artifactId>controlsfx</artifactId>
             <version>11.2.1</version>
         </dependency>
+
 
     </dependencies>
 

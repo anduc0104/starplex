@@ -64,7 +64,7 @@ public class AddMovieController {
 
     private void loadGenres() {
         String sql = "SELECT name FROM movie_genres";
-        try (Connection conn = DatabaseConnection.getConn();
+        try (Connection conn = new DatabaseConnection().getConn();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
@@ -92,7 +92,7 @@ public class AddMovieController {
 
         String sql = "INSERT INTO movies (title, duration, release_date, description, images) VALUES (?, ?, ?, ?, ?)";
 
-        try (Connection conn = DatabaseConnection.getConn();
+        try (Connection conn =new DatabaseConnection().getConn();
              PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, title);
 //            stmt.setString(2, director);

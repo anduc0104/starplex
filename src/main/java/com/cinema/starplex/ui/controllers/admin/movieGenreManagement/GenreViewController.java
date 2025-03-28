@@ -192,7 +192,7 @@ public class GenreViewController {
             genreDao.delete(idToDelete);
             String sql = "DELETE FROM movie_genres WHERE id = ?";
 
-            try (Connection conn = DatabaseConnection.getConn();
+            try (Connection conn = new DatabaseConnection().getConn();
                  PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
                 pstmt.setInt(1, genre.getId());

@@ -9,19 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookingDao implements BaseDao<Booking> {
-    private Connection connection;
-
-    public BookingDao() {
-        this.connection = DatabaseConnection.getConn();
-    }
-
-    public BookingDao(Connection connection) {
-        this.connection = connection;
-    }
-
-    public Connection getConnection() {
-        return connection;
-    }
+    static Connection connection = new DatabaseConnection().getConn();
 
     @Override
     public void save(Booking booking) {

@@ -11,11 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class BookingDetailDao implements BaseDao<BookingDetail> {
-    public Connection conn;
-
-    public BookingDetailDao() {
-        conn = DatabaseConnection.getConn();
-    }
+    static Connection conn = new DatabaseConnection().getConn();
 
     @Override
     public void save(BookingDetail entity) {

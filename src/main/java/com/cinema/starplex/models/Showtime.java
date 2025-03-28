@@ -44,6 +44,15 @@ public class Showtime {
         this.roomId = roomId;
     }
 
+    public Showtime(Integer id, Movie movie, Room room, Date showDate, Time showTime, Date createdAt) {
+        this.id = id;
+        this.movie = movie;
+        this.room = room;
+        this.showDate = showDate;
+        this.showTime = showTime;
+        this.createdAt = createdAt;
+    }
+
     // Getters and Setters
     public Integer getId() {
         return id;
@@ -143,4 +152,5 @@ public class Showtime {
                 ", roomId=" + roomId +
                 '}';
     }
+
 }

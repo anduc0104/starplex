@@ -10,11 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShowTimeDao implements BaseDao<Showtime> {
-    public Connection conn;
-
-    public ShowTimeDao() {
-        this.conn = DatabaseConnection.getConn();
-    }
+    static Connection conn = new DatabaseConnection().getConn();
 
     @Override
     public void save(Showtime entity) {
@@ -48,6 +44,7 @@ public class ShowTimeDao implements BaseDao<Showtime> {
                         rs.getInt("room_id")
                 );
             }
+            
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -70,6 +67,7 @@ public class ShowTimeDao implements BaseDao<Showtime> {
                 );
                 showtimes.add(showtime);
             }
+            
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -82,7 +80,7 @@ public class ShowTimeDao implements BaseDao<Showtime> {
      */
     public List<Showtime> getAllShowtimes() {
         List<Showtime> showtimes = new ArrayList<>();
-        String sql = "SELECT s.id, m.title AS movie_title, r.room_number, s.show_date, s.show_time, s.price, s.created_at " +
+        String sql = "SELECT s.id, m.title AS movie_title, m.id AS movie_id,r.room_number, r.id as room_id, s.show_date, s.show_time, s.price, s.created_at " +
                 "FROM showtimes s " +
                 "LEFT JOIN movies m ON s.movie_id = m.id " +
                 "LEFT JOIN rooms r ON s.room_id = r.id";
@@ -90,17 +88,21 @@ public class ShowTimeDao implements BaseDao<Showtime> {
             while (rs.next()) {
                 String movieTitle = rs.getString("movie_title");
                 String roomNumber = rs.getString("room_number");
+                Integer movieId = rs.getInt("movie_id");
+                Integer roomId = rs.getInt("room_id");
+
 
                 showtimes.add(new Showtime(
                         rs.getInt("id"),
-                        new Movie(movieTitle),
-                        new Room(roomNumber),
+                        new Movie(movieId, movieTitle),
+                        new Room(roomId, roomNumber),
                         rs.getDate("show_date"),   // Lấy ngày chiếu
                         rs.getTime("show_time"),   // Lấy giờ chiếu
                         rs.getBigDecimal("price"),
                         rs.getDate("created_at")
                 ));
             }
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -129,6 +131,7 @@ public class ShowTimeDao implements BaseDao<Showtime> {
             stmt.setTime(4, showtime.getShowTime());   // Lưu giờ chiếu
             stmt.setBigDecimal(5, showtime.getPrice());
 
+            
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -159,6 +162,7 @@ public class ShowTimeDao implements BaseDao<Showtime> {
             stmt.setBigDecimal(5, showtime.getPrice());
             stmt.setInt(6, showtime.getId());
 
+            
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -173,6 +177,7 @@ public class ShowTimeDao implements BaseDao<Showtime> {
         String sql = "DELETE FROM showtimes WHERE id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
+            
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -180,7 +185,7 @@ public class ShowTimeDao implements BaseDao<Showtime> {
         return false;
     }
 
-    public int getRoomNumber(int roomId) {
+    public int getRoomNumber(int roomId){
         String sql = "SELECT room_number FROM rooms WHERE id =?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, roomId);
@@ -188,6 +193,7 @@ public class ShowTimeDao implements BaseDao<Showtime> {
             if (rs.next()) {
                 return rs.getInt("room_number");
             }
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }

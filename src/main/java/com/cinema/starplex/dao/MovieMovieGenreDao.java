@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class MovieMovieGenreDao implements BaseDao<MovieGenre> {
+    static Connection conn = new DatabaseConnection().getConn();
+
     @Override
     public void save(MovieGenre entity) {
 
@@ -28,9 +30,7 @@ public class MovieMovieGenreDao implements BaseDao<MovieGenre> {
     public void delete(long id) {
         String sql = "DELETE FROM movie_movie_genres WHERE movie_id = ?";
         // execute the SQL query
-        try (Connection conn = DatabaseConnection.getConn();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setLong(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {

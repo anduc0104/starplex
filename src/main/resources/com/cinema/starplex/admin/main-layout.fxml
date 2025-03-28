@@ -25,8 +25,8 @@
                         BorderPane.alignment="CENTER_LEFT">
                 <VBox>
                     <!--dashboard-->
-                    <Button mnemonicParsing="false" onAction="#dashBoardScene" styleClass="nav-btn"
-                            stylesheets="@../../../../css/admin.css" text="Dashboard" textFill="WHITE"/>
+<!--                    <Button mnemonicParsing="false" onAction="#dashBoardScene" styleClass="nav-btn"-->
+<!--                            stylesheets="@../../../../css/admin.css" text="Dashboard" textFill="WHITE"/>-->
                     <!--button movie-->
                     <Button mnemonicParsing="false" onAction="#movieScene" styleClass="nav-btn"
                             stylesheets="@../../../../css/admin.css" text="Movie" textFill="WHITE"/>

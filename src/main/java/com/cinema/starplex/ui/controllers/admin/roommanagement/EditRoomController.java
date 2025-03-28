@@ -67,6 +67,7 @@ public class EditRoomController {
                 roomDao.update(selectedRoom);
                 showAlert(Alert.AlertType.INFORMATION, "Success", "Room updated successfully");
                 clearFields();
+                returnToMovieView(event);
             } catch (Exception e) {
                 e.printStackTrace();
             }

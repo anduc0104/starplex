@@ -9,19 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PaymentDao implements BaseDao<Payment>{
-    private Connection connection;
-
-    public PaymentDao() {
-        this.connection = DatabaseConnection.getConn();
-    }
-
-    public PaymentDao(Connection connection) {
-        this.connection = connection;
-    }
-
-    public Connection getConnection() {
-        return connection;
-    }
+    static Connection connection = new DatabaseConnection().getConn();
 
     @Override
     public void save(Payment payment) {

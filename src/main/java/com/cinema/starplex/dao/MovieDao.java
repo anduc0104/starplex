@@ -19,12 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 public class MovieDao implements BaseDao<Movie> {
-
-    private final Connection conn;
-
-    public MovieDao() {
-        conn = DatabaseConnection.getConn();
-    }
+    static Connection conn = new DatabaseConnection().getConn();
 
     public ObservableList<Movie> getMovies() throws SQLException {
         ObservableList<Movie> movies = FXCollections.observableArrayList();
@@ -97,8 +92,7 @@ public class MovieDao implements BaseDao<Movie> {
     @Override
     public void save(Movie entity) {
         String sql = "INSERT INTO movies (title, duration, release_date, description, images) VALUES (?, ?, ?, ?, ?)";
-        try (Connection conn = DatabaseConnection.getConn();
-             PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, entity.getTitle());
             // stmt.setString(2, director);
             // stmt.setString(3, actors);
@@ -134,8 +128,7 @@ public class MovieDao implements BaseDao<Movie> {
     @Override
     public void delete(long id) {
         String sql = "DELETE FROM movies WHERE id =?";
-        try (Connection conn = DatabaseConnection.getConn();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setLong(1, id);
             stmt.executeUpdate();

@@ -91,7 +91,7 @@ public class AddShowtimeController {
             Time sqlShowTime = Time.valueOf(showTime); // Chuyển LocalTime thành java.sql.Time
 
             // Lấy giá vé
-            BigDecimal price = new BigDecimal(priceField.getText());
+//            BigDecimal price = new BigDecimal(priceField.getText());
 
             // Kiểm tra lựa chọn Movie và Room
             Movie selectedMovie = movieComboBox.getValue();
@@ -103,7 +103,7 @@ public class AddShowtimeController {
             }
 
             // Tạo Showtime mới
-            Showtime showtime = new Showtime(null, selectedMovie, selectedRoom, sqlShowDate, sqlShowTime, price, null);
+            Showtime showtime = new Showtime(null, selectedMovie, selectedRoom, sqlShowDate, sqlShowTime, null);
 
             // Insert Showtime using DAO
             if (showtimeDAO.insertShowtime(showtime)) {
@@ -126,8 +126,7 @@ public class AddShowtimeController {
     @FXML
     private void handleClear() {
         showDatePicker.setValue(null);
-        showTimePicker.clear();
-        priceField.clear();
+//        showTimePicker.clear();
         movieComboBox.setValue(null);
         roomComboBox.setValue(null);
     }
