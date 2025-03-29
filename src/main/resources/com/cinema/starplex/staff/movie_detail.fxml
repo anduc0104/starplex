@@ -62,6 +62,22 @@
             <Button focusTraversable="false" prefWidth="40" prefHeight="40" styleClass="seat-type-selected"/>
             <Label text="Selected" textFill="white" alignment="CENTER"/>
         </HBox>
+        <HBox alignment="CENTER_LEFT" spacing="8">
+            <Button text="X" focusTraversable="false" disable="true" prefWidth="40" prefHeight="40" styleClass="btn-Standard" />
+            <Label text="Standard" textFill="white" alignment="CENTER" />
+        </HBox>
+
+        <!-- Ghế Premium -->
+        <HBox alignment="CENTER_LEFT" spacing="8">
+            <Button focusTraversable="false" prefWidth="40" prefHeight="40" styleClass="btn-Premium" />
+            <Label text="Premium" textFill="white" alignment="CENTER" />
+        </HBox>
+
+        <!-- Ghế VIP -->
+        <HBox alignment="CENTER_LEFT" spacing="8">
+            <Button focusTraversable="false" prefWidth="40" prefHeight="40" styleClass="btn-VIP" />
+            <Label text="VIP" textFill="white" alignment="CENTER" />
+        </HBox>
     </HBox>
     <HBox alignment="CENTER">
         <VBox spacing="8" alignment="CENTER_LEFT">

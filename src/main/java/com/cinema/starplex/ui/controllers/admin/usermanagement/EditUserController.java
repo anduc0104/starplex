@@ -84,16 +84,7 @@ public class EditUserController {
 
     public void setUser(UserFX user) {
         this.user = user;
-
         // Kiểm tra giá trị của user
-        System.out.println("User data: " + user);
-        System.out.println("Username: " + user.getUsername());
-        System.out.println("Full name: " + user.getFullName());
-        System.out.println("Email: " + user.getEmail());
-        System.out.println("Phone: " + user.getPhone());
-        System.out.println("Role: " + user.getRole());
-        System.out.println("User ID: " + user.idProperty().get());
-
         fullNameField.setText(user.getFullName());
         usernameField.setText(user.getUsername());
         emailField.setText(user.getEmail());

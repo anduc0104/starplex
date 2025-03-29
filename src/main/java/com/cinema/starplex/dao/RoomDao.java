@@ -28,8 +28,8 @@ public class RoomDao implements BaseDao<Room> {
     @Override
     public boolean insert(Room room) {
         String query = "INSERT INTO rooms (room_number, total_seats, created_at) VALUES (?, ?, NOW())";
-        System.out.println(room.getRoomNumber());
-        System.out.println(room.getTotalSeats());
+        // System.out.println(room.getRoomNumber());
+        // System.out.println(room.getTotalSeats());
 
         try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, room.getRoomNumber());
@@ -216,7 +216,7 @@ public class RoomDao implements BaseDao<Room> {
                 int id = resultSet.getInt("id");
                 int roomNumber = resultSet.getInt("room_number");
                 int totalSeats = resultSet.getInt("total_seats");
-                System.out.printf("Room ID: %d, Room Number: %d, Total Seats: %d%n", id, roomNumber, totalSeats);
+                // System.out.printf("Room ID: %d, Room Number: %d, Total Seats: %d%n", id, roomNumber, totalSeats);
                 rooms.add(new Room(id, roomNumber, totalSeats));
             }
         } catch (SQLException e) {

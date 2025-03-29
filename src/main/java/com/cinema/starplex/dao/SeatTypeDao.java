@@ -32,7 +32,7 @@ public class SeatTypeDao implements BaseDao<SeatType> {
 
     @Override
     public boolean insert(SeatType seatType) {
-        String query = "INSERT INTO seat_types(name, price, created_at)VALUES (?,?,?,?,?)";
+        String query = "INSERT INTO seat_types(name, price, created_at)VALUES (?,?,?)";
         try (PreparedStatement statement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, seatType.getName());
             statement.setBigDecimal(2, seatType.getPrice());
@@ -58,7 +58,7 @@ public class SeatTypeDao implements BaseDao<SeatType> {
 
     @Override
     public void update(SeatType seatType) {
-        String query = "UPDATE seat_types SET name, price=?, created_at=? WHERE id=?";
+        String query = "UPDATE seat_types SET name = ?, price=?, created_at=? WHERE id=?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, seatType.getName());
             statement.setBigDecimal(2, seatType.getPrice());

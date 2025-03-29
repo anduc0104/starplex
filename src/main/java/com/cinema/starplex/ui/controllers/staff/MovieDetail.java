@@ -54,31 +54,31 @@ public class MovieDetail {
         this.showTimeDao = new ShowTimeDao();
         this.roomDao = new RoomDao();
         this.seatTypeDao = new SeatTypeDao();
-        loadSeatTypes();
+//        loadSeatTypes();
     }
 
-    public void loadSeatTypes() {
-        List<SeatType> seatTypes = roomDao.getSeatTypes();
-        for (SeatType seatType : seatTypes) {
-//            System.out.println(seatType);
-            HBox seatBox = new HBox(8); // Tạo nhóm gồm Button + Label
-            seatBox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
-
-            Button seatButton = new Button();
-            seatButton.setFocusTraversable(false);
-            seatButton.setOnAction(Event::consume);
-            seatButton.setPrefWidth(40);
-            seatButton.setPrefHeight(40);
-            seatButton.getStyleClass().add("btn-" + seatType.getName());
-
-            Label seatLabel = new Label(seatType.getName());
-            seatLabel.setTextFill(javafx.scene.paint.Color.WHITE);
-            seatLabel.setAlignment(javafx.geometry.Pos.CENTER);
-
-            seatBox.getChildren().addAll(seatButton, seatLabel);
-            listBtnSeatType.getChildren().add(seatBox);
-        }
-    }
+//    public void loadSeatTypes() {
+//        List<SeatType> seatTypes = roomDao.getSeatTypes();
+//        for (SeatType seatType : seatTypes) {
+////            System.out.println(seatType);
+//            HBox seatBox = new HBox(8); // Tạo nhóm gồm Button + Label
+//            seatBox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+//
+//            Button seatButton = new Button();
+//            seatButton.setFocusTraversable(false);
+//            seatButton.setOnAction(Event::consume);
+//            seatButton.setPrefWidth(40);
+//            seatButton.setPrefHeight(40);
+//            seatButton.getStyleClass().add("btn-" + seatType.getName());
+//
+//            Label seatLabel = new Label(seatType.getName());
+//            seatLabel.setTextFill(javafx.scene.paint.Color.WHITE);
+//            seatLabel.setAlignment(javafx.geometry.Pos.CENTER);
+//
+//            seatBox.getChildren().addAll(seatButton, seatLabel);
+//            listBtnSeatType.getChildren().add(seatBox);
+//        }
+//    }
 
     public void setShowtime(Showtime showtime, Movie movie) throws SQLException {
         this.selectedShowtime = showtime;

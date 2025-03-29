@@ -23,7 +23,6 @@
                 <TableColumn fx:id="colAmount" prefWidth="150.0" text="Amount"/>
                 <TableColumn fx:id="colPaymentMethod" prefWidth="150.0" text="Payment method"/>
                 <TableColumn fx:id="colStatus" prefWidth="150.0" text="Status"/>
-                <TableColumn fx:id="colTransactionId" prefWidth="150.0" text="Transaction Id"/>
                 <TableColumn fx:id="colAction" prefWidth="100.0" text="Action"/>
             </columns>
         </TableView>

@@ -55,7 +55,6 @@ public class PaymentController {
         colAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
         colPaymentMethod.setCellValueFactory(new PropertyValueFactory<>("paymentMethod"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-        colTransactionId.setCellValueFactory(new PropertyValueFactory<>("transactionId"));
         addActionButtons();
         loadsPayment();
     }

@@ -199,7 +199,7 @@ public class GenreViewController {
                 int affectedRows = pstmt.executeUpdate();
 
                 if (affectedRows > 0) {
-                    System.out.println("Genre deleted: " + genre.getName());
+                    // System.out.println("Genre deleted: " + genre.getName());
                     loadGenres();
                 }
             } catch (SQLException e) {

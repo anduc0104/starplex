@@ -3,15 +3,10 @@ INSERT INTO users (full_name, username, email, phone, password, role, created_at
 ('Nguyen Van A', 'admin', 'admin@example.com', '0912345671', '$2a$12$Qtiw5reG1xJc.DVdl4kVneibqx2z59o6KZriZGmUWlqJ.daEfd9u2', 'admin', NOW()),
 ('Nguyen Van B', 'staff', 'staff@example.com', '0912345672', '$2a$12$Qtiw5reG1xJc.DVdl4kVneibqx2z59o6KZriZGmUWlqJ.daEfd9u2', 'staff', NOW())
 
-
-
--- movies
-INSERT INTO movies (id, title, duration, release_date, description) VALUES
-(1, 'The Hero Returns', 120, '2025-01-01', 'An epic tale of heroism.'),
-(2, 'Laughing Out Loud', 90, '2025-02-10', 'A hilarious comedy.'),
-(3, 'Haunted Nights', 110, '2025-03-15', 'A chilling horror story.');
-
-
+INSERT INTO movies (id, `title`, `duration`, `release_date`, `description`, `images`) VALUES
+(1, 'The Hero Returns', 120, '2025-01-01', 'An epic tale of heroism.','file:/C:/Users/Admin/IdeaProjects/starplex/src/main/resources/images/tải%20xuống.jpg'),
+(2, 'Laughing Out Loud', 90, '2025-02-10', 'A hilarious comedy.','file:/C:/Users/Admin/IdeaProjects/starplex/src/main/resources/images/tải%20xuống%20(1).jpg'),
+(3, 'Haunted Nights', 110, '2025-03-15', 'A chilling horror story.','file:/C:/Users/Admin/IdeaProjects/starplex/src/main/resources/images/tải%20xuống%20(2).jpg');
 
 -- rooms
 INSERT INTO rooms (id, room_number, total_seats) VALUES
@@ -38,18 +33,13 @@ INSERT INTO movie_movie_genres (movie_id, genre_id) VALUES
 (2, 2), (2, 6),
 (3, 4), (3, 7);
 
-
-
-
 -- seat types
 INSERT INTO seat_types (id, name, price) VALUES
 (1, 'Standard', 100000),
 (2, 'Premium', 150000),
 (3, 'VIP', 200000);
-
-
 -- seat
-INSERT INTO seats (id, room_id, seat_type_id, `row`, col_number) VALUES
+INSERT INTO seats (id, room_id, seat_type_id, `row`, col_number) values
 (1, 1, 1, 'A', 1), (2, 1, 1, 'A', 2), (3, 1, 1, 'A', 3), (4, 1, 1, 'A', 4),
 (5, 1, 1, 'A', 5), (6, 1, 1, 'A', 6), (7, 1, 1, 'A', 7), (8, 1, 1, 'A', 8),
 (9, 1, 1, 'A', 9), (10, 1, 1, 'A', 10), (11, 1, 1, 'A', 11), (12, 1, 1, 'A', 12),
@@ -89,26 +79,16 @@ INSERT INTO seats (id, room_id, seat_type_id, `row`, col_number) VALUES
 
 -- showtimes
 INSERT INTO showtimes (id, movie_id, room_id, show_date, show_time) VALUES
-(1, 1, 1, '2025-03-20', '10:00'), (2, 1, 1, '2025-03-20', '13:00'),
-(3, 1, 1, '2025-03-20', '16:00'), (4, 1, 1, '2025-03-20', '19:00'),
-(5, 1, 1, '2025-03-21', '10:00'), (6, 1, 1, '2025-03-21', '13:00'),
-(7, 1, 1, '2025-03-21', '16:00'), (8, 1, 1, '2025-03-21', '19:00'),
-(9, 2, 2, '2025-03-22', '11:00'), (10, 2, 2, '2025-03-22', '14:00'),
-(11, 2, 2, '2025-03-22', '17:00'), (12, 2, 2, '2025-03-22', '20:00'),
-(13, 3, 3, '2025-03-23', '12:00'), (14, 3, 3, '2025-03-23', '15:00'),
-(15, 3, 3, '2025-03-23', '18:00'), (16, 3, 3, '2025-03-23', '21:00'),
+(1, 1, 1, CURDATE(), '10:00'), (2, 1, 1, '2025-03-17', '13:00'),
+(3, 1, 1, CURDATE(), '16:00'), (4, 1, 1, '2025-03-17', '19:00'),
+(5, 1, 1, CURDATE(), '10:00'),(9, 2, 2, CURDATE(), '11:00'),
+(10, 2, 2, '2025-03-17', '14:00'),
+(11, 2, 2, CURDATE(), '17:00'), (12, 2, 2, '2025-03-17', '20:00'),
+(13, 3, 3, CURDATE(), '12:00'), (14, 3, 3, '2025-03-23', '15:00'),
+(15, 3, 3, CURDATE(), '18:00'), (16, 3, 3, '2025-03-23', '21:00'),
 (17, 1, 2, '2025-03-24', '10:00'), (18, 1, 2, '2025-03-24', '13:00'),
 (19, 1, 2, '2025-03-24', '16:00'), (20, 1, 2, '2025-03-24', '19:00'),
-(21, 2, 3, '2025-03-25', '11:00'), (22, 2, 3, '2025-03-25', '14:00'),
-(23, 2, 3, '2025-03-25', '17:00'), (24, 2, 3, '2025-03-25', '20:00'),
-(25, 3, 1, '2025-03-26', '12:00'), (26, 3, 1, '2025-03-26', '15:00'),
-(27, 3, 1, '2025-03-26', '18:00'), (28, 3, 1, '2025-03-26', '21:00'),
-(29, 1, 3, '2025-03-27', '10:00'), (30, 1, 3, '2025-03-27', '13:00'),
-(31, 1, 3, '2025-03-27', '16:00'), (32, 1, 3, '2025-03-27', '19:00'),
-(33, 2, 1, '2025-03-28', '11:00'), (34, 2, 1, '2025-03-28', '14:00'),
-(35, 2, 1, '2025-03-28', '17:00'), (36, 2, 1, '2025-03-28', '20:00'),
-(37, 3, 2, '2025-03-29', '12:00'), (38, 3, 2, '2025-03-29', '15:00'),
-(39, 3, 2, '2025-03-29', '18:00'), (40, 3, 2, '2025-03-29', '21:00');
+(21, 2, 3, '2025-03-25', '11:00'), (22, 2, 3, '2025-03-25', '14:00')
 
 
 -- bookings
@@ -132,3 +112,18 @@ INSERT INTO booking_details (id, booking_id, seat_id, price) VALUES
 (3, 2, 15, 100000), (4, 2, 16, 100000), (5, 2, 17, 100000), (6, 2, 18, 100000),
 (7, 3, 43, 100000),
 (8, 4, 85, 100000), (9, 4, 86, 100000), (10, 4, 87, 100000);
+
+UPDATE seats
+SET seat_type_id =
+    CASE
+        WHEN `row` = 'A' THEN 1
+        WHEN `row` = 'B' THEN 1
+        WHEN `row` = 'C' THEN 1
+        WHEN `row` = 'D' THEN 1
+        WHEN `row` = 'E' THEN 2
+        WHEN `row` = 'F' THEN 2
+        WHEN `row` = 'G' THEN 2
+        WHEN `row` = 'H' THEN 1
+        WHEN `row` = 'I' THEN 3
+        ELSE seat_type_id -- Giữ nguyên nếu không khớp
+    END;

@@ -68,10 +68,8 @@ public class BookingEditController {
 
     private void loadUsers() {
         List<User> users = userDao.findAll();
-        System.out.println("Users loaded: " + users.size());
-        for (User user : users) {
-            System.out.println("ID: " + user.getId() + ", Username: " + user.getUsername() + ", Email: " + user.getEmail());
-        }
+        // System.out.println("Users loaded: " + users.size());
+    
         userComboBox.setItems(FXCollections.observableArrayList(users));
         // Set a cell factory to display username in ComboBox
         userComboBox.setCellFactory(param -> new javafx.scene.control.ListCell<User>() {

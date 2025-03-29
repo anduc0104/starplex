@@ -9,7 +9,9 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Optional;
 
 public class EditSeatTypeController {
@@ -30,7 +32,8 @@ public class EditSeatTypeController {
     public void setSeatType(SeatType seatType) {
         this.currentSeatType = seatType;
         nameField.setText(seatType.getName());
-        priceField.setText(seatType.getPrice().toString());
+        BigDecimal price = new BigDecimal(String.valueOf(seatType.getPrice()));
+        priceField.setText(price.setScale(0, RoundingMode.FLOOR).toPlainString());
     }
 
     @FXML
@@ -79,7 +82,7 @@ public class EditSeatTypeController {
 
     @FXML
     private void handleBack(ActionEvent event) {
-                    returnToSeatTypeView(event);
+        returnToSeatTypeView(event);
 
     }
 
