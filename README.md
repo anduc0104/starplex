@@ -1,2 +1,2 @@
 # starplex
-movie ticket manament
+movie ticket management
